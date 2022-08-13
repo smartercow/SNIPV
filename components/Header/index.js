@@ -21,7 +21,7 @@ const Header = ({ user }) => {
         <div>
           <Link href='/upsert'>
             <Button color="gradient" auto size="sm">
-              +Save
+              +Gem
             </Button>
           </Link>
         </div>
@@ -37,7 +37,7 @@ const Header = ({ user }) => {
         {user ? (
           <User squared src={user.photoURL} name={user.displayName}>
             <Button size="xs" onClick={logout} color="gradient">
-              Log out
+              Logud
             </Button>
           </User>
         ) : (

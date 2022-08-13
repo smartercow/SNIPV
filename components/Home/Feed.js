@@ -1,4 +1,6 @@
 import React from "react";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { oneLight } from "react-syntax-highlighter/dist/cjs/styles/prism";
 
 const Feed = ({user, snippets, tags}) => {
   console.log("Snippets",snippets);
@@ -9,6 +11,11 @@ const Feed = ({user, snippets, tags}) => {
           <h4>{item.title}</h4>
           <p>{item.description}</p>
           <div>{item.tags}</div>
+          <div>
+          <SyntaxHighlighter language="javascript" style={oneLight}>
+            {item.snippet}
+          </SyntaxHighlighter>
+          </div>
         </div>
       ))}
     </div>

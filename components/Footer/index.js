@@ -5,7 +5,7 @@ const Footer = () => {
   return (
     <footer className="text-center">
       <Text small b>
-        Made by PG
+        Lavet af PG
       </Text>
     </footer>
   );
