@@ -5,7 +5,7 @@ const Footer = () => {
   return (
     <footer className="text-center">
       <Text small b>
-        Lavet af PG
+        © PG 2022 - alpha 0.03
       </Text>
     </footer>
   );

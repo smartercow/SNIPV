@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { Button } from '@nextui-org/react';
+import { Button } from "@nextui-org/react";
 import Feed from "../components/Home/Feed";
 import HomePage from "../components/Home";
 export default function Home() {

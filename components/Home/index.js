@@ -14,7 +14,7 @@ const HomePage = () => {
   console.log(snippets);
   useEffect(() => {
     const snippetsSub = onSnapshot(
-      collection(db, "Snippets"),
+      collection(db, "SnippetsData"),
       (snapshot) => {
         let snippetList = [];
         let tags = [];

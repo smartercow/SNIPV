@@ -13,7 +13,7 @@ const Feed = ({user, snippets, tags}) => {
           <div>{item.tags}</div>
           <div>
           <SyntaxHighlighter language="javascript" style={oneLight}>
-            {item.snippet}
+            {item.code}
           </SyntaxHighlighter>
           </div>
         </div>
