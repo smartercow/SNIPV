@@ -18,7 +18,7 @@ const initialSelectedLang = {
   langId: "54",
 };
 
-export default function CreateFolder({ setCreateFolderOn }) {
+export default function CreateFolder({ setCreateFolderOn, update, setUpdate }) {
   const [language, setLanguage] = useState(initialSelectedLang);
 
   const [folderName, setFolderName] = useState("");
@@ -26,6 +26,11 @@ export default function CreateFolder({ setCreateFolderOn }) {
 
   function handleSelect(data) {
     setLanguage(data);
+  }
+
+  function handelCancel() {
+    setCreateFolderOn(false)
+    setUpdate(!update)
   }
 
   const createFolder = async (e) => {
@@ -46,6 +51,7 @@ export default function CreateFolder({ setCreateFolderOn }) {
           value: folderName,
         });
         setCreateFolderOn(false);
+        setUpdate(!update)
       } catch (error) {
         return null;
       }
@@ -86,7 +92,6 @@ export default function CreateFolder({ setCreateFolderOn }) {
           <Tooltip
             content={"Programmeringssprog for denne mappe"}
             color="primary"
-            hideArrow
           >
             <Button auto flat>
               ?
@@ -97,7 +102,7 @@ export default function CreateFolder({ setCreateFolderOn }) {
           <Button color="gradient" auto onClick={createFolder}>
             Opret
           </Button>
-          <Button auto flat color="error" onClick={() => setCreateFolderOn(false)}>X</Button>
+          <Button auto flat color="error" onClick={handelCancel}>X</Button>
         </div>
       </div>
     </div>

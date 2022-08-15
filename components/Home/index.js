@@ -1,8 +1,9 @@
-import { collection, onSnapshot } from 'firebase/firestore';
-import React, { useEffect, useState } from 'react'
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth, db } from '../../Firebase/clientApp';
-import Feed from './Feed';
+import { Text } from "@nextui-org/react";
+import { collection, onSnapshot } from "firebase/firestore";
+import React, { useEffect, useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth, db } from "../../Firebase/clientApp";
+import Feed from "./Feed";
 
 const HomePage = () => {
   const [user] = useAuthState(auth);
@@ -20,7 +21,7 @@ const HomePage = () => {
         let tags = [];
         snapshot.docs.forEach((doc) => {
           tags.push(...doc.get("tags"));
-          snippetList.push({ id: doc.id, ...doc.data()});
+          snippetList.push({ id: doc.id, ...doc.data() });
         });
         const uniqueTags = [...new Set(tags)];
         setTags(uniqueTags);
@@ -33,14 +34,28 @@ const HomePage = () => {
     );
 
     return () => {
-        snippetsSub();
+      snippetsSub();
     };
   }, []);
   return (
     <div>
-        <Feed user={user} snippets={snippets} tags={tags}/>
+      {user ? (
+        <div>
+          {snippets ? (
+            <Feed user={user} snippets={snippets} tags={tags} />
+          ) : (
+            <div>
+              <Text>Du har ingen snippets endnu</Text>
+            </div>
+          )}
+        </div>
+      ) : (
+        <div className="flex justify-center items-center h-[40vh]">
+          <Text><Text b>Log ind</Text> for at gemme eller se kode snippets</Text>
+        </div>
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default HomePage
+export default HomePage;

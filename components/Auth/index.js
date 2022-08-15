@@ -33,7 +33,7 @@ const Auth = () => {
 
   return (
     <div>
-      <Button onClick={() => signInWithGoogle()}>Continue with Google</Button>
+      <Button onClick={() => signInWithGoogle()}>Forsæt med Google</Button>
     </div>
   );
 };

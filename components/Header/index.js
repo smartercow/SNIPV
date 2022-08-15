@@ -4,8 +4,9 @@ import Link from "next/link";
 import React from "react";
 import { auth } from "../../Firebase/clientApp";
 import Auth from "../Auth";
+import Country from "../Country";
 
-const Menu = ["Snippets", "Mapper", "Sprog", "Tags", "Indstillinger"];
+const Menu = ["Fejl", "Tags", "Sprog", "Mapper", "Indstillinger"];
 
 const Header = ({ user }) => {
   const logout = async () => {
@@ -15,24 +16,27 @@ const Header = ({ user }) => {
   return (
     <div className="flex justify-between items-center max-w-5xl mx-5 lg:mx-auto py-2">
       <div className="flex gap-2 items-center">
-        <div>
+        <div className="cursor-pointer">
           <Link href="/">
-            <Text h4>SNIPV</Text>
+            <Text h4 weight="extrabold">SNIPV</Text>
           </Link>
         </div>
         <div>
-          <Link href="/upsert">
-            <Button color="gradient" auto size="sm">
-              +Gem
-            </Button>
-          </Link>
+          {user && (
+            <Link href="/upsert">
+              <Button color="gradient" auto size="sm">
+                +Gem
+              </Button>
+            </Link>
+          )}
         </div>
       </div>
-      <div>
+      <div className="hidden md:inline">
         {user && (
           <Button.Group color="gradient" ghost>
+            <Link href="/snippets"><Button>KODER</Button></Link>
             {Menu.map((item, index) => (
-              <Button key={index}>
+              <Button disabled key={index}>
                 <Text b transform="uppercase">
                   {item}
                 </Text>
@@ -41,11 +45,11 @@ const Header = ({ user }) => {
           </Button.Group>
         )}
       </div>
-      <div>
+      <div className="flex items-center">
         {user ? (
           <User squared src={user.photoURL} name={user.displayName}>
             <Button size="xs" onClick={logout} color="gradient">
-              Log out
+              Log ud
             </Button>
           </User>
         ) : (
@@ -53,6 +57,9 @@ const Header = ({ user }) => {
             <Auth />
           </div>
         )}
+        <div>
+          <Country />
+        </div>
       </div>
     </div>
   );
