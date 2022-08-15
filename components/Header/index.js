@@ -16,10 +16,12 @@ const Header = ({ user }) => {
     <div className="flex justify-between items-center max-w-5xl mx-5 lg:mx-auto py-2">
       <div className="flex gap-2 items-center">
         <div>
-          <Link href='/'><Text h4>SNIPV</Text></Link>
+          <Link href="/">
+            <Text h4>SNIPV</Text>
+          </Link>
         </div>
         <div>
-          <Link href='/upsert'>
+          <Link href="/upsert">
             <Button color="gradient" auto size="sm">
               +Gem
             </Button>
@@ -27,11 +29,17 @@ const Header = ({ user }) => {
         </div>
       </div>
       <div>
-        <Button.Group color="gradient" ghost>
-          {Menu.map((item, index) => (
-            <Button key={index}><Text b transform="uppercase" >{item}</Text></Button>
-          ))}
-        </Button.Group>
+        {user && (
+          <Button.Group color="gradient" ghost>
+            {Menu.map((item, index) => (
+              <Button key={index}>
+                <Text b transform="uppercase">
+                  {item}
+                </Text>
+              </Button>
+            ))}
+          </Button.Group>
+        )}
       </div>
       <div>
         {user ? (
