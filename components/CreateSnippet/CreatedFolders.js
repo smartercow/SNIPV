@@ -14,6 +14,7 @@ export default function CreatedFolders({
   const [selectValue, setSelectValue] = useState([]);
   const [createFolderOn, setCreateFolderOn] = useState(false);
   const [update, setUpdate] = useState(false)
+  const [loading, setLoading] = useState(true)
 
   function handleSelect(data) {
     setSelectValue(data);
@@ -57,7 +58,7 @@ export default function CreatedFolders({
                 </div>
                 <div>
                   <Button
-                    color="secondary"
+                    color="gradient"
                     auto
                     rounded
                     onClick={() => setCreateFolderOn(true)}

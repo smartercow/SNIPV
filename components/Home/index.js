@@ -1,5 +1,12 @@
-import { Text } from "@nextui-org/react";
-import { collection, getDocs, onSnapshot, orderBy, query, where } from "firebase/firestore";
+import { Loading, Text } from "@nextui-org/react";
+import {
+  collection,
+  getDocs,
+  onSnapshot,
+  orderBy,
+  query,
+  where,
+} from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../../Firebase/clientApp";
@@ -12,7 +19,6 @@ const HomePage = () => {
   const [loading, setLoading] = useState(true);
   const [snippets, setSnippets] = useState([]);
   const [tags, setTags] = useState([]);
-
 
   const getSnippets = async () => {
     try {
@@ -30,6 +36,7 @@ const HomePage = () => {
         ...prev,
         snips: snippets,
       }));
+      setLoading(false);
     } catch (error) {
       console.log("getPosts error", error.message);
     }
@@ -41,19 +48,33 @@ const HomePage = () => {
 
   return (
     <div>
-      {user ? (
-        <div>
-          {snippets ? (
-            <Feed user={user} snippets={snippets} tags={tags} />
-          ) : (
-            <div>
-              <Text>Du har ingen snippets endnu</Text>
+      <div>
+        {user ? (
+          <div>
+            <div className="mb-3">
+              <Text h4>Offentlige snippets</Text>
             </div>
-          )}
-        </div>
-      ) : (
-        <NoUser />
-      )}
+            <div>
+              <div>
+                {snippets ? (
+                  <Feed user={user} snippets={snippets} tags={tags} />
+                ) : (
+                  <div>
+                    <Text>Du har ingen snippets endnu</Text>
+                  </div>
+                )}
+              </div>
+              {loading && (
+                <div className="flex justify-center items-center h-[20vh]">
+                  <Loading size="lg" />
+                </div>
+              )}
+            </div>
+          </div>
+        ) : (
+          <NoUser />
+        )}
+      </div>
     </div>
   );
 };

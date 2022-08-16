@@ -3,7 +3,7 @@ import React from "react";
 
 const About = () => {
   return (
-    <div>
+    <div className="min-h-[70vh]">
       <div className="flex justify-center items-center h-20">
         <Text h4 b>
           SNIPV

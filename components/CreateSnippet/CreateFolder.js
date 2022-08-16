@@ -93,7 +93,7 @@ export default function CreateFolder({ setCreateFolderOn, update, setUpdate }) {
             content={"Programmeringssprog for denne mappe"}
             color="primary"
           >
-            <Button rounded auto flat>
+            <Button color="primary" rounded auto flat>
               ?
             </Button>
           </Tooltip>

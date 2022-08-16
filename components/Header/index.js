@@ -24,7 +24,7 @@ const Header = ({ user }) => {
       <div className="flex gap-2 items-center">
         <div className="cursor-pointer">
           <Link href="/">
-            <Text h4 weight="extrabold">SNIPV</Text>
+            <Text h2 weight="extrabold">SNIPV</Text>
           </Link>
         </div>
         <div>
@@ -40,7 +40,7 @@ const Header = ({ user }) => {
       <div className="hidden md:inline">
         {user && (
           <Button.Group color="gradient" ghost>
-            <Link href="/snippets"><Button>MINE SNIPPETS</Button></Link>
+            <Link href="/mysnippets"><Button>MINE SNIPPETS</Button></Link>
             {Menu.map((item, index) => (
               <Button disabled key={index}>
                 <Text b transform="uppercase">

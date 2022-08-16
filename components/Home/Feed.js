@@ -8,37 +8,32 @@ const Feed = ({ user, snippets, tags }) => {
   return (
     <div>
       <div className="w-full">
-
-            <Collapse.Group shadow>
-              {snippets?.snips?.map((item) => (
-                <Collapse
-                  key={item.uid}
-                  title={<Text h4>{item.title}</Text>}
-                  subtitle={item.description}
-                  contentLeft={
-                    <Tooltip
-                    content={item.author}
-                    color="primary"
-                  >
-                    <Avatar
-                      size="lg"
-                      src={item.userPhoto}
-                      color="secondary"
-                      bordered
-                      squared
-                    />
-                  </Tooltip>
-
-                  }
-                >
-                  <div>
-                    <SyntaxHighlighter language="javascript" style={oneLight}>
-                      {item.code}
-                    </SyntaxHighlighter>
-                  </div>
-                </Collapse>
-              ))}
-            </Collapse.Group>
+        <Collapse.Group shadow>
+          {snippets?.snips?.map((item) => (
+            <Collapse
+              key={item.uid}
+              title={<Text h4>{item.title}</Text>}
+              subtitle={item.description}
+              contentLeft={
+                <Tooltip content={item.author} color="primary">
+                  <Avatar
+                    size="lg"
+                    src={item.userPhoto}
+                    color="secondary"
+                    bordered
+                    squared
+                  />
+                </Tooltip>
+              }
+            >
+              <div>
+                <SyntaxHighlighter language="javascript" style={oneLight}>
+                  {item.code}
+                </SyntaxHighlighter>
+              </div>
+            </Collapse>
+          ))}
+        </Collapse.Group>
       </div>
     </div>
   );

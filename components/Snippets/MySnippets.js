@@ -1,4 +1,4 @@
-import { Button, Collapse, Text } from "@nextui-org/react";
+import { Button, Collapse, Loading, Text } from "@nextui-org/react";
 import {
   collection,
   getDocs,
@@ -16,7 +16,7 @@ import NoUser from "../NoPage/NoUser";
 
 const MySnippets = () => {
   const [user] = useAuthState(auth);
-
+  const [loading, setLoading] = useState(true);
   const [mySnippets, setMySnippets] = useState();
 
   const getMySnippets = async () => {
@@ -35,6 +35,7 @@ const MySnippets = () => {
         ...prev,
         snips: snippets,
       }));
+      setLoading(false);
     } catch (error) {
       console.log("getPosts error", error.message);
     }
@@ -46,11 +47,12 @@ const MySnippets = () => {
   return (
     <div>
       {user ? (
-        <div>
-          <div>
+        <div className="min-h-[80vh]">
+          <div className="mb-4">
             <Button.Group color="secondary" size="sm">
               <Button>Koder</Button>
               <Button disabled>Fejl</Button>
+              <Button disabled>Noter</Button>
             </Button.Group>
           </div>
           <div>
@@ -70,6 +72,11 @@ const MySnippets = () => {
               ))}
             </Collapse.Group>
           </div>
+          {loading && (
+            <div className="flex justify-center items-center h-[20vh]">
+              <Loading size="lg" />
+            </div>
+          )}
         </div>
       ) : (
         <div>

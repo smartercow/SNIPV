@@ -166,7 +166,7 @@ const CreateSnippet = () => {
                 content={"Tags for denne snippet - Tryk ENTER for at tilføj"}
                 color="primary"
               >
-                <Button rounded auto flat>
+                <Button color="primary" rounded auto flat>
                   ?
                 </Button>
               </Tooltip>
