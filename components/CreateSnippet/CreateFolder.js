@@ -80,7 +80,7 @@ export default function CreateFolder({ setCreateFolderOn, update, setUpdate }) {
       <Spacer y={0.4} />
 
       <div className="flex justify-between gap-3">
-        <div className="flex gap-2">
+        <div className="flex gap-2 w-full">
           <Select
             options={LanguageOptions}
             placeholder="Search and select"
@@ -98,7 +98,7 @@ export default function CreateFolder({ setCreateFolderOn, update, setUpdate }) {
             </Button>
           </Tooltip>
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 w-full justify-end">
           <Button color="gradient" auto onClick={createFolder}>
             Opret
           </Button>

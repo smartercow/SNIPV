@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const Footer = () => {
   return (
-    <footer className="max-w-5xl mx-5 lg:mx-auto mt-10">
+    <footer className="max-w-5xl mx-5 lg:mx-auto my-10">
       <div className="flex justify-between items-center">
         <div className="flex flex-col sm:flex-row gap-2">
           <div className="cursor-pointer">
@@ -15,14 +15,15 @@ const Footer = () => {
             </Link>
           </div>
           <div>
-            <Text small color="black">
+            <Text
+              small
+              className="text-[#E6E8EB]"
+            >
               Databeskyttelsespolitik
             </Text>
           </div>
           <div>
-            <Text small color="black">
-            Cookiepolitik
-            </Text>
+            <Text small className="text-[#E6E8EB]">Cookiepolitik</Text>
           </div>
         </div>
         <div className="text-center">

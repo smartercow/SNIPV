@@ -50,8 +50,8 @@ const HomePage = () => {
           )}
         </div>
       ) : (
-        <div className="flex justify-center items-center h-[40vh]">
-          <Text><Text b>Log ind</Text> for at gemme eller se kode snippets</Text>
+        <div className="flex justify-center items-center h-[60vh]">
+          <Text><Text b>Log ind</Text> for at gemme eller se indhold</Text>
         </div>
       )}
     </div>

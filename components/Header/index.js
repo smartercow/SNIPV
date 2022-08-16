@@ -2,6 +2,8 @@ import { Button, Grid, Text, User } from "@nextui-org/react";
 import { signOut } from "firebase/auth";
 import Link from "next/link";
 import React from "react";
+import { useRecoilState } from "recoil";
+import { loginModalState } from "../../atoms/loginModalStateAtom";
 import { auth } from "../../Firebase/clientApp";
 import Auth from "../Auth";
 import Country from "../Country";
@@ -9,6 +11,9 @@ import Country from "../Country";
 const Menu = ["Fejl", "Tags", "Sprog", "Mapper", "Indstillinger"];
 
 const Header = ({ user }) => {
+
+  const [open, setOpen] = useRecoilState(loginModalState); 
+
   const logout = async () => {
     await signOut(auth);
     //clear community state
@@ -54,7 +59,7 @@ const Header = ({ user }) => {
           </User>
         ) : (
           <div>
-            <Auth />
+            <Button color="gradient" onClick={() => setOpen(true)}>LOG PÅ</Button>
           </div>
         )}
         <div>

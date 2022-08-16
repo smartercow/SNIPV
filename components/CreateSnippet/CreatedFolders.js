@@ -47,7 +47,7 @@ export default function CreatedFolders({
               <Text>Mappe</Text>
               <Spacer y={0.3} />
               <div className="flex gap-3">
-                <div>
+                <div className="w-full">
                   <Select
                     options={folders}
                     placeholder="Valg en mappe"
@@ -58,7 +58,7 @@ export default function CreatedFolders({
                 </div>
                 <div>
                   <Button
-                    color="gradient"
+                    color="secondary"
                     auto
                     onClick={() => setCreateFolderOn(true)}
                   >

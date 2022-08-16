@@ -4,10 +4,10 @@ import {
   Spacer,
   Textarea,
   Button,
-  Dropdown,
   Collapse,
   Text,
   Tooltip,
+  Switch,
 } from "@nextui-org/react";
 import {
   addDoc,
@@ -43,6 +43,7 @@ const CreateSnippet = () => {
   /*   const [open, setOpen] = useRecoilState(createFolderModalState); */
   const [form, setForm] = useState(initialState);
   const [tags, setTags] = useState([]);
+  const [snippetPublic, setSnippetPublic] = useState(false)
   const [selectedFolder, setSelectedFolder] = useState(
     initialSelectedFolderValue
   );
@@ -68,9 +69,11 @@ const CreateSnippet = () => {
           postedAt: serverTimestamp(),
           author: user.displayName,
           userId: user.uid,
+          userPhoto: user.photoURL,
           category: selectedCategory,
           folder: selectedFolder,
           tags: tags,
+          isPublic: snippetPublic,
         });
         router("/");
       } catch (error) {
@@ -80,35 +83,36 @@ const CreateSnippet = () => {
       /* return toast.error("All fields are mandatory to fill!"); */
     }
   };
-  console.log("selectCat", selectedCategory);
-  console.log("selectFod", selectedFolder);
+  console.log("snippetPublic", snippetPublic);
   return (
     <div>
       <div className="">
         <form onSubmit={handleSubmit}>
           <div className="flex gap-4 flex-col md:flex-row md:gap-8 justify-between">
-            <div className="w-full pt-8">
+            <div className="w-full">
+              <Text>Titel *</Text>
               <Input
                 clearable
                 underlined
-                labelPlaceholder="Titel *"
                 name="title"
                 value={title}
                 size="lg"
                 onChange={handleChange}
                 required
                 width="100%"
+                aria-label="Titel"
               />
               <Spacer y={1.7} />
+              <Text>Beskrivelse</Text>
               <Input
                 clearable
                 underlined
-                labelPlaceholder="Beskrivelse"
                 name="description"
                 value={description}
                 size="lg"
                 onChange={handleChange}
                 width="100%"
+                aria-label="Beskrivelse"
               />
             </div>
             <div className="w-full">
@@ -121,7 +125,7 @@ const CreateSnippet = () => {
           </div>
           <Spacer y={1.5} />
           <div>
-            <Text>Din kode</Text>
+            <Text>Din kode *</Text>
             <Spacer y={0.3} />
             <Textarea
               placeholder="her..."
@@ -133,6 +137,9 @@ const CreateSnippet = () => {
               cacheMeasurements
               width="100%"
               height="100%"
+              shadow="false"
+              animated="false"
+              aria-label="kode"
             />
           </div>
           <Spacer y={1} />
@@ -165,6 +172,11 @@ const CreateSnippet = () => {
                 </Button>
               </Tooltip>
             </div>
+          </div>
+          <Spacer y={1} />
+          <div>
+            <Text>Offentlig</Text>
+            <Switch onChange={() => setSnippetPublic(!snippetPublic)}/>
           </div>
           <Spacer y={1.5} />
           <Button color="gradient" type="submit">

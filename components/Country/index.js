@@ -16,7 +16,7 @@ export default function Country() {
       </Dropdown.Button>
       <Dropdown.Menu
         aria-label="Single selection actions"
-        color="secondary"
+        color="primary"
         disallowEmptySelection
         selectionMode="single"
         selectedKeys={selected}
