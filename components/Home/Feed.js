@@ -1,4 +1,4 @@
-import { Avatar, Collapse, Grid, Text } from "@nextui-org/react";
+import { Avatar, Collapse, Grid, Text, Tooltip } from "@nextui-org/react";
 import React from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneLight } from "react-syntax-highlighter/dist/cjs/styles/prism";
@@ -17,13 +17,19 @@ const Feed = ({ user, snippets, tags }) => {
                   title={<Text h4>{item.title}</Text>}
                   subtitle={item.description}
                   contentLeft={
+                    <Tooltip
+                    content={item.author}
+                    color="primary"
+                  >
                     <Avatar
                       size="lg"
-                      src="https://i.pravatar.cc/150?u=a042581f4e29026024d"
+                      src={item.userPhoto}
                       color="secondary"
                       bordered
                       squared
                     />
+                  </Tooltip>
+
                   }
                 >
                   <div>

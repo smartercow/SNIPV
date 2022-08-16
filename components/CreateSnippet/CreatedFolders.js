@@ -44,7 +44,7 @@ export default function CreatedFolders({
             </div>
           ) : (
             <div>
-              <Text>Mappe</Text>
+              <Text>Mappe *</Text>
               <Spacer y={0.3} />
               <div className="flex gap-3">
                 <div className="w-full">
@@ -60,6 +60,7 @@ export default function CreatedFolders({
                   <Button
                     color="secondary"
                     auto
+                    rounded
                     onClick={() => setCreateFolderOn(true)}
                   >
                     +

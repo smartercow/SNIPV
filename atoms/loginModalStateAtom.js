@@ -1,6 +1,10 @@
 import { atom } from "recoil";
 
-export const loginModalState = atom({
-    key: 'loginModalState',
+const defaultModalState = {
+    open: false,
+}
+
+export const Login = atom({
+    key: 'defaultModalState',
     default: false,
 })

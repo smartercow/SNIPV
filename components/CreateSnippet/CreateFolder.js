@@ -93,7 +93,7 @@ export default function CreateFolder({ setCreateFolderOn, update, setUpdate }) {
             content={"Programmeringssprog for denne mappe"}
             color="primary"
           >
-            <Button auto flat>
+            <Button rounded auto flat>
               ?
             </Button>
           </Tooltip>
@@ -102,7 +102,7 @@ export default function CreateFolder({ setCreateFolderOn, update, setUpdate }) {
           <Button color="gradient" auto onClick={createFolder}>
             Opret
           </Button>
-          <Button auto flat color="error" onClick={handelCancel}>X</Button>
+          <Button rounded auto flat color="error" onClick={handelCancel}>X</Button>
         </div>
       </div>
     </div>

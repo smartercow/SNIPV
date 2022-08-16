@@ -1,16 +1,28 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Modal, Button, Text, Input, Row, Checkbox } from "@nextui-org/react";
 import Auth from "../Auth";
 import { useRecoilState } from "recoil";
-import { loginModalState } from "../../atoms/loginModalStateAtom";
+import { Login } from "../../atoms/loginModalStateAtom";
+import { auth } from "../../Firebase/clientApp";
+import { useAuthState } from "react-firebase-hooks/auth";
 
-export default function App() {
-  const [open, setOpen] = useRecoilState(loginModalState);
+export default function LoginModal() {
+  const [open, setOpen] = useRecoilState(Login);
+
+  const [user] = useAuthState(auth);
 
   const closeHandler = () => {
     setOpen(false);
   };
 
+  useEffect(() => {
+    if (!user) return;
+    const closeOnLogin = () => {
+        setOpen(false);
+    }
+    closeOnLogin()
+    console.log("WorkingLogin");
+  }, [user]);
   return (
     <div>
       <Modal

@@ -20,6 +20,9 @@ const About = () => {
             Rapporter fejl
           </Button>
           <Button light size="lg" color="gradient" disabled>
+            Patch noter
+          </Button>
+          <Button light size="lg" color="gradient" disabled>
             Forslag
           </Button>
           <Button light size="lg" color="gradient" disabled>

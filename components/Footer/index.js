@@ -26,11 +26,11 @@ const Footer = () => {
             <Text small className="text-[#E6E8EB]">Cookiepolitik</Text>
           </div>
         </div>
-        <div className="text-center">
-          <Text small>© 2022 SNIPV</Text>
-        </div>
+{/*         <div className="">
+          <Text small></Text>
+        </div> */}
         <div className="">
-          <Text small>beta 0.2</Text>
+          <Text small>© 2022 SNIPV beta 0.2</Text>
         </div>
       </div>
     </footer>

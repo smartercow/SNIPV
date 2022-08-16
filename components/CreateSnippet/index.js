@@ -62,7 +62,7 @@ const CreateSnippet = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (title && description && code) {
+    if (title && code && selectedCategory) {
       try {
         await addDoc(collection(db, "SnippetsData"), {
           ...form,
@@ -75,7 +75,7 @@ const CreateSnippet = () => {
           tags: tags,
           isPublic: snippetPublic,
         });
-        router("/");
+        router.push("/");
       } catch (error) {
         console.log(error);
       }
@@ -167,7 +167,7 @@ const CreateSnippet = () => {
                 content={"Tags for denne snippet - Tryk ENTER for at tilføj"}
                 color="primary"
               >
-                <Button auto flat>
+                <Button rounded auto flat>
                   ?
                 </Button>
               </Tooltip>
