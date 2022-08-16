@@ -8,7 +8,7 @@ import { auth } from "../../Firebase/clientApp";
 import Auth from "../Auth";
 import Country from "../Country";
 
-const Menu = ["Fejl", "Tags", "Sprog", "Mapper", "Indstillinger"];
+const Menu = ["Mine mapper", "Indstillinger"];
 
 const Header = ({ user }) => {
 
@@ -40,7 +40,7 @@ const Header = ({ user }) => {
       <div className="hidden md:inline">
         {user && (
           <Button.Group color="gradient" ghost>
-            <Link href="/snippets"><Button>KODER</Button></Link>
+            <Link href="/snippets"><Button>MINE SNIPPETS</Button></Link>
             {Menu.map((item, index) => (
               <Button disabled key={index}>
                 <Text b transform="uppercase">

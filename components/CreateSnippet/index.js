@@ -83,7 +83,6 @@ const CreateSnippet = () => {
       /* return toast.error("All fields are mandatory to fill!"); */
     }
   };
-  console.log("snippetPublic", snippetPublic);
   return (
     <div>
       <div className="">

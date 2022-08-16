@@ -1,8 +1,9 @@
 import { Text } from "@nextui-org/react";
-import { collection, onSnapshot } from "firebase/firestore";
+import { collection, getDocs, onSnapshot, orderBy, query, where } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../../Firebase/clientApp";
+import NoUser from "../NoPage/NoUser";
 import Feed from "./Feed";
 
 const HomePage = () => {
@@ -12,31 +13,32 @@ const HomePage = () => {
   const [snippets, setSnippets] = useState([]);
   const [tags, setTags] = useState([]);
 
-  console.log(snippets);
-  useEffect(() => {
-    const snippetsSub = onSnapshot(
-      collection(db, "SnippetsData"),
-      (snapshot) => {
-        let snippetList = [];
-        let tags = [];
-        snapshot.docs.forEach((doc) => {
-          tags.push(...doc.get("tags"));
-          snippetList.push({ id: doc.id, ...doc.data() });
-        });
-        const uniqueTags = [...new Set(tags)];
-        setTags(uniqueTags);
-        setSnippets(snippetList);
-        setLoading(false);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
 
-    return () => {
-      snippetsSub();
-    };
-  }, []);
+  const getSnippets = async () => {
+    try {
+      const postsQuery = query(
+        collection(db, "SnippetsData"),
+        where("isPublic", "==", true),
+        orderBy("postedAt", "desc")
+      );
+      const snippetDocs = await getDocs(postsQuery);
+      const snippets = snippetDocs.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setSnippets((prev) => ({
+        ...prev,
+        snips: snippets,
+      }));
+    } catch (error) {
+      console.log("getPosts error", error.message);
+    }
+  };
+
+  useEffect(() => {
+    getSnippets();
+  }, [user]);
+
   return (
     <div>
       {user ? (
@@ -50,9 +52,7 @@ const HomePage = () => {
           )}
         </div>
       ) : (
-        <div className="flex justify-center items-center h-[60vh]">
-          <Text><Text b>Log ind</Text> for at gemme eller se indhold</Text>
-        </div>
+        <NoUser />
       )}
     </div>
   );

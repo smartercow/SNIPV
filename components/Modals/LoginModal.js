@@ -18,11 +18,11 @@ export default function LoginModal() {
   useEffect(() => {
     if (!user) return;
     const closeOnLogin = () => {
-        setOpen(false);
-    }
-    closeOnLogin()
-    console.log("WorkingLogin");
+      setOpen(false);
+    };
+    closeOnLogin();
   }, [user]);
+
   return (
     <div>
       <Modal
@@ -31,23 +31,26 @@ export default function LoginModal() {
         aria-labelledby="modal-title"
         open={open}
         onClose={closeHandler}
+        width="360px"
       >
         <Modal.Header>
-          <Text id="modal-title" size={18}>
-            Velkommen til
-            <Text b size={18}>
+          <div className="flex">
+            <Text id="modal-title" size={18}>
+              Log ind til&nbsp;
+            </Text>
+            <Text weight="extrabold" size={18}>
               SNIPV
             </Text>
-          </Text>
+          </div>
         </Modal.Header>
         <Modal.Body>
           <Auth />
         </Modal.Body>
-        <Modal.Footer>
+        {/*         <Modal.Footer>
           <Button auto flat color="error" onClick={closeHandler}>
             Luk
           </Button>
-        </Modal.Footer>
+        </Modal.Footer> */}
       </Modal>
     </div>
   );

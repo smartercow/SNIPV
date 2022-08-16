@@ -13,7 +13,6 @@ const CreateFolderModal = () => {
     [selected]
   );
 
-  console.log(selected);
   return (
     <div>
       <Modal

@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <div>
       <Head>
-        <title>Kode Bankboks</title>
+        <title>SNIPV - Bankboks for kildekode, maskinkode eller tekst.</title>
         <meta name="description" content="Created by Peter G" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

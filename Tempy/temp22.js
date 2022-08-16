@@ -79,8 +79,6 @@ const Upsert = () => {
       /* return toast.error("All fields are mandatory to fill!"); */
     }
   };
-  console.log("selectCat", selectedCategory);
-  console.log("selectFod", selectedFolder);
   return (
     <div>
       <div className="">

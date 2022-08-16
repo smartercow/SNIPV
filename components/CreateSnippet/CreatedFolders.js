@@ -33,7 +33,6 @@ export default function CreatedFolders({
     getFolders();
   }, [user, update]);
 
-  console.log(folders);
   return (
     <div>
       {folders.length > 0 ? (
