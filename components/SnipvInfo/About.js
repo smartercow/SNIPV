@@ -6,7 +6,13 @@ const About = () => {
   return (
     <div className="min-h-[70vh]">
       <div className="flex justify-center items-center h-20">
-        <Text h4 b>
+        <Text
+          h3
+          css={{
+            textGradient: "90deg, $blue600 -20%, $pink600 50%",
+          }}
+          weight="extrabold"
+        >
           SNIPV
         </Text>
       </div>
@@ -20,8 +26,8 @@ const About = () => {
             </Button>
           </Link>
           <Link href="/patchnotes">
-            <Button light size="lg" color="gradient">
-            <Text b color="black">
+            <Button light size="lg" color="primary">
+              <Text b color="black">
                 Patch noter
               </Text>
             </Button>

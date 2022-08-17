@@ -25,11 +25,17 @@ const Feed = ({ user, snippets, tags }) => {
                   />
                 </Tooltip>
               }
+              
             >
               <div>
                 <SyntaxHighlighter language="javascript" style={oneLight}>
                   {item.code}
                 </SyntaxHighlighter>
+                <div>
+                <Link href={`/snippet/${item.id}`} >
+                <Text b color="primary" className="cursor-pointer">Snippet link →</Text>
+                </Link>
+                </div>
               </div>
             </Collapse>
           ))}
