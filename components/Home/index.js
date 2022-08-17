@@ -57,18 +57,14 @@ const HomePage = () => {
             <div>
               <div>
                 {snippets ? (
-                  <Feed user={user} snippets={snippets} tags={tags} />
+                  <Feed user={user} loading={loading} snippets={snippets} tags={tags} />
                 ) : (
                   <div>
                     <Text>Du har ingen snippets endnu</Text>
                   </div>
                 )}
               </div>
-              {loading && (
-                <div className="flex justify-center items-center h-[20vh]">
-                  <Loading size="lg" />
-                </div>
-              )}
+
             </div>
           </div>
         ) : (
