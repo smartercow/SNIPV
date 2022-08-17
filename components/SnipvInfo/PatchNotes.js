@@ -53,7 +53,7 @@ const PatchNotes = () => {
             <hr />
             
             <ul className="list-disc italic">
-              <li><Text color="" size="lg">Side for hver snippets</Text></li>
+              <li><Text color="" del size="lg">Side for hver snippets</Text></li>
               <li><Text color="" size="lg">Rediger og slet snippets</Text></li>
               <li><Text color="" size="lg">Opret fejl snippet</Text></li>
               <li><Text color="" size="lg">Opret noter</Text></li>
