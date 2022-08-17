@@ -1,5 +1,6 @@
 import { Button, Text } from "@nextui-org/react";
 import React from "react";
+import Link from "next/link";
 
 const About = () => {
   return (
@@ -11,16 +12,22 @@ const About = () => {
       </div>
       <div className="flex justify-between gap-4">
         <div className="flex flex-col gap-4">
-          <Button light size="lg" color="primary">
+          <Link href="/about">
+            <Button light size="lg" color="primary">
+              <Text b color="black">
+                Om SNIPV
+              </Text>
+            </Button>
+          </Link>
+          <Link href="/patchnotes">
+            <Button light size="lg" color="gradient">
             <Text b color="black">
-              Om SNIPV
-            </Text>
-          </Button>
+                Patch noter
+              </Text>
+            </Button>
+          </Link>
           <Button light size="lg" color="gradient" disabled>
             Rapporter fejl
-          </Button>
-          <Button light size="lg" color="gradient" disabled>
-            Patch noter
           </Button>
           <Button light size="lg" color="gradient" disabled>
             Forslag
@@ -37,7 +44,7 @@ const About = () => {
             <Text size="lg">
               <Text size="lg" b>
                 SNIPV
-              </Text>{" "}
+              </Text>
               (Snippets Vault) er en bankboks for genanvendelig kildekode,
               maskinkode eller tekst.
             </Text>
