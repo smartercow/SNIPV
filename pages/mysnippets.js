@@ -11,6 +11,7 @@ const mysnippets = () => {
             <Button>Koder</Button>
             <Button disabled>Fejl</Button>
             <Button disabled>Noter</Button>
+            <Button disabled>Links</Button>
           </Button.Group>
         </div>
       </div>

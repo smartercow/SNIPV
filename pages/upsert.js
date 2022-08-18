@@ -28,6 +28,7 @@ const Upsert = () => {
               <Card.Header>
                 <Text b>Opret en kode snippet</Text>
               </Card.Header>
+              <Card.Divider />
               <Card.Body>
                 <CreateSnippet />
               </Card.Body>
