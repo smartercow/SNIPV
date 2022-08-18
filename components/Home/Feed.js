@@ -1,11 +1,13 @@
 import {
   Avatar,
+  Card,
   Collapse,
   Grid,
   Loading,
   Pagination,
   Text,
   Tooltip,
+  User,
 } from "@nextui-org/react";
 import React from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
@@ -22,41 +24,40 @@ const Feed = ({ user, snippets, tags, loading }) => {
       )}
       {snippets && (
         <div className="w-full">
-          <Collapse.Group shadow>
-            {snippets?.snips?.slice(0, 10).map((item) => (
-              <Collapse
-                key={item.uid}
-                title={<Text h4>{item.title}</Text>}
-                subtitle={item.description}
-                contentLeft={
-                  <Tooltip content={item.author} color="primary">
-                    <Avatar
-                      size="lg"
-                      src={item.userPhoto}
-                      color="secondary"
-                      bordered
-                      squared
-                    />
-                  </Tooltip>
-                }
-              >
-                <div>
-                  <SyntaxHighlighter language="javascript" style={oneLight}>
-                    {item.code}
-                  </SyntaxHighlighter>
-                  <div>
-                    <Link href={`/snippet/${item.id}`}>
-                      <Text b color="primary" className="cursor-pointer">
-                        Snippet link →
-                      </Text>
-                    </Link>
-                  </div>
+          <div className="flex flex-col gap-4">
+            {snippets.snips &&
+              snippets.snips.slice(0, 10).map((snip) => (
+                <div key={snip.id}>
+                  <Link href={`/snippet/${snip.id}`}>
+                    <Card
+                      isPressable
+                      variant="flat"
+                      css={{ mw: "100%" }}
+                      key={snip.id}
+                    >
+                      <Card.Body>
+                        <div className="flex items-center">
+                          <div className="w-auto">
+                            <User src={snip.userPhoto} zoomed squared />
+                          </div>
+                          <div className="w-full">
+                            <div>
+                              <Text h4>{snip.title}</Text>
+                            </div>
+                            <div>
+                              <Text weight="semibold" color="#889096">{snip.description}</Text>
+                            </div>
+                          </div>
+                        </div>
+                        <Text></Text>
+                      </Card.Body>
+                    </Card>
+                  </Link>
                 </div>
-              </Collapse>
-            ))}
-          </Collapse.Group>
+              ))}
+          </div>
           <div className="mt-5 text-center">
-            <Pagination color="primary" total={10} initialPage={1} />
+            <Pagination color="primary" total={10} />
           </div>
         </div>
       )}

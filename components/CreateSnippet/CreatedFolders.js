@@ -44,7 +44,7 @@ export default function CreatedFolders({
             </div>
           ) : (
             <div>
-              <Text>Mappe *</Text>
+              <Text>Mappe <Text color="error" b>*</Text></Text>
               <Spacer y={0.3} />
               <div className="flex gap-3">
                 <div className="w-full">
@@ -54,6 +54,8 @@ export default function CreatedFolders({
                     value={selectValue}
                     onChange={handleSelect}
                     isSearchable={true}
+                    menuPortalTarget={document.body} 
+                    styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
                   />
                 </div>
                 <div>

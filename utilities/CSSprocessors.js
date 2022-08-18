@@ -1,0 +1,16 @@
+export const CSSprocessors = [
+  { label: "SCSS", value: "scss", langId: "1" },
+  { label: "cssnext", value: "cssnext", langId: "2" },
+  { label: "CSS-Crush", value: "csscrush", langId: "3" },
+  { label: "CSS-On-Diet", value: "cssondiet", langId: "4" },
+  { label: "Garden (Clojure)", value: "garden", langId: "5" },
+  { label: "Less", value: "less", langId: "6" },
+  { label: "Pleeease", value: "pleeease", langId: "7" },
+  { label: "PostCSS", value: "postcss", langId: "8" },
+  { label: "Rework", value: "rework", langId: "9" },
+  { label: "SASS", value: "sass", langId: "10" },
+  { label: "Sly", value: "sly", langId: "11" },
+  { label: "styled-components", value: "styledcomponents", langId: "12" },
+  { label: "Stylecow", value: "stylecow", langId: "13" },
+  { label: "Stylus", value: "stylus", langId: "14" },
+];

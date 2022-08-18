@@ -43,6 +43,11 @@ const Snippet = () => {
           </div>
           <div>
             <Text>
+              {snippet.notes}
+            </Text>
+          </div>
+          <div>
+            <Text>
               Af <Text b>{snippet.author}</Text>
             </Text>
           </div>

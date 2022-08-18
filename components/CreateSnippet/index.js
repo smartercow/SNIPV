@@ -43,7 +43,10 @@ const CreateSnippet = () => {
   /*   const [open, setOpen] = useRecoilState(createFolderModalState); */
   const [form, setForm] = useState(initialState);
   const [tags, setTags] = useState([]);
-  const [snippetPublic, setSnippetPublic] = useState(false)
+  const [notes, setNotes] = useState("");
+  const [snippetPublic, setSnippetPublic] = useState(false);
+
+  const [status, setStatus] = useState("")
   const [selectedFolder, setSelectedFolder] = useState(
     initialSelectedFolderValue
   );
@@ -74,8 +77,9 @@ const CreateSnippet = () => {
           folder: selectedFolder,
           tags: tags,
           isPublic: snippetPublic,
+          notes: notes
         });
-        router.push("/");
+        router.push("/mysnippets");
       } catch (error) {
         console.log(error);
       }
@@ -89,7 +93,7 @@ const CreateSnippet = () => {
         <form onSubmit={handleSubmit}>
           <div className="flex gap-4 flex-col md:flex-row md:gap-8 justify-between">
             <div className="w-full">
-              <Text>Titel *</Text>
+              <Text>Titel <Text color="error" b>*</Text></Text>
               <Input
                 clearable
                 underlined
@@ -124,7 +128,7 @@ const CreateSnippet = () => {
           </div>
           <Spacer y={1.5} />
           <div>
-            <Text>Din kode *</Text>
+            <Text>Din kode <Text color="error" b>*</Text></Text>
             <Spacer y={0.3} />
             <Textarea
               placeholder="her..."
@@ -139,6 +143,7 @@ const CreateSnippet = () => {
               shadow="false"
               animated="false"
               aria-label="kode"
+              required
             />
           </div>
           <Spacer y={1} />
@@ -149,6 +154,21 @@ const CreateSnippet = () => {
               </SyntaxHighlighter>
             </Collapse>
           </div>
+          <Collapse title={<Text b>Noter</Text>}>
+          <Textarea
+              placeholder="Noter her..."
+              name="notes"
+              onChange={(e) => setNotes(e.target.value) }
+              css={{ height: "auto" }}
+              size="lg"
+              cacheMeasurements
+              width="100%"
+              height="100%"
+              shadow="false"
+              animated="false"
+              aria-label="noter"
+            />
+          </Collapse>
           <Spacer y={1.5} />
           {/* MODAL OPEN */}
           {/* <Button onClick={() => setOpen(true)}>Open</Button> */}
@@ -175,7 +195,7 @@ const CreateSnippet = () => {
           <Spacer y={1} />
           <div>
             <Text>Offentlig</Text>
-            <Switch onChange={() => setSnippetPublic(!snippetPublic)}/>
+            <Switch onChange={() => setSnippetPublic(!snippetPublic)} />
           </div>
           <Spacer y={1.5} />
           <Button color="gradient" type="submit">

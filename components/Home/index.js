@@ -12,6 +12,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../../Firebase/clientApp";
 import NoUser from "../NoPage/NoUser";
 import Feed from "./Feed";
+import Tags from "./Tags";
 
 const HomePage = () => {
   const [user] = useAuthState(auth);
@@ -36,7 +37,6 @@ const HomePage = () => {
         ...prev,
         snips: snippets,
       }));
-      setLoading(false);
     } catch (error) {
       console.log("getPosts error", error.message);
     }
@@ -44,27 +44,57 @@ const HomePage = () => {
 
   useEffect(() => {
     getSnippets();
+
+    const snapSub = onSnapshot(
+      collection(db, "SnippetsData"),
+      (snapshot) => {
+/*         let list = []; */
+        let tags = [];
+        snapshot.docs.forEach((doc) => {
+          tags.push(...doc.get("tags"));
+/*           list.push({ id: doc.id, ...doc.data() }); */
+        });
+        const uniqueTags = [...new Set(tags)];
+        setTags(uniqueTags);
+        setLoading(false);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+
+    return () => {
+      snapSub();
+      getSnippets();
+    };
+
   }, [user]);
 
+  console.log(tags);
   return (
     <div>
       <div>
         {user ? (
           <div>
             <div className="mb-3">
-              <Text h4>Offentlige snippets</Text>
+              <Text h4>🌍 Offentlige snippets</Text>
             </div>
             <div>
-              <div>
-                {snippets ? (
-                  <Feed user={user} loading={loading} snippets={snippets} tags={tags} />
-                ) : (
-                  <div>
-                    <Text>Du har ingen snippets endnu</Text>
+              {snippets && (
+                <div className="flex gap-6">
+                  <div className="w-full">
+                    <Feed
+                      user={user}
+                      loading={loading}
+                      snippets={snippets}
+                      tags={tags}
+                    />
                   </div>
-                )}
-              </div>
-
+                  <div className="hidden md:inline w-2/5">
+                    <Tags tags={tags} />
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         ) : (

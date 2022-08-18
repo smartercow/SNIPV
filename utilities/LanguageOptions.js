@@ -77,6 +77,7 @@ export const LanguageOptions = [
   { label: "MATLAB", value: "matlab", langId: "76" },
   { label: "Maze", value: "maze", langId: "77" },
   { label: "MEL", value: "mel", langId: "78" },
+  { label: "Node.js", value: "nodejs", langId: "137"},
   { label: "MUSHCode", value: "mushcode", langId: "79" },
   { label: "MySQL", value: "mysql", langId: "80" },
   { label: "Nix", value: "nix", langId: "81" },
@@ -135,8 +136,7 @@ export const LanguageOptions = [
   { label: "XML", value: "xml", langId: "134" },
   { label: "XQuery", value: "xquery", langId: "135" },
   { label: "YAML", value: "yaml", langId: "136" },
-/*   { label: "React", value: "react", langId: "137"},
-  { label: "Next", value: "next", langId: "138"},
-  { label: "Vue", value: "vue", langId: "139"},
-  { label: "Node JS", value: "nodejs", langId: "139"}, */
+  { label: "Other", value: "other", langId: "138" },
 ];
+
+/* LAST: Other - 138 */
