@@ -15,7 +15,7 @@ const Post = () => {
               <User bordered src={user.photoURL} squared color="primary" />
             </div>
             <div className="w-full">
-              <Input width="100%" bordered labelPlaceholder="Gem snippet" />
+              <Input width="100%" bordered labelPlaceholder="Gem en snippet" />
             </div>
             <div></div>
           </div>
