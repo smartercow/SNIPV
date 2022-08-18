@@ -48,13 +48,6 @@ const MySnippets = () => {
     <div>
       {user ? (
         <div className="min-h-[80vh]">
-          <div className="mb-4">
-            <Button.Group color="secondary" size="sm">
-              <Button>Koder</Button>
-              <Button disabled>Fejl</Button>
-              <Button disabled>Noter</Button>
-            </Button.Group>
-          </div>
           <div>
             <Collapse.Group shadow>
               {mySnippets?.snips?.map((item) => (

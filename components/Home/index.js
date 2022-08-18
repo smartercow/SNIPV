@@ -1,4 +1,4 @@
-import { Loading, Text } from "@nextui-org/react";
+import { Card, Loading, Text } from "@nextui-org/react";
 import {
   collection,
   getDocs,
@@ -12,6 +12,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../../Firebase/clientApp";
 import NoUser from "../NoPage/NoUser";
 import Feed from "./Feed";
+import Post from "./Post";
 import Tags from "./Tags";
 
 const HomePage = () => {
@@ -44,15 +45,15 @@ const HomePage = () => {
 
   useEffect(() => {
     getSnippets();
-
+    setLoading(true);
     const snapSub = onSnapshot(
       collection(db, "SnippetsData"),
       (snapshot) => {
-/*         let list = []; */
+        /*         let list = []; */
         let tags = [];
         snapshot.docs.forEach((doc) => {
           tags.push(...doc.get("tags"));
-/*           list.push({ id: doc.id, ...doc.data() }); */
+          /*           list.push({ id: doc.id, ...doc.data() }); */
         });
         const uniqueTags = [...new Set(tags)];
         setTags(uniqueTags);
@@ -67,7 +68,6 @@ const HomePage = () => {
       snapSub();
       getSnippets();
     };
-
   }, [user]);
 
   console.log(tags);
@@ -76,13 +76,13 @@ const HomePage = () => {
       <div>
         {user ? (
           <div>
-            <div className="mb-3">
-              <Text h4>🌍 Offentlige snippets</Text>
-            </div>
-            <div>
-              {snippets && (
-                <div className="flex gap-6">
-                  <div className="w-full">
+            {snippets && (
+              <div className="flex gap-6">
+                <div className="w-full flex flex-col gap-4">
+                  <div>
+                    <Post />
+                  </div>
+                  <div>
                     <Feed
                       user={user}
                       loading={loading}
@@ -90,12 +90,17 @@ const HomePage = () => {
                       tags={tags}
                     />
                   </div>
-                  <div className="hidden md:inline w-2/5">
-                    <Tags tags={tags} />
-                  </div>
                 </div>
-              )}
-            </div>
+                <div className="hidden md:inline w-2/5">
+                  <Tags snippets={snippets} tags={tags} />
+                </div>
+              </div>
+            )}
+            {loading && (
+              <div className="flex justify-center items-center h-[20vh]">
+                <Loading size="lg" />
+              </div>
+            )}
           </div>
         ) : (
           <NoUser />

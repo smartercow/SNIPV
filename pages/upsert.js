@@ -20,6 +20,7 @@ const Upsert = () => {
               <Button>Kode</Button>
               <Button disabled>Fejl</Button>
               <Button disabled>Noter</Button>
+              <Button disabled>Link</Button>
             </Button.Group>
           </div>
           <div className="mt-3">

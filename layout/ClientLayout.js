@@ -13,7 +13,8 @@ const ClientLayout = ({children}) => {
   return (
     <div>
       <Header user={user} />
-      <div className="max-w-5xl mx-5 lg:mx-auto">{children}</div>
+      <hr />
+      <div className="max-w-5xl mx-5 lg:mx-auto mt-3">{children}</div>
       <Footer />
       <CreateFolderModal />
       <LoginModal />

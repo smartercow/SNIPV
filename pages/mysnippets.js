@@ -1,12 +1,24 @@
-import React from 'react'
-import MySnippets from '../components/Snippets/MySnippets'
+import { Button } from "@nextui-org/react";
+import React from "react";
+import MyCodeSnippets from "../components/MySnippets/MyCodeSnippets";
 
-const snippets = () => {
+const mysnippets = () => {
   return (
     <div>
-        <MySnippets />
+      <div>
+        <div className="mb-4">
+          <Button.Group color="secondary" size="sm">
+            <Button>Koder</Button>
+            <Button disabled>Fejl</Button>
+            <Button disabled>Noter</Button>
+          </Button.Group>
+        </div>
+      </div>
+      <div>
+        <MyCodeSnippets />
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default snippets
+export default mysnippets;
