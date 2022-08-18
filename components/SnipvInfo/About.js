@@ -26,7 +26,7 @@ const About = () => {
             </Button>
           </Link>
           <Link href="/patchnotes">
-            <Button light size="lg" color="primary">
+            <Button light size="lg" color="primary" disabled>
               <Text b color="black">
                 Patch noter
               </Text>
