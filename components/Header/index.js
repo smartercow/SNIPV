@@ -54,7 +54,7 @@ const Header = ({ user }) => {
               clearable
               animated="false"
               contentRightStyling={false}
-              placeholder="Search"
+              placeholder="Søg"
               contentLeft={
                 <Text b>
                   <BsSearch />
