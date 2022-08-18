@@ -19,8 +19,8 @@ const Upsert = () => {
             <Button.Group color="secondary" size="sm">
               <Button>Kode</Button>
               <Button disabled>Fejl</Button>
-              <Button disabled>Noter</Button>
               <Button disabled>Link</Button>
+              <Button disabled>Noter</Button>
             </Button.Group>
           </div>
           <div className="mt-3">

@@ -10,8 +10,8 @@ const mysnippets = () => {
           <Button.Group color="secondary" size="sm">
             <Button>Koder</Button>
             <Button disabled>Fejl</Button>
-            <Button disabled>Noter</Button>
             <Button disabled>Links</Button>
+            <Button disabled>Noter</Button>
           </Button.Group>
         </div>
       </div>
