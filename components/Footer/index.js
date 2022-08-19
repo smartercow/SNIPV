@@ -26,9 +26,6 @@ const Footer = () => {
             <Text small className="text-[#E6E8EB]">Cookiepolitik</Text>
           </div>
         </div>
-{/*         <div className="">
-          <Text small></Text>
-        </div> */}
         <div className="">
           <Text small>© 2022 SNIPV beta 0.40</Text>
         </div>
