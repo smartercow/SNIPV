@@ -55,6 +55,8 @@ const Header = ({ user }) => {
               animated="false"
               contentRightStyling={false}
               placeholder="Søg"
+              borderWeight="bold"
+              aria-label="Search"
               contentLeft={
                 <Text b>
                   <BsSearch />
@@ -78,7 +80,7 @@ const Header = ({ user }) => {
                     size="lg"
                     color="primary"
                     name="Profil"
-                    description=""
+                    description="2 likes"
                     src={user.photoURL}
                     pointer
                   />
@@ -87,7 +89,6 @@ const Header = ({ user }) => {
                   color="primary"
                   aria-label="Avatar Actions"
                   disabledKeys={[
-                    "my_folders",
                     "settings",
                     "configurations",
                     "help_and_feedback",
@@ -106,8 +107,10 @@ const Header = ({ user }) => {
                       <div className="w-full">Mine snippets</div>
                     </Link>
                   </Dropdown.Item>
-                  <Dropdown.Item dis key="my_folders">
-                    Mine mapper
+                  <Dropdown.Item dis key="folders">
+                  <Link href="/folders">
+                      <div className="w-full">Mine mapper</div>
+                    </Link>
                   </Dropdown.Item>
                   <Dropdown.Item key="settings" withDivider>
                     Indstillinger

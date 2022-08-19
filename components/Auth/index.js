@@ -11,12 +11,11 @@ const Auth = () => {
 
     const createUserDocument = async (user) => {
 
-      await setDoc(doc(db, "UsersData", user.uid), {
+      await setDoc(doc(db, "UsersData1", user.uid), {
         isAdmin: false,
         author: user.displayName,
         username: "",
-        premium: false,
-        donator: false,
+        //Remember UserName for "UsersData2"
         isModerator: false,
         superUser: false,
         user: JSON.parse(JSON.stringify(user))

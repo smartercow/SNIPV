@@ -26,10 +26,10 @@ export default function CreatedFolders({
 
   useEffect(() => {
     if (!user) return;
-    const folderColRef = collection(db, "UsersData", user.uid, "Folders");
+    const folderColRef = collection(db, "UsersData1", user.uid, "CodeFolders1");
     const getFolders = async () => {
       const userData = await getDocs(folderColRef);
-      setFolders(userData.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      setFolders(userData.docs.map((doc) => ({ ...doc.data(), folderId: doc.id })));
     };
     getFolders();
   }, [user, update]);

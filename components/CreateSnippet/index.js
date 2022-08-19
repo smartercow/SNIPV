@@ -67,7 +67,7 @@ const CreateSnippet = () => {
     e.preventDefault();
     if (title && code && selectedCategory) {
       try {
-        await addDoc(collection(db, "SnippetsData"), {
+        await addDoc(collection(db, "CodeSnippetsData1"), {
           ...form,
           postedAt: serverTimestamp(),
           author: user.displayName,

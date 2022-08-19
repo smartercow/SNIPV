@@ -14,8 +14,8 @@ const Snippet = () => {
   const [snippet, setSnippet] = useState();
   const [loading, setLoading] = useState(true);
 
-  const getSnippet = async () => {
-    const snippetDocref = doc(db, "SnippetsData", `${id}`);
+  const getSnippetData = async () => {
+    const snippetDocref = doc(db, "CodeSnippetsData1", `${id}`);
     const snippetData = await getDoc(snippetDocref);
     setSnippet(snippetData.data());
     setLoading(false);
@@ -23,11 +23,12 @@ const Snippet = () => {
 
   useEffect(() => {
     if (id) {
-      getSnippet();
+      getSnippetData();
     }
   }, [id]);
 
-  console.log(snippet);
+  console.log(id);
+  console.log("snippet",snippet);
   return (
     <div>
       {snippet && (
@@ -43,7 +44,7 @@ const Snippet = () => {
           </div>
           <div>
             <Text>
-              {snippet.notes}
+              {snippet?.notes}
             </Text>
           </div>
           <div>

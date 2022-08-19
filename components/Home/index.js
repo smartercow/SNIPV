@@ -25,7 +25,7 @@ const HomePage = () => {
   const getSnippets = async () => {
     try {
       const postsQuery = query(
-        collection(db, "SnippetsData"),
+        collection(db, "CodeSnippetsData1"),
         where("isPublic", "==", true),
         orderBy("postedAt", "desc")
       );
@@ -47,7 +47,7 @@ const HomePage = () => {
     getSnippets();
     setLoading(true);
     const snapSub = onSnapshot(
-      collection(db, "SnippetsData"),
+      collection(db, "CodeSnippetsData1"),
       (snapshot) => {
         /*         let list = []; */
         let tags = [];
@@ -70,7 +70,6 @@ const HomePage = () => {
     };
   }, [user]);
 
-  console.log(tags);
   return (
     <div>
       <div>

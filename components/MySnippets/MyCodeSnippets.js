@@ -17,12 +17,12 @@ import NoUser from "../NoPage/NoUser";
 const MySnippets = () => {
   const [user] = useAuthState(auth);
   const [loading, setLoading] = useState(true);
-  const [mySnippets, setMySnippets] = useState();
+  const [myCodeSnippets, setMyCodeSnippets] = useState();
 
   const getMySnippets = async () => {
     try {
       const postsQuery = query(
-        collection(db, "SnippetsData"),
+        collection(db, "CodeSnippetsData1"),
         where("userId", "==", user?.uid),
         orderBy("postedAt", "desc")
       );
@@ -31,7 +31,7 @@ const MySnippets = () => {
         id: doc.id,
         ...doc.data(),
       }));
-      setMySnippets((prev) => ({
+      setMyCodeSnippets((prev) => ({
         ...prev,
         snips: snippets,
       }));
@@ -42,15 +42,18 @@ const MySnippets = () => {
   };
 
   useEffect(() => {
-    getMySnippets();
+    if (user) {
+      getMySnippets();
+    }
   }, [user]);
+  console.log(setMyCodeSnippets);
   return (
     <div>
       {user ? (
         <div className="min-h-[80vh]">
           <div>
             <Collapse.Group shadow>
-              {mySnippets?.snips?.map((item) => (
+              {myCodeSnippets?.snips?.map((item) => (
                 <Collapse
                   key={item.id}
                   title={<Text h4>{item.title}</Text>}

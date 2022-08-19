@@ -18,13 +18,13 @@ const Tags = ({ tags, snippets }) => {
                     </Text>
                   </div>
                   <div>
-                    <Text h4>Trending tags</Text>
+                    <Text h4>Populær tags</Text>
                   </div>
                 </div>
               </Card.Header>
               <Card.Body>
-                <div className="flex gap-2 flex-wrap -mt-4">
-                  {tags.slice(1, 13).map((tag, index) => (
+                <div className="flex gap-2 flex-wrap -mt-4 justify-between">
+                  {tags.slice(0, 10).map((tag, index) => (
                     <Link key={index} href="/">
                       <div className="px-3 py-1 bg-[#ffffffc2] rounded-md">
                         <Text b transform="lowercase" color="black">

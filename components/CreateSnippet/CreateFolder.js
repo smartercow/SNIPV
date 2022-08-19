@@ -109,11 +109,11 @@ export default function CreateFolder({ setCreateFolderOn, update, setUpdate }) {
     e.preventDefault();
     if (language && folderName) {
       try {
-        const userDataDocRef = doc(db, "UsersData", user?.uid);
+        const userDataDocRef = doc(db, "UsersData1", user?.uid);
 
         await setDoc(userDataDocRef, JSON.parse(JSON.stringify(user)));
 
-        await addDoc(collection(db, "UsersData", user?.uid, "Folders"), {
+        await addDoc(collection(db, "UsersData1", user?.uid, "CodeFolders1"), {
           createdAt: serverTimestamp(),
           userId: user.uid,
           author: user.displayName,
@@ -122,7 +122,8 @@ export default function CreateFolder({ setCreateFolderOn, update, setUpdate }) {
           label: folderName,
           value: folderName,
           framework: framework,
-          processor: processor
+          processor: processor,
+          folderSnippetType: "code",
         });
         setCreateFolderOn(false);
         setUpdate(!update);
