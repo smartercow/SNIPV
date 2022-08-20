@@ -1,5 +1,5 @@
 export const JavascriptFrameworks = [
-  { label: "Alpine.js", value: "angular", langId: "1" },
+  { label: "Alpine.js", value: "alpinejs", langId: "1" },
   { label: "Angular", value: "angular", langId: "2" },
   { label: "Astro", value: "astro", langId: "3" },
   { label: "Babylon.js", value: "babylonjs", langId: "4" },

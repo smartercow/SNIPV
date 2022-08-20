@@ -20,6 +20,10 @@ import { auth, db } from "../../Firebase/clientApp";
 import { LanguageOptions } from "../../utilities/LanguageOptions";
 import { JavascriptFrameworks } from "../../utilities/JavascriptFrameworks";
 import { CSSprocessors } from "../../utilities/CSSprocessors";
+import { BsQuestionCircleFill } from "react-icons/bs";
+import { useRecoilState } from "recoil";
+import { createFolderModalState } from "../../atoms/createFolderModalAtom";
+import { updateStateAtom } from "../../atoms/updateStateAtom";
 
 const initialSelectedLang = {
   label: "JavaScript",
@@ -38,7 +42,7 @@ const initialSelectedProcessor = {
   langId: "1",
 };
 
-export default function CreateFolder({ setCreateFolderOn, update, setUpdate }) {
+export default function CreateFolder() {
   const [language, setLanguage] = useState(initialSelectedLang);
 
   const [framework, setFramework] = useState(initialSelectedFramework);
@@ -52,6 +56,9 @@ export default function CreateFolder({ setCreateFolderOn, update, setUpdate }) {
   const [folderName, setFolderName] = useState("");
   const [user] = useAuthState(auth);
 
+  const [open, setOpen] = useRecoilState(createFolderModalState);
+  const [update, setUpdate] = useRecoilState(updateStateAtom);
+
   function handleSelectLang(data) {
     setLanguage(data);
   }
@@ -62,11 +69,6 @@ export default function CreateFolder({ setCreateFolderOn, update, setUpdate }) {
 
   function handleSelectProcessor(data) {
     setProcessor(data);
-  }
-
-  function handelCancel() {
-    setCreateFolderOn(false);
-    setUpdate(!update);
   }
 
   useEffect(() => {
@@ -80,10 +82,10 @@ export default function CreateFolder({ setCreateFolderOn, update, setUpdate }) {
   useEffect(() => {
     if (language.langId === "54") {
       setFrameworkOption(true);
-      setFramework(initialSelectedFramework)
+      setFramework(initialSelectedFramework);
     } else {
       setFrameworkOption(false);
-      setFramework([])
+      setFramework([]);
     }
   }, [language]);
 
@@ -98,10 +100,10 @@ export default function CreateFolder({ setCreateFolderOn, update, setUpdate }) {
   useEffect(() => {
     if (language.langId === "19") {
       setProcessorOption(true);
-      setProcessor(initialSelectedProcessor)
+      setProcessor(initialSelectedProcessor);
     } else {
       setProcessorOption(false);
-      setProcessor([])
+      setProcessor([]);
     }
   }, [language]);
 
@@ -125,7 +127,7 @@ export default function CreateFolder({ setCreateFolderOn, update, setUpdate }) {
           processor: processor,
           folderSnippetType: "code",
         });
-        setCreateFolderOn(false);
+        setOpen(false);
         setUpdate(!update);
       } catch (error) {
         return null;
@@ -137,10 +139,6 @@ export default function CreateFolder({ setCreateFolderOn, update, setUpdate }) {
 
   return (
     <div>
-      <div>
-        <Text h5>Opret mappe</Text>
-      </div>
-      <Spacer y={0.5} />
       <div>
         <Text>Navn</Text>
         <Input
@@ -155,8 +153,8 @@ export default function CreateFolder({ setCreateFolderOn, update, setUpdate }) {
       <Spacer y={0.7} />
       <Text>Sprog</Text>
       <Spacer y={0.4} />
-      <div className="flex justify-between gap-3">
-        <div className="flex gap-2 w-full">
+      <div className="flex justify-between items-center gap-3">
+        <div className="w-full">
           <Select
             options={LanguageOptions}
             placeholder="Søg og valg"
@@ -165,19 +163,22 @@ export default function CreateFolder({ setCreateFolderOn, update, setUpdate }) {
             isSearchable={true}
             className="w-full"
             aria-label="Select"
-            menuPortalTarget={document.body} 
-            styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+            menuPortalTarget={document.body}
+            styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
           />
+        </div>
+        <div className="">
           <Tooltip
             content={"Programmeringssprog for denne mappe"}
             color="primary"
+            keepMounted="true"
+            css={{ zIndex: 999999 }}
           >
-            <Button color="primary" rounded auto flat>
-              ?
-            </Button>
+            <Text h5 color="primary">
+              <BsQuestionCircleFill />
+            </Text>
           </Tooltip>
         </div>
-        <div className="flex gap-2 w-full justify-end"></div>
       </div>
       <Spacer y={0.7} />
       <div hidden={!frameworkOption}>
@@ -190,8 +191,8 @@ export default function CreateFolder({ setCreateFolderOn, update, setUpdate }) {
         </Checkbox>
         <Spacer y={0.7} />
         <div hidden={!frameworkOn}>
-          <div className="flex justify-between gap-3">
-            <div className="flex gap-2 w-full">
+          <div className="flex gap-2 w-full items-center">
+            <div className="w-full">
               <Select
                 options={JavascriptFrameworks}
                 placeholder="Valg Framework"
@@ -200,16 +201,21 @@ export default function CreateFolder({ setCreateFolderOn, update, setUpdate }) {
                 isSearchable={true}
                 className="w-full"
                 aria-label="Select"
-                menuPortalTarget={document.body} 
-                styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+                menuPortalTarget={document.body}
+                styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
               />
-              <Tooltip content={"JS framework for denne mappe"} color="primary">
-                <Button color="primary" rounded auto flat>
-                  ?
-                </Button>
+            </div>
+            <div className="pt-2">
+              <Tooltip
+                content={"Javascript framework for denne mappe"}
+                color="primary"
+                css={{ zIndex: 999999 }}
+              >
+                <Text h5 color="primary">
+                  <BsQuestionCircleFill />
+                </Text>
               </Tooltip>
             </div>
-            <div className="flex gap-2 w-full justify-end"></div>
           </div>
         </div>
       </div>
@@ -225,8 +231,8 @@ export default function CreateFolder({ setCreateFolderOn, update, setUpdate }) {
         </Checkbox>
         <Spacer y={0.7} />
         <div hidden={!processorOn}>
-          <div className="flex justify-between gap-3">
-            <div className="flex gap-2 w-full">
+          <div className="flex gap-2 w-full items-center">
+            <div className="w-full">
               <Select
                 options={CSSprocessors}
                 placeholder="Valg processor"
@@ -235,26 +241,31 @@ export default function CreateFolder({ setCreateFolderOn, update, setUpdate }) {
                 isSearchable={true}
                 className="w-full"
                 aria-label="Select"
-                menuPortalTarget={document.body} 
-                styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+                menuPortalTarget={document.body}
+                styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
               />
-              <Tooltip content={"Processor for denne mappe"} color="primary">
-                <Button color="primary" rounded auto flat>
-                  ?
-                </Button>
+            </div>
+            <div className="">
+              <Tooltip
+                content={"Processor for denne mappe"}
+                color="primary"
+                css={{ zIndex: 999999 }}
+              >
+                <Text h5 color="primary">
+                  <BsQuestionCircleFill />
+                </Text>
               </Tooltip>
             </div>
-            <div className="flex gap-2 w-full justify-end"></div>
           </div>
         </div>
       </div>
 
-      <div className="flex gap-2 w-full justify-end">
+      <div className="flex gap-2 w-full justify-end my-3">
+        <Button auto light color="error" onClick={() => setOpen(false)}>
+          Luk
+        </Button>
         <Button color="gradient" auto onClick={createFolder}>
           Opret
-        </Button>
-        <Button rounded auto flat color="error" onClick={handelCancel}>
-          X
         </Button>
       </div>
     </div>

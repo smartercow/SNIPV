@@ -3,8 +3,12 @@ import { collection, doc, getDocs } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import Select from "react-select";
+import { useRecoilState } from "recoil";
+import { createFolderModalState } from "../../atoms/createFolderModalAtom";
+import { updateStateAtom } from "../../atoms/updateStateAtom";
 import { auth, db } from "../../Firebase/clientApp";
 import CreateFolder from "./CreateFolder";
+import { FaFolderPlus } from "react-icons/fa";
 
 export default function CreatedFolders({
   setSelectedFolder,
@@ -13,8 +17,10 @@ export default function CreatedFolders({
   const [folders, setFolders] = useState([]);
   const [selectValue, setSelectValue] = useState([]);
   const [createFolderOn, setCreateFolderOn] = useState(false);
-  const [update, setUpdate] = useState(false)
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
+
+  const [open, setOpen] = useRecoilState(createFolderModalState);
+  const [update, setUpdate] = useRecoilState(updateStateAtom);
 
   function handleSelect(data) {
     setSelectValue(data);
@@ -29,7 +35,9 @@ export default function CreatedFolders({
     const folderColRef = collection(db, "UsersData1", user.uid, "CodeFolders1");
     const getFolders = async () => {
       const userData = await getDocs(folderColRef);
-      setFolders(userData.docs.map((doc) => ({ ...doc.data(), folderId: doc.id })));
+      setFolders(
+        userData.docs.map((doc) => ({ ...doc.data(), folderId: doc.id }))
+      );
     };
     getFolders();
   }, [user, update]);
@@ -38,58 +46,44 @@ export default function CreatedFolders({
     <div>
       {folders.length > 0 ? (
         <div>
-          {createFolderOn ? (
-            <div>
-              <CreateFolder update={update} setUpdate={setUpdate} setCreateFolderOn={setCreateFolderOn} />
-            </div>
-          ) : (
-            <div>
-              <Text>Mappe <Text color="error" b>*</Text></Text>
-              <Spacer y={0.3} />
-              <div className="flex gap-3">
-                <div className="w-full">
-                  <Select
-                    options={folders}
-                    placeholder="Valg en mappe"
-                    value={selectValue}
-                    onChange={handleSelect}
-                    isSearchable={true}
-                    menuPortalTarget={document.body} 
-                    styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
-                  />
-                </div>
-                <div>
-                  <Button
-                    color="gradient"
-                    auto
-                    rounded
-                    onClick={() => setCreateFolderOn(true)}
-                  >
-                    +
-                  </Button>
-                </div>
+          <div>
+            <Text>
+              Mappe{" "}
+              <Text color="error" b>
+                *
+              </Text>
+            </Text>
+            <Spacer y={0.3} />
+            <div className="flex gap-3 items-center">
+              <div className="w-full">
+                <Select
+                  options={folders}
+                  placeholder="Valg en mappe"
+                  value={selectValue}
+                  onChange={handleSelect}
+                  isSearchable={true}
+                  menuPortalTarget={document.body}
+                  styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
+                />
+              </div>
+              <div>
+                <Text h3 color="primary" onClick={() => setOpen(true)}>
+                  <FaFolderPlus />
+                </Text>
               </div>
             </div>
-          )}
+          </div>
         </div>
       ) : (
         <>
-          {createFolderOn ? (
-            <CreateFolder update={update} setUpdate={setUpdate} setCreateFolderOn={setCreateFolderOn} />
-          ) : (
-            <div className="flex flex-col gap-1">
-              <Text>Du har ingen mapper</Text>
-              <div>
-                <Button
-                  color="gradient"
-                  auto
-                  onClick={() => setCreateFolderOn(true)}
-                >
-                  opret
-                </Button>
-              </div>
+          <div className="flex flex-col gap-1">
+            <Text>Du har ingen mapper</Text>
+            <div>
+              <Button color="gradient" auto onClick={() => setOpen(true)}>
+                Opret
+              </Button>
             </div>
-          )}
+          </div>
         </>
       )}
     </div>

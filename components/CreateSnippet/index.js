@@ -26,6 +26,8 @@ import { oneLight } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import { useRecoilState } from "recoil";
 import { createFolderModalState } from "../../atoms/createFolderModalAtom";
 import CreatedFolders from "./CreatedFolders";
+import { BsQuestionCircleFill } from "react-icons/bs";
+
 
 const initialState = {
   title: "",
@@ -40,13 +42,12 @@ const initialSelectedFolderValue = {
 };
 
 const CreateSnippet = () => {
-  /*   const [open, setOpen] = useRecoilState(createFolderModalState); */
+    const [open, setOpen] = useRecoilState(createFolderModalState);
   const [form, setForm] = useState(initialState);
   const [tags, setTags] = useState([]);
   const [notes, setNotes] = useState("");
   const [snippetPublic, setSnippetPublic] = useState(false);
 
-  const [status, setStatus] = useState("")
   const [selectedFolder, setSelectedFolder] = useState(
     initialSelectedFolderValue
   );
@@ -170,9 +171,7 @@ const CreateSnippet = () => {
             />
           </Collapse>
           <Spacer y={1.5} />
-          {/* MODAL OPEN */}
-          {/* <Button onClick={() => setOpen(true)}>Open</Button> */}
-          <div className="flex justify-between gap-2">
+          <div className="flex justify-between gap-2 items-center">
             <div className="w-full">
               <TagsInput
                 value={tags}
@@ -181,14 +180,15 @@ const CreateSnippet = () => {
                 placeHolder="tags"
               />
             </div>
-            <div>
+            <div className="">
               <Tooltip
                 content={"Tags for denne snippet - Tryk ENTER for at tilføj"}
                 color="primary"
+                css={{ zIndex: 9999 }}
               >
-                <Button color="primary" rounded auto flat>
-                  ?
-                </Button>
+                <Text h5 color="primary">
+                  <BsQuestionCircleFill />
+                </Text>
               </Tooltip>
             </div>
           </div>
