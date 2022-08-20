@@ -1,18 +1,11 @@
 import React from "react";
 import { createFolderModalState } from "../../atoms/createFolderModalAtom";
 import { useRecoilState } from "recoil";
-import { Button, Dropdown, Input, Modal, Text } from "@nextui-org/react";
-import CreateFolder from "../CreateSnippet/CreateFolder";
+import { Button, Input, Modal, Text } from "@nextui-org/react";
+import CreateFolder from "../CreateCodeSnippet/CreateFolder";
 
 const CreateFolderModal = () => {
   const [open, setOpen] = useRecoilState(createFolderModalState);
-
-  const [selected, setSelected] = React.useState(new Set(["react"]));
-
-  const selectedValue = React.useMemo(
-    () => Array.from(selected).join(", ").replaceAll("_", " "),
-    [selected]
-  );
 
   return (
     <div>
@@ -28,11 +21,11 @@ const CreateFolderModal = () => {
           </Text>
         </Modal.Header>
         <Modal.Body>
-      <div>
-        <CreateFolder />
-      </div>
+          <div>
+            <CreateFolder />
+          </div>
         </Modal.Body>
-{/*         <Modal.Footer>
+        {/*         <Modal.Footer>
           <Button auto flat color="error" onClick={() => setOpen(false)}>
             Luk
           </Button>

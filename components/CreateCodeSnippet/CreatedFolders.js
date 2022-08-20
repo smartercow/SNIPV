@@ -7,7 +7,6 @@ import { useRecoilState } from "recoil";
 import { createFolderModalState } from "../../atoms/createFolderModalAtom";
 import { updateStateAtom } from "../../atoms/updateStateAtom";
 import { auth, db } from "../../Firebase/clientApp";
-import CreateFolder from "./CreateFolder";
 import { FaFolderPlus } from "react-icons/fa";
 
 export default function CreatedFolders({
@@ -16,7 +15,6 @@ export default function CreatedFolders({
 }) {
   const [folders, setFolders] = useState([]);
   const [selectValue, setSelectValue] = useState([]);
-  const [createFolderOn, setCreateFolderOn] = useState(false);
   const [loading, setLoading] = useState(true);
 
   const [open, setOpen] = useRecoilState(createFolderModalState);
@@ -46,16 +44,18 @@ export default function CreatedFolders({
     <div>
       {folders.length > 0 ? (
         <div>
-          <div>
-            <Text>
-              Mappe{" "}
-              <Text color="error" b>
-                *
+          <div className="flex items-center gap-4 mt-3">
+            <div className="w-20">
+              <Text>
+                Mappe&nbsp;
+                <Text color="error" b>
+                  *
+                </Text>
               </Text>
-            </Text>
-            <Spacer y={0.3} />
-            <div className="flex gap-3 items-center">
-              <div className="w-full">
+            </div>
+
+            <div className="flex gap-3 items-center w-full">
+              <div className="w-1/2">
                 <Select
                   options={folders}
                   placeholder="Valg en mappe"
@@ -67,7 +67,7 @@ export default function CreatedFolders({
                 />
               </div>
               <div>
-                <Text h3 color="primary" onClick={() => setOpen(true)}>
+                <Text h3 color="primary" onClick={() => setOpen(true)} className="cursor-pointer">
                   <FaFolderPlus />
                 </Text>
               </div>

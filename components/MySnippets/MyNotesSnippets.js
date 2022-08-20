@@ -12,7 +12,7 @@ const MyNotesSnippets = () => {
       {user ? (
         <Card>
           <Card.Body>
-            <Text b>Du har ingen notes snippets endnu!</Text>
+            <Text b>Du har ingen noter snippets endnu!</Text>
           </Card.Body>
         </Card>
       ) : (

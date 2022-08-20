@@ -12,7 +12,7 @@ const MyLinksSnippets = () => {
       {user ? (
         <Card>
           <Card.Body>
-            <Text b>Du har ingen fejl snippets endnu!</Text>
+            <Text b>Du har ingen links snippets endnu!</Text>
           </Card.Body>
         </Card>
       ) : (

@@ -1,15 +1,13 @@
 import { Button, Card, Text } from "@nextui-org/react";
 import React, { useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import CreateSnippet from "../components/CreateSnippet";
+import CreateCodeSnippet from "../components/CreateCodeSnippet";
 import { auth } from "../Firebase/clientApp";
 import { useRouter } from "next/router";
 import NoUser from "../components/NoPage/NoUser";
 
 const Upsert = () => {
   const [user] = useAuthState(auth);
-
-  const router = useRouter();
 
   return (
     <div>
@@ -30,7 +28,7 @@ const Upsert = () => {
               </Card.Header>
               <Card.Divider />
               <Card.Body>
-                <CreateSnippet />
+                <CreateCodeSnippet />
               </Card.Body>
             </Card>
           </div>
