@@ -16,14 +16,14 @@ import {
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import Select from "react-select";
-import { auth, db } from "../../Firebase/clientApp";
-import { LanguageOptions } from "../../utilities/LanguageOptions";
-import { JavascriptFrameworks } from "../../utilities/JavascriptFrameworks";
-import { CSSprocessors } from "../../utilities/CSSprocessors";
+import { auth, db } from "../../../Firebase/clientApp";
+import { LanguageOptions } from "../../../utilities/LanguageOptions";
+import { JavascriptFrameworks } from "../../../utilities/JavascriptFrameworks";
+import { CSSprocessors } from "../../../utilities/CSSprocessors";
 import { BsQuestionCircleFill } from "react-icons/bs";
 import { useRecoilState } from "recoil";
-import { createFolderModalState } from "../../atoms/createFolderModalAtom";
-import { updateStateAtom } from "../../atoms/updateStateAtom";
+import { createFolderModalState } from "../../../atoms/createFolderModalAtom";
+import { updateStateAtom } from "../../../atoms/updateStateAtom";
 import { toast } from "react-toastify";
 
 const initialSelectedLang = {

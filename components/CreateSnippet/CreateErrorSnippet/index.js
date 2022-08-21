@@ -17,7 +17,7 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
-import { auth, db } from "../../Firebase/clientApp";
+import { auth, db } from "../../../Firebase/clientApp";
 import { useRouter } from "next/router";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { TagsInput } from "react-tag-input-component";
@@ -30,7 +30,8 @@ import { toast } from "react-toastify";
 const initialState = {
   title: "",
   description: "",
-  code: "",
+  errorcode: "",
+  solutioncode: "",
 };
 
 const initialSelectedFolderValue = {
@@ -50,7 +51,7 @@ const CreateCodeSnippet = () => {
   );
   const [selectedCategory, setSelectedCategory] = useState([]);
 
-  const { title, description, code } = form;
+  const { title, description, errorcode, solutioncode } = form;
 
   const [user] = useAuthState(auth);
 
@@ -63,9 +64,9 @@ const CreateCodeSnippet = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (title && code && selectedFolder?.language?.langId) {
+    if (title && errorcode && selectedFolder?.language?.langId) {
       try {
-        await addDoc(collection(db, "CodeSnippetsData1"), {
+        await addDoc(collection(db, "ErrorSnippetsData1"), {
           ...form,
           postedAt: serverTimestamp(),
           author: user.displayName,
@@ -85,6 +86,8 @@ const CreateCodeSnippet = () => {
       return toast.error("Valg en mappe!");
     }
   };
+
+  console.log(form);
   return (
     <div>
       <div className="">
@@ -136,9 +139,9 @@ const CreateCodeSnippet = () => {
               />
             </div>
 
-            <div>
+            <div className="mt-1">
               <Text>
-                Din kode&nbsp;
+                Fejl kode&nbsp;
                 <Text color="error" b>
                   *
                 </Text>
@@ -146,14 +149,12 @@ const CreateCodeSnippet = () => {
               <Spacer y={0.4} />
               <Textarea
                 placeholder="her..."
-                name="code"
-                value={code}
+                name="errorcode"
+                value={errorcode}
                 onChange={handleChange}
                 css={{ height: "auto" }}
                 size="lg"
-                cacheMeasurements
                 width="100%"
-                height="100%"
                 shadow="false"
                 animated="false"
                 aria-label="kode"
@@ -162,9 +163,36 @@ const CreateCodeSnippet = () => {
             </div>
 
             <div>
-              <Collapse title={<Text b>Kode forhåndsvisning</Text>}>
+              <Collapse title={<Text b>Fejl forhåndsvisning</Text>}>
                 <SyntaxHighlighter language="javascript" style={oneLight}>
-                  {form.code}
+                  {form.errorcode}
+                </SyntaxHighlighter>
+              </Collapse>
+            </div>
+
+            <div className="mt-1">
+              <Text>
+                Løsning kode
+              </Text>
+              <Spacer y={0.4} />
+              <Textarea
+                placeholder="her..."
+                name="solutioncode"
+                value={solutioncode}
+                onChange={handleChange}
+                css={{ height: "auto" }}
+                size="lg"
+                width="100%"
+                shadow="false"
+                animated="false"
+                aria-label="kode"
+              />
+            </div>
+
+            <div>
+              <Collapse title={<Text b>Løsning forhåndsvisning</Text>}>
+                <SyntaxHighlighter language="javascript" style={oneLight}>
+                  {form.solutioncode}
                 </SyntaxHighlighter>
               </Collapse>
             </div>
@@ -219,7 +247,7 @@ const CreateCodeSnippet = () => {
                 Gem
               </Button>
             </div>
-            
+
           </div>
         </form>
       </div>

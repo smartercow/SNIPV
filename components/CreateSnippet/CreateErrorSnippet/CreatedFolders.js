@@ -4,9 +4,9 @@ import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import Select from "react-select";
 import { useRecoilState } from "recoil";
-import { createFolderModalState } from "../../atoms/createFolderModalAtom";
-import { updateStateAtom } from "../../atoms/updateStateAtom";
-import { auth, db } from "../../Firebase/clientApp";
+import { createErrorFolderModalState } from "../../../atoms/createErrorFolderModalAtom";
+import { updateErrorStateAtom } from "../../../atoms/updateErrorStateAtom";
+import { auth, db } from "../../../Firebase/clientApp";
 import { FaFolderPlus } from "react-icons/fa";
 
 export default function CreatedFolders({
@@ -17,8 +17,8 @@ export default function CreatedFolders({
   const [selectValue, setSelectValue] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const [open, setOpen] = useRecoilState(createFolderModalState);
-  const [update, setUpdate] = useRecoilState(updateStateAtom);
+  const [open, setOpen] = useRecoilState(createErrorFolderModalState);
+  const [update, setUpdate] = useRecoilState(updateErrorStateAtom);
 
   function handleSelect(data) {
     setSelectValue(data);
@@ -30,7 +30,12 @@ export default function CreatedFolders({
 
   useEffect(() => {
     if (!user) return;
-    const folderColRef = collection(db, "UsersData1", user.uid, "CodeFolders1");
+    const folderColRef = collection(
+      db,
+      "UsersData1",
+      user.uid,
+      "ErrorFolders"
+    );
     const getFolders = async () => {
       const userData = await getDocs(folderColRef);
       setFolders(
@@ -40,6 +45,7 @@ export default function CreatedFolders({
     getFolders();
   }, [user, update]);
 
+  console.log(open);
   return (
     <div>
       {folders.length > 0 ? (
@@ -67,7 +73,12 @@ export default function CreatedFolders({
                 />
               </div>
               <div>
-                <Text h3 color="primary" onClick={() => setOpen(true)} className="cursor-pointer">
+                <Text
+                  h3
+                  color="primary"
+                  onClick={() => setOpen(true)}
+                  className="cursor-pointer"
+                >
                   <FaFolderPlus />
                 </Text>
               </div>
@@ -77,7 +88,12 @@ export default function CreatedFolders({
       ) : (
         <>
           <div className="flex flex-col gap-1">
-            <Text>Du har ingen mapper</Text>
+            <Text>
+              Du har ingen mapper for fejl snippets&nbsp;
+              <Text color="error" b>
+                *
+              </Text>
+            </Text>
             <div>
               <Button color="gradient" auto onClick={() => setOpen(true)}>
                 Opret
