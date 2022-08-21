@@ -10,11 +10,13 @@ const MyFolders = () => {
   const [loading, setLoading] = useState(true);
   const [myCodeFolders, setCodeMyFolders] = useState();
 
+  const [foldersType, setFoldersType] = useState("code")
+
   const getMyCodeFolders = async () => {
     try {
       const folderQuery = query(
-        collection(db, "UsersData1", user?.uid, "CodeFolders1"),
-        where("folderSnippetType", "==", "code"),
+        collection(db, "UsersData1", user?.uid, "CodeFolders"),
+        where("folderSnippetType", "==", foldersType),
         orderBy("createdAt", "desc")
       );
       const folderDocs = await getDocs(folderQuery);

@@ -1,11 +1,11 @@
 import React from "react";
-import { createFolderModalState } from "../../atoms/createFolderModalAtom";
+import { createCodeFolderModalState } from "../../atoms/createCodeFolderModalAtom";
 import { useRecoilState } from "recoil";
 import { Button, Input, Modal, Text } from "@nextui-org/react";
 import CreateFolder from "../CreateSnippet/CreateCodeSnippet/CreateFolder";
 
-const CreateFolderModal = () => {
-  const [open, setOpen] = useRecoilState(createFolderModalState);
+const CreateCodeFolderModal = () => {
+  const [open, setOpen] = useRecoilState(createCodeFolderModalState);
 
   return (
     <div>
@@ -30,4 +30,4 @@ const CreateFolderModal = () => {
   );
 };
 
-export default CreateFolderModal;
+export default CreateCodeFolderModal;

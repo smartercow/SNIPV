@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import Select from "react-select";
 import { useRecoilState } from "recoil";
-import { createFolderModalState } from "../../../atoms/createFolderModalAtom";
+import { createCodeFolderModalState } from "../../../atoms/createCodeFolderModalAtom";
 import { updateStateAtom } from "../../../atoms/updateStateAtom";
 import { auth, db } from "../../../Firebase/clientApp";
 import { FaFolderPlus } from "react-icons/fa";
@@ -17,7 +17,7 @@ export default function CreatedFolders({
   const [selectValue, setSelectValue] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const [open, setOpen] = useRecoilState(createFolderModalState);
+  const [open, setOpen] = useRecoilState(createCodeFolderModalState);
   const [update, setUpdate] = useRecoilState(updateStateAtom);
 
   function handleSelect(data) {
@@ -30,7 +30,7 @@ export default function CreatedFolders({
 
   useEffect(() => {
     if (!user) return;
-    const folderColRef = collection(db, "UsersData1", user.uid, "CodeFolders1");
+    const folderColRef = collection(db, "UsersData1", user.uid, "CodeFolders");
     const getFolders = async () => {
       const userData = await getDocs(folderColRef);
       setFolders(

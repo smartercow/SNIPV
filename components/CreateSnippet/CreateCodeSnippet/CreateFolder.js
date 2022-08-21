@@ -22,7 +22,7 @@ import { JavascriptFrameworks } from "../../../utilities/JavascriptFrameworks";
 import { CSSprocessors } from "../../../utilities/CSSprocessors";
 import { BsQuestionCircleFill } from "react-icons/bs";
 import { useRecoilState } from "recoil";
-import { createFolderModalState } from "../../../atoms/createFolderModalAtom";
+import { createCodeFolderModalState } from "../../../atoms/createCodeFolderModalAtom";
 import { updateStateAtom } from "../../../atoms/updateStateAtom";
 import { toast } from "react-toastify";
 
@@ -57,7 +57,7 @@ export default function CreateFolder() {
   const [folderName, setFolderName] = useState("");
   const [user] = useAuthState(auth);
 
-  const [open, setOpen] = useRecoilState(createFolderModalState);
+  const [open, setOpen] = useRecoilState(createCodeFolderModalState);
   const [update, setUpdate] = useRecoilState(updateStateAtom);
 
   const [inputStatus, setInputStatus] = useState("");
@@ -118,7 +118,7 @@ export default function CreateFolder() {
 
         await setDoc(userDataDocRef, JSON.parse(JSON.stringify(user)));
 
-        await addDoc(collection(db, "UsersData1", user?.uid, "CodeFolders1"), {
+        await addDoc(collection(db, "UsersData1", user?.uid, "CodeFolders"), {
           createdAt: serverTimestamp(),
           userId: user.uid,
           author: user.displayName,

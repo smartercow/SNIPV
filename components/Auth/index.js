@@ -13,11 +13,7 @@ const Auth = () => {
 
       await setDoc(doc(db, "UsersData1", user.uid), {
         isAdmin: false,
-        author: user.displayName,
         username: "",
-        //Remember UserName for "UsersData2"
-        isModerator: false,
-        superUser: false,
         user: JSON.parse(JSON.stringify(user))
       });
     }

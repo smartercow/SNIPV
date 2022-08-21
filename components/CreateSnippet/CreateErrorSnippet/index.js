@@ -78,7 +78,7 @@ const CreateCodeSnippet = () => {
           isPublic: snippetPublic,
           notes: notes,
         });
-        router.push("/mysnippets");
+        router.push("/mysnippets/errors");
       } catch (error) {
         console.log(error);
       }
