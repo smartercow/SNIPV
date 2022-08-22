@@ -14,7 +14,6 @@ import NoUser from "../NoPage/NoUser";
 import Feed from "./Feed";
 import Post from "./Post";
 import Tags from "./Tags";
-import CheckSetUsername from "../CheckSetUsername"
 
 const HomePage = () => {
   const [user] = useAuthState(auth);
@@ -80,8 +79,7 @@ const HomePage = () => {
               <div className="flex gap-6">
                 <div className="w-full flex flex-col gap-4">
                   <div>
-{/*                     <CheckSetUsername />
- */}                    <Post />
+                    <Post />
                   </div>
                   <div>
                     <Feed

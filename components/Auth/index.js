@@ -8,21 +8,7 @@ import { GithubLogo } from "./GithubLogo";
 const Auth = () => {
   const [signInWithGoogle, userCred, loading, error] =
     useSignInWithGoogle(auth);
-
-    const createUserDocument = async (user) => {
-
-      await setDoc(doc(db, "UsersData1", user.uid), {
-        isAdmin: false,
-        username: "",
-        user: JSON.parse(JSON.stringify(user))
-      });
-    }
-  
-    useEffect(() => {
-      if (userCred?.user) {
-        createUserDocument(userCred.user)
-      }
-    }, [userCred])
+    
 
   return (
     <div className="flex flex-col gap-4 justify-center">
