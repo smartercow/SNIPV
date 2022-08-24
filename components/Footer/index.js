@@ -27,7 +27,7 @@ const Footer = () => {
           </div>
         </div>
         <div className="">
-          <Text small>© 2022 SNIPV beta 0.40</Text>
+          <Text small>© 2022 SNIPV beta 0.70</Text>
         </div>
       </div>
     </footer>

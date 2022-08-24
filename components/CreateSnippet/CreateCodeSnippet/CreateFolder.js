@@ -34,13 +34,13 @@ const initialSelectedLang = {
 const initialSelectedFramework = {
   label: "React.js",
   value: "reactjs",
-  langId: "28",
+  frameworkId: "28",
 };
 
 const initialSelectedProcessor = {
   label: "SCSS",
   value: "scss",
-  langId: "1",
+  processorId: "1",
 };
 
 export default function CreateFolder() {
@@ -114,9 +114,6 @@ export default function CreateFolder() {
     e.preventDefault();
     if (language && folderName) {
       try {
-        const userDataDocRef = doc(db, "UsersData1", user?.uid);
-
-        await setDoc(userDataDocRef, JSON.parse(JSON.stringify(user)));
 
         await addDoc(collection(db, "UsersData1", user?.uid, "CodeFolders"), {
           createdAt: serverTimestamp(),

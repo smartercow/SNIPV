@@ -1,0 +1,52 @@
+  @font-face {
+    font-family: 'Epilogue';
+    src: url("/fonts/Epilogue-Bold.ttf");
+  }
+
+  @font-face {
+    font-family: 'JetBrainsMono';
+    src: url("/fonts/JetBrainsMono/JetBrainsMono-Bold.ttf"),
+         url("/fonts/JetBrainsMono/JetBrainsMono-BoldItalic.ttf"),
+         url("/fonts/JetBrainsMono/JetBrainsMono-ExtraBold.ttf"),
+         url("/fonts/JetBrainsMono/JetBrainsMono-ExtraBoldItalic.ttf"),
+         url("/fonts/JetBrainsMono/JetBrainsMono-ExtraLight.ttf"),
+         url("/fonts/JetBrainsMono/JetBrainsMono-ExtraLightItalic.ttf"),
+         url("/fonts/JetBrainsMono/JetBrainsMono-Italic.ttf"),
+         url("/fonts/JetBrainsMono/JetBrainsMono-Light.ttf"),
+         url("/fonts/JetBrainsMono/JetBrainsMono-LightItalic.ttf"),
+         url("/fonts/JetBrainsMono/JetBrainsMono-Medium.ttf"),
+         url("/fonts/JetBrainsMono/JetBrainsMono-MediumItalic.ttf"),
+         url("/fonts/JetBrainsMono/JetBrainsMono-Regular.ttf"),
+         url("/fonts/JetBrainsMono/JetBrainsMono-SemiBold.ttf"),
+         url("/fonts/JetBrainsMono/JetBrainsMono-SemiBoldItalic.ttf"),
+         url("/fonts/JetBrainsMono/JetBrainsMono-Thin.ttf"),
+         url("/fonts/JetBrainsMono/JetBrainsMono-ThinItalic.ttf"),
+         url("/fonts/JetBrainsMono/JetBrainsMonoNL-Bold.ttf"),
+         url("/fonts/JetBrainsMono/JetBrainsMonoNL-BoldItalic.ttf"),
+         url("/fonts/JetBrainsMono/JetBrainsMonoNL-ExtraBold.ttf"),
+         url("/fonts/JetBrainsMono/JetBrainsMonoNL-ExtraBoldItalic.ttf"),
+         url("/fonts/JetBrainsMono/JetBrainsMonoNL-ExtraLight.ttf"),
+         url("/fonts/JetBrainsMono/JetBrainsMonoNL-ExtraLightItalic.ttf"),
+         url("/fonts/JetBrainsMono/JetBrainsMonoNL-Italic.ttf"),
+         url("/fonts/JetBrainsMono/JetBrainsMonoNL-Light.ttf"),
+         url("/fonts/JetBrainsMono/JetBrainsMonoNL-LightItalic.ttf"),
+         url("/fonts/JetBrainsMono/JetBrainsMonoNL-Medium.ttf"),
+         url("/fonts/JetBrainsMono/JetBrainsMonoNL-MediumItalic.ttf"),
+         url("/fonts/JetBrainsMono/JetBrainsMonoNL-Regular.ttf"),
+         url("/fonts/JetBrainsMono/JetBrainsMonoNL-SemiBold.ttf"),
+         url("/fonts/JetBrainsMono/JetBrainsMonoNL-SemiBoldItalic.ttf"),
+         url("/fonts/JetBrainsMono/JetBrainsMonoNL-Thin.ttf"),
+         url("/fonts/JetBrainsMono/JetBrainsMonoNL-ThinItalic.ttf")
+  }
+
+  /* Snippet page heading */
+  .SnippetHeading {
+    font-family: 'Epilogue', sans-serif;
+  }
+
+  /* Snippet page language */
+  .MonoHeading {
+    font-family: 'JetBrainsMono', monospace;
+  }
+
+  

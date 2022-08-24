@@ -198,7 +198,7 @@ const CreateCodeSnippet = () => {
             </div>
 
             <div>
-              <Collapse title={<Text b>Noter</Text>}>
+              <Collapse title={<Text b>Notat</Text>}>
                 <Textarea
                   placeholder="Noter her..."
                   name="notes"
@@ -221,7 +221,7 @@ const CreateCodeSnippet = () => {
                   value={tags}
                   onChange={setTags}
                   name="tags"
-                  placeHolder="tags"
+                  placeHolder="Skriv og tryk enters"
                 />
               </div>
               <div className="">

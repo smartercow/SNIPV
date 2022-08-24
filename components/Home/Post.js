@@ -9,8 +9,8 @@ const Post = () => {
   return (
     <div>
       <Link href="/upsert">
-        <Card isPressable variant="flat">
-          <div className="flex justify-between py-3 pl-2 pr-6">
+        <Card isPressable variant="flat" css={{ mw: "100%", padding: "$0" }}>
+          <div className="flex justify-between py-3 pl-2 pr-6 bg-[#F1F7FF]">
             <div>
               <User bordered src={user.photoURL} squared color="primary" />
             </div>

@@ -5,6 +5,7 @@ import { db } from "../../Firebase/clientApp";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneLight } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import { Loading, Text } from "@nextui-org/react";
+import SnippetPage from "../../components/SnippetPage";
 
 const Snippet = () => {
   const {
@@ -32,27 +33,7 @@ const Snippet = () => {
   return (
     <div>
       {snippet && (
-        <div className="flex flex-col gap-3">
-          <div>
-            <Text h3>{snippet.title}</Text>
-          </div>
-          <div>{snippet.description}</div>
-          <div>
-            <SyntaxHighlighter language="javascript" style={oneLight}>
-              {snippet.code}
-            </SyntaxHighlighter>
-          </div>
-          <div>
-            <Text>
-              {snippet?.notes}
-            </Text>
-          </div>
-          <div>
-            <Text>
-              Af <Text b>{snippet.author}</Text>
-            </Text>
-          </div>
-        </div>
+        <SnippetPage snippet={snippet} />
       )}
       {loading && (
         <div className="flex justify-center items-center h-[20vh]">

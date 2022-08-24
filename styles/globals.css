@@ -7,3 +7,21 @@
 /* @tailwind base; */
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .tagHover {
+    @apply bg-[#1253fa] text-white ease-in duration-300 cursor-pointer
+  }
+
+  .langHover {
+    @apply opacity-80 cursor-pointer ease-in duration-300
+  }
+
+  .cardHover {
+    @apply bg-[#F1F7FF] hover:bg-[#c8dfff] ease-in duration-300
+  }
+
+/*   .textHoverBlue {
+    @apply text-[#1253fa]
+  } */
+}

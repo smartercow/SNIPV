@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   Input,
   Spacer,
@@ -13,6 +13,8 @@ import {
   addDoc,
   collection,
   doc,
+  getDoc,
+  runTransaction,
   serverTimestamp,
   setDoc,
   updateDoc,
@@ -35,7 +37,7 @@ const initialState = {
 
 const initialSelectedFolderValue = {
   label: "",
-  value: "this",
+  value: "",
   langId: 0,
 };
 
@@ -44,6 +46,8 @@ const CreateCodeSnippet = () => {
   const [tags, setTags] = useState([]);
   const [notes, setNotes] = useState("");
   const [snippetPublic, setSnippetPublic] = useState(false);
+
+  const [userData, setUserData] = useState([])
 
   const [selectedFolder, setSelectedFolder] = useState(
     initialSelectedFolderValue
@@ -61,6 +65,27 @@ const CreateCodeSnippet = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  const getUser = async () => {
+    try {
+      const userDocRef = doc(db, "UsersData1", user.uid);
+
+      await runTransaction(db, async (transaction) => {
+        const userDoc = await transaction.get(userDocRef);
+
+        if (userDoc.exists()) {
+          const User = await getDoc(userDocRef);
+
+          setUserData(User.data())
+          console.log("USERDATA", userData);
+        } 
+      });
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    getUser()
+  }, [user])
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (title && code && selectedFolder?.language?.langId) {
@@ -68,9 +93,7 @@ const CreateCodeSnippet = () => {
         await addDoc(collection(db, "CodeSnippetsData1"), {
           ...form,
           postedAt: serverTimestamp(),
-          author: user.displayName,
-          userId: user.uid,
-          userPhoto: user.photoURL,
+          userData: userData,
           category: selectedCategory,
           folder: selectedFolder,
           tags: tags,
@@ -85,6 +108,8 @@ const CreateCodeSnippet = () => {
       return toast.error("Valg en mappe!");
     }
   };
+
+  
   return (
     <div>
       <div className="">
@@ -170,7 +195,7 @@ const CreateCodeSnippet = () => {
             </div>
 
             <div>
-              <Collapse title={<Text b>Noter</Text>}>
+              <Collapse title={<Text b>Notat</Text>}>
                 <Textarea
                   placeholder="Noter her..."
                   name="notes"
@@ -193,7 +218,7 @@ const CreateCodeSnippet = () => {
                   value={tags}
                   onChange={setTags}
                   name="tags"
-                  placeHolder="tags"
+                  placeHolder="Skriv og tryk enter"
                 />
               </div>
               <div className="">

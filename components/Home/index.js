@@ -34,6 +34,7 @@ const HomePage = () => {
         id: doc.id,
         ...doc.data(),
       }));
+      
       setSnippets((prev) => ({
         ...prev,
         snips: snippets,

@@ -1,4 +1,12 @@
-import { collection, doc, getDoc, query, setDoc, where } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  query,
+  runTransaction,
+  setDoc,
+  where,
+} from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { setUsernameModal } from "../atoms/setUsernameModal";
@@ -16,37 +24,36 @@ const ClientLayout = ({ children }) => {
 
   const [open, setOpen] = useRecoilState(setUsernameModal);
 
-  const [update, setUpdate] = useState(true)
-
+  const [update, setUpdate] = useState(true);
 
   const CheckUser = async () => {
-    const docRef = doc(db, "UsersData1", user.uid);
-    const docSnap = await getDoc(docRef);
+    try {
+      const userDocRef = doc(db, "UsersData1", user.uid);
 
-    if (docSnap.exists()) {
-      console.log("User data dokument er der!");
+      await runTransaction(db, async (transaction) => {
+        const userDoc = await transaction.get(userDocRef);
 
-      const docRef = doc(db, "UsersData1", user.uid);
-      const docSnap = await getDoc(docRef);
-  
-      if (docSnap.exists() && docSnap.data().usernameSet === false) {
-        setOpen(true);
-        console.log("Username = false");
-      } 
+        if (userDoc.exists()) {
+          const User = await getDoc(userDocRef);
 
-    } else {
-      console.log("UsernameSet = false");
-      //SET USER DATA FOR THE FIRST TIME ONLY
-      await setDoc(doc(db, "UsersData1", user.uid), {
-        usernameSet: false,
-        username: "",
-        usernameValue: "",
-        user: JSON.parse(JSON.stringify(user))
+          if (User.data().usernameSet === false) {
+            setOpen(true);
+          }
+        } else {
+
+          //SET USER DATA KUN FØRSTE GANG
+          await setDoc(doc(db, "UsersData1", user.uid), {
+            usernameSet: false,
+            username: "",
+            usernameValue: "",
+            user: JSON.parse(JSON.stringify(user)),
+          });
+
+          setUpdate(!update);
+        }
       });
-
-      setUpdate(!update)
-    }
-  }
+    } catch (error) {}
+  };
 
   useEffect(() => {
     if (user) {
@@ -54,12 +61,11 @@ const ClientLayout = ({ children }) => {
     }
   }, [user, update]);
 
- 
   return (
     <div>
       <Header user={user} />
       <hr />
-      <div className="max-w-5xl mx-5 lg:mx-auto mt-3">{children}</div>
+      <div className="max-w-5xl mx-5 lg:mx-auto mt-3 text-[#4D5B7C]">{children}</div>
       <Footer />
       <CreateCodeFolderModal />
       <CreateErrorFolderModal />

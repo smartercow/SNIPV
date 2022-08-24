@@ -119,8 +119,7 @@ const SetUsernameModal = () => {
     }
   }, [usernameInputValue]);
 
-  console.log(user);
-  console.log(open);
+
   return (
     <div>
       <Modal
