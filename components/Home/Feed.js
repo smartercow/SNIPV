@@ -23,20 +23,18 @@ const Feed = ({ user, snippets, tags, loading }) => {
         <div className="w-full">
           {snippets.snips && (
             <div className="flex flex-col gap-4 ">
-              <div className="">
-                <div className="bg-gradient-to-r from-cyan-500 to-blue-500 text-white">
-                  <div className="flex items-center gap-2 pl-2">
-                    <div className="pt-1">
-                      <Text h3 color="white">
-                        <MdPublic />
-                      </Text>
-                    </div>
-                    <div className="w-full ">
-                      <div className="uppercase MonoHeading ">
-                        <p h4 color="$gray900" className="font-semibold">
-                          Offentlige snippets
-                        </p>
-                      </div>
+              <div className="bg-gradient-to-r from-cyan-500 to-blue-500 text-white">
+                <div className="flex items-center gap-2 pl-2">
+                  <div className="pt-1">
+                    <Text h3 color="white">
+                      <MdPublic />
+                    </Text>
+                  </div>
+                  <div className="w-full ">
+                    <div className="uppercase MonoHeading ">
+                      <p h4 color="$gray900" className="font-semibold">
+                        Offentlige snippets
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -59,7 +57,7 @@ const Feed = ({ user, snippets, tags, loading }) => {
                                 <div className="w-auto">
                                   <Tooltip
                                     content={snip.userData.username}
-                                    color="primary"
+                                    color="#B7D5F8"
                                   >
                                     <User
                                       src={snip.userData.user.photoURL}

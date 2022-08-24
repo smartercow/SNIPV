@@ -10,7 +10,7 @@ const Tags = ({ tags, snippets }) => {
         <div>
           {tags && (
             <Card variant="flat" css={{ mw: "100%", padding: "$0" }}>
-              <div className="bg-gradient-to-r from-cyan-500 to-blue-500 bg-opacity-60 flex flex-col gap-5 pt-1 pb-5 px-3">
+              <div className="bg-[#c8dfff] bg-opacity-60 flex flex-col gap-5 pt-1 pb-5 px-3">
                 <div>
                   <div className="flex items-center gap-2">
                     <div className="pt-1">
@@ -18,7 +18,7 @@ const Tags = ({ tags, snippets }) => {
                         <MdLocalFireDepartment />
                       </Text>
                     </div>
-                    <div className="uppercase mt-3 text-white">
+                    <div className="uppercase mt-3 text-[#031B4E]">
                       <h5>Populær tags</h5>
                     </div>
                   </div>
