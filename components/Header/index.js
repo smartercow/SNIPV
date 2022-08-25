@@ -13,7 +13,6 @@ import React from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { Login, loginModalState } from "../../atoms/loginModalStateAtom";
 import { auth } from "../../Firebase/clientApp";
-import Auth from "../Auth";
 import Country from "../Country";
 import { BsSearch } from "react-icons/bs";
 
@@ -32,7 +31,7 @@ const Header = ({ user }) => {
         <div className="flex gap-2 items-center">
           <div className="cursor-pointer">
             <Link href="/">
-              <Text h2 weight="extrabold">
+              <Text color="#031B4E" h2 weight="extrabold">
                 SNIPV
               </Text>
             </Link>
