@@ -79,7 +79,7 @@ const Header = ({ user }) => {
                     size="lg"
                     color="primary"
                     name="Profil"
-                    description="0 likes"
+                    description={user.displayName}
                     src={user.photoURL}
                     pointer
                   />

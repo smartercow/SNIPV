@@ -93,111 +93,108 @@ const CreateCodeSnippet = () => {
       <div className="">
         <form onSubmit={handleSubmit}>
           <div className="flex flex-col gap-5">
-            <div className="w-full flex gap-4 items-center">
-              <div className="w-20">
+            <div className="flex flex-col gap-5 mx-3">
+              <div className="w-full flex gap-4 items-center">
+                <div className="w-20">
+                  <Text>
+                    Titel&nbsp;
+                    <Text color="error" b>
+                      *
+                    </Text>
+                  </Text>
+                </div>
+                <Input
+                  underlined
+                  clearable
+                  name="title"
+                  value={title}
+                  size="lg"
+                  onChange={handleChange}
+                  required
+                  width="100%"
+                  aria-label="Titel"
+                />
+              </div>
+
+              <div className="w-full flex gap-4 items-center">
+                <div className="w-20">
+                  <Text>Beskrivelse</Text>
+                </div>
+                <Input
+                  underlined
+                  clearable
+                  name="description"
+                  value={description}
+                  size="lg"
+                  onChange={handleChange}
+                  width="100%"
+                  aria-label="Beskrivelse"
+                />
+              </div>
+
+              <div className="w-full">
+                <CreatedFolders
+                  setSelectedFolder={setSelectedFolder}
+                  selectedFolder={selectedFolder}
+                  setSelectedCategory={setSelectedCategory}
+                />
+              </div>
+
+              <div className="mt-1">
                 <Text>
-                  Titel&nbsp;
+                  Fejl kode&nbsp;
                   <Text color="error" b>
                     *
                   </Text>
                 </Text>
+                <Spacer y={0.4} />
+                <Textarea
+                  placeholder="her..."
+                  name="errorcode"
+                  value={errorcode}
+                  onChange={handleChange}
+                  css={{ height: "auto" }}
+                  size="lg"
+                  width="100%"
+                  shadow="false"
+                  animated="false"
+                  aria-label="kode"
+                  required
+                />
               </div>
-              <Input
-                underlined
-                clearable
-                name="title"
-                value={title}
-                size="lg"
-                onChange={handleChange}
-                required
-                width="100%"
-                aria-label="Titel"
-              />
-            </div>
 
-            <div className="w-full flex gap-4 items-center">
-              <div className="w-20">
-              <Text>Beskrivelse</Text>
+              <div>
+                <Collapse title={<Text b>Fejl forhåndsvisning</Text>}>
+                  <SyntaxHighlighter language="javascript" style={oneLight}>
+                    {form.errorcode}
+                  </SyntaxHighlighter>
+                </Collapse>
               </div>
-              <Input
-                underlined
-                clearable
-                name="description"
-                value={description}
-                size="lg"
-                onChange={handleChange}
-                width="100%"
-                aria-label="Beskrivelse"
-              />
+
+              <div className="mt-1">
+                <Text>Løsning kode</Text>
+                <Spacer y={0.4} />
+                <Textarea
+                  placeholder="her..."
+                  name="solutioncode"
+                  value={solutioncode}
+                  onChange={handleChange}
+                  css={{ height: "auto" }}
+                  size="lg"
+                  width="100%"
+                  shadow="false"
+                  animated="false"
+                  aria-label="kode"
+                />
+              </div>
             </div>
 
-            <div className="w-full">
-              <CreatedFolders
-                setSelectedFolder={setSelectedFolder}
-                selectedFolder={selectedFolder}
-                setSelectedCategory={setSelectedCategory}
-              />
-            </div>
-
-            <div className="mt-1">
-              <Text>
-                Fejl kode&nbsp;
-                <Text color="error" b>
-                  *
-                </Text>
-              </Text>
-              <Spacer y={0.4} />
-              <Textarea
-                placeholder="her..."
-                name="errorcode"
-                value={errorcode}
-                onChange={handleChange}
-                css={{ height: "auto" }}
-                size="lg"
-                width="100%"
-                shadow="false"
-                animated="false"
-                aria-label="kode"
-                required
-              />
-            </div>
-
-            <div>
-              <Collapse title={<Text b>Fejl forhåndsvisning</Text>}>
-                <SyntaxHighlighter language="javascript" style={oneLight}>
-                  {form.errorcode}
-                </SyntaxHighlighter>
-              </Collapse>
-            </div>
-
-            <div className="mt-1">
-              <Text>
-                Løsning kode
-              </Text>
-              <Spacer y={0.4} />
-              <Textarea
-                placeholder="her..."
-                name="solutioncode"
-                value={solutioncode}
-                onChange={handleChange}
-                css={{ height: "auto" }}
-                size="lg"
-                width="100%"
-                shadow="false"
-                animated="false"
-                aria-label="kode"
-              />
-            </div>
-
-            <div>
+            <Collapse.Group>
               <Collapse title={<Text b>Løsning forhåndsvisning</Text>}>
                 <SyntaxHighlighter language="javascript" style={oneLight}>
                   {form.solutioncode}
                 </SyntaxHighlighter>
               </Collapse>
-            </div>
-
-            <div>
               <Collapse title={<Text b>Notat</Text>}>
                 <Textarea
                   placeholder="Noter her..."
@@ -213,41 +210,45 @@ const CreateCodeSnippet = () => {
                   aria-label="noter"
                 />
               </Collapse>
-            </div>
+              <Collapse title={<Text b>Tags</Text>}>
+                <div className="flex justify-between gap-2 items-center">
+                  <div className="w-full">
+                    <TagsInput
+                      value={tags}
+                      onChange={setTags}
+                      name="tags"
+                      placeHolder="Skriv og tryk enters"
+                    />
+                  </div>
+                  <div className="">
+                    <Tooltip
+                      content={
+                        "Tags for denne snippet - Tryk ENTER for at tilføj"
+                      }
+                      color="primary"
+                      css={{ zIndex: 9999 }}
+                    >
+                      <Text h5 color="primary">
+                        <BsQuestionCircleFill />
+                      </Text>
+                    </Tooltip>
+                  </div>
+                </div>
+              </Collapse>
+            </Collapse.Group>
 
-            <div className="flex justify-between gap-2 items-center">
-              <div className="w-full">
-                <TagsInput
-                  value={tags}
-                  onChange={setTags}
-                  name="tags"
-                  placeHolder="Skriv og tryk enters"
-                />
+            <div className="mx-3 flex flex-col gap-5">
+              <div>
+                <Text>Offentlig</Text>
+                <Switch onChange={() => setSnippetPublic(!snippetPublic)} />
               </div>
-              <div className="">
-                <Tooltip
-                  content={"Tags for denne snippet - Tryk ENTER for at tilføj"}
-                  color="primary"
-                  css={{ zIndex: 9999 }}
-                >
-                  <Text h5 color="primary">
-                    <BsQuestionCircleFill />
-                  </Text>
-                </Tooltip>
+
+              <div>
+                <Button color="gradient" type="submit">
+                  Gem
+                </Button>
               </div>
             </div>
-
-            <div>
-              <Text>Offentlig</Text>
-              <Switch onChange={() => setSnippetPublic(!snippetPublic)} />
-            </div>
-
-            <div>
-              <Button color="gradient" type="submit">
-                Gem
-              </Button>
-            </div>
-
           </div>
         </form>
       </div>

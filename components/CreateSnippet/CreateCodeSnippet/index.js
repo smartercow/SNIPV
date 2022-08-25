@@ -33,6 +33,8 @@ const initialState = {
   title: "",
   description: "",
   code: "",
+  linkHeading: "",
+  link: "",
 };
 
 const initialSelectedFolderValue = {
@@ -47,14 +49,14 @@ const CreateCodeSnippet = () => {
   const [notes, setNotes] = useState("");
   const [snippetPublic, setSnippetPublic] = useState(false);
 
-  const [userData, setUserData] = useState([])
+  const [userData, setUserData] = useState([]);
 
   const [selectedFolder, setSelectedFolder] = useState(
     initialSelectedFolderValue
   );
   const [selectedCategory, setSelectedCategory] = useState([]);
 
-  const { title, description, code } = form;
+  const { title, description, code, linkHeading, link } = form;
 
   const [user] = useAuthState(auth);
 
@@ -75,16 +77,16 @@ const CreateCodeSnippet = () => {
         if (userDoc.exists()) {
           const User = await getDoc(userDocRef);
 
-          setUserData(User.data())
+          setUserData(User.data());
           console.log("USERDATA", userData);
-        } 
+        }
       });
     } catch (error) {}
   };
 
   useEffect(() => {
-    getUser()
-  }, [user])
+    getUser();
+  }, [user]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -109,95 +111,92 @@ const CreateCodeSnippet = () => {
     }
   };
 
-  
   return (
     <div>
       <div className="">
         <form onSubmit={handleSubmit}>
           <div className="flex flex-col gap-5">
-            <div className="w-full flex gap-4 items-center">
-              <div className="w-20">
+            <div className="flex flex-col gap-5 mx-3">
+              <div className="w-full flex gap-4 items-center">
+                <div className="w-20">
+                  <Text>
+                    Titel&nbsp;
+                    <Text color="error" b>
+                      *
+                    </Text>
+                  </Text>
+                </div>
+                <Input
+                  underlined
+                  clearable
+                  name="title"
+                  value={title}
+                  size="lg"
+                  onChange={handleChange}
+                  required
+                  width="100%"
+                  aria-label="Titel"
+                />
+              </div>
+
+              <div className="w-full flex gap-4 items-center">
+                <div className="w-20">
+                  <Text>Beskrivelse</Text>
+                </div>
+                <Input
+                  underlined
+                  clearable
+                  name="description"
+                  value={description}
+                  size="lg"
+                  onChange={handleChange}
+                  width="100%"
+                  aria-label="Beskrivelse"
+                />
+              </div>
+
+              <div className="w-full">
+                <CreatedFolders
+                  setSelectedFolder={setSelectedFolder}
+                  selectedFolder={selectedFolder}
+                  setSelectedCategory={setSelectedCategory}
+                />
+              </div>
+
+              <div className="mt-1">
                 <Text>
-                  Titel&nbsp;
+                  Din kode&nbsp;
                   <Text color="error" b>
                     *
                   </Text>
                 </Text>
+                <Spacer y={0.4} />
+                <Textarea
+                  placeholder="her..."
+                  name="code"
+                  value={code}
+                  onChange={handleChange}
+                  css={{ height: "auto" }}
+                  size="lg"
+                  cacheMeasurements
+                  width="100%"
+                  height="100%"
+                  shadow="false"
+                  animated="false"
+                  aria-label="kode"
+                  required
+                />
               </div>
-              <Input
-                underlined
-                clearable
-                name="title"
-                value={title}
-                size="lg"
-                onChange={handleChange}
-                required
-                width="100%"
-                aria-label="Titel"
-              />
             </div>
-
-            <div className="w-full flex gap-4 items-center">
-              <div className="w-20">
-              <Text>Beskrivelse</Text>
-              </div>
-              <Input
-                underlined
-                clearable
-                name="description"
-                value={description}
-                size="lg"
-                onChange={handleChange}
-                width="100%"
-                aria-label="Beskrivelse"
-              />
-            </div>
-
-            <div className="w-full">
-              <CreatedFolders
-                setSelectedFolder={setSelectedFolder}
-                selectedFolder={selectedFolder}
-                setSelectedCategory={setSelectedCategory}
-              />
-            </div>
-
-            <div className="mt-1">
-              <Text>
-                Din kode&nbsp;
-                <Text color="error" b>
-                  *
-                </Text>
-              </Text>
-              <Spacer y={0.4} />
-              <Textarea
-                placeholder="her..."
-                name="code"
-                value={code}
-                onChange={handleChange}
-                css={{ height: "auto" }}
-                size="lg"
-                cacheMeasurements
-                width="100%"
-                height="100%"
-                shadow="false"
-                animated="false"
-                aria-label="kode"
-                required
-              />
-            </div>
-
-            <div>
+            <Collapse.Group>
               <Collapse title={<Text b>Kode forhåndsvisning</Text>}>
                 <SyntaxHighlighter language="javascript" style={oneLight}>
                   {form.code}
                 </SyntaxHighlighter>
               </Collapse>
-            </div>
-
-            <div>
               <Collapse title={<Text b>Notat</Text>}>
                 <Textarea
-                  placeholder="Noter her..."
+                  placeholder="her..."
                   name="notes"
                   onChange={(e) => setNotes(e.target.value)}
                   css={{ height: "auto" }}
@@ -210,41 +209,83 @@ const CreateCodeSnippet = () => {
                   aria-label="noter"
                 />
               </Collapse>
-            </div>
+              <Collapse title={<Text b>Link</Text>}>
+                <div className="flex flex-col gap-5">
+                  <div className="w-full flex gap-4 items-center">
+                    <div className="w-20">
+                      <Text>Heading</Text>
+                    </div>
+                    <div className="w-full">
+                      <Input
+                        underlined
+                        clearable
+                        name="linkHeading"
+                        value={linkHeading}
+                        size="lg"
+                        onChange={handleChange}
+                        width="100%"
+                        aria-label="linkHeading"
+                      />
+                    </div>
+                  </div>
+                  <div className="w-full flex gap-4 items-center">
+                    <div className="w-20">
+                      <Text>Link</Text>
+                    </div>
+                    <div className="w-full">
+                      <Input
+                        underlined
+                        clearable
+                        name="link"
+                        value={link}
+                        size="lg"
+                        onChange={handleChange}
+                        width="100%"
+                        aria-label="link"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </Collapse>
+              <Collapse title={<Text b>Tags</Text>}>
+                <div className="flex justify-between gap-2 items-center">
+                  <div className="w-full">
+                    <TagsInput
+                      value={tags}
+                      onChange={setTags}
+                      name="tags"
+                      placeHolder="Skriv og tryk enter"
+                    />
+                  </div>
+                  <div className="">
+                    <Tooltip
+                      content={
+                        "Tags for denne snippet - Tryk ENTER for at tilføj"
+                      }
+                      color="primary"
+                      css={{ zIndex: 9999 }}
+                    >
+                      <Text h5 color="primary">
+                        <BsQuestionCircleFill />
+                      </Text>
+                    </Tooltip>
+                  </div>
+                </div>
+              </Collapse>
+            </Collapse.Group>
 
-            <div className="flex justify-between gap-2 items-center">
-              <div className="w-full">
-                <TagsInput
-                  value={tags}
-                  onChange={setTags}
-                  name="tags"
-                  placeHolder="Skriv og tryk enter"
-                />
-              </div>
+            <div className="mx-3 flex flex-col gap-5">
               <div className="">
-                <Tooltip
-                  content={"Tags for denne snippet - Tryk ENTER for at tilføj"}
-                  color="primary"
-                  css={{ zIndex: 9999 }}
-                >
-                  <Text h5 color="primary">
-                    <BsQuestionCircleFill />
-                  </Text>
-                </Tooltip>
+                <p>Offentlig</p>
+                <Switch onChange={() => setSnippetPublic(!snippetPublic)} />
+              </div>
+
+              <div>
+                <Button color="gradient" type="submit">
+                  Gem
+                </Button>
               </div>
             </div>
-
-            <div>
-              <Text>Offentlig</Text>
-              <Switch onChange={() => setSnippetPublic(!snippetPublic)} />
-            </div>
-
-            <div>
-              <Button color="gradient" type="submit">
-                Gem
-              </Button>
-            </div>
-
           </div>
         </form>
       </div>
