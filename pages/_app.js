@@ -1,5 +1,6 @@
 import "../styles/globals.css";
 import "../styles/font-styles.css";
+import "../styles/styles.css";
 import { NextUIProvider } from "@nextui-org/react";
 import ClientLayout from "../layout/ClientLayout";
 import { RecoilRoot } from "recoil";

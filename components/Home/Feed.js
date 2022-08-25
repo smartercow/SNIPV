@@ -10,13 +10,17 @@ import {
   Tooltip,
   User,
 } from "@nextui-org/react";
-import React from "react";
+import React, { useState } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneLight } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import Link from "next/link";
 import { MdPublic } from "react-icons/md";
-
+import Login from "../SVG/Iconly/bulk/Login.svg"
+import Image from "next/image"
+import {excerpt} from "../../utilities/excerpt"
 const Feed = ({ user, snippets, tags, loading }) => {
+  const [hover, setHover] = useState(true)
+  
   return (
     <div>
       {snippets && (
@@ -42,10 +46,10 @@ const Feed = ({ user, snippets, tags, loading }) => {
 
               <div>
                 <div className="flex flex-col gap-4">
-                  {snippets.snips.slice(0, 10).map((snip) => (
+                  {snippets.snips.slice(0, 10).map((snip, index) => (
                     <div key={snip.id}>
                       <Link href={`/s/${snip.id}`}>
-                        <div className="">
+                        <div className="hoverable-item">
                           <Card
                             isPressable
                             variant="flat"
@@ -57,7 +61,7 @@ const Feed = ({ user, snippets, tags, loading }) => {
                                 <div className="w-auto">
                                   <Tooltip
                                     content={snip.userData.username}
-                                    color="#B7D5F8"
+                                    color="primary"
                                   >
                                     <User
                                       src={snip.userData.user.photoURL}
@@ -71,19 +75,22 @@ const Feed = ({ user, snippets, tags, loading }) => {
                                 <div className="w-full flex flex-col gap-3 MonoHeading">
                                   <div>
                                     <p className="text-[#4D5B7C] text-lg font-[500]">
-                                      {snip.title}
+                                      {excerpt(snip.title, 60)}
                                     </p>
                                   </div>
                                   {snip.description && (
                                     <div className="-mt-2">
                                       <h6
-                                        className="text-gray-500"
+                                        className="text-gray-500 whitespace-nowrap"
                                         color="#889096"
                                       >
-                                        {snip.description}
+                                        {excerpt(snip.description, 60)}
                                       </h6>
                                     </div>
                                   )}
+                                </div>
+                                <div className="hoverable-show">
+                                  <Image src={Login} fill="responsive" alt="" />
                                 </div>
                               </div>
                             </div>

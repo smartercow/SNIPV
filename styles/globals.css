@@ -21,6 +21,10 @@
     @apply bg-[#F1F7FF] hover:bg-[#c8dfff] ease-in duration-300
   }
 
+  .snipArrow {
+    @apply ease-in duration-300
+  }
+
 /*   .textHoverBlue {
     @apply text-[#1253fa]
   } */

@@ -1,0 +1,11 @@
+.hoverable-show {
+    visibility: hidden;
+    transition: linear 3s ease-in;
+
+}
+
+.hoverable-item:hover .hoverable-show {
+    visibility: visible;
+
+}
+
