@@ -101,7 +101,6 @@ const MyCodeSnippets = () => {
                               color="#889096"
                             >
                               {excerpt(item.description, 60)} <br />
-                              {item.id}
                             </h6>
                           </div>
                         )}
