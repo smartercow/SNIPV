@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   Input,
   Spacer,
@@ -13,6 +13,8 @@ import {
   addDoc,
   collection,
   doc,
+  getDoc,
+  runTransaction,
   serverTimestamp,
   setDoc,
   updateDoc,
@@ -32,11 +34,13 @@ const initialState = {
   description: "",
   errorcode: "",
   solutioncode: "",
+  linkHeading: "",
+  link: "",
 };
 
 const initialSelectedFolderValue = {
   label: "",
-  value: "this",
+  value: "",
   langId: 0,
 };
 
@@ -46,12 +50,14 @@ const CreateCodeSnippet = () => {
   const [notes, setNotes] = useState("");
   const [snippetPublic, setSnippetPublic] = useState(false);
 
+  const [userData, setUserData] = useState([]);
+
   const [selectedFolder, setSelectedFolder] = useState(
     initialSelectedFolderValue
   );
   const [selectedCategory, setSelectedCategory] = useState([]);
 
-  const { title, description, errorcode, solutioncode } = form;
+  const { title, description, errorcode, solutioncode, linkHeading, link } = form;
 
   const [user] = useAuthState(auth);
 
@@ -62,6 +68,27 @@ const CreateCodeSnippet = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  const getUser = async () => {
+    try {
+      const userDocRef = doc(db, "UsersData1", user.uid);
+
+      await runTransaction(db, async (transaction) => {
+        const userDoc = await transaction.get(userDocRef);
+
+        if (userDoc.exists()) {
+          const User = await getDoc(userDocRef);
+
+          setUserData(User.data());
+          console.log("USERDATA", userData);
+        }
+      });
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    getUser();
+  }, [user]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (title && errorcode && selectedFolder?.language?.langId) {
@@ -69,9 +96,8 @@ const CreateCodeSnippet = () => {
         await addDoc(collection(db, "ErrorSnippetsData1"), {
           ...form,
           postedAt: serverTimestamp(),
-          author: user.displayName,
+          userData: userData,
           userId: user.uid,
-          userPhoto: user.photoURL,
           category: selectedCategory,
           folder: selectedFolder,
           tags: tags,
@@ -87,7 +113,8 @@ const CreateCodeSnippet = () => {
     }
   };
 
-  console.log(form);
+  console.log("UserData", userData);
+
   return (
     <div>
       <div className="">
@@ -210,6 +237,44 @@ const CreateCodeSnippet = () => {
                   aria-label="noter"
                 />
               </Collapse>
+              <Collapse title={<Text b>Link</Text>}>
+                <div className="flex flex-col gap-5">
+                  <div className="w-full flex gap-4 items-center">
+                    <div className="w-20">
+                      <Text>Heading</Text>
+                    </div>
+                    <div className="w-full">
+                      <Input
+                        underlined
+                        clearable
+                        name="linkHeading"
+                        value={linkHeading}
+                        size="lg"
+                        onChange={handleChange}
+                        width="100%"
+                        aria-label="linkHeading"
+                      />
+                    </div>
+                  </div>
+                  <div className="w-full flex gap-4 items-center">
+                    <div className="w-20">
+                      <Text>Link</Text>
+                    </div>
+                    <div className="w-full">
+                      <Input
+                        underlined
+                        clearable
+                        name="link"
+                        value={link}
+                        size="lg"
+                        onChange={handleChange}
+                        width="100%"
+                        aria-label="link"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </Collapse>
               <Collapse title={<Text b>Tags</Text>}>
                 <div className="flex justify-between gap-2 items-center">
                   <div className="w-full">
@@ -223,7 +288,7 @@ const CreateCodeSnippet = () => {
                   <div className="">
                     <Tooltip
                       content={
-                        "Tags for denne snippet - Tryk ENTER for at tilføj"
+                        "Tags hjælper med at filtrering og søgning af snippets"
                       }
                       color="primary"
                       css={{ zIndex: 9999 }}
@@ -244,7 +309,7 @@ const CreateCodeSnippet = () => {
               </div>
 
               <div>
-                <Button color="gradient" type="submit">
+                <Button color="primary" type="submit">
                   Gem
                 </Button>
               </div>

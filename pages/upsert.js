@@ -51,7 +51,7 @@ const Upsert = () => {
       {user ? (
         <div>
           <div>
-            <Button.Group color="secondary" size="sm">
+            <Button.Group color="primary" size="sm">
               {SnippetType.map(({ type, title }) => (
                 <Button
                   css={{ textTransform: "capitalize" }}

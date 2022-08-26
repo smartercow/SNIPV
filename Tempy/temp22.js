@@ -148,7 +148,7 @@ const Upsert = () => {
             placeHolder="tags"
           />
           <Spacer y={1.5} />
-          <Button color="gradient" type="submit">
+          <Button color="primary" type="submit">
             Gem
           </Button>
         </form>

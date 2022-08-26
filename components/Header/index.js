@@ -39,7 +39,7 @@ const Header = ({ user }) => {
           <div>
             {user && (
               <Link href="/upsert">
-                <Button color="gradient" auto size="sm">
+                <Button color="primary" auto size="sm">
                   +Gem
                 </Button>
               </Link>
@@ -79,8 +79,8 @@ const Header = ({ user }) => {
                     size="lg"
                     color="primary"
                     name="Profil"
-                    description={user.displayName}
-                    src={user.photoURL}
+                    description={user?.displayName}
+                    src={user?.photoURL}
                     pointer
                   />
                 </Dropdown.Trigger>
@@ -98,7 +98,7 @@ const Header = ({ user }) => {
                       Logget ind som
                     </Text>
                     <Text b color="inherit" css={{ d: "flex" }}>
-                      {user.email}
+                      {user?.email}
                     </Text>
                   </Dropdown.Item>
                   <Dropdown.Item key="my_snippets" withDivider>
@@ -131,7 +131,7 @@ const Header = ({ user }) => {
           ) : (
             <div>
               <Button
-                color="gradient"
+                color="primary"
                 onClick={() => setAuthModalState({ open: true })}
               >
                 LOG PÅ

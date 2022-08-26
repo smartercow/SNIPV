@@ -274,7 +274,7 @@ export default function CreateFolder() {
           <Button auto light color="error" onClick={() => setOpen(false)}>
             Luk
           </Button>
-          <Button color="gradient" auto type="submit">
+          <Button color="primary" auto type="submit">
             Opret mappe
           </Button>
         </div>

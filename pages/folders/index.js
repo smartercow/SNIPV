@@ -1,9 +1,11 @@
 import { Button } from "@nextui-org/react";
 import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth, db } from "../Firebase/clientApp";
-import CodeFolders from "../Folders/CodeFolders";
+import SnippetsFolderType from "../../components/Heading/SnippetsFolderType";
+import { auth, db } from "../../Firebase/clientApp";
+import CodeFolders from "../../components/Folders/CodeFolders";
 
 const MyFolders = () => {
   const [user] = useAuthState(auth);
@@ -35,18 +37,12 @@ const MyFolders = () => {
     getMyCodeFolders();
   }, [user]);
 
-  console.log("mycodefolders", myCodeFolders);
 
   return (
     <div>
       <div>
         <div className="mb-4">
-          <Button.Group color="secondary" size="sm">
-            <Button>Koder</Button>
-            <Button disabled>Fejl</Button>
-            <Button disabled>Links</Button>
-            <Button disabled>Noter</Button>
-          </Button.Group>
+        <SnippetsFolderType />
         </div>
         <div>
           <CodeFolders myCodeFolders={myCodeFolders} />

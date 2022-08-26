@@ -18,8 +18,8 @@ import { MdPublic } from "react-icons/md";
 import Login from "../SVG/Iconly/bulk/Login.svg"
 import Image from "next/image"
 import {excerpt} from "../../utilities/excerpt"
+
 const Feed = ({ user, snippets, tags, loading }) => {
-  const [hover, setHover] = useState(true)
   
   return (
     <div>
@@ -46,7 +46,7 @@ const Feed = ({ user, snippets, tags, loading }) => {
 
               <div>
                 <div className="flex flex-col gap-4">
-                  {snippets.snips.slice(0, 10).map((snip, index) => (
+                  {snippets.snips.slice(0, 20).map((snip, index) => (
                     <div key={snip.id}>
                       <Link href={`/s/${snip.id}`}>
                         <div className="hoverable-item">
@@ -64,7 +64,7 @@ const Feed = ({ user, snippets, tags, loading }) => {
                                     color="primary"
                                   >
                                     <User
-                                      src={snip.userData.user.photoURL}
+                                      src={snip.userData?.photoURL}
                                       zoomed
                                       squared
                                       pointer

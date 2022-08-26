@@ -2,12 +2,12 @@ import { Button, Card, Text } from "@nextui-org/react";
 import Link from "next/link";
 import React from "react";
 import { ImFolderOpen } from "react-icons/im";
-const CodeFolders = ({ myCodeFolders }) => {
+const CodeFolders = ({ myErrorFolders }) => {
   return (
     <div>
-      {myCodeFolders && (
+      {myErrorFolders && (
         <div className="flex flex-col gap-3">
-          {myCodeFolders.map((folder) => (
+          {myErrorFolders.map((folder) => (
             <div key={folder.id} className="">
               <Link href={`/folder/${folder.id}`}>
                 <Card isPressable variant="bordered" css={{ mw: "100%" }}>

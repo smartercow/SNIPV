@@ -114,9 +114,6 @@ export default function CreateFolder() {
     e.preventDefault();
     if (language && folderName) {
       try {
-        const userDataDocRef = doc(db, "UsersData1", user?.uid);
-
-        await setDoc(userDataDocRef, JSON.parse(JSON.stringify(user)));
 
         await addDoc(collection(db, "UsersData1", user?.uid, "ErrorFolders"), {
           createdAt: serverTimestamp(),
@@ -277,7 +274,7 @@ export default function CreateFolder() {
           <Button auto light color="error" onClick={() => setOpen(false)}>
             Luk
           </Button>
-          <Button color="gradient" auto type="submit">
+          <Button color="primary" auto type="submit">
             Opret mappe
           </Button>
         </div>

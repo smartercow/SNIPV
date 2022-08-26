@@ -102,11 +102,11 @@ export const LanguageOptions = [
   { label: "RST", value: "rst", langId: "100" },
   { label: "Ruby", value: "ruby", langId: "101" },
   { label: "Rust", value: "rust", langId: "102" },
-  { label: "SASS", value: "sass", langId: "103" },
+/*   { label: "SASS", value: "sass", langId: "103" }, */
   { label: "SCAD", value: "scad", langId: "104" },
   { label: "Scala", value: "scala", langId: "105" },
   { label: "Scheme", value: "scheme", langId: "106" },
-  { label: "SCSS", value: "scss", langId: "107" },
+/*   { label: "SCSS", value: "scss", langId: "107" }, */
   { label: "SH", value: "sh", langId: "108" },
   { label: "SJS", value: "sjs", langId: "109" },
   { label: "Smarty", value: "smarty", langId: "110" },

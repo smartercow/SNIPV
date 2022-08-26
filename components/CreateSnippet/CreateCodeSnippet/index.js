@@ -96,6 +96,7 @@ const CreateCodeSnippet = () => {
           ...form,
           postedAt: serverTimestamp(),
           userData: userData,
+          userId: user.uid,
           category: selectedCategory,
           folder: selectedFolder,
           tags: tags,
@@ -111,6 +112,7 @@ const CreateCodeSnippet = () => {
     }
   };
 
+  console.log("userDatacode",userData);
   return (
     <div>
       <div className="">
@@ -260,7 +262,7 @@ const CreateCodeSnippet = () => {
                   <div className="">
                     <Tooltip
                       content={
-                        "Tags for denne snippet - Tryk ENTER for at tilføj"
+                        "Tags hjælper med at filtrering og søgning af snippets"
                       }
                       color="primary"
                       css={{ zIndex: 9999 }}
@@ -281,7 +283,7 @@ const CreateCodeSnippet = () => {
               </div>
 
               <div>
-                <Button color="gradient" type="submit">
+                <Button color="primary" type="submit">
                   Gem
                 </Button>
               </div>

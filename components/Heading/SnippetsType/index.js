@@ -6,7 +6,7 @@ export const SnippetsTypeLinks = () => {
   return (
     <div>
       <div className="mb-4">
-        <Button.Group color="gradient" ghost size="sm">
+        <Button.Group color="primary" size="sm">
           <Link href="/mysnippets/codes">
             <Button>Koder</Button>
           </Link>
@@ -14,10 +14,10 @@ export const SnippetsTypeLinks = () => {
             <Button>Fejl</Button>
           </Link>
           <Link href="/mysnippets/links">
-            <Button>Links</Button>
+            <Button disabled>Links</Button>
           </Link>
           <Link href="/mysnippets/notes">
-            <Button>Noter</Button>
+            <Button disabled>Noter</Button>
           </Link>
         </Button.Group>
       </div>

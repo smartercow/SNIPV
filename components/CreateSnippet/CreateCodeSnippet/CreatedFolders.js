@@ -89,7 +89,7 @@ export default function CreatedFolders({
               </Text>
             </Text>
             <div>
-              <Button color="gradient" auto onClick={() => setOpen(true)}>
+              <Button color="primary" auto onClick={() => setOpen(true)}>
                 Opret
               </Button>
             </div>

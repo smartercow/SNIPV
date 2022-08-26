@@ -12,8 +12,8 @@ const Auth = () => {
 
   return (
     <div className="flex flex-col gap-4 justify-center">
-      <Button auto color="gradient" icon={<GoogleLogo />} onClick={() => signInWithGoogle()}>&nbsp; Forsæt med Google</Button>
-      <Button auto disabled color="gradient" icon={<GithubLogo />} onClick={() => {}}>&nbsp; Forsæt med Github</Button>
+      <Button auto color="primary" icon={<GoogleLogo />} onClick={() => signInWithGoogle()}>&nbsp; Forsæt med Google</Button>
+      <Button auto disabled color="primary" icon={<GithubLogo />} onClick={() => {}}>&nbsp; Forsæt med Github</Button>
     </div>
   );
 };
