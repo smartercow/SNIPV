@@ -29,37 +29,41 @@ import { DebounceInput } from "react-debounce-input";
 import { useAuthState } from "react-firebase-hooks/auth";
 
 const SetUsernameModal = () => {
-  const [user] = useAuthState(auth)
+  const [user] = useAuthState(auth);
   const [open, setOpen] = useRecoilState(setUsernameModal);
 
   const [usernameInputValue, setUsernameInputValue] = useState("");
   const [usernameValue, setUsernameValue] = useState("");
   const [usernameStatus, setUsernameStatus] = useState("");
-  const [charsRemaining, setCharsRemaining] = useState(20);
+  const [charsRemaining, setCharsRemaining] = useState(16);
+
+  //true = button disabled = false button abled
+  const [confirm, setConfirm] = useState(true);
 
   const [loading, setLoading] = useState(false);
-  const [check, setCheck] = useState(false);
+  //true vaild or nothing - false = error
+  const [check, setCheck] = useState(true);
   const [statusColor, setStatusColor] = useState("");
-  const [inputStatus, setInputStatus] = useState(false);
 
   const handleChange = (e) => {
-    if (e.target.value.length > 20) return;
-    setCharsRemaining(20 - e.target.value.length);
+    if (e.target.value.length > 17) return;
+    setCharsRemaining(16 - e.target.value.length);
     setUsernameValue(e.target.value.toLowerCase());
     setUsernameInputValue(e.target.value);
     setLoading(true);
-    setCheck(false);
+    setCheck(true);
   };
 
-  const CheckUsername = async () => {
-    const usernameFormat = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+  const usernameFormat = /^[A-Za-z0-9]*$/;
 
+  const CheckUsername = async () => {
     if (
-      usernameFormat.test(usernameInputValue) ||
+      usernameFormat.test(usernameInputValue) &&
       usernameInputValue.length > 2
     ) {
       setUsernameStatus("");
-      setInputStatus(true);
+      setCheck(true);
+      setConfirm(true);
       const UserRef = collection(db, "UsersData1");
       const UsernameQuery = query(
         UserRef,
@@ -69,57 +73,57 @@ const SetUsernameModal = () => {
       const Username = await getDocs(UsernameQuery);
 
       if (Username.docs.length > 0) {
-        console.log("username exists");
-        setUsernameStatus(`${usernameInputValue} er allerede taget`);
+        setUsernameStatus("er allerede taget!");
         setStatusColor("error");
         setLoading(false);
-        setCheck(false);
-        setInputStatus(false);
+        setConfirm(true);
       } else {
-        console.log("username NOT exists");
-        setUsernameStatus(`${usernameInputValue} er tilgængelig`);
+        setUsernameStatus("er tilgængelig!");
         setStatusColor("success");
         setLoading(false);
-        setCheck(false);
-        setInputStatus(true);
+        setConfirm(false);
       }
     } else {
-      setInputStatus(false);
+      setCheck(false);
+      setConfirm(true);
+      setLoading(false);
+      setUsernameStatus("");
+      setStatusColor("error");
+
     }
   };
 
   const SetUsername = async () => {
-    try {
-      await updateDoc(doc(db, "UsersData1", user.uid), {
-        username: usernameInputValue,
-        usernameValue: usernameValue,
-        usernameSet: true,
-      })
-      
-      setStatusColor("")
-      setInputStatus(false)
-      setLoading(false)
-      setOpen(false)
-      setCheck(false)
-    } catch (error) {
-      return null
-    }
-  }
+    if (
+      usernameFormat.test(usernameInputValue) &&
+      usernameInputValue.length > 2
+    ) {
+      try {
+        await updateDoc(doc(db, "UsersData1", user.uid), {
+          username: usernameInputValue,
+          usernameValue: usernameValue,
+          usernameSet: true,
+        });
 
-  
+        setOpen(false);
+      } catch (error) {
+        return null;
+      }
+    } else {
+      setCheck(false)
+      setConfirm(true)
+    }
+  };
 
   useEffect(() => {
     if (usernameInputValue) {
       CheckUsername();
+
     }
-    if (!usernameInputValue.length > 0) {
-      setUsernameStatus("");
-      setLoading(false);
-      setInputStatus(true);
-    }
+
   }, [usernameInputValue]);
 
-
+  console.log(usernameInputValue);
   return (
     <div>
       <Modal
@@ -142,8 +146,9 @@ const SetUsernameModal = () => {
             <div className="flex gap-2 items-center">
               <div className="w-full">
                 <DebounceInput
-                  minLength={3}
-                  debounceTimeout={700}
+                  minLength={0}
+                  maxLength={16}
+                  debounceTimeout={1000}
                   aria-label="Username"
                   placeholder="brugernavn"
                   width="100%"
@@ -152,11 +157,11 @@ const SetUsernameModal = () => {
                   element={Input}
                 />
               </div>
-              {inputStatus ? (
+              {check === true && (
                 <div>
                   <Tooltip
                     content={
-                      "Brugernavn skal være mellem 3-20 tegn og må kun indeholde bogstaver, tal eller understregninger."
+                      "Brugernavn skal være mellem 3-16 tegn og må kun indeholde bogstaver eller tal uden MELLEMRUM og ÆØÅ."
                     }
                     color="primary"
                     keepMounted="true"
@@ -167,11 +172,12 @@ const SetUsernameModal = () => {
                     </Text>
                   </Tooltip>
                 </div>
-              ) : (
+              )}
+              {check === false && (
                 <div>
                   <Tooltip
                     content={
-                      "Brugernavn skal være mellem 3-20 tegn og må kun indeholde bogstaver, tal eller understregninger."
+                      "Brugernavn skal være mellem 3-16 tegn og må kun indeholde bogstaver eller tal uden MELLEMRUM og ÆØÅ."
                     }
                     color="error"
                     keepMounted="true"
@@ -187,13 +193,20 @@ const SetUsernameModal = () => {
             {/*             <Text color={charsRemaining === 0 ? "error" : "success"}>
               {charsRemaining} tegn tilbage
             </Text> */}
-            <div className="h-4">
+            <div className="h-4 flex items-center">
+              <Text b color={statusColor}>{usernameInputValue}&nbsp;</Text>
               <Text color={statusColor}>{usernameStatus}</Text>
             </div>
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button auto flat color="primary" onClick={SetUsername}>
+          <Button
+            auto
+            flat
+            color="primary"
+            disabled={confirm}
+            onClick={SetUsername}
+          >
             Færdiggør
           </Button>
         </Modal.Footer>
