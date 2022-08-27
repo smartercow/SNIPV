@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneLight } from "react-syntax-highlighter/dist/cjs/styles/prism";
 const SnippetPage = ({ snippet }) => {
-  const [check, setCheck] = useState("");
+
   const [bgColor, setBgColor] = useState("");
   const [color, setColor] = useState("");
 

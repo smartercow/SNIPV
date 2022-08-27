@@ -44,7 +44,9 @@ const HomePage = () => {
           const mergedSnippets = [];
 
           PromiseResults.forEach((snapshot) => {
-            snapshot.forEach((doc) => mergedSnippets.push(doc.data()));
+            snapshot.forEach((doc) => {
+              mergedSnippets.push({ ...doc.data(), id: doc.id })
+            });
           });
           console.log("merged", mergedSnippets);
           return mergedSnippets;
@@ -65,6 +67,8 @@ const HomePage = () => {
       console.log("getPosts error", error.message);
     }
   };
+
+  console.log("snippetzz",snippets);
 
   useEffect(() => {
     getSnippets();

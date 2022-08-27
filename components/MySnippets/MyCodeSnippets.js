@@ -1,4 +1,5 @@
 import {
+  Badge,
   Button,
   Card,
   Collapse,
@@ -14,6 +15,7 @@ import {
   onSnapshot,
   orderBy,
   query,
+  Timestamp,
   where,
 } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
@@ -25,8 +27,6 @@ import NoUser from "../NoPage/NoUser";
 import Link from "next/link";
 import Image from "next/image";
 import { excerpt } from "../../utilities/excerpt";
-import Document from "../../components/SVG/Iconly/bulk/Document.svg";
-import Login from "../../components/SVG/Iconly/bulk/Login.svg";
 import { DeleteDocumentIcon } from "../SVG/DeleteDocumentIcon";
 import { DeleteSnippet } from "../NonModal/DeleteSnippet";
 import { EditDocumentIcon } from "../SVG/EditDocumentIcon";
@@ -39,6 +39,8 @@ const MyCodeSnippets = () => {
   const [myCodeSnippets, setMyCodeSnippets] = useState();
 
   const [update, setUpdate] = useState(false);
+
+  const [truncate, setTruncate] = useState(null);
 
   const getMySnippets = async () => {
     try {
@@ -78,6 +80,22 @@ const MyCodeSnippets = () => {
     }
   };
 
+  useEffect(() => {
+    window.addEventListener("resize", function () {
+      if (window.matchMedia("(min-width: 1100px)").matches) {
+        setTruncate(90);
+      } else if (window.matchMedia("(min-width: 900px)").matches) {
+        setTruncate(60);
+      } else if (window.matchMedia("(min-width: 600px)").matches) {
+        setTruncate(40);
+      } else if (window.matchMedia("(min-width: 400px)").matches) {
+        setTruncate(20);
+      }
+    });
+  }, [truncate]);
+
+  console.log(myCodeSnippets);
+
   return (
     <div className="min-h-[80vh]">
       {user ? (
@@ -100,9 +118,11 @@ const MyCodeSnippets = () => {
                           </div>
                           <div>
                             {item.folder.folderSnippetType === "code" && (
-                              <div className="text-white bg-[#8FC2FB] px-1 font-mono w-10 ml-1 codeBanner">
-                                <p className="w-10">kode</p>
-                              </div>
+                              <Badge color="primary" variant="flat">
+                                kode
+                              </Badge>
+                              /*                               <div className="text-white bg-[#8FC2FB] px-1 font-mono w-10 ml-1 codeBanner">
+                              </div> */
                             )}
                           </div>
                         </div>
@@ -115,19 +135,28 @@ const MyCodeSnippets = () => {
                           </div>
                           {item.description && (
                             <div className="-mt-2">
-                              <h6 className="text-[#031b4ed4] whitespace-nowrap">
-                                {excerpt(item.description, 60)} <br />
+                              <h6 className="text-[#031b4ed4] truncateHeading ">
+                                {excerpt(item.description, truncate)}
                               </h6>
                             </div>
                           )}
-                          <div className="-mt-2">
-                            <h6 className="text-[#031b4e9f] whitespace-nowrap">
-                              MAPPER / {excerpt(item.folder?.folderName, 60)}
-                            </h6>
+                          <div className="-mt-2 flex justify-between gap-1">
+                            <div>
+                              <h6 className="text-[#031b4e9f] whitespace-nowrap hidden sm:inline">
+                                MAPPER /{" "}
+                                {excerpt(item.folder?.folderName, truncate)}
+                              </h6>
+                            </div>
+                            <div>
+                              <h6 className="text-[#031b4e9f] whitespace-nowrap">
+                                {/* {new Date(item.postedAt).toDate()} */}{" "}
+                                27/08/2022
+                              </h6>
+                            </div>
                           </div>
                         </div>
                         <div className="hoverable-show">
-                        <LoginIcon fill="#0072F5" />
+                          <LoginIcon width={30} height={30} fill="#0072F5" />
                         </div>
                       </div>
                     </div>
@@ -140,6 +169,8 @@ const MyCodeSnippets = () => {
                     <EditDocumentIcon
                       fill="#0072F5"
                       className="cursor-pointer"
+                      width={26}
+                      height={26}
                     />
                   </Button>
                 </div>
@@ -150,6 +181,8 @@ const MyCodeSnippets = () => {
                         <DeleteDocumentIcon
                           fill="#F31260"
                           className="cursor-pointer"
+                          width={26}
+                          height={26}
                         />
                       </Button>
                     </Popover.Trigger>
