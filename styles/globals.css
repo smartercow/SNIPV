@@ -10,7 +10,7 @@
 
 @layer components {
   .tagHover {
-    @apply bg-[#1253fa] text-white ease-in duration-300 cursor-pointer
+    @apply bg-[#0072F5] text-white ease-in duration-300 cursor-pointer
   }
 
   .langHover {

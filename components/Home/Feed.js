@@ -15,12 +15,12 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneLight } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import Link from "next/link";
 import { MdPublic } from "react-icons/md";
-import Login from "../SVG/Iconly/bulk/Login.svg"
-import Image from "next/image"
-import {excerpt} from "../../utilities/excerpt"
+import Login from "../SVG/Iconly/bulk/Login.svg";
+import Image from "next/image";
+import { excerpt } from "../../utilities/excerpt";
+import { LoginIcon } from "../SVG/LoginIcon";
 
 const Feed = ({ user, snippets, tags, loading }) => {
-  
   return (
     <div>
       {snippets && (
@@ -46,7 +46,7 @@ const Feed = ({ user, snippets, tags, loading }) => {
 
               <div>
                 <div className="flex flex-col gap-4">
-                  {snippets.snips.slice(0, 20).map((snip, index) => (
+                  {snippets.snips.slice(0, 10).map((snip, index) => (
                     <div key={snip.id}>
                       <Link href={`/s/${snip.id}`}>
                         <div className="hoverable-item">
@@ -72,17 +72,16 @@ const Feed = ({ user, snippets, tags, loading }) => {
                                   </Tooltip>
                                 </div>
 
-                                <div className="w-full flex flex-col gap-3 MonoHeading">
+                                <div className="w-full flex flex-col gap-3">
                                   <div>
-                                    <p className="text-[#4D5B7C] text-lg font-[500]">
+                                    <p className="text-[#031B4E] text-lg font-[500] SnippetHeadingTwo">
                                       {excerpt(snip.title, 60)}
                                     </p>
                                   </div>
                                   {snip.description && (
                                     <div className="-mt-2">
                                       <h6
-                                        className="text-gray-500 whitespace-nowrap"
-                                        color="#889096"
+                                        className="text-[#031b4ed4] whitespace-nowrap MonoHeading"
                                       >
                                         {excerpt(snip.description, 60)}
                                       </h6>
@@ -90,7 +89,7 @@ const Feed = ({ user, snippets, tags, loading }) => {
                                   )}
                                 </div>
                                 <div className="hoverable-show">
-                                  <Image src={Login} fill="responsive" alt="" />
+                                  <LoginIcon fill="#0072F5" />
                                 </div>
                               </div>
                             </div>

@@ -107,7 +107,7 @@ const Header = ({ user }) => {
                     </Link>
                   </Dropdown.Item>
                   <Dropdown.Item dis key="folders">
-                  <Link href="/folders">
+                    <Link href="/folders">
                       <div className="w-full">Mine mapper</div>
                     </Link>
                   </Dropdown.Item>

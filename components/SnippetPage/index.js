@@ -129,7 +129,7 @@ const SnippetPage = ({ snippet }) => {
               <div>
                 <a
                   href={snippet.link}
-                  className="text-[#1253fa] underline underline-offset-4 text font-semibold text-lg"
+                  className="text-[#0072F5] underline underline-offset-4 text font-semibold text-lg"
                 >
                   {snippet.link}
                 </a>

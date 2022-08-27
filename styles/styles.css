@@ -1,16 +1,16 @@
 .hoverable-show {
     visibility: hidden;
-    transition: linear 3s ease-in;
-
+    opacity: 0;
 }
 
 .hoverable-item:hover .hoverable-show {
     visibility: visible;
-
+    opacity: 1;
+    transition: visibility .5s, opacity .6s linear;
 }
 
 /* Link Snippets Page */
 .linkSection {
-    border-left: 8px solid #1253fa;
+    border-left: 8px solid #0072F5;
     border-radius: 5px;
 }

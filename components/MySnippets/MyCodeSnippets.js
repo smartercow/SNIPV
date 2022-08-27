@@ -1,4 +1,11 @@
-import { Button, Card, Collapse, Loading, Text } from "@nextui-org/react";
+import {
+  Button,
+  Card,
+  Collapse,
+  Loading,
+  Popover,
+  Text,
+} from "@nextui-org/react";
 import {
   collection,
   deleteDoc,
@@ -21,6 +28,10 @@ import { excerpt } from "../../utilities/excerpt";
 import Document from "../../components/SVG/Iconly/bulk/Document.svg";
 import Login from "../../components/SVG/Iconly/bulk/Login.svg";
 import { DeleteDocumentIcon } from "../SVG/DeleteDocumentIcon";
+import { DeleteSnippet } from "../NonModal/DeleteSnippet";
+import { EditDocumentIcon } from "../SVG/EditDocumentIcon";
+import { DocumentIcon } from "../SVG/DocumentIcon";
+import { LoginIcon } from "../SVG/LoginIcon";
 
 const MyCodeSnippets = () => {
   const [user] = useAuthState(auth);
@@ -42,8 +53,6 @@ const MyCodeSnippets = () => {
         ...doc.data(),
       }));
 
-      console.log("snippetdocs", snippets);
-
       setMyCodeSnippets((prev) => ({
         ...prev,
         snips: snippets,
@@ -54,6 +63,12 @@ const MyCodeSnippets = () => {
     }
   };
 
+  useEffect(() => {
+    if (user) {
+      getMySnippets();
+    }
+  }, [user, update]);
+
   const handleDelete = async (id) => {
     try {
       await deleteDoc(doc(db, "CodeSnippetsData1", id));
@@ -63,69 +78,85 @@ const MyCodeSnippets = () => {
     }
   };
 
-  useEffect(() => {
-    if (user) {
-      getMySnippets();
-    }
-  }, [user, update]);
-  console.log(myCodeSnippets);
-  
   return (
     <div className="min-h-[80vh]">
       {user ? (
         <div className="flex flex-col gap-4">
           {myCodeSnippets?.snips?.map((item) => (
-            <div key={item.id} className="flex gap-2">
+            <div key={item.id} className="hoverable-item flex gap-2">
               <Link href={`/s/${item.id}`} key={item.id}>
                 <div key={item.id} className="flex gap-2 w-full cursor-pointer">
                   <Card variant="flat" css={{ mw: "100%", padding: 0 }}>
-                    <div className="cardHover p-2 border-b rounded-xl w-full">
-                      <div className="flex gap-4 items-center">
-                        <div className="w-auto">
-                          <Image
-                            src={Document}
-                            height={40}
-                            width={40}
-                            fill="responsive"
-                            alt=""
-                          />
+                    <div className="cardHover hoverable-item p-2 border-b rounded-xl w-full">
+                      <div className="flex gap-4 items-center justify-center">
+                        <div className="px-1">
+                          <div>
+                            <DocumentIcon
+                              fill="#0072F5"
+                              className="cursor-pointer"
+                              width={50}
+                              height={50}
+                            />
+                          </div>
+                          <div>
+                            {item.folder.folderSnippetType === "code" && (
+                              <div className="text-white bg-[#8FC2FB] px-1 rounded-md font-mono w-10 ml-1">
+                                <p className="w-10">kode</p>
+                              </div>
+                            )}
+                          </div>
                         </div>
 
                         <div className="w-full flex flex-col gap-3 MonoHeading">
                           <div>
-                            <p className="text-[#4D5B7C] text-lg font-[500]">
+                            <p className="text-[#031B4E] text-lg font-[500]">
                               {excerpt(item.title, 60)}
                             </p>
                           </div>
                           {item.description && (
                             <div className="-mt-2">
-                              <h6
-                                className="text-gray-500 whitespace-nowrap"
-                                color="#889096"
-                              >
+                              <h6 className="text-[#031b4ed4] whitespace-nowrap">
                                 {excerpt(item.description, 60)} <br />
                               </h6>
                             </div>
                           )}
+                          <div className="-mt-2">
+                            <h6 className="text-[#031b4e9f] whitespace-nowrap">
+                              MAPPER / {excerpt(item.folder?.folderName, 60)}
+                            </h6>
+                          </div>
                         </div>
                         <div className="hoverable-show">
-                          <Image src={Login} fill="responsive" alt="" />
+                        <LoginIcon fill="#0072F5" />
                         </div>
                       </div>
                     </div>
                   </Card>
                 </div>
               </Link>
-              <div className="flex flex-col gap-1 justify-center items-center">
-                <div>edit</div>
+              <div className="hoverable-show flex flex-col gap-1 justify-center items-center">
                 <div>
-                  <DeleteDocumentIcon
-                    fill="#F31260"
-                    className="cursor-pointer"
-                    onClick={() => {
-                      handleDelete(item.id);
-                    }}
-                  />
+                  <Button auto light>
+                    <EditDocumentIcon
+                      fill="#0072F5"
+                      className="cursor-pointer"
+                    />
+                  </Button>
+                </div>
+                <div>
+                  <Popover placement="top">
+                    <Popover.Trigger>
+                      <Button auto light>
+                        <DeleteDocumentIcon
+                          fill="#F31260"
+                          className="cursor-pointer"
+                        />
+                      </Button>
+                    </Popover.Trigger>
+                    <Popover.Content>
+                      <DeleteSnippet item={item} handleDelete={handleDelete} />
+                    </Popover.Content>
+                  </Popover>
                 </div>
               </div>
             </div>

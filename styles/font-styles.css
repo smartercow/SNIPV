@@ -12,6 +12,10 @@
     word-break: break-word;
   }
 
+  .SnippetHeadingTwo {
+    font-family: 'Epilogue', sans-serif;
+  }
+
   /* Snippet page language */
   .MonoHeading {
     font-family: 'JetBrainsMono', monospace;

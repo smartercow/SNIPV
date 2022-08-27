@@ -10,7 +10,7 @@ const Tags = ({ tags, snippets }) => {
         <div>
           {tags && (
             <Card variant="flat" css={{ mw: "100%", padding: "$0" }}>
-              <div className="bg-[#c8dfff] bg-opacity-60 flex flex-col gap-5 pt-1 pb-5 px-3">
+              <div className="bg-[#F1F7FF] bg-opacity-60 flex flex-col gap-5 pt-1 pb-5 px-3">
                 <div>
                   <div className="flex items-center gap-2">
                     <div className="pt-1">
@@ -27,10 +27,10 @@ const Tags = ({ tags, snippets }) => {
                   <div className="flex gap-2 flex-wrap -mt-4">
                     {tags.slice(0, 10).map((tag, index) => (
                       <Link key={index} href="/">
-                        <div className="px-3 py-1 bg-[#ffffffc2] rounded-md opacity-80 cursor-pointer hover:opacity-70 mr-2">
-                          <Text b transform="lowercase" color="black">
+                        <div className="px-3 py-1 bg-[#c8dfff85] rounded-md cursor-pointer hover:opacity-70 mr-2 lowercase ease-in duration-300">
+                          <p className="font-[500] text-sm SnippetHeadingTwo tracking-wide text-[#031B4E]">
                             {tag}
-                          </Text>
+                          </p>
                         </div>
                       </Link>
                     ))}
