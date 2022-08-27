@@ -100,7 +100,7 @@ const MyCodeSnippets = () => {
                           </div>
                           <div>
                             {item.folder.folderSnippetType === "code" && (
-                              <div className="text-white bg-[#8FC2FB] px-1 rounded-md font-mono w-10 ml-1">
+                              <div className="text-white bg-[#8FC2FB] px-1 font-mono w-10 ml-1 codeBanner">
                                 <p className="w-10">kode</p>
                               </div>
                             )}

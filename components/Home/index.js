@@ -24,21 +24,43 @@ const HomePage = () => {
 
   const getSnippets = async () => {
     try {
-      const postsQuery = query(
+      const codeQuery = query(
         collection(db, "CodeSnippetsData1"),
         where("isPublic", "==", true),
         orderBy("postedAt", "desc")
       );
-      const snippetDocs = await getDocs(postsQuery);
-      const snippets = snippetDocs.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      
-      setSnippets((prev) => ({
-        ...prev,
-        snips: snippets,
-      }));
+
+      const errorQuery = query(
+        collection(db, "ErrorSnippetsData1"),
+        where("isPublic", "==", true),
+        orderBy("postedAt", "desc")
+      );
+
+      const codeDocs = await getDocs(codeQuery);
+      const errorDocs = await getDocs(errorQuery);
+
+      Promise.all([codeDocs, errorDocs])
+        .then((PromiseResults) => {
+          const mergedSnippets = [];
+
+          PromiseResults.forEach((snapshot) => {
+            snapshot.forEach((doc) => mergedSnippets.push(doc.data()));
+          });
+          console.log("merged", mergedSnippets);
+          return mergedSnippets;
+        })
+        .then((mergedData) =>
+          mergedData.sort((a, b) => a.postedAt - b.postedAt).reverse()
+        )
+        .then((sortedSnippets) => {
+          setSnippets((prev) => ({
+            ...prev,
+            snips: sortedSnippets,
+          }));
+        })
+        .catch((e) => console.log("error", e));
+
+      console.log("snipz", snippets);
     } catch (error) {
       console.log("getPosts error", error.message);
     }

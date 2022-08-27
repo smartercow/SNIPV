@@ -11,12 +11,8 @@ import {
   User,
 } from "@nextui-org/react";
 import React, { useState } from "react";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { oneLight } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import Link from "next/link";
 import { MdPublic } from "react-icons/md";
-import Login from "../SVG/Iconly/bulk/Login.svg";
-import Image from "next/image";
 import { excerpt } from "../../utilities/excerpt";
 import { LoginIcon } from "../SVG/LoginIcon";
 
@@ -36,7 +32,7 @@ const Feed = ({ user, snippets, tags, loading }) => {
                   </div>
                   <div className="w-full ">
                     <div className="uppercase MonoHeading ">
-                      <p h4 color="$gray900" className="font-semibold">
+                      <p className="font-semibold">
                         Offentlige snippets
                       </p>
                     </div>
@@ -46,8 +42,8 @@ const Feed = ({ user, snippets, tags, loading }) => {
 
               <div>
                 <div className="flex flex-col gap-4">
-                  {snippets.snips.slice(0, 10).map((snip, index) => (
-                    <div key={snip.id}>
+                  {snippets.snips.slice(0,10).map((snip, index) => (
+                    <div key={index}>
                       <Link href={`/s/${snip.id}`}>
                         <div className="hoverable-item">
                           <Card
