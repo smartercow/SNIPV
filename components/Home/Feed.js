@@ -41,14 +41,14 @@ const Feed = ({ user, snippets, tags, loading }) => {
           {snippets.snips && (
             <div className="flex flex-col gap-4 ">
               <div className="bg-gradient-to-r from-cyan-500 to-blue-500 text-white">
-                <div className="flex items-center gap-2 pl-2">
-                  <div className="pt-1">
+                <div className="flex items-center gap-2 pl-2 h-10">
+                  <div className="pt-3">
                     <Text h3 color="white">
                       <MdPublic />
                     </Text>
                   </div>
                   <div className="w-full ">
-                    <div className="uppercase MonoHeading ">
+                    <div className="uppercase">
                       <p className="font-semibold">Offentlige snippets</p>
                     </div>
                   </div>
@@ -67,7 +67,7 @@ const Feed = ({ user, snippets, tags, loading }) => {
                             css={{ mw: "100%", padding: "$0" }}
                             key={snip.id}
                           >
-                            <div className="cardHover hoverable-item flex gap-1 items-center p-2 border-b rounded-xl w-full">
+                            <div className="cardHover bg-[#F1F7FF] hoverable-item flex gap-3 items-center p-2 border-b rounded-xl w-full">
                               <div className="w-full flex flex-col gap-2">
                                 <div className="flex items-center">
                                   <div className="">
@@ -127,64 +127,41 @@ const Feed = ({ user, snippets, tags, loading }) => {
                                     )}
                                   </div>
                                   <div className="w-full MonoHeading">
-                                    {snip.category.langId === "54" && (
-                                      <div>
-                                        {Object.keys(snip?.folder?.framework)
-                                          .length > 0 ? (
-                                          <Badge
-                                            css={{
-                                              backgroundColor: "#F7E018",
-                                              color: "#031B4E",
-                                            }}
-                                            variant="flat"
-                                            className="font-mono"
-                                          >
-                                            {snip?.folder?.framework?.label}
-                                          </Badge>
-                                        ) : (
-                                          <Badge
-                                            css={{
-                                              backgroundColor: "#F7E018",
-                                              color: "#031B4E",
-                                            }}
-                                            variant="flat"
-                                            className="font-mono"
-                                          >
-                                            {snip?.folder?.language?.label}
-                                          </Badge>
-                                        )}
+                                    <div className="flex gap-2">
+                                      <div
+                                        className={`l${snip.category.langId} lBadge rounded-3xl flex justify-center items-center`}
+                                      >
+                                        <p className="text-xs MonoHeading font-semibold lowercase">
+                                          {snip.folder.language?.label}
+                                        </p>
                                       </div>
-                                    )}
-                                    {snip.category.langId === "19" && (
-                                      <div>
-                                        {Object.keys(snip?.folder?.processor)
-                                          .length > 0 ? (
-                                          <Badge
-                                            css={{
-                                              backgroundColor: "#009BDD",
-                                              color: "white",
-                                            }}
-                                            variant="flat"
-                                            className="font-mono"
-                                          >
-                                            {snip?.folder?.processor?.label}
-                                          </Badge>
-                                        ) : (
-                                          <Badge
-                                            css={{
-                                              backgroundColor: "#009BDD",
-                                              color: "white",
-                                            }}
-                                            variant="flat"
-                                            className="font-mono"
-                                          >
-                                            {snip?.folder?.language?.label}
-                                          </Badge>
-                                        )}
-                                      </div>
-                                    )}
+                                      {snip.folder?.framework.frameworkId && (
+                                        <div
+                                          className={`f${snip.folder.framework.frameworkId} lBadge rounded-3xl flex justify-center items-center`}
+                                        >
+                                          <p className="text-xs MonoHeading font-semibold lowercase">
+                                            {snip.folder.framework?.label}
+                                          </p>
+                                        </div>
+                                      )}
+                                      {snip?.folder?.processor.processorId && (
+                                        <div
+                                          className={`p${snip.folder?.processor.processorId} lBadge rounded-3xl flex justify-center items-center`}
+                                        >
+                                          <p className="text-xs MonoHeading font-semibold lowercase">
+                                            {snip.folder.processor?.label}
+                                          </p>
+                                        </div>
+                                      )}
+                                    </div>
                                   </div>
-                                  <div className="MonoHeading">2/2/1900</div>
+                                  <div className="text-[#031B4E]">
+                                    <p className="text-xs font-mono">
+                                      {new Date(
+                                        snip.postedAt.seconds * 1000
+                                      ).toLocaleDateString("da-DK")}
+                                    </p>
+                                  </div>
                                 </div>
                               </div>
                               <div className="hoverable-show">

@@ -40,7 +40,7 @@ const MyCodeSnippets = () => {
 
   const [update, setUpdate] = useState(false);
 
-  const [truncate, setTruncate] = useState(null);
+  const [truncate, setTruncate] = useState(50);
 
   const getMySnippets = async () => {
     try {
@@ -118,11 +118,11 @@ const MyCodeSnippets = () => {
                           </div>
                           <div>
                             {item.folder.folderSnippetType === "code" && (
-                              <Badge color="primary" variant="flat">
-                                kode
-                              </Badge>
-                              /*                               <div className="text-white bg-[#8FC2FB] px-1 font-mono w-10 ml-1 codeBanner">
-                              </div> */
+                              <div className="pr-[.60rem]">
+                                <Badge isSquared color="primary" variant="flat">
+                                  KODE
+                                </Badge>
+                              </div>
                             )}
                           </div>
                         </div>
@@ -143,13 +143,13 @@ const MyCodeSnippets = () => {
                           <div className="-mt-2 flex justify-between gap-1">
                             <div>
                               <h6 className="text-[#031b4e9f] whitespace-nowrap hidden sm:inline">
-                                MAPPER /{" "}
+                                MAPPER /
                                 {excerpt(item.folder?.folderName, truncate)}
                               </h6>
                             </div>
                             <div>
                               <h6 className="text-[#031b4e9f] whitespace-nowrap">
-                                {/* {new Date(item.postedAt).toDate()} */}{" "}
+                                {/* {new Date(item.postedAt).toDate()} */}
                                 27/08/2022
                               </h6>
                             </div>

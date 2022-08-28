@@ -18,7 +18,7 @@
   }
 
   .cardHover {
-    @apply bg-[#F1F7FF] hover:bg-[#c8dfff] ease-in duration-300
+    @apply hover:bg-[#c8dfff] ease-in duration-300
   }
 
   .snipArrow {
