@@ -48,7 +48,7 @@ const Header = ({ user }) => {
         </div>
 
         {user && (
-          <div className="text-center">
+          <div className="text-center hidden md:inline">
             <Input
               clearable
               animated="false"

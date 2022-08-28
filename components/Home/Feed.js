@@ -18,26 +18,11 @@ import { excerpt } from "../../utilities/excerpt";
 import { LoginIcon } from "../SVG/LoginIcon";
 
 const Feed = ({ user, snippets, tags, loading }) => {
-  const [truncate, setTruncate] = useState(30);
-
-  useEffect(() => {
-    window.addEventListener("resize", function () {
-      if (window.matchMedia("(min-width: 1100px)").matches) {
-        setTruncate(90);
-      } else if (window.matchMedia("(min-width: 900px)").matches) {
-        setTruncate(60);
-      } else if (window.matchMedia("(min-width: 600px)").matches) {
-        setTruncate(40);
-      } else if (window.matchMedia("(min-width: 400px)").matches) {
-        setTruncate(20);
-      }
-    });
-  }, [truncate, user]);
 
   return (
     <div>
       {snippets && (
-        <div className="w-full">
+        <div className="max-w-[46rem]">
           {snippets.snips && (
             <div className="flex flex-col gap-4 ">
               <div className="bg-gradient-to-r from-cyan-500 to-blue-500 text-white">
@@ -86,14 +71,14 @@ const Feed = ({ user, snippets, tags, loading }) => {
 
                                   <div className="w-full flex flex-col justify-center gap-3 MonoHeading">
                                     <div>
-                                      <p className="text-[#031B4E] text-lg font-[500]">
-                                        {excerpt(snip.title, truncate)}
+                                      <p className="text-[#031B4E] text-lg font-[500] truncateText">
+                                        {snip.title}
                                       </p>
                                     </div>
                                     {snip.description && (
                                       <div className="-mt-2 h-5">
                                         <h6 className="text-[#031b4ed4] whitespace-nowrap MonoHeading">
-                                          {excerpt(snip.description, truncate)}
+                                          {snip.description}
                                         </h6>
                                       </div>
                                     )}

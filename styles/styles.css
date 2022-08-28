@@ -20,6 +20,8 @@
     border-radius: .4rem;
 }
 
-.truncateHeading {
+/* .truncateText {
+    overflow: hidden;
     text-overflow: ellipsis;
-}
+    white-space: nowrap;
+} */

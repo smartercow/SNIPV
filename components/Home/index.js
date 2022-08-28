@@ -117,7 +117,7 @@ const HomePage = () => {
                     />
                   </div>
                 </div>
-                <div className="hidden md:inline w-2/5">
+                <div className="hidden md:inline">
                   <Tags snippets={snippets} tags={tags} />
                 </div>
               </div>
