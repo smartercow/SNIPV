@@ -11,6 +11,7 @@ import {
   collection,
   deleteDoc,
   doc,
+  FieldPath,
   getDocs,
   onSnapshot,
   orderBy,
@@ -46,7 +47,7 @@ const MyCodeSnippets = () => {
     try {
       const snippetQuery = query(
         collection(db, "CodeSnippetsData1"),
-        where("userId", "==", user?.uid),
+        where(new FieldPath("userData", "uid"), "==", user?.uid),
         orderBy("postedAt", "desc")
       );
       const snippetDocs = await getDocs(snippetQuery);

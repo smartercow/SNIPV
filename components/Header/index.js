@@ -39,9 +39,8 @@ const Header = ({ user }) => {
           <div>
             {user && (
               <Link href="/upsert">
-                <Button color="primary" auto size="sm">
+                
                   +Gem
-                </Button>
               </Link>
             )}
           </div>

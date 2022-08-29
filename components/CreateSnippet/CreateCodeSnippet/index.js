@@ -49,7 +49,13 @@ const CreateCodeSnippet = () => {
   const [notes, setNotes] = useState("");
   const [snippetPublic, setSnippetPublic] = useState(false);
 
-  const [userData, setUserData] = useState([]);
+  const [userData, setUserData] = useState([])
+  const [username, setUsername] = useState("")
+  const [usernameValue, setUsernameValue] = useState("")
+  const [photoURL, setPhotoURL] = useState("")
+  const [uid, setUid] = useState("")
+
+  console.log("UserData", userData);
 
   const [selectedFolder, setSelectedFolder] = useState(
     initialSelectedFolderValue
@@ -59,6 +65,11 @@ const CreateCodeSnippet = () => {
   const { title, description, code, linkHeading, link } = form;
 
   const [user] = useAuthState(auth);
+
+  console.log("USERNAME", username);
+  console.log("USERVALUE",usernameValue);
+  console.log("UID",uid);
+  console.log("photo",photoURL);
 
   /*   const { id } = useRouter(); */
   const router = useRouter();
@@ -78,7 +89,10 @@ const CreateCodeSnippet = () => {
           const User = await getDoc(userDocRef);
 
           setUserData(User.data());
-          console.log("USERDATA", userData);
+          setUsername(User.data().username)
+          setUsernameValue(User.data().usernameValue)
+          setUid(User.data().uid)
+          setPhotoURL(User.data().photoURL)
         }
       });
     } catch (error) {}
@@ -95,8 +109,12 @@ const CreateCodeSnippet = () => {
         await addDoc(collection(db, "CodeSnippetsData1"), {
           ...form,
           postedAt: serverTimestamp(),
-          userData: userData,
-          userId: user.uid,
+          userData: {
+            username: username,
+            usernameValue: usernameValue,
+            uid: uid,
+            photoURL: photoURL,
+          },
           category: selectedCategory,
           folder: selectedFolder,
           tags: tags,
@@ -112,7 +130,6 @@ const CreateCodeSnippet = () => {
     }
   };
 
-  console.log("userDatacode",userData);
   return (
     <div>
       <div className="">

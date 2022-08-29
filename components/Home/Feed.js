@@ -70,14 +70,14 @@ const Feed = ({ user, snippets, tags, loading }) => {
                                   </div>
 
                                   <div className="w-full flex flex-col justify-center gap-3 MonoHeading">
-                                    <div>
+                                    <div className="w-full">
                                       <p className="text-[#031B4E] text-lg font-[500] truncateText">
                                         {snip.title}
                                       </p>
                                     </div>
                                     {snip.description && (
                                       <div className="-mt-2 h-5">
-                                        <h6 className="text-[#031b4ed4] whitespace-nowrap MonoHeading">
+                                        <h6 className="text-[#031b4ed4] whitespace-nowrap MonoHeading truncateText">
                                           {snip.description}
                                         </h6>
                                       </div>

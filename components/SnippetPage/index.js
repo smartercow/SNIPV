@@ -5,83 +5,47 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneLight } from "react-syntax-highlighter/dist/cjs/styles/prism";
 const SnippetPage = ({ snippet }) => {
 
-  const [bgColor, setBgColor] = useState("");
-  const [color, setColor] = useState("");
 
-  useEffect(() => {
-    if ((snippet.category.langId === "19") | "54" | "50") {
-      if (snippet.category.langId === "19") {
-        setBgColor("#009BDD"); //css blue
-        setColor("white");
-      }
-
-      if (snippet.category.langId === "54") {
-        setBgColor("#F7E018"); //yellow js
-        setColor("#031B4E"); //blueish main
-      }
-
-      if (snippet.category.langId === "50") {
-        setBgColor("#FF3137"); //red html
-        setColor("white");
-      }
-    }
-  }, [snippet]);
-
-  //bg-[#F7E018] yellow
   return (
     <div className="flex flex-col gap-4">
-      <div>
-        <div className="flex gap-2 items-center">
-          <div className="">
+      <div className="flex flex-col gap-3">
+        <div className="flex gap-2 -ml-1">
+          <div
+            className={`l${snippet.category.langId} lBadge rounded-3xl flex justify-center items-center`}
+          >
+            <p className="text-xs MonoHeading font-semibold lowercase">
+              {snippet.folder.language?.label}
+            </p>
+          </div>
+          {snippet.folder?.framework.frameworkId && (
             <div
-              style={{ backgroundColor: bgColor, color: color }}
-              className="bg-[#F75C1E] text-white rounded-lg py-1 px-3 uppercase hover:langHover SPlangauge"
+              className={`f${snippet.folder.framework.frameworkId} lBadge rounded-3xl flex justify-center items-center`}
             >
-              {Object.keys(snippet?.folder?.framework).length > 0 && (
-                <div>
-                  {Object.keys(snippet?.folder?.framework).length > 0 ? (
-                    <p className="font-mono">
-                      {snippet?.folder?.framework?.label}
-                    </p>
-                  ) : (
-                    <p className="font-mono">
-                      {snippet?.folder?.language?.label}
-                    </p>
-                  )}
-                </div>
-              )}
-
-              {Object.keys(snippet?.folder?.processor).length > 0 && (
-                <div>
-                  {Object.keys(snippet?.folder?.processor).length > 0 ? (
-                    <p className="font-mono">
-                      {snippet?.folder?.processor?.label}
-                    </p>
-                  ) : (
-                    <p className="font-mono">
-                      {snippet?.folder?.language?.label}
-                    </p>
-                  )}
-                </div>
-              )}
-
-              {!Object.keys(snippet?.folder?.processor).length > 0 &&
-                !Object.keys(snippet?.folder?.framework).length > 0 && (
-                  <div>
-                    <p className="font-mono">{snippet?.category?.label}</p>
-                  </div>
-                )}
+              <p className="text-xs MonoHeading font-semibold lowercase">
+                {snippet.folder.framework?.label}
+              </p>
             </div>
-          </div>
-          <div className="">
-            <Text h2 color="#031B4E" className="SnippetHeading">
-              {snippet.title}
-            </Text>
-          </div>
+          )}
+          {snippet?.folder?.processor.processorId && (
+            <div
+              className={`p${snippet.folder?.processor.processorId} lBadge rounded-3xl flex justify-center items-center`}
+            >
+              <p className="text-xs MonoHeading font-semibold lowercase">
+                {snippet.folder.processor?.label}
+              </p>
+            </div>
+          )}
         </div>
-        {snippet.description && (
-          <div className="text-lg ">{snippet.description}</div>
-        )}
+        <div>
+          <div className="flex items-center">
+            <h2 style={{ color: "#031B4E" }} className="SnippetHeading">
+              {snippet.title}
+            </h2>
+          </div>
+          {snippet.description && (
+            <div className="text-lg ">{snippet.description}</div>
+          )}
+        </div>
       </div>
       {snippet.tags && (
         <div className="flex gap-2">
@@ -140,7 +104,7 @@ const SnippetPage = ({ snippet }) => {
       )}
 
       <div className="text-lg flex gap-1">
-        <p>Af</p>
+        <p>Af</p> <p>{snippet.id}</p>
         <p className="font-bold text-[#031B4E]">{snippet.userData.username}</p>
       </div>
     </div>

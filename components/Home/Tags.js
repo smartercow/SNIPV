@@ -9,7 +9,7 @@ const Tags = ({ tags, snippets }) => {
       {snippets.snips && (
         <div>
           {tags && (
-            <Card variant="flat" css={{ mw: "100%", padding: "$0" }}>
+            <Card variant="flat" css={{ w: "300px", padding: "$0" }}>
               <div className="bg-[#F1F7FF] bg-opacity-60 flex flex-col gap-5 pt-1 pb-5 px-3">
                 <div>
                   <div className="flex items-center gap-2">
