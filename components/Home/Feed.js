@@ -14,7 +14,6 @@ import {
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { MdPublic } from "react-icons/md";
-import { excerpt } from "../../utilities/excerpt";
 import { LoginIcon } from "../SVG/LoginIcon";
 
 const Feed = ({ user, snippets, tags, loading }) => {

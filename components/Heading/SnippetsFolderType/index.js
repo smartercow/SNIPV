@@ -4,17 +4,13 @@ import React from "react";
 
 const SnippetsFolderType = () => {
   return (
-    <div>
-      <Button.Group color="primary" size="sm">
+    <div className="flex gap-3 uppercase">
         <Link href="/folders/codes">
-          <Button>Koder</Button>
+        <h5 className="cursor-pointer">Koder</h5>
         </Link>
         <Link href="/folders/errors">
-          <Button>Fejl</Button>
+        <h5 className="cursor-pointer">Fejl</h5>
         </Link>
-        <Button disabled>Links</Button>
-        <Button disabled>Noter</Button>
-      </Button.Group>
     </div>
   );
 };

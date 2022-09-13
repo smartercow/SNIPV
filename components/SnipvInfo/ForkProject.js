@@ -1,12 +1,12 @@
-import { Button, Text } from "@nextui-org/react";
+import { Button, Spacer, Text } from "@nextui-org/react";
 import React from "react";
 import Link from "next/link";
 
-const About = () => {
+const ForkProject = () => {
   return (
     <div className="min-h-[70vh]">
       <div className="flex justify-center items-center h-20">
-        <Text
+      <Text
           h3
           css={{
             textGradient: "90deg, $blue600 -20%, $pink600 50%",
@@ -17,7 +17,7 @@ const About = () => {
         </Text>
       </div>
       <div className="flex justify-between gap-4">
-        <div className="flex flex-col gap-4 w-60 text-center">
+      <div className="flex flex-col gap-4 w-60">
           <Link href="/about">
             <Text h5 className="cursor-pointer hover:underline">
               <Text b color="black">
@@ -27,24 +27,18 @@ const About = () => {
           </Link>
           <Link href="/forkproject">
             <Text h5 className="cursor-pointer hover:underline">
-              Fork denne projekt
+                Fork denne projekt
             </Text>
           </Link>
         </div>
-        <div className="w-full flex flex-col gap-4">
-          <div className="text-center">
-            <Text size="lg">
-              <Text size="lg" b>
-                SNIPV
-              </Text>
-              (Snippets Vault) er en bankboks for genanvendelig kildekode,
-              maskinkode eller tekst.
+        <div className="w-full">
+          <div>
+            <Text size="lg" b>
+              FORK DENNE PROJEKT PÅ GITHUB
             </Text>
-          </div>
-          <div className="text-center">
-            <div className="flex gap-3 justify-center items-center">
-            <Text h5>Et projekt af PG -</Text>
-            <Text h5 className="underline text-blue-600">https://github.com/smartercow</Text>
+            <hr className="my-3" />
+            <div>
+            <Text h5 className="text-blue-500 underline">https://github.com/smartercow/SNIPV</Text>
             </div>
           </div>
         </div>
@@ -53,4 +47,4 @@ const About = () => {
   );
 };
 
-export default About;
+export default ForkProject;
