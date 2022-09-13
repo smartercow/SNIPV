@@ -39,8 +39,7 @@ const Header = ({ user }) => {
           <div>
             {user && (
               <Link href="/upsert">
-                
-                  +Gem
+                <h5 className="text-blue-500">+Gem</h5>
               </Link>
             )}
           </div>

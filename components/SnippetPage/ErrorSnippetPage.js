@@ -1,10 +1,8 @@
 import { Text } from "@nextui-org/react";
-import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneLight } from "react-syntax-highlighter/dist/cjs/styles/prism";
-const SnippetPage = ({ snippet }) => {
-
+const ErrorSnippetPage = ({ snippet }) => {
 
   return (
     <div className="flex flex-col gap-4">
@@ -60,14 +58,37 @@ const SnippetPage = ({ snippet }) => {
         </div>
       )}
       <div>
+        <div>
+          <Text h4 color="error">
+            Fejl Kode
+          </Text>
+        </div>
         <SyntaxHighlighter
           language="javascript"
           style={oneLight}
           className="rounded-lg"
         >
-          {snippet.code}
+          {snippet.errorcode}
         </SyntaxHighlighter>
       </div>
+
+      {snippet.solutioncode && (
+        <div>
+          <div>
+            <Text h4 color="success">
+              Løsning kode
+            </Text>
+          </div>
+          <SyntaxHighlighter
+            language="javascript"
+            style={oneLight}
+            className="rounded-lg"
+          >
+            {snippet.solutioncode}
+          </SyntaxHighlighter>
+        </div>
+      )}
+
       {snippet.notes && (
         <div>
           <div className="bg-[#D4EFEE] p-4 rounded-lg">
@@ -111,4 +132,4 @@ const SnippetPage = ({ snippet }) => {
   );
 };
 
-export default SnippetPage;
+export default ErrorSnippetPage;

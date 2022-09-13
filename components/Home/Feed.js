@@ -44,7 +44,7 @@ const Feed = ({ user, snippets, tags, loading }) => {
                 <div className="flex flex-col gap-4">
                   {snippets.snips.slice(0, 10).map((snip, index) => (
                     <div key={index}>
-                      <Link href={`/s/${snip.id}`}>
+                      <Link href={snip.folder?.folderSnippetType === "code" ? `/s/${snip.id}` : `/e/${snip.id}`}>
                         <div className="hoverable-item">
                           <Card
                             isPressable
