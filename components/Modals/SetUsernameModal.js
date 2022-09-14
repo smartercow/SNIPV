@@ -123,7 +123,6 @@ const SetUsernameModal = () => {
 
   }, [usernameInputValue]);
 
-  console.log(usernameInputValue);
   return (
     <div>
       <Modal

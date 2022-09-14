@@ -45,7 +45,6 @@ export default function CreatedFolders({
     getFolders();
   }, [user, update]);
 
-  console.log(open);
   return (
     <div>
       {folders.length > 0 ? (

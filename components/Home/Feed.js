@@ -13,10 +13,10 @@ import {
 } from "@nextui-org/react";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { MdPublic } from "react-icons/md";
+import { MdFormatIndentIncrease } from "react-icons/md";
 import { LoginIcon } from "../SVG/LoginIcon";
 
-const Feed = ({ user, snippets, tags, loading }) => {
+const Feed = ({ snippets }) => {
 
   return (
     <div>
@@ -28,12 +28,12 @@ const Feed = ({ user, snippets, tags, loading }) => {
                 <div className="flex items-center gap-2 pl-2 h-10">
                   <div className="pt-3">
                     <Text h3 color="white">
-                      <MdPublic />
+                      <MdFormatIndentIncrease />
                     </Text>
                   </div>
                   <div className="w-full ">
                     <div className="uppercase">
-                      <p className="font-semibold">Offentlige snippets</p>
+                      <p className="font-semibold">Seneste snippets</p>
                     </div>
                   </div>
                 </div>

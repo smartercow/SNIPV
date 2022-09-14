@@ -4,7 +4,7 @@ import React from "react";
 
 const SnippetsFolderType = () => {
   return (
-    <div className="flex gap-3 uppercase">
+    <div className="flex gap-4 uppercase">
         <Link href="/folders/codes">
         <h5 className="cursor-pointer">Koder</h5>
         </Link>

@@ -1,12 +1,11 @@
-import { Button } from "@nextui-org/react";
 import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
-import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import SnippetsFolderType from "../../components/Heading/SnippetsFolderType";
 import { auth, db } from "../../Firebase/clientApp";
 import CodeFolders from "../../components/Folders/CodeFolders";
-
+import NoUser from "../../components/NoPage/NoUser";
+import { Text } from "@nextui-org/react";
 const MyCodesFolders = () => {
   const [user] = useAuthState(auth);
   const [loading, setLoading] = useState(true);
@@ -39,14 +38,23 @@ const MyCodesFolders = () => {
 
   return (
     <div>
-      <div>
-        <div className="mb-4">
-          <SnippetsFolderType />
-        </div>
+      {user && (
         <div>
-          <CodeFolders myCodeFolders={myCodeFolders} />
+          <div className="mb-4">
+            <SnippetsFolderType />
+          </div>
+          <div className="flex flex-col gap-4">
+            <div>
+              <Text h5 className="text-[#031B4E]">
+                KODE MAPPER
+              </Text>
+              <hr />
+            </div>
+            <CodeFolders myCodeFolders={myCodeFolders} />
+          </div>
         </div>
-      </div>
+      )}
+      {!user && <NoUser />}
     </div>
   );
 };

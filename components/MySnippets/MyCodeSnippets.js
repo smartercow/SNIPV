@@ -145,13 +145,6 @@ const MyCodeSnippets = () => {
                                 </Badge>
                               </div>
                             )}
-{/*                             {snip.folder.folderSnippetType === "error" && (
-                              <div className="pr-[.60rem]">
-                                <Badge isSquared color="error" variant="flat">
-                                  FEJL
-                                </Badge>
-                              </div>
-                            )} */}
                           </div>
                           <div className="w-full MonoHeading">
                             <div className="flex gap-2">

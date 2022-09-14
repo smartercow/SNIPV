@@ -17,7 +17,6 @@ const Post = () => {
             <div className="w-full">
               <Input width="100%" bordered labelPlaceholder="Gem en snippet" />
             </div>
-            <div></div>
           </div>
         </Card>
       </Link>

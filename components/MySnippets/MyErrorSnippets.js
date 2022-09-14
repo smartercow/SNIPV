@@ -14,7 +14,6 @@ import {
   deleteDoc,
   doc,
   getDocs,
-  onSnapshot,
   orderBy,
   query,
   where,
@@ -28,7 +27,6 @@ import Link from "next/link";
 import { EditDocumentIcon } from "../SVG/EditDocumentIcon";
 import { DeleteDocumentIcon } from "../SVG/DeleteDocumentIcon";
 import { DeleteErrorSnippet } from "../NonModal/DeleteErrorSnippet";
-import { DocumentIcon } from "../SVG/DocumentIcon";
 import { PaperFail } from "../SVG/PaperFail";
 
 const MyErrorSnippets = () => {
@@ -62,7 +60,7 @@ const MyErrorSnippets = () => {
 
   const handleDelete = async (id) => {
     try {
-      await deleteDoc(doc(db, "CodeSnippetsData1", id));
+      await deleteDoc(doc(db, "ErrorSnippetsData1", id));
       setUpdate(!update);
     } catch (error) {
       console.log("Fejl i sletning!", error.message);
@@ -73,7 +71,7 @@ const MyErrorSnippets = () => {
     if (user) {
       getMySnippets();
     }
-  }, [user]);
+  }, [user, update]);
   return (
     <div>
       {user ? (

@@ -19,7 +19,7 @@ const Tags = ({ tags, snippets }) => {
                       </Text>
                     </div>
                     <div className="uppercase mt-3 text-[#031B4E]">
-                      <h5>Populær tags</h5>
+                      <h5>Seneste tags</h5>
                     </div>
                   </div>
                 </div>

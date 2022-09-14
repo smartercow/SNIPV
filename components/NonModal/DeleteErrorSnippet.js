@@ -12,7 +12,7 @@ export const DeleteErrorSnippet = ({ snip, handleDelete }) => {
       <Row css={{ py: ".5rem" }}>
         <Text>
           Er du sikker på, at du vil slette denne fejl snippet? Ved at gøre dette,
-          vil du ikke være i stand til at gendanne kode.
+          vil du ikke være i stand til at gendanne indhold.
         </Text>
       </Row>
       <Grid.Container justify="space-between" alignContent="center">

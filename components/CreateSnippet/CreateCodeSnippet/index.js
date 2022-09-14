@@ -55,7 +55,6 @@ const CreateCodeSnippet = () => {
   const [photoURL, setPhotoURL] = useState("")
   const [uid, setUid] = useState("")
 
-  console.log("UserData", userData);
 
   const [selectedFolder, setSelectedFolder] = useState(
     initialSelectedFolderValue
@@ -66,10 +65,6 @@ const CreateCodeSnippet = () => {
 
   const [user] = useAuthState(auth);
 
-  console.log("USERNAME", username);
-  console.log("USERVALUE",usernameValue);
-  console.log("UID",uid);
-  console.log("photo",photoURL);
 
   /*   const { id } = useRouter(); */
   const router = useRouter();
@@ -294,10 +289,10 @@ const CreateCodeSnippet = () => {
             </Collapse.Group>
 
             <div className="mx-3 flex flex-col gap-5">
-              <div className="">
+{/*               <div className="">
                 <p>Offentlig</p>
                 <Switch onChange={() => setSnippetPublic(!snippetPublic)} />
-              </div>
+              </div> */}
 
               <div>
                 <Button color="primary" type="submit">

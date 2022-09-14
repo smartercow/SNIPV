@@ -26,14 +26,14 @@ const HomePage = () => {
     try {
       const codeQuery = query(
         collection(db, "CodeSnippetsData1"),
-        where("isPublic", "==", true),
-        orderBy("postedAt", "desc")
+/*         where("isPublic", "==", true),
+        orderBy("postedAt", "desc") */
       );
 
       const errorQuery = query(
         collection(db, "ErrorSnippetsData1"),
-        where("isPublic", "==", true),
-        orderBy("postedAt", "desc")
+/*         where("isPublic", "==", true),
+        orderBy("postedAt", "desc") */
       );
 
       const codeDocs = await getDocs(codeQuery);
@@ -48,7 +48,6 @@ const HomePage = () => {
               mergedSnippets.push({ ...doc.data(), id: doc.id })
             });
           });
-          console.log("merged", mergedSnippets);
           return mergedSnippets;
         })
         .then((mergedData) =>
@@ -62,13 +61,11 @@ const HomePage = () => {
         })
         .catch((e) => console.log("error", e));
 
-      console.log("snipz", snippets);
     } catch (error) {
       console.log("getPosts error", error.message);
     }
   };
 
-  console.log("snippetzz",snippets);
 
   useEffect(() => {
     getSnippets();

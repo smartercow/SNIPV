@@ -1,10 +1,12 @@
 import { Button, Card, Text } from "@nextui-org/react";
 import Link from "next/link";
 import React from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../../Firebase/clientApp";
 import { excerpt } from "../../utilities/excerpt";
 import { FolderIcon } from "../SVG/FolderIcon";
 const CodeFolders = ({ myCodeFolders }) => {
-  
+  const [user] = useAuthState(auth)
   return (
     <div>
       {myCodeFolders && (

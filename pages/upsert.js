@@ -17,16 +17,6 @@ const SnippetType = [
     title: "fejl",
     component: CreateErrorSnippet,
   },
-  /*   {
-    name: "link",
-    title: "link",
-    component: CreateLinkSnippet
-  },
-  {
-    name: "scooters",
-    title: "Scooters",
-    component: CreateNoteSnippet
-  } */
 ];
 
 const Upsert = () => {
@@ -61,8 +51,6 @@ const Upsert = () => {
                   {title}
                 </Button>
               ))}
-              <Button disabled>Link</Button>
-              <Button disabled>Noter</Button>
             </Button.Group>
           </div>
           <div className="mt-3">

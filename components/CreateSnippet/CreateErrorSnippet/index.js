@@ -79,7 +79,6 @@ const CreateCodeSnippet = () => {
           const User = await getDoc(userDocRef);
 
           setUserData(User.data());
-          console.log("USERDATA", userData);
         }
       });
     } catch (error) {}
@@ -113,7 +112,6 @@ const CreateCodeSnippet = () => {
     }
   };
 
-  console.log("UserData", userData);
 
   return (
     <div>

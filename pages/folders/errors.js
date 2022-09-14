@@ -1,4 +1,4 @@
-import { Button } from "@nextui-org/react";
+import { Button, Text } from "@nextui-org/react";
 import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
@@ -6,6 +6,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import SnippetsFolderType from "../../components/Heading/SnippetsFolderType";
 import { auth, db } from "../../Firebase/clientApp";
 import ErrorFolders from "../../components/Folders/ErrorFolders";
+import NoUser from "../../components/NoPage/NoUser";
 
 const MyErrorsFolders = () => {
   const [user] = useAuthState(auth);
@@ -39,14 +40,20 @@ const MyErrorsFolders = () => {
 
   return (
     <div>
-      <div>
-        <div className="mb-4">
-        <SnippetsFolderType />
-        </div>
+      {user && (
         <div>
-          <ErrorFolders myErrorFolders={myErrorFolders} />
+          <div className="mb-4">
+            <SnippetsFolderType />
+          </div>
+          <div>
+            <div>
+              <Text h5 className="text-[#031B4E]">FEJL MAPPER</Text>
+            </div>
+            <ErrorFolders myErrorFolders={myErrorFolders} />
+          </div>
         </div>
-      </div>
+      )}
+      {!user && <NoUser />}
     </div>
   );
 };

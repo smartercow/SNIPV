@@ -26,8 +26,6 @@ const Snippet = () => {
     }
   }, [id]);
 
-  console.log(id);
-  console.log("snippet",snippet);
   return (
     <div>
       {snippet && (

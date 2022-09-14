@@ -6,13 +6,14 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import SnippetsFolderType from "../../components/Heading/SnippetsFolderType";
 import { auth, db } from "../../Firebase/clientApp";
 import CodeFolders from "../../components/Folders/CodeFolders";
+import NoUser from "../../components/NoPage/NoUser";
 
 const MyFolders = () => {
   const [user] = useAuthState(auth);
   const [loading, setLoading] = useState(true);
   const [myCodeFolders, setCodeMyFolders] = useState();
 
-  const [foldersType, setFoldersType] = useState("code")
+  const [foldersType, setFoldersType] = useState("code");
 
   const getMyCodeFolders = async () => {
     try {
@@ -37,17 +38,19 @@ const MyFolders = () => {
     getMyCodeFolders();
   }, [user]);
 
-
   return (
     <div>
-      <div>
-        <div className="mb-4">
-        <SnippetsFolderType />
-        </div>
+      {user && (
         <div>
-          <CodeFolders myCodeFolders={myCodeFolders} />
+          <div className="mb-4">
+            <SnippetsFolderType />
+          </div>
+          <div>
+            <CodeFolders myCodeFolders={myCodeFolders} />
+          </div>
         </div>
-      </div>
+      )}
+      {!user && <NoUser />}
     </div>
   );
 };
