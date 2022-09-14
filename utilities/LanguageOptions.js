@@ -36,6 +36,7 @@ export const LanguageOptions = [
   { label: "FreeMarker", value: "freeMarker", langId: "35" },
   { label: "Gcode", value: "gcode", langId: "36" },
   { label: "Gherkin", value: "gherkin", langId: "37" },
+  { label: "Git", value: "git", langId: "139" },
   { label: "Gitignore", value: "gitignore", langId: "38" },
   { label: "Glsl", value: "glsl", langId: "39" },
   { label: "Gobstones", value: "gobstones", langId: "40" },
@@ -139,4 +140,4 @@ export const LanguageOptions = [
   { label: "Other", value: "other", langId: "138" },
 ];
 
-/* LAST: Other - 138 */
+/* LAST: Git - 139 */

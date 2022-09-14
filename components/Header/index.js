@@ -15,6 +15,7 @@ import { Login, loginModalState } from "../../atoms/loginModalStateAtom";
 import { auth } from "../../Firebase/clientApp";
 import Country from "../Country";
 import { BsSearch } from "react-icons/bs";
+import { Edit } from "../SVG/Edit";
 
 const Menu = ["Mine mapper", "Indstillinger"];
 
@@ -28,7 +29,7 @@ const Header = ({ user }) => {
   return (
     <div>
       <div className="flex justify-between items-center max-w-5xl mx-5 lg:mx-auto py-2">
-        <div className="flex gap-2 items-center">
+        <div className="flex gap-4 items-center">
           <div className="cursor-pointer">
             <Link href="/">
               <Text color="#031B4E" h2 weight="extrabold">
@@ -39,7 +40,13 @@ const Header = ({ user }) => {
           <div>
             {user && (
               <Link href="/upsert">
-                <h5 className="text-blue-500">+Gem</h5>
+                {/* <h5 className="text-blue-500 cursor-pointer">+Gem</h5> */}
+                <Edit
+                  fill="#0072F5"
+                  className="cursor-pointer"
+                  width={35}
+                  height={35}
+                />
               </Link>
             )}
           </div>

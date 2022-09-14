@@ -3,7 +3,6 @@ import React from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneLight } from "react-syntax-highlighter/dist/cjs/styles/prism";
 const ErrorSnippetPage = ({ snippet }) => {
-
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col gap-3">
@@ -124,9 +123,20 @@ const ErrorSnippetPage = ({ snippet }) => {
         </div>
       )}
 
-      <div className="text-lg flex gap-1">
-        <p>Af</p> <p>{snippet.id}</p>
-        <p className="font-bold text-[#031B4E]">{snippet.userData.username}</p>
+      <div className="flex justify-between">
+        <div className="text-lg flex gap-1">
+          <p>Af</p> <p>{snippet.id}</p>
+          <p className="font-bold text-[#031B4E]">
+            {snippet.userData.username}
+          </p>
+        </div>
+        <div>
+          <p className="font-semibold text-[#031B4E]">
+            {new Date(snippet.postedAt.seconds * 1000).toLocaleDateString(
+              "da-DK"
+            )}
+          </p>
+        </div>
       </div>
     </div>
   );

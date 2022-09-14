@@ -1,8 +1,7 @@
 import React from "react";
 import { Text, Button, Grid, Row } from "@nextui-org/react";
 
-export const DeleteSnippet = ({ item, handleDelete }) => {
-
+export const DeleteErrorSnippet = ({ snip, handleDelete }) => {
   return (
     <Grid.Container
       css={{ borderRadius: "14px", padding: "0.75rem", maxWidth: "330px" }}
@@ -12,7 +11,7 @@ export const DeleteSnippet = ({ item, handleDelete }) => {
       </Row>
       <Row css={{ py: ".5rem" }}>
         <Text>
-          Er du sikker på, at du vil slette denne snippet? Ved at gøre dette,
+          Er du sikker på, at du vil slette denne fejl snippet? Ved at gøre dette,
           vil du ikke være i stand til at gendanne kode.
         </Text>
       </Row>
@@ -28,7 +27,7 @@ export const DeleteSnippet = ({ item, handleDelete }) => {
             shadow
             color="error"
             onClick={() => {
-              handleDelete(item.id);
+              handleDelete(snip.id);
             }}
           >
             Slet

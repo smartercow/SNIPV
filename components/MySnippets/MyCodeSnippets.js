@@ -23,18 +23,14 @@ import {
 } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { auth, db } from "../../Firebase/clientApp";
-import { oneLight } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import NoUser from "../NoPage/NoUser";
 import Link from "next/link";
-import Image from "next/image";
-import { excerpt } from "../../utilities/excerpt";
 import { DeleteDocumentIcon } from "../SVG/DeleteDocumentIcon";
-import { DeleteSnippet } from "../NonModal/DeleteSnippet";
+import { DeleteCodeSnippet } from "../NonModal/DeleteCodeSnippet";
 import { EditDocumentIcon } from "../SVG/EditDocumentIcon";
-import { DocumentIcon } from "../SVG/DocumentIcon";
 import { LoginIcon } from "../SVG/LoginIcon";
+import { Paper } from "../SVG/Paper";
 
 const MyCodeSnippets = () => {
   const [user] = useAuthState(auth);
@@ -104,9 +100,9 @@ const MyCodeSnippets = () => {
       {user ? (
         <div className="flex flex-col gap-4">
           {myCodeSnippets?.snips?.map((snip, index) => (
-            <div key={index}>
+            <div key={index} className="hoverable-item flex gap-2">
               <Link href={`/s/${snip.id}`}>
-                <div className="hoverable-item">
+                <div className="hoverable-item w-full">
                   <Card
                     isPressable
                     variant="flat"
@@ -115,19 +111,14 @@ const MyCodeSnippets = () => {
                   >
                     <div className="cardHover bg-[#F1F7FF] hoverable-item flex gap-3 items-center p-2 border-b rounded-xl w-full">
                       <div className="w-full flex flex-col gap-2">
-                        <div className="flex items-center">
-                          <div className="">
-                            <Tooltip
-                              content={snip.userData.username}
-                              color="primary"
-                            >
-                              <User
-                                src={snip.userData?.photoURL}
-                                zoomed
-                                squared
-                                pointer
-                              />
-                            </Tooltip>
+                        <div className="flex gap-6 items-center">
+                          <div className="pl-2">
+                            <Paper
+                              fill="#0072F5"
+                              className="cursor-pointer"
+                              width={50}
+                              height={50}
+                            />
                           </div>
 
                           <div className="w-full flex flex-col justify-center gap-3 MonoHeading">
@@ -154,13 +145,13 @@ const MyCodeSnippets = () => {
                                 </Badge>
                               </div>
                             )}
-                            {snip.folder.folderSnippetType === "error" && (
+{/*                             {snip.folder.folderSnippetType === "error" && (
                               <div className="pr-[.60rem]">
                                 <Badge isSquared color="error" variant="flat">
                                   FEJL
                                 </Badge>
                               </div>
-                            )}
+                            )} */}
                           </div>
                           <div className="w-full MonoHeading">
                             <div className="flex gap-2">
@@ -207,6 +198,38 @@ const MyCodeSnippets = () => {
                   </Card>
                 </div>
               </Link>
+              <div className="hoverable-show flex flex-col gap-1 justify-center items-center">
+                <div>
+                  <Button auto light>
+                    <EditDocumentIcon
+                      fill="#0072F5"
+                      className="cursor-pointer"
+                      width={26}
+                      height={26}
+                    />
+                  </Button>
+                </div>
+                <div>
+                  <Popover placement="top">
+                    <Popover.Trigger>
+                      <Button auto light>
+                        <DeleteDocumentIcon
+                          fill="#F31260"
+                          className="cursor-pointer"
+                          width={26}
+                          height={26}
+                        />
+                      </Button>
+                    </Popover.Trigger>
+                    <Popover.Content>
+                      <DeleteCodeSnippet
+                        snip={snip}
+                        handleDelete={handleDelete}
+                      />
+                    </Popover.Content>
+                  </Popover>
+                </div>
+              </div>
             </div>
           ))}
 

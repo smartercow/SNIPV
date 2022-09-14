@@ -27,7 +27,7 @@ const About = () => {
           </Link>
           <Link href="/forkproject">
             <Text h5 className="cursor-pointer hover:underline">
-              Fork denne projekt
+              Fork projekt
             </Text>
           </Link>
         </div>

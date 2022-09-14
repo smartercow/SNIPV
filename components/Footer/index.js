@@ -1,6 +1,7 @@
 import { Text } from "@nextui-org/react";
 import React from "react";
 import Link from "next/link";
+import { BiGitRepoForked } from "react-icons/bi";
 
 const Footer = () => {
   return (
@@ -17,7 +18,8 @@ const Footer = () => {
           <div>
           <Link href="/forkproject">
               <Text small b color="black" className="hover:underline cursor-pointer">
-                FORK DENNE PROJEKT
+                <BiGitRepoForked />
+                FORK PROJEKT
               </Text>
             </Link>
           </div>
