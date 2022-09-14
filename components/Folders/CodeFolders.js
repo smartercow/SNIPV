@@ -1,10 +1,7 @@
 import { Button, Card, Text } from "@nextui-org/react";
-import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { ImFolderOpen } from "react-icons/im";
 import { excerpt } from "../../utilities/excerpt";
-import Folder from "../../components/SVG/Iconly/bulk/Folder.svg";
 import { FolderIcon } from "../SVG/FolderIcon";
 const CodeFolders = ({ myCodeFolders }) => {
   return (
@@ -30,18 +27,40 @@ const CodeFolders = ({ myCodeFolders }) => {
                         />
                       </div>
 
-                      <div className="w-full flex flex-col gap-3 MonoHeading">
-                        <div className="MonoHeading">
+                      <div className="w-full flex gap-3 justify-between MonoHeading">
+                        <div className="MonoHeading w-full">
                           <p className="text-[#031B4E] text-lg font-[500]">
                             {excerpt(folder.folderName, 60)}
                           </p>
                         </div>
-                        <div className="-mt-2">
-                          <h6
-                            className="text-[#031b4ed4] whitespace-nowrap"
-                          >
-                            {excerpt(folder.language?.label, 60)}
-                          </h6>
+                        <div className="MonoHeading">
+                          <div className="flex gap-2">
+                            <div
+                              className={`l${folder.language.langId} lBadge rounded-3xl flex justify-center items-center`}
+                            >
+                              <p className="text-xs MonoHeading font-semibold lowercase">
+                                {folder.language?.label}
+                              </p>
+                            </div>
+                            {folder.framework.frameworkId && (
+                              <div
+                                className={`f${folder.framework.frameworkId} lBadge rounded-3xl flex justify-center items-center`}
+                              >
+                                <p className="text-xs MonoHeading font-semibold lowercase">
+                                  {folder.framework?.label}
+                                </p>
+                              </div>
+                            )}
+                            {folder.processor.processorId && (
+                              <div
+                                className={`p${folder.processor.processorId} lBadge rounded-3xl flex justify-center items-center`}
+                              >
+                                <p className="text-xs MonoHeading font-semibold lowercase">
+                                  {folder.processor.label}
+                                </p>
+                              </div>
+                            )}
+                          </div>
                         </div>
                       </div>
                     </div>

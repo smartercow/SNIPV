@@ -16,11 +16,10 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../../Firebase/clientApp";
 import { Button, Card, Popover, Text } from "@nextui-org/react";
 import { excerpt } from "../../utilities/excerpt";
-import Image from "next/image";
 import { DeleteDocumentIcon } from "../../components/SVG/DeleteDocumentIcon";
-import { DeleteSnippet } from "../../components/NonModal/DeleteSnippet";
+import { FolderDeleteSnippet } from "../../components/NonModal/FolderDeleteSnippet";
 import { EditDocumentIcon } from "../../components/SVG/EditDocumentIcon";
-import { DocumentIcon } from "../../components/SVG/DocumentIcon";
+import { Paper } from "../../components/SVG/Paper";
 import { ArrowLeftSquare } from "../../components/SVG/ArrowLeftSquare";
 import { LoginIcon } from "../../components/SVG/LoginIcon";
 
@@ -137,7 +136,7 @@ const Folder = () => {
                   <div className="cardHover p-2 border-b rounded-xl w-auto">
                     <div className="flex gap-4 items-center">
                       <div className="w-auto">
-                        <DocumentIcon
+                        <Paper
                           fill="#0072F5"
                           className="cursor-pointer"
                           width={40}
@@ -189,7 +188,7 @@ const Folder = () => {
                       </Button>
                     </Popover.Trigger>
                     <Popover.Content>
-                      <DeleteSnippet item={snip} handleDelete={handleDelete} />
+                      <FolderDeleteSnippet item={snip} handleDelete={handleDelete} />
                     </Popover.Content>
                   </Popover>
                 </div>
