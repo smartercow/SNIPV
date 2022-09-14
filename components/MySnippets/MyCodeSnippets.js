@@ -2,12 +2,8 @@ import {
   Badge,
   Button,
   Card,
-  Collapse,
   Loading,
   Popover,
-  Text,
-  Tooltip,
-  User,
 } from "@nextui-org/react";
 import {
   collection,
@@ -15,10 +11,10 @@ import {
   doc,
   FieldPath,
   getDocs,
-  onSnapshot,
+  limit,
   orderBy,
   query,
-  Timestamp,
+  startAfter,
   where,
 } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
@@ -31,34 +27,91 @@ import { DeleteCodeSnippet } from "../NonModal/DeleteCodeSnippet";
 import { EditDocumentIcon } from "../SVG/EditDocumentIcon";
 import { LoginIcon } from "../SVG/LoginIcon";
 import { Paper } from "../SVG/Paper";
+import {MdRefresh} from "react-icons/md"
 
 const MyCodeSnippets = () => {
   const [user] = useAuthState(auth);
   const [loading, setLoading] = useState(true);
   const [myCodeSnippets, setMyCodeSnippets] = useState();
-
+  const [lastSnippet, setLastSnippet] = useState();
   const [update, setUpdate] = useState(false);
 
   const [truncate, setTruncate] = useState(50);
+
+  const [isEmpty, setIsEmpty] = useState(false);
 
   const getMySnippets = async () => {
     try {
       const snippetQuery = query(
         collection(db, "CodeSnippetsData1"),
         where(new FieldPath("userData", "uid"), "==", user?.uid),
-        orderBy("postedAt", "desc")
+        orderBy("postedAt", "desc"),
+        limit(10)
       );
       const snippetDocs = await getDocs(snippetQuery);
-      const snippets = snippetDocs.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
 
-      setMyCodeSnippets((prev) => ({
-        ...prev,
-        snips: snippets,
-      }));
-      setLoading(false);
+      const colEmpty = snippetDocs.docs.length === 0;
+
+      console.log("SNIPZ", snippetDocs);
+
+
+      if(snippetDocs.docs.length < 10) {
+        setIsEmpty(true)
+      }
+
+      if (!colEmpty) {
+        const lastDoc = snippetDocs.docs[snippetDocs.docs.length - 1];
+        const snippets = snippetDocs.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+
+
+        setLastSnippet(lastDoc);
+        setMyCodeSnippets(snippets);
+        setLoading(false);
+      } else {
+        setIsEmpty(true);
+        setLoading(false);
+      }
+    } catch (error) {
+      console.log("getPosts error", error.message);
+    }
+  };
+
+
+
+  const fetchMore = async () => {
+    setLoading(true);
+    try {
+      const snippetQuery = query(
+        collection(db, "CodeSnippetsData1"),
+        where(new FieldPath("userData", "uid"), "==", user?.uid),
+        orderBy("postedAt", "desc"),
+        startAfter(lastSnippet),
+        limit(10)
+      );
+      const snippetDocs = await getDocs(snippetQuery);
+
+      const colEmpty = snippetDocs.size === 0;
+
+      console.log("COLEMPTY", colEmpty);
+
+      if (!colEmpty) {
+        const lastDoc = snippetDocs.docs[snippetDocs.docs.length - 1];
+        const snippets = snippetDocs.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+
+        setLastSnippet(lastDoc);
+
+        setMyCodeSnippets((prev) => [...prev, ...snippets]);
+        setLoading(false);
+      } else {
+        setIsEmpty(true);
+        setLoading(false);
+      }
     } catch (error) {
       console.log("getPosts error", error.message);
     }
@@ -93,13 +146,13 @@ const MyCodeSnippets = () => {
     });
   }, [truncate]);
 
-  console.log(myCodeSnippets);
+  console.log("ISEMPTY", isEmpty);
 
   return (
     <div className="min-h-[80vh]">
       {user ? (
         <div className="flex flex-col gap-4">
-          {myCodeSnippets?.snips?.map((snip, index) => (
+          {myCodeSnippets?.map((snip, index) => (
             <div key={index} className="hoverable-item flex gap-2">
               <Link href={`/s/${snip.id}`}>
                 <div className="hoverable-item w-full">
@@ -230,6 +283,18 @@ const MyCodeSnippets = () => {
             <div className="flex justify-center items-center h-[20vh]">
               <Loading size="lg" />
             </div>
+          )}
+
+          {!loading && (
+            <>
+              {!isEmpty && (
+                <div className="flex justify-center">
+                  <Button size="sm" onClick={fetchMore}>
+                    <MdRefresh />HENT MERE
+                  </Button>
+                </div>
+              )}
+            </>
           )}
         </div>
       ) : (

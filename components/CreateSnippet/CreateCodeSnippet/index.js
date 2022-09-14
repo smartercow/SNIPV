@@ -82,12 +82,12 @@ const CreateCodeSnippet = () => {
 
         if (userDoc.exists()) {
           const User = await getDoc(userDocRef);
-
+          console.log(User.data().user.uid);
           setUserData(User.data());
           setUsername(User.data().username)
           setUsernameValue(User.data().usernameValue)
-          setUid(User.data().uid)
-          setPhotoURL(User.data().photoURL)
+          setUid(User.data().user.uid)
+          setPhotoURL(User.data().user.photoURL)
         }
       });
     } catch (error) {}
@@ -96,6 +96,7 @@ const CreateCodeSnippet = () => {
   useEffect(() => {
     getUser();
   }, [user]);
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();

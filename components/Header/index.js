@@ -17,7 +17,6 @@ import Country from "../Country";
 import { BsSearch } from "react-icons/bs";
 import { Edit } from "../SVG/Edit";
 
-const Menu = ["Mine mapper", "Indstillinger"];
 
 const Header = ({ user }) => {
   const setAuthModalState = useSetRecoilState(Login);

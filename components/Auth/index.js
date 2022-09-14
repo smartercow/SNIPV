@@ -42,7 +42,7 @@ const Auth = () => {
             />
           </div>
           <Button auto onClick={confirmAccess}>
-            Adgang
+            Få adgang
           </Button>
         </div>
       </div>

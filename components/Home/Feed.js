@@ -1,6 +1,7 @@
 import {
   Avatar,
   Badge,
+  Button,
   Card,
   Collapse,
   Dropdown,
@@ -16,8 +17,7 @@ import Link from "next/link";
 import { MdFormatIndentIncrease } from "react-icons/md";
 import { LoginIcon } from "../SVG/LoginIcon";
 
-const Feed = ({ snippets }) => {
-
+const Feed = ({ snippets, fetchMore }) => {
   return (
     <div>
       {snippets && (
@@ -43,7 +43,13 @@ const Feed = ({ snippets }) => {
                 <div className="flex flex-col gap-4">
                   {snippets.snips.slice(0, 10).map((snip, index) => (
                     <div key={index}>
-                      <Link href={snip.folder?.folderSnippetType === "code" ? `/s/${snip.id}` : `/e/${snip.id}`}>
+                      <Link
+                        href={
+                          snip.folder?.folderSnippetType === "code"
+                            ? `/s/${snip.id}`
+                            : `/e/${snip.id}`
+                        }
+                      >
                         <div className="hoverable-item">
                           <Card
                             isPressable
@@ -164,7 +170,9 @@ const Feed = ({ snippets }) => {
                 </div>
 
                 <div className="mt-5 text-center">
-                  <Pagination color="primary" total={10} />
+                  <Link href="/mysnippets">
+                    <Text h5 className="cursor-pointer hover:underline">SE ALLE</Text>
+                  </Link>
                 </div>
               </div>
             </div>
