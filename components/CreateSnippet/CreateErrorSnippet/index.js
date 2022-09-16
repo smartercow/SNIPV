@@ -74,6 +74,7 @@ const CreateCodeSnippet = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  
   useEffect(() => {
     if (!user) return;
     const userDocRef = doc(db, "UsersData1", user.uid);
