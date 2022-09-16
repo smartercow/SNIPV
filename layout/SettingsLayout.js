@@ -3,7 +3,7 @@ import Sidebar from '../components/Settings/Sidebar'
 
 const SettingsLayout = ({children}) => {
   return (
-    <div className='flex gap-3'>
+    <div className='min-h-[70vh] flex gap-3'>
         <div>
             <Sidebar />
         </div>

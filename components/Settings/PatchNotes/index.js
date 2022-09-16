@@ -45,12 +45,12 @@ const PatchNotes = () => {
       <div className="my-5">
         {lastUpdate && (
           <>
-            {!lastUpdate.id === currentUpdate.id ? (
+            {lastUpdate?.id !== currentUpdate.id && (
               <div>
                 <div className="flex gap-1">
                   <Text h5>Der er en ny version</Text>
                   <Text h5 color="primary" className="underline">
-                    1.2.3
+                    {lastUpdate.version}
                   </Text>
                 </div>
                 <div className="flex gap-1">
@@ -65,7 +65,9 @@ const PatchNotes = () => {
                   </Link>
                 </div>
               </div>
-            ) : (
+            )}
+            
+            {lastUpdate?.id === currentUpdate.id && (
               <div>
                 <Text h5>Din version er up to date! 👍</Text>
               </div>
@@ -76,7 +78,7 @@ const PatchNotes = () => {
       <hr />
       <div className="my-3 flex flex-col gap-3">
         <div>
-          <Text h5>Versioner</Text>
+          <Text h5>Seneste versioner</Text>
           <Text small>
             Kun vigtigt commits er synlige som opdateringer, for små tweak
             commits hold øje med den original repository.

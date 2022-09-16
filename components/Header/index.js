@@ -43,13 +43,16 @@ const Header = ({ user }) => {
       }, 80);
     }
   }, [updateData]);
+
+  console.log("Last", lastUpdate?.id);
+  console.log("current", currentUpdate?.id);
   return (
     <div>
       {user && (
         <>
           {lastUpdate && (
             <>
-              {lastUpdate.id === currentUpdate.id && (
+              {lastUpdate?.id !== currentUpdate?.id && (
                 <div className="flex justify-center py-2 bg-[#0072F5]">
                   <div className="flex gap-2 items-center">
                     <InfoCircle
