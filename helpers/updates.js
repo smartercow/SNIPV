@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = {
-    baseUrl1: "https://api.dataforsyningen.dk/",
+    baseUrl1: "https://snipv.vercel.app/api/updates",
 }
 
 
@@ -14,8 +14,6 @@ export const getUpdates = () => {
     })
     .catch(error => {
         console.log("FEJL", error)
-        //return null
-        throw new Error("Desværre - ingen by/postnummer")
     })
 
     return response

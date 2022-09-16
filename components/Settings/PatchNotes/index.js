@@ -1,9 +1,24 @@
 import { Text } from "@nextui-org/react";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import PatchTable from "./PatchTable";
 import { CgExternal } from "react-icons/cg";
+import { getUpdates } from "../../../helpers/updates";
 const PatchNotes = () => {
+  useEffect(() => {
+    getUpdates()
+      .then((data) => {
+        if (data) {
+          console.log("UPDATEDATA",data);
+        } else {
+          console.log("fejl");
+        }
+      })
+      .finally(() => {
+        console.log("succes");
+      });
+  }, []);
+
   return (
     <div>
       <div>
