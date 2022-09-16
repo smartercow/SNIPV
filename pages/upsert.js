@@ -5,6 +5,7 @@ import CreateCodeSnippet from "../components/CreateSnippet/CreateCodeSnippet";
 import CreateErrorSnippet from "../components/CreateSnippet/CreateErrorSnippet";
 import { auth } from "../Firebase/clientApp";
 import NoUser from "../components/NoPage/NoUser";
+import Head from "next/head";
 
 const SnippetType = [
   {
@@ -38,6 +39,12 @@ const Upsert = () => {
 
   return (
     <div>
+      <Head>
+        <title>Opret en snip - SNIPV</title>
+        <meta name="description" content="Created by Peter G" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
       {user ? (
         <div>
           <div>
@@ -46,7 +53,9 @@ const Upsert = () => {
                 <Button
                   css={{ textTransform: "capitalize" }}
                   key={type}
-                  onClick={() => setSelectedType(type) | setSelectedTypeTranslate(title)}
+                  onClick={() =>
+                    setSelectedType(type) | setSelectedTypeTranslate(title)
+                  }
                 >
                   {title}
                 </Button>

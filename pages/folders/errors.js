@@ -7,6 +7,7 @@ import SnippetsFolderType from "../../components/Heading/SnippetsFolderType";
 import { auth, db } from "../../Firebase/clientApp";
 import ErrorFolders from "../../components/Folders/ErrorFolders";
 import NoUser from "../../components/NoPage/NoUser";
+import Head from "next/head";
 
 const MyErrorsFolders = () => {
   const [user] = useAuthState(auth);
@@ -40,6 +41,11 @@ const MyErrorsFolders = () => {
 
   return (
     <div>
+      <Head>
+        <title>Mine fejl mapper - SNIPV</title>
+        <meta name="description" content="Created by Peter G" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       {user && (
         <div>
           <div className="mb-4">
@@ -47,7 +53,9 @@ const MyErrorsFolders = () => {
           </div>
           <div>
             <div>
-              <Text h5 className="text-[#031B4E]">FEJL MAPPER</Text>
+              <Text h5 className="text-[#031B4E]">
+                FEJL MAPPER
+              </Text>
             </div>
             <ErrorFolders myErrorFolders={myErrorFolders} />
           </div>

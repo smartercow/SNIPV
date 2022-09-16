@@ -22,6 +22,7 @@ import { EditDocumentIcon } from "../../components/SVG/EditDocumentIcon";
 import { Paper } from "../../components/SVG/Paper";
 import { ArrowLeftSquare } from "../../components/SVG/ArrowLeftSquare";
 import { LoginIcon } from "../../components/SVG/LoginIcon";
+import Head from "next/head";
 
 const Folder = () => {
   const [user] = useAuthState(auth);
@@ -80,6 +81,12 @@ const Folder = () => {
 
   return (
     <div>
+      <Head>
+        <title>{folder?.folderName}nbsp;- SNIPV</title>
+        <meta name="description" content="Created by Peter G" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      
       {thisFolderSnippets && (
         <div className="flex flex-col gap-4">
           <div className="flex gap-2">
@@ -188,7 +195,10 @@ const Folder = () => {
                       </Button>
                     </Popover.Trigger>
                     <Popover.Content>
-                      <FolderDeleteSnippet item={snip} handleDelete={handleDelete} />
+                      <FolderDeleteSnippet
+                        item={snip}
+                        handleDelete={handleDelete}
+                      />
                     </Popover.Content>
                   </Popover>
                 </div>

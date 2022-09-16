@@ -4,6 +4,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../Firebase/clientApp";
 import { Loading } from "@nextui-org/react";
 import ErrorSnippetPage from "../../components/SnippetPage/ErrorSnippetPage";
+import Head from "next/head";
 
 const Snippet = () => {
   const {
@@ -29,6 +30,11 @@ const Snippet = () => {
   console.log(id);
   return (
     <div>
+      <Head>
+        <title>{snippet?.title}nbsp;- SNIPV</title>
+        <meta name="description" content="Created by Peter G" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       {snippet && <ErrorSnippetPage snippet={snippet} />}
       {loading && (
         <div className="flex justify-center items-center h-[20vh]">

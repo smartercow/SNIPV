@@ -53,7 +53,7 @@ const Header = ({ user }) => {
                 <div className="flex justify-center py-2 bg-[#0072F5]">
                   <div className="flex gap-2 items-center">
                     <InfoCircle
-                      fill="#0072F5"
+                      fill="white"
                       className="cursor-pointer"
                       width={35}
                       height={35}
@@ -63,7 +63,10 @@ const Header = ({ user }) => {
                       <Text color="white" b>
                         {lastUpdate.version}
                       </Text>
-                      <Text color="white">Opdatere nu</Text>
+                      <Text>👉</Text>
+                      <Link href="/settings/patchnotes">
+                      <Text color="white" b className="cursor-pointer hover:underline">Opdatere nu</Text>
+                      </Link>
                     </div>
                   </div>
                 </div>

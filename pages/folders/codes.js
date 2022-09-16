@@ -6,6 +6,7 @@ import { auth, db } from "../../Firebase/clientApp";
 import CodeFolders from "../../components/Folders/CodeFolders";
 import NoUser from "../../components/NoPage/NoUser";
 import { Text } from "@nextui-org/react";
+import Head from "next/head";
 const MyCodesFolders = () => {
   const [user] = useAuthState(auth);
   const [loading, setLoading] = useState(true);
@@ -38,6 +39,11 @@ const MyCodesFolders = () => {
 
   return (
     <div>
+      <Head>
+        <title>Mine kode mapper - SNIPV</title>
+        <meta name="description" content="Created by Peter G" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       {user && (
         <div>
           <div className="mb-4">
