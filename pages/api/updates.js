@@ -20,7 +20,7 @@ export default function handler(req, res) {
               "version": "1.2.2",
               "commit": "PatchNotes",
               "commitMsg": "Der blevet skiftet noget3",
-              "status": "nuværende"
+              "status": "forældet"
             },
             {
               "id": "120",
@@ -28,7 +28,7 @@ export default function handler(req, res) {
               "version": "1.2.2",
               "commit": "PatchNotes",
               "commitMsg": "Der blevet skiftet noget3",
-              "status": "nuværende"
+              "status": "forældet"
             }
           ]
         }
