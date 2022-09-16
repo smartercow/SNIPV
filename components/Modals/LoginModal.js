@@ -46,11 +46,6 @@ export default function LoginModal() {
         <Modal.Body>
           <Auth />
         </Modal.Body>
-        {/*         <Modal.Footer>
-          <Button auto flat color="error" onClick={closeHandler}>
-            Luk
-          </Button>
-        </Modal.Footer> */}
       </Modal>
     </div>
   );

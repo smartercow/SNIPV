@@ -7,17 +7,13 @@ import {
   Collapse,
   Text,
   Tooltip,
-  Switch,
 } from "@nextui-org/react";
 import {
   addDoc,
   collection,
   doc,
   getDoc,
-  runTransaction,
   serverTimestamp,
-  setDoc,
-  updateDoc,
 } from "firebase/firestore";
 import { auth, db } from "../../../Firebase/clientApp";
 import { useRouter } from "next/router";
@@ -66,7 +62,6 @@ const CreateCodeSnippet = () => {
   const [user] = useAuthState(auth);
 
 
-  /*   const { id } = useRouter(); */
   const router = useRouter();
 
   const handleChange = (e) => {
@@ -280,11 +275,6 @@ const CreateCodeSnippet = () => {
             </Collapse.Group>
 
             <div className="mx-3 flex flex-col gap-5">
-{/*               <div className="">
-                <p>Offentlig</p>
-                <Switch onChange={() => setSnippetPublic(!snippetPublic)} />
-              </div> */}
-
               <div>
                 <Button color="primary" type="submit">
                   Gem

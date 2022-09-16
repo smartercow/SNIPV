@@ -3,7 +3,7 @@ import { auth, db } from "../../Firebase/clientApp";
 import { useSignInWithGoogle } from "react-firebase-hooks/auth";
 import { Button, Input } from "@nextui-org/react";
 import { GoogleLogo } from "./GoogleLogo";
-import { collection, doc, getDoc } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 const Auth = () => {
   const [signInWithGoogle, userCred, loading, error] =
     useSignInWithGoogle(auth);
@@ -23,7 +23,8 @@ const Auth = () => {
     getAccess();
   }, []);
 
-  const confirmAccess = () => {
+  const confirmAccess = (e) => {
+    e.preventDefault();
     if (access.password === password) {
       setHidden(false);
       setAccessed(true);
@@ -32,19 +33,22 @@ const Auth = () => {
   return (
     <div className="flex flex-col gap-4 justify-center">
       <div hidden={accessed}>
-        <div className="flex gap-3">
-          <div className="w-full">
-            <Input
-              aria-label="access"
-              type="password"
-              width="100%"
-              onChange={(e) => setPassword(e.target.value)}
-            />
+        <form onSubmit={confirmAccess}>
+          <div className="flex gap-3">
+            <div className="w-full">
+              <Input
+                aria-label="access"
+                type="password"
+                width="100%"
+                onChange={(e) => setPassword(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && confirmAccess}
+              />
+            </div>
+            <Button auto type="submit">
+              Få adgang
+            </Button>
           </div>
-          <Button auto onClick={confirmAccess}>
-            Få adgang
-          </Button>
-        </div>
+        </form>
       </div>
 
       <div hidden={hidden}>
