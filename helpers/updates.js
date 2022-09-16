@@ -2,6 +2,7 @@ import axios from "axios";
 
 const api = {
   baseUrl1: "https://snipv.vercel.app/api/updates",
+  baseUrl2: "/api/currentupdates",
 };
 
 export const getUpdates = () => {
@@ -16,3 +17,16 @@ export const getUpdates = () => {
 
   return response;
 };
+
+export const getCurrentUpdate = () => {
+    let response = axios.get(api.baseUrl2)
+      .then((res) => {
+        console.log(response);
+        return res.data;
+      })
+      .catch((error) => {
+        console.log("FEJL", error);
+      });
+  
+    return response;
+  };

@@ -1,15 +1,19 @@
 import { Text } from "@nextui-org/react";
 import Link from "next/link";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import PatchTable from "./PatchTable";
 import { CgExternal } from "react-icons/cg";
 import { getUpdates } from "../../../helpers/updates";
+import { currentUpdate } from "../../../pages/api/currentupdate";
+
 const PatchNotes = () => {
+  const [updateData, setUpdateData] = useState();
+
   useEffect(() => {
     getUpdates()
-      .then((data) => {
-        if (data) {
-          console.log("UPDATEDATA",data);
+      .then((uData) => {
+        if (uData) {
+          setUpdateData(uData.data);
         } else {
           console.log("fejl");
         }
@@ -18,6 +22,8 @@ const PatchNotes = () => {
         console.log("succes");
       });
   }, []);
+
+  console.log(currentUpdate.id);
 
   return (
     <div>
@@ -55,7 +61,7 @@ const PatchNotes = () => {
             commits hold øje med den original repository.
           </Text>
         </div>
-        <PatchTable />
+        <PatchTable updateData={updateData} />
       </div>
     </div>
   );
