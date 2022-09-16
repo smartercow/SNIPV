@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, Button, Grid, Row } from "@nextui-org/react";
 
-export const DeleteCodeSnippet = ({ snip, handleDelete }) => {
+export const FolderDeleteSnippet = ({ snip, handleDelete }) => {
 
   return (
     <Grid.Container
