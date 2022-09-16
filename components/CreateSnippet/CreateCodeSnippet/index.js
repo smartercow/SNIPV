@@ -78,10 +78,12 @@ const CreateCodeSnippet = () => {
     const userDocRef = doc(db, "UsersData1", user.uid);
     const getUser = async () => {
       const userData = await getDoc(userDocRef);
+  console.log(userData.data());
+
       setUserData(userData.data());
       setUsername(userData.data().username)
       setUsernameValue(userData.data().usernameValue)
-      setUid(userData.data().uid)
+      setUid(userData.data().user.uid)
       setPhotoURL(userData.data().photoURL)
     };
     getUser();
@@ -114,6 +116,7 @@ const CreateCodeSnippet = () => {
       return toast.error("Valg en mappe!");
     }
   };
+  console.log(uid);
 
   return (
     <div>
