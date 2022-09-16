@@ -9,17 +9,26 @@ export default function handler(req, res) {
             {
               "id": "122",
               "date": "16/09/2022",
-              "name": "Harok",
+              "version": "1.2.2",
+              "commit": "PatchNotes",
+              "commitMsg": "Der blevet skiftet noget3",
+              "status": "nuværende"
             },
             {
               "id": "121",
               "date": "16/09/2022",
-              "name": "Hatana",
+              "version": "1.2.2",
+              "commit": "PatchNotes",
+              "commitMsg": "Der blevet skiftet noget3",
+              "status": "nuværende"
             },
             {
               "id": "120",
               "date": "16/09/2022",
-              "name": "Ziggly",
+              "version": "1.2.2",
+              "commit": "PatchNotes",
+              "commitMsg": "Der blevet skiftet noget3",
+              "status": "nuværende"
             }
           ]
         }
