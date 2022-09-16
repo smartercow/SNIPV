@@ -83,7 +83,7 @@ const CreateCodeSnippet = () => {
       setUsername(userData.data().username)
       setUsernameValue(userData.data().usernameValue)
       setUid(userData.data().user.uid)
-      setPhotoURL(userData.data().photoURL)
+      setPhotoURL(userData.data().user.photoURL)
     };
     getUser();
   }, [user])
