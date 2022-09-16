@@ -50,7 +50,6 @@ const CreateCodeSnippet = () => {
   const [notes, setNotes] = useState("");
   const [snippetPublic, setSnippetPublic] = useState(false);
 
-  const [userData, setUserData] = useState([]);
 
   const [selectedFolder, setSelectedFolder] = useState(
     initialSelectedFolderValue
@@ -58,6 +57,13 @@ const CreateCodeSnippet = () => {
   const [selectedCategory, setSelectedCategory] = useState([]);
 
   const { title, description, errorcode, solutioncode, linkHeading, link } = form;
+
+  
+  const [userData, setUserData] = useState([])
+  const [username, setUsername] = useState("")
+  const [usernameValue, setUsernameValue] = useState("")
+  const [photoURL, setPhotoURL] = useState("")
+  const [uid, setUid] = useState("")
 
   const [user] = useAuthState(auth);
 
@@ -68,23 +74,17 @@ const CreateCodeSnippet = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const getUser = async () => {
-    try {
-      const userDocRef = doc(db, "UsersData1", user.uid);
-
-      await runTransaction(db, async (transaction) => {
-        const userDoc = await transaction.get(userDocRef);
-
-        if (userDoc.exists()) {
-          const User = await getDoc(userDocRef);
-
-          setUserData(User.data());
-        }
-      });
-    } catch (error) {}
-  };
-
   useEffect(() => {
+    if (!user) return;
+    const userDocRef = doc(db, "UsersData1", user.uid);
+    const getUser = async () => {
+      const userData = await getDoc(userDocRef);
+      setUserData(userData.data());
+      setUsername(userData.data().username)
+      setUsernameValue(userData.data().usernameValue)
+      setUid(userData.data().uid)
+      setPhotoURL(userData.data().photoURL)
+    };
     getUser();
   }, [user]);
 
@@ -95,8 +95,12 @@ const CreateCodeSnippet = () => {
         await addDoc(collection(db, "ErrorSnippetsData1"), {
           ...form,
           postedAt: serverTimestamp(),
-          userData: userData,
-          userId: user.uid,
+          userData: {
+            username: username,
+            usernameValue: usernameValue,
+            uid: uid,
+            photoURL: photoURL,
+          },
           category: selectedCategory,
           folder: selectedFolder,
           tags: tags,
@@ -301,10 +305,10 @@ const CreateCodeSnippet = () => {
             </Collapse.Group>
 
             <div className="mx-3 flex flex-col gap-5">
-              <div>
+{/*               <div>
                 <Text>Offentlig</Text>
                 <Switch onChange={() => setSnippetPublic(!snippetPublic)} />
-              </div>
+              </div> */}
 
               <div>
                 <Button color="primary" type="submit">

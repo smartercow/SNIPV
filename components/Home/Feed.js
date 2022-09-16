@@ -17,7 +17,8 @@ import Link from "next/link";
 import { MdFormatIndentIncrease } from "react-icons/md";
 import { LoginIcon } from "../SVG/LoginIcon";
 
-const Feed = ({ snippets, fetchMore }) => {
+const Feed = ({ snippets }) => {
+  console.log(snippets);
   return (
     <div>
       {snippets && (

@@ -1,12 +1,10 @@
-import { Button, Card, Text } from "@nextui-org/react";
+import { Card } from "@nextui-org/react";
 import Link from "next/link";
 import React from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../../Firebase/clientApp";
 import { excerpt } from "../../utilities/excerpt";
 import { FolderIcon } from "../SVG/FolderIcon";
+
 const CodeFolders = ({ myCodeFolders }) => {
-  const [user] = useAuthState(auth)
   return (
     <div>
       {myCodeFolders && (
@@ -39,7 +37,7 @@ const CodeFolders = ({ myCodeFolders }) => {
                         <div className="MonoHeading">
                           <div className="flex gap-2">
                             <div
-                              className={`l${folder.language.langId} lBadge rounded-3xl flex justify-center items-center`}
+                              className={`l${folder.language.langId} lBadge rounded-3xl flex justify-center items-center whitespace-nowrap`}
                             >
                               <p className="text-xs MonoHeading font-semibold lowercase">
                                 {folder.language?.label}
@@ -47,7 +45,7 @@ const CodeFolders = ({ myCodeFolders }) => {
                             </div>
                             {folder.framework.frameworkId && (
                               <div
-                                className={`f${folder.framework.frameworkId} lBadge rounded-3xl flex justify-center items-center`}
+                                className={`f${folder.framework.frameworkId} lBadge rounded-3xl flex justify-center items-center whitespace-nowrap`}
                               >
                                 <p className="text-xs MonoHeading font-semibold lowercase">
                                   {folder.framework?.label}
@@ -56,7 +54,7 @@ const CodeFolders = ({ myCodeFolders }) => {
                             )}
                             {folder.processor.processorId && (
                               <div
-                                className={`p${folder.processor.processorId} lBadge rounded-3xl flex justify-center items-center`}
+                                className={`p${folder.processor.processorId} lBadge rounded-3xl flex justify-center items-center whitespace-nowrap`}
                               >
                                 <p className="text-xs MonoHeading font-semibold lowercase">
                                   {folder.processor.label}

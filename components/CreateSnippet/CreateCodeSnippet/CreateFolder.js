@@ -9,9 +9,7 @@ import {
 import {
   addDoc,
   collection,
-  doc,
   serverTimestamp,
-  setDoc,
 } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -24,7 +22,6 @@ import { BsQuestionCircleFill } from "react-icons/bs";
 import { useRecoilState } from "recoil";
 import { createCodeFolderModalState } from "../../../atoms/createCodeFolderModalAtom";
 import { updateStateAtom } from "../../../atoms/updateStateAtom";
-import { toast } from "react-toastify";
 
 const initialSelectedLang = {
   label: "JavaScript",
@@ -136,6 +133,8 @@ export default function CreateFolder() {
       setInputStatus("- skal udfyldes!");
     }
   };
+
+  console.log("PROCESSOR", framework);
 
   return (
     <div>

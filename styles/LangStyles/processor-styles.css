@@ -1,5 +1,13 @@
 /* SCSS */
+
+/* SCSS */
 .p1 {
     background-color: #C76395;
+    color: white;
+  }
+
+  /* TAILWINDCSS */
+  .p15 {
+    background-color: #39ABAA;
     color: white;
   }

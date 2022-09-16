@@ -73,30 +73,19 @@ const CreateCodeSnippet = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const getUser = async () => {
-    try {
-      const userDocRef = doc(db, "UsersData1", user.uid);
-
-      await runTransaction(db, async (transaction) => {
-        const userDoc = await transaction.get(userDocRef);
-
-        if (userDoc.exists()) {
-          const User = await getDoc(userDocRef);
-          console.log(User.data().user.uid);
-          setUserData(User.data());
-          setUsername(User.data().username)
-          setUsernameValue(User.data().usernameValue)
-          setUid(User.data().user.uid)
-          setPhotoURL(User.data().user.photoURL)
-        }
-      });
-    } catch (error) {}
-  };
-
   useEffect(() => {
+    if (!user) return;
+    const userDocRef = doc(db, "UsersData1", user.uid);
+    const getUser = async () => {
+      const userData = await getDoc(userDocRef);
+      setUserData(userData.data());
+      setUsername(userData.data().username)
+      setUsernameValue(userData.data().usernameValue)
+      setUid(userData.data().uid)
+      setPhotoURL(userData.data().photoURL)
+    };
     getUser();
   }, [user]);
-  
 
   const handleSubmit = async (e) => {
     e.preventDefault();

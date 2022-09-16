@@ -1,8 +1,6 @@
 import {
-  Avatar,
   Button,
   Dropdown,
-  Grid,
   Input,
   Text,
   User,
@@ -10,10 +8,9 @@ import {
 import { signOut } from "firebase/auth";
 import Link from "next/link";
 import React from "react";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { Login, loginModalState } from "../../atoms/loginModalStateAtom";
 import { auth } from "../../Firebase/clientApp";
-import Country from "../Country";
 import { BsSearch } from "react-icons/bs";
 import { Edit } from "../SVG/Edit";
 
@@ -23,7 +20,6 @@ const Header = ({ user }) => {
 
   const logout = async () => {
     await signOut(auth);
-    //clear community state
   };
   return (
     <div>
@@ -39,7 +35,6 @@ const Header = ({ user }) => {
           <div>
             {user && (
               <Link href="/upsert">
-                {/* <h5 className="text-blue-500 cursor-pointer">+Gem</h5> */}
                 <Edit
                   fill="#0072F5"
                   className="cursor-pointer"
@@ -93,8 +88,7 @@ const Header = ({ user }) => {
                   aria-label="Avatar Actions"
                   disabledKeys={[
                     "settings",
-                    "configurations",
-                    "help_and_feedback",
+                    "tags",
                   ]}
                 >
                   <Dropdown.Item key="profile" css={{ height: "$18" }}>
@@ -110,19 +104,18 @@ const Header = ({ user }) => {
                       <div className="w-full">Mine snippets</div>
                     </Link>
                   </Dropdown.Item>
-                  <Dropdown.Item dis key="folders">
+                  <Dropdown.Item key="folders">
                     <Link href="/folders">
                       <div className="w-full">Mine mapper</div>
                     </Link>
                   </Dropdown.Item>
+                  <Dropdown.Item key="tags">
+                    <Link href="/tags">
+                      <div className="w-full">Tags</div>
+                    </Link>
+                  </Dropdown.Item>
                   <Dropdown.Item key="settings" withDivider>
                     Indstillinger
-                  </Dropdown.Item>
-                  <Dropdown.Item key="configurations">
-                    Konfigurationer
-                  </Dropdown.Item>
-                  <Dropdown.Item key="help_and_feedback" withDivider>
-                    Hjælp & Feedback
                   </Dropdown.Item>
                   <Dropdown.Item key="logout" color="error" withDivider>
                     <div className="w-full" onClick={logout}>
@@ -142,9 +135,6 @@ const Header = ({ user }) => {
               </Button>
             </div>
           )}
-{/*           <div>
-            <Country />
-          </div> */}
         </div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-export const CSSprocessorIds = [
+export const CSSprocessors = [
   { label: "SCSS", value: "scss", processorId: "1" },
   { label: "cssnext", value: "cssnext", processorId: "2" },
   { label: "CSS-Crush", value: "csscrush", processorId: "3" },
@@ -13,4 +13,5 @@ export const CSSprocessorIds = [
   { label: "styled-components", value: "styledcomponents", processorId: "12" },
   { label: "Stylecow", value: "stylecow", processorId: "13" },
   { label: "Stylus", value: "stylus", processorId: "14" },
+  { label: "TailwindCSS", value: "tailwindcss", processorId: "15" },
 ];
