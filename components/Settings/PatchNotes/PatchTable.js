@@ -27,7 +27,7 @@ export default function PatchTable() {
       status: "nuværende",
     },
     {
-      id: 2,
+      id: 3,
       date: "16/09/2022",
       version: "1.2.1",
       commit: "PatchNotes",

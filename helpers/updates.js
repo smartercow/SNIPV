@@ -1,20 +1,19 @@
 import axios from "axios";
 
 const api = {
-    baseUrl1: "https://snipv.vercel.app/api/updates",
+    url: "https://valorant-api.com/v1/agents"
 }
-
 
 export const getUpdates = () => {
 
-    let response = axios.get(api.baseUrl1)
-    .then(res => {
-        console.log(response);
+    let response = axios.get(api.url).then(res => {
+        console.log('Data modtaget');
         return res.data
     })
     .catch(error => {
-        console.log("FEJL", error)
+        console.log("FEJL", error);
+        return null
     })
 
-    return response
+    return response;
 }
