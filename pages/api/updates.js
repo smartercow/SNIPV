@@ -8,7 +8,7 @@ export default function UpdateVersions(req, res) {
         {
           id: "126",
           date: "16/09/2022",
-          version: "1.2.2",
+          version: "1.2.6",
           commit: "PatchNotes",
           commitMsg: "Final patch noter testing",
           status: "nyeste",
@@ -16,7 +16,7 @@ export default function UpdateVersions(req, res) {
         {
           id: "125",
           date: "16/09/2022",
-          version: "1.2.2",
+          version: "1.2.5",
           commit: "PatchNotes",
           commitMsg: "Indstillinger tilføjet",
           status: "forældet",
@@ -24,7 +24,7 @@ export default function UpdateVersions(req, res) {
         {
           id: "124",
           date: "16/09/2022",
-          version: "1.2.2",
+          version: "1.2.4",
           commit: "PatchNotes",
           commitMsg: "Testing patch noter",
           status: "forældet",

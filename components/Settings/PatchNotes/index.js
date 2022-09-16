@@ -8,6 +8,7 @@ import { currentUpdate } from "../../../pages/api/currentupdate";
 
 const PatchNotes = () => {
   const [updateData, setUpdateData] = useState();
+  const [lastUpdate, setLastUpdate] = useState();
 
   useEffect(() => {
     getUpdates()
@@ -19,11 +20,21 @@ const PatchNotes = () => {
         }
       })
       .finally(() => {
-        console.log("succes");
+        console.log("");
       });
   }, []);
 
-  console.log(currentUpdate.id);
+  useEffect(() => {
+    if (updateData) {
+      updateData.map(function (element, index, array) {
+        setLastUpdate(array[0]);
+        return array;
+      }, 80);
+    }
+  }, [updateData]);
+
+  console.log("last", lastUpdate?.id);
+  console.log("current", currentUpdate.id);
 
   return (
     <div>
@@ -32,25 +43,35 @@ const PatchNotes = () => {
       </div>
       <hr />
       <div className="my-5">
-        <div>
-          <div className="flex gap-1">
-            <Text h5>Der er en ny version</Text>
-            <Text h5 color="primary" className="underline">
-              1.2.3
-            </Text>
-          </div>
-          <div className="flex gap-1">
-            <Text h6>
-              Opdatere ved at synkronisere de seneste commits på din
-            </Text>
-            <Link href="">
-              <Text h6 color="primary" className="underline">
-                Github repository
-                <CgExternal />
-              </Text>
-            </Link>
-          </div>
-        </div>
+        {lastUpdate && (
+          <>
+            {!lastUpdate.id === currentUpdate.id ? (
+              <div>
+                <div className="flex gap-1">
+                  <Text h5>Der er en ny version</Text>
+                  <Text h5 color="primary" className="underline">
+                    1.2.3
+                  </Text>
+                </div>
+                <div className="flex gap-1">
+                  <Text h6>
+                    Opdatere ved at synkronisere de seneste commits på din
+                  </Text>
+                  <Link href="">
+                    <Text h6 color="primary" className="underline">
+                      Github repository
+                      <CgExternal />
+                    </Text>
+                  </Link>
+                </div>
+              </div>
+            ) : (
+              <div>
+                <Text h5>Din version er up to date! 👍</Text>
+              </div>
+            )}
+          </>
+        )}
       </div>
       <hr />
       <div className="my-3 flex flex-col gap-3">

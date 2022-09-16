@@ -1,38 +1,76 @@
 import { Button, Dropdown, Input, Text, User } from "@nextui-org/react";
 import { signOut } from "firebase/auth";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSetRecoilState } from "recoil";
 import { Login, loginModalState } from "../../atoms/loginModalStateAtom";
 import { auth } from "../../Firebase/clientApp";
 import { BsSearch } from "react-icons/bs";
 import { Edit } from "../SVG/Edit";
 import { InfoCircle } from "../SVG/InfoCircle";
+import { getUpdates } from "../../helpers/updates";
+import { currentUpdate } from "../../pages/api/currentupdate";
 
 const Header = ({ user }) => {
+  const [updateData, setUpdateData] = useState();
+  const [lastUpdate, setLastUpdate] = useState();
+
   const setAuthModalState = useSetRecoilState(Login);
 
   const logout = async () => {
     await signOut(auth);
   };
+
+  useEffect(() => {
+    getUpdates()
+      .then((uData) => {
+        if (uData) {
+          setUpdateData(uData.data);
+        } else {
+          console.log("fejl");
+        }
+      })
+      .finally(() => {
+        console.log("");
+      });
+  }, []);
+
+  useEffect(() => {
+    if (updateData) {
+      updateData.map(function (element, index, array) {
+        setLastUpdate(array[0]);
+        return array;
+      }, 80);
+    }
+  }, [updateData]);
   return (
     <div>
       {user && (
-        <div className="flex justify-center py-2 bg-[#0072F5]">
-          <div className="flex gap-2 items-center">
-            <InfoCircle
-              fill="#0072F5"
-              className="cursor-pointer"
-              width={35}
-              height={35}
-            />
-            <div className="flex gap-2 items-center">
-            <Text color="white">Der er en ny version:</Text>
-            <Text color="white" b>1.5.0</Text>
-            <Text color="white">Opdatere nu</Text>
-            </div>
-          </div>
-        </div>
+        <>
+          {lastUpdate && (
+            <>
+              {lastUpdate.id === currentUpdate.id && (
+                <div className="flex justify-center py-2 bg-[#0072F5]">
+                  <div className="flex gap-2 items-center">
+                    <InfoCircle
+                      fill="#0072F5"
+                      className="cursor-pointer"
+                      width={35}
+                      height={35}
+                    />
+                    <div className="flex gap-2 items-center">
+                      <Text color="white">Der er en ny version:</Text>
+                      <Text color="white" b>
+                        {lastUpdate.version}
+                      </Text>
+                      <Text color="white">Opdatere nu</Text>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </>
+          )}
+        </>
       )}
       <div className="flex justify-between items-center max-w-5xl mx-5 lg:mx-auto py-2">
         <div className="flex gap-4 items-center">

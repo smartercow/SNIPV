@@ -18,15 +18,3 @@ export const getUpdates = () => {
   return response;
 };
 
-export const getCurrentUpdate = () => {
-    let response = axios.get(api.baseUrl2)
-      .then((res) => {
-        console.log(response);
-        return res.data;
-      })
-      .catch((error) => {
-        console.log("FEJL", error);
-      });
-  
-    return response;
-  };

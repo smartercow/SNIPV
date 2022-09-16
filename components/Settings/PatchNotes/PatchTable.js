@@ -21,7 +21,7 @@ export default function PatchTable({ updateData }) {
       </Table.Header>
       <Table.Body>
         {updateData && updateData.map((item, index) => (
-          <Table.Row key="1">
+          <Table.Row key={item.id}>
             <Table.Cell>{item.date}</Table.Cell>
             <Table.Cell>
               <div className="flex gap-2">
@@ -40,7 +40,7 @@ export default function PatchTable({ updateData }) {
               </div>
             </Table.Cell>
             <Table.Cell>{item.commit}</Table.Cell>
-            <Table.Cell>{item.status}</Table.Cell>
+            <Table.Cell>{item.id === currentUpdate.id ? "nuværende" : item.status}</Table.Cell>
           </Table.Row>
         ))}
       </Table.Body>
