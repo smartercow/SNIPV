@@ -13,7 +13,7 @@ const Tags = ({ tags, snippets }) => {
               <div className="bg-[#F1F7FF] bg-opacity-60 flex flex-col gap-5 pt-1 pb-5 px-3">
                 <div>
                   <div className="flex items-center gap-2">
-                    <div className="pt-1">
+                    <div className="pt-3">
                       <Text h3 color="error">
                         <AiTwotoneTags />
                       </Text>

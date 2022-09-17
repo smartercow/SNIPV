@@ -42,6 +42,7 @@ const initialSelectedFolderValue = {
 const CreateCodeSnippet = () => {
   const [form, setForm] = useState(initialState);
   const [tags, setTags] = useState([]);
+  const [tagInputValues, setTagInputValues] = useState([])
   const [notes, setNotes] = useState("");
   const [snippetPublic, setSnippetPublic] = useState(false);
 
@@ -67,6 +68,15 @@ const CreateCodeSnippet = () => {
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
+
+  const lowercaseTags = tagInputValues.map(element => {
+    return element.toLowerCase();
+    
+  });
+
+  useEffect(() => {
+    setTags(lowercaseTags)
+  }, [tagInputValues])
 
   useEffect(() => {
     if (!user) return;
@@ -252,7 +262,7 @@ const CreateCodeSnippet = () => {
                   <div className="w-full">
                     <TagsInput
                       value={tags}
-                      onChange={setTags}
+                      onChange={setTagInputValues}
                       name="tags"
                       placeHolder="Skriv og tryk enter"
                     />
