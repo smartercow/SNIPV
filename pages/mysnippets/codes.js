@@ -4,7 +4,7 @@ import { SnippetsTypeLinks } from "../../components/Heading/SnippetsType";
 import MyCodeSnippets from "../../components/MySnippets/MyCodeSnippets";
 const Codes = () => {
   return (
-    <div>
+    <div className="min-h-[80vh]">
       <Head>
         <title>Mine kode snippets - SNIPV</title>
         <meta name="description" content="Created by Peter G" />

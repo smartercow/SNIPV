@@ -13,16 +13,17 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth, db } from "../../Firebase/clientApp";
+import { auth, db } from "../../../Firebase/clientApp";
 import { Button, Card, Popover, Text } from "@nextui-org/react";
-import { excerpt } from "../../utilities/excerpt";
-import { DeleteDocumentIcon } from "../../components/SVG/DeleteDocumentIcon";
-import { FolderDeleteSnippet } from "../../components/NonModal/FolderDeleteSnippet";
-import { EditDocumentIcon } from "../../components/SVG/EditDocumentIcon";
-import { Paper } from "../../components/SVG/Paper";
-import { ArrowLeftSquare } from "../../components/SVG/ArrowLeftSquare";
-import { LoginIcon } from "../../components/SVG/LoginIcon";
+import { excerpt } from "../../../utilities/excerpt";
+import { DeleteDocumentIcon } from "../../../components/SVG/DeleteDocumentIcon";
+import { FolderDeleteSnippet } from "../../../components/NonModal/FolderDeleteSnippet";
+import { EditDocumentIcon } from "../../../components/SVG/EditDocumentIcon";
+import { PaperFail } from "../../../components/SVG/PaperFail";
+import { ArrowLeftSquare } from "../../../components/SVG/ArrowLeftSquare";
+import { LoginIcon } from "../../../components/SVG/LoginIcon";
 import Head from "next/head";
+import SnippetsFolderType from "../../../components/Heading/SnippetsFolderType";
 
 const Folder = () => {
   const [user] = useAuthState(auth);
@@ -36,7 +37,7 @@ const Folder = () => {
   const [folder, setFolder] = useState();
 
   const getFolderName = async () => {
-    const folderRef = doc(db, "UsersData1", user.uid, "CodeFolders", `${id}`);
+    const folderRef = doc(db, "UsersData1", user.uid, "ErrorFolders", `${id}`);
     const folder = await getDoc(folderRef);
 
     setFolder(folder.data());
@@ -44,7 +45,7 @@ const Folder = () => {
 
   const getFolder = async () => {
     try {
-      const snippetsColRef = collection(db, "CodeSnippetsData1");
+      const snippetsColRef = collection(db, "ErrorSnippetsData1");
       const snippetsQuery = query(
         snippetsColRef,
         where(new FieldPath("folder", "folderId"), "==", id)
@@ -71,7 +72,7 @@ const Folder = () => {
 
   const handleDelete = async (id) => {
     try {
-      await deleteDoc(doc(db, "CodeSnippetsData1", id));
+      await deleteDoc(doc(db, "ErrorSnippetsData1", id));
       setUpdate(!update);
     } catch (error) {
       console.log("Fejl i sletning!", error.message);
@@ -79,12 +80,16 @@ const Folder = () => {
   };
 
   return (
-    <div>
+    <div className="min-h-[80vh]">
       <Head>
-        <title>{folder?.folderName}nbsp;- SNIPV</title>
+        <title>{folder?.folderName}&nbsp;- SNIPV</title>
         <meta name="description" content="Created by Peter G" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      
+      <div className="mb-4">
+            <SnippetsFolderType />
+          </div>
       {thisFolderSnippets && (
         <div className="flex flex-col gap-4">
           <div className="flex gap-2">
@@ -141,8 +146,8 @@ const Folder = () => {
                   <div className="cardHover p-2 border-b rounded-xl w-auto">
                     <div className="flex gap-4 items-center">
                       <div className="w-auto">
-                        <Paper
-                          fill="#0072F5"
+                        <PaperFail
+                          fill="#FF3137"
                           className="cursor-pointer"
                           width={40}
                           height={40}

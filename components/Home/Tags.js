@@ -25,20 +25,25 @@ const Tags = ({ tags, snippets }) => {
                 </div>
                 <div>
                   <div className="flex gap-2 flex-wrap -mt-4">
-                    {tags.slice(0, 20).reverse().map((tag, index) => (
-                      <Link key={index} href="/">
-                        <div className="px-3 py-1 bg-[#c8dfff85] rounded-md cursor-pointer hover:opacity-70 mr-2 lowercase ease-in duration-300">
-                          <p className="font-[500] text-sm SnippetHeadingTwo tracking-wide text-[#031B4E]">
-                            {tag}
-                          </p>
-                        </div>
-                      </Link>
-                    ))}
+                    {tags
+                      .slice(0, 20)
+                      .reverse()
+                      .map((tag, index) => (
+                        <Link key={index} href="/">
+                          <div className="px-3 py-1 bg-[#c8dfff85] rounded-md cursor-pointer hover:opacity-70 mr-2 lowercase ease-in duration-300">
+                            <p className="font-[500] text-sm SnippetHeadingTwo tracking-wide text-[#031B4E]">
+                              {tag}
+                            </p>
+                          </div>
+                        </Link>
+                      ))}
                   </div>
                 </div>
                 <div className="text-center">
                   <Link href="/tags">
-                  <Text b className="cursor-pointer hover:underline">SE ALLE</Text>
+                    <Text b className="cursor-pointer hover:underline">
+                      SE ALLE
+                    </Text>
                   </Link>
                 </div>
               </div>

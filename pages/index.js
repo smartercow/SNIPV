@@ -4,7 +4,7 @@ import Feed from "../components/Home/Feed";
 import HomePage from "../components/Home";
 export default function Home() {
   return (
-    <div>
+    <div className="min-h-[80vh]">
       <Head>
         <title>SNIPV - Bankboks for kildekode, maskinkode eller tekst.</title>
         <meta name="description" content="Created by Peter G" />

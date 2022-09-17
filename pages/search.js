@@ -2,7 +2,7 @@ import React from 'react'
 
 const SearchPage = () => {
   return (
-    <div>SearchPage</div>
+    <div className="min-h-[80vh]">SearchPage</div>
   )
 }
 

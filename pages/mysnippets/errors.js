@@ -5,7 +5,7 @@ import MyErrorSnippets from "../../components/MySnippets/MyErrorSnippets";
 
 const Errors = () => {
   return (
-    <div>
+    <div className="min-h-[80vh]">
       <Head>
         <title>Mine fejl snippets - SNIPV</title>
         <meta name="description" content="Created by Peter G" />

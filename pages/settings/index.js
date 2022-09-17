@@ -4,12 +4,13 @@ import Settings from "../../components/Settings";
 
 const SettingsPage = () => {
   return (
-    <div>
+    <div className="min-h-[80vh]">
       <Head>
         <title>Indstillinger - SNIPV</title>
         <meta name="description" content="Created by Peter G" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      
       <Settings />
     </div>
   );

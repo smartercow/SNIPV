@@ -38,7 +38,7 @@ const Upsert = () => {
   };
 
   return (
-    <div>
+    <div className="min-h-[80vh]">
       <Head>
         <title>Opret en snip - SNIPV</title>
         <meta name="description" content="Created by Peter G" />

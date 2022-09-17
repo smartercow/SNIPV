@@ -3,7 +3,7 @@ import Tags from '../../components/Tags'
 
 const TagsPage = () => {
   return (
-    <div>
+    <div className="min-h-[80vh]">
       <Tags />
     </div>
   )

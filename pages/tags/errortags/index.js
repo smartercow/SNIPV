@@ -2,7 +2,7 @@ import React from 'react'
 
 const ErrorTagsPage = () => {
   return (
-    <div>ErrorTagsPage</div>
+    <div className="min-h-[80vh]">ErrorTagsPage</div>
   )
 }
 

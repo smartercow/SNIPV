@@ -4,7 +4,7 @@ import StatsSettings from "../../components/Settings/Stats";
 
 const StatsPage = () => {
   return (
-    <div>
+    <div className="min-h-[80vh]">
       <Head>
         <title>Statistikker - SNIPV</title>
         <meta name="description" content="Created by Peter G" />

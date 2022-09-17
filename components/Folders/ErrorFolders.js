@@ -11,7 +11,7 @@ const CodeFolders = ({ myErrorFolders }) => {
         <div className="flex flex-col gap-3">
           {myErrorFolders.map((folder) => (
             <div key={folder.id} className="">
-            <Link href={`/errorfolder/${folder.id}`}>
+            <Link href={`/folders/errors/${folder.id}`}>
               <Card
                 isPressable
                 variant="flat"

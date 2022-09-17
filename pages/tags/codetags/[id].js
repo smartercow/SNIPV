@@ -2,7 +2,7 @@ import React from 'react'
 
 const CodeTagPage = () => {
   return (
-    <div>CodeTagPage</div>
+    <div className="min-h-[80vh]">CodeTagPage</div>
   )
 }
 

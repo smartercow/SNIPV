@@ -5,7 +5,7 @@ import Head from "next/head";
 
 const Links = () => {
   return (
-    <div>
+    <div className="min-h-[80vh]">
       <Head>
         <title>Mine links snippetss - SNIPV</title>
         <meta name="description" content="Created by Peter G" />
