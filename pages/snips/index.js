@@ -104,7 +104,7 @@ const MySnippets = () => {
   return (
     <div className="min-h-[80vh]">
       <Head>
-        <title>Mine snippets - SNIPV</title>
+        <title>Mine snips - SNIPV</title>
         <meta name="description" content="Created by Peter G" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -119,7 +119,7 @@ const MySnippets = () => {
             <div className="flex flex-col gap-2">
               <div>
                 <Text transform="uppercase" h5>
-                  Seneste kode mapper
+                  Seneste kode snips
                 </Text>
               </div>
               <div className="flex flex-col gap-4">
@@ -258,7 +258,7 @@ const MySnippets = () => {
                   </div>
                 ))}
                 <div className="text-center">
-                  <Link href="/tags">
+                  <Link href="/mysnippets/codes">
                     <Text b className="cursor-pointer hover:underline">
                       SE ALLE
                     </Text>
@@ -272,7 +272,7 @@ const MySnippets = () => {
             <div className="flex flex-col gap-2">
               <div>
                 <Text transform="uppercase" h5>
-                  Seneste fejl mapper
+                  Seneste fejl snips
                 </Text>
               </div>
               <div className="flex flex-col gap-4">
@@ -411,7 +411,7 @@ const MySnippets = () => {
                   </div>
                 ))}
                 <div className="text-center">
-                  <Link href="/tags">
+                  <Link href="/mysnippets/errors">
                     <Text b className="cursor-pointer hover:underline">
                       SE ALLE
                     </Text>

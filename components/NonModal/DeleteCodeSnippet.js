@@ -1,8 +1,7 @@
 import React from "react";
 import { Text, Button, Grid, Row } from "@nextui-org/react";
 
-export const DeleteCodeSnippet = ({ snip, handleDelete }) => {
-
+export const DeleteCodeSnippet = ({ snip, handleDelete, setAllOpenStates, index }) => {
   return (
     <Grid.Container
       css={{ borderRadius: "14px", padding: "0.75rem", maxWidth: "330px" }}
@@ -12,13 +11,13 @@ export const DeleteCodeSnippet = ({ snip, handleDelete }) => {
       </Row>
       <Row css={{ py: ".5rem" }}>
         <Text>
-          Er du sikker på, at du vil slette denne kode snippet? Ved at gøre dette,
-          vil du ikke være i stand til at gendanne indhold.
+          Er du sikker på, at du vil slette denne kode snippet? Ved at gøre
+          dette, vil du ikke være i stand til at gendanne indhold.
         </Text>
       </Row>
       <Grid.Container justify="space-between" alignContent="center">
         <Grid>
-          <Button size="sm" light>
+          <Button size="sm" light onClick={() => setAllOpenStates(oldState => ({...oldState, [index]: false}))}>
             Annullere
           </Button>
         </Grid>
@@ -28,7 +27,8 @@ export const DeleteCodeSnippet = ({ snip, handleDelete }) => {
             shadow
             color="error"
             onClick={() => {
-              handleDelete(snip.id);
+              handleDelete(snip.id) 
+              setAllOpenStates(oldState => ({...oldState, [index]: false}))
             }}
           >
             Slet
@@ -38,3 +38,4 @@ export const DeleteCodeSnippet = ({ snip, handleDelete }) => {
     </Grid.Container>
   );
 };
+

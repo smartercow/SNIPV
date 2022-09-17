@@ -10,7 +10,7 @@ const Nav = () => {
   const Menu = [
     {
       titel: "Snips",
-      link: "/mysnippets",
+      link: "/snips",
     },
     {
       titel: "Mapper",

@@ -9,11 +9,11 @@ export const SnippetsTypeLinks = () => {
   const Type = [
     {
       titel: "Koder",
-      link: "/mysnippets/codes",
+      link: "/snips/codes",
     },
     {
       titel: "Fejl",
-      link: "/mysnippets/errors",
+      link: "/snips/errors",
     },
   ];
   return (
