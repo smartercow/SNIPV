@@ -20,11 +20,6 @@ const General = () => {
                   <Text b color="error">
                     https://www&nbsp;
                   </Text>
-                  eller&nbsp;
-                  <Text b color="error">
-                    /&nbsp;
-                  </Text>
-                  efter .app - .com - .dk
                 </Text>
               }
               color="primary"

@@ -68,8 +68,13 @@ const PatchNotes = () => {
             )}
             
             {lastUpdate?.id === currentUpdate.id && (
-              <div>
-                <Text h5>Din version er up to date! 👍</Text>
+              <div className="flex gap-1">
+                <Text h5>Din version </Text>
+                <Text h5 color="primary" className="underline">
+                    {lastUpdate.version}
+                  </Text>
+                <Text h5>er up to date! 👍</Text>
+
               </div>
             )}
           </>

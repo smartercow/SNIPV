@@ -1,19 +1,48 @@
+import { Text } from "@nextui-org/react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React from "react";
-
+import {MdOutlineArrowRight} from "react-icons/md"
 const Sidebar = () => {
+  const { asPath } = useRouter();
+
+  const Menu = [
+    {
+      titel: "General",
+      link: "/settings/general",
+    },
+    {
+      titel: "Stats",
+      link: "/settings/stats",
+    },
+    {
+      titel: "Opdateringer",
+      link: "/settings/patchnotes",
+    },
+  ];
   return (
-    <div>
+    <div className="w-40">
       <ul>
-        <li>
-          <Link href="/settings/general">Generel</Link>
-        </li>
-        <li>
-          <Link href="/settings/stats">Stats</Link>
-        </li>
-        <li>
-          <Link href="/settings/patchnotes">Opdateringer</Link>
-        </li>
+        {Menu.map((item, index) => {
+          if (asPath === item.link)
+            return (
+              <li key={index}>
+                <Link href={item.link}>
+                  <Text b className="cursor-pointer text">
+                    <MdOutlineArrowRight />{item.titel}
+                  </Text>
+                </Link>
+              </li>
+            );
+          else
+            return (
+              <li key={index}>
+                <Link href={item.link}>
+                  <Text className="cursor-pointer hover:underline">{item.titel}</Text>
+                </Link>
+              </li>
+            );
+        })}
       </ul>
     </div>
   );

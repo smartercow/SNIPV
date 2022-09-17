@@ -1,9 +1,18 @@
-import React from 'react'
+import { Text } from "@nextui-org/react";
+import React from "react";
 
 const StatsSettings = () => {
   return (
-    <div>StatsSettings</div>
-  )
-}
+    <div>
+      <div className="w-full">
+        <Text h4>Stats</Text>
+      </div>
+      <hr />
+      <div>
+        
+      </div>
+    </div>
+  );
+};
 
-export default StatsSettings
+export default StatsSettings;

@@ -1,7 +1,8 @@
 import Head from "next/head";
 import React from "react";
+import StatsSettings from "../../components/Settings/Stats";
 
-const StatsSettings = () => {
+const StatsPage = () => {
   return (
     <div>
       <Head>
@@ -10,9 +11,9 @@ const StatsSettings = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      StatsSettings
+      <StatsSettings />
     </div>
   );
 };
 
-export default StatsSettings;
+export default StatsPage;
