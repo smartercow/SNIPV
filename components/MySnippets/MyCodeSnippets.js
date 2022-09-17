@@ -52,9 +52,6 @@ const MyCodeSnippets = () => {
 
       const colEmpty = snippetDocs.docs.length === 0;
 
-      console.log("SNIPZ", snippetDocs);
-
-
       if(snippetDocs.docs.length < 10) {
         setIsEmpty(true)
       }
@@ -94,8 +91,6 @@ const MyCodeSnippets = () => {
       const snippetDocs = await getDocs(snippetQuery);
 
       const colEmpty = snippetDocs.size === 0;
-
-      console.log("COLEMPTY", colEmpty);
 
       if (!colEmpty) {
         const lastDoc = snippetDocs.docs[snippetDocs.docs.length - 1];
@@ -145,8 +140,6 @@ const MyCodeSnippets = () => {
       }
     });
   }, [truncate]);
-
-  console.log("ISEMPTY", isEmpty);
 
   return (
     <div className="min-h-[80vh]">

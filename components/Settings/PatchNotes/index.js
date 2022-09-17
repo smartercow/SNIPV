@@ -33,9 +33,6 @@ const PatchNotes = () => {
     }
   }, [updateData]);
 
-  console.log("last", lastUpdate?.id);
-  console.log("current", currentUpdate.id);
-
   return (
     <div>
       <div>

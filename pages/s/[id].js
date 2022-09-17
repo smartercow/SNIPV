@@ -27,8 +27,6 @@ const Snippet = () => {
     }
   }, [id]);
 
-  console.log(snippet);
-
   return (
     <div>
       <Head>

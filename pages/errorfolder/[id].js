@@ -55,7 +55,6 @@ const Folder = () => {
         snapshot.docs.forEach((doc) => {
           snippets.push({ ...doc.data(), id: doc.id });
         });
-        console.log("snippts", snippets);
         setThisFolderSnippets(snippets);
       });
     } catch (error) {

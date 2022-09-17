@@ -74,11 +74,11 @@ const CreateCodeSnippet = () => {
     const getUser = async () => {
       const userData = await getDoc(userDocRef);
 
-      setUserData(userData.data());
-      setUsername(userData.data().username)
-      setUsernameValue(userData.data().usernameValue)
-      setUid(userData.data().user.uid)
-      setPhotoURL(userData.data().user.photoURL)
+      setUserData(userData?.data());
+      setUsername(userData?.data().username)
+      setUsernameValue(userData?.data().usernameValue)
+      setUid(userData?.data().user?.uid)
+      setPhotoURL(userData?.data().user?.photoURL)
     };
     getUser();
   }, [user])

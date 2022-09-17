@@ -73,11 +73,9 @@ const HomePage = () => {
     const snapSub = onSnapshot(
       collection(db, "CodeSnippetsData1"),
       (snapshot) => {
-        /*         let list = []; */
         let tags = [];
         snapshot.docs.forEach((doc) => {
           tags.push(...doc.get("tags"));
-          /*           list.push({ id: doc.id, ...doc.data() }); */
         });
         const uniqueTags = [...new Set(tags)];
         setTags(uniqueTags);

@@ -89,8 +89,6 @@ const MyCodeSnippets = () => {
 
       const colEmpty = snippetDocs.size === 0;
 
-      console.log("COLEMPTY", colEmpty);
-
       if (!colEmpty) {
         const lastDoc = snippetDocs.docs[snippetDocs.docs.length - 1];
         const snippets = snippetDocs.docs.map((doc) => ({
@@ -139,8 +137,6 @@ const MyCodeSnippets = () => {
       }
     });
   }, [truncate]);
-
-  console.log("ISEMPTY", isEmpty);
 
   return (
     <div className="min-h-[80vh]">

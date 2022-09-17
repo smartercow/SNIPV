@@ -8,7 +8,6 @@ const api = {
 export const getUpdates = () => {
   let response = axios.get(api.baseUrl1)
     .then((res) => {
-      console.log(response);
       return res.data;
     })
     .catch((error) => {

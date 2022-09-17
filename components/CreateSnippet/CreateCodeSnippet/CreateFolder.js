@@ -134,8 +134,6 @@ export default function CreateFolder() {
     }
   };
 
-  console.log("PROCESSOR", framework);
-
   return (
     <div>
       <form onSubmit={createFolder}>

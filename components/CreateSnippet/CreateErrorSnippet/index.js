@@ -80,14 +80,20 @@ const CreateCodeSnippet = () => {
     const userDocRef = doc(db, "UsersData1", user.uid);
     const getUser = async () => {
       const userData = await getDoc(userDocRef);
-      setUserData(userData.data());
-      setUsername(userData.data().username)
-      setUsernameValue(userData.data().usernameValue)
-      setUid(userData.data().user.uid)
-      setPhotoURL(userData.data().user.photoURL)
+      setUserData(userData?.data());
+      setUsername(userData?.data().username)
+      setUsernameValue(userData?.data().usernameValue)
+      setUid(userData?.data().user?.uid)
+      setPhotoURL(userData?.data().user?.photoURL)
+      console.log("Userdata", userData.data());
     };
     getUser();
   }, [user]);
+
+  console.log("Username", username);
+  console.log("UsernameValue", usernameValue);
+  console.log("UID", uid);
+  console.log("photoURL", photoURL);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

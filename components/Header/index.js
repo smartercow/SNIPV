@@ -5,11 +5,11 @@ import React, { useEffect, useState } from "react";
 import { useSetRecoilState } from "recoil";
 import { Login, loginModalState } from "../../atoms/loginModalStateAtom";
 import { auth } from "../../Firebase/clientApp";
-import { BsSearch } from "react-icons/bs";
 import { Edit } from "../SVG/Edit";
 import { InfoCircle } from "../SVG/InfoCircle";
 import { getUpdates } from "../../helpers/updates";
 import { currentUpdate } from "../../pages/api/currentupdate";
+import Nav from "./Nav";
 
 const Header = ({ user }) => {
   const [updateData, setUpdateData] = useState();
@@ -44,8 +44,6 @@ const Header = ({ user }) => {
     }
   }, [updateData]);
 
-  console.log("Last", lastUpdate?.id);
-  console.log("current", currentUpdate?.id);
   return (
     <div>
       {user && (
@@ -53,7 +51,7 @@ const Header = ({ user }) => {
           {lastUpdate && (
             <>
               {lastUpdate?.id !== currentUpdate?.id && (
-                <div className="flex justify-center py-2 bg-[#0072F5]">
+                <div className="flex justify-center bg-[#0072F5]">
                   <div className="flex gap-2 items-center">
                     <InfoCircle
                       fill="white"
@@ -78,7 +76,7 @@ const Header = ({ user }) => {
           )}
         </>
       )}
-      <div className="flex justify-between items-center max-w-5xl mx-5 lg:mx-auto py-2">
+      <div className="flex justify-between items-center max-w-5xl mx-5 lg:mx-auto h-16">
         <div className="flex gap-4 items-center">
           <div className="cursor-pointer">
             <Link href="/">
@@ -102,22 +100,8 @@ const Header = ({ user }) => {
         </div>
 
         {user && (
-          <div className="text-center hidden md:inline">
-            <Input
-              clearable
-              animated="false"
-              contentRightStyling={false}
-              placeholder="Søg"
-              borderWeight="bold"
-              aria-label="Search"
-              contentLeft={
-                <Text b>
-                  <BsSearch />
-                </Text>
-              }
-              width="120%"
-              disabled
-            />
+          <div className="hidden md:inline">
+            <Nav />
           </div>
         )}
 
@@ -141,7 +125,6 @@ const Header = ({ user }) => {
                 <Dropdown.Menu
                   color="primary"
                   aria-label="Avatar Actions"
-                  disabledKeys={["tags"]}
                 >
                   <Dropdown.Item key="profile" css={{ height: "$18" }}>
                     <Text b color="inherit" css={{ d: "flex" }}>
@@ -153,12 +136,12 @@ const Header = ({ user }) => {
                   </Dropdown.Item>
                   <Dropdown.Item key="my_snippets" withDivider>
                     <Link href="/mysnippets">
-                      <div className="w-full">Mine snippets</div>
+                      <div className="w-full">Snips</div>
                     </Link>
                   </Dropdown.Item>
                   <Dropdown.Item key="folders">
                     <Link href="/folders">
-                      <div className="w-full">Mine mapper</div>
+                      <div className="w-full">Mapper</div>
                     </Link>
                   </Dropdown.Item>
                   <Dropdown.Item key="tags">

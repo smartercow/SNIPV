@@ -1,7 +1,7 @@
 import { Card, Text } from "@nextui-org/react";
 import Link from "next/link";
 import React from "react";
-import { MdLocalFireDepartment } from "react-icons/md";
+import { AiTwotoneTags } from "react-icons/ai";
 
 const Tags = ({ tags, snippets }) => {
   return (
@@ -15,7 +15,7 @@ const Tags = ({ tags, snippets }) => {
                   <div className="flex items-center gap-2">
                     <div className="pt-1">
                       <Text h3 color="error">
-                        <MdLocalFireDepartment />
+                        <AiTwotoneTags />
                       </Text>
                     </div>
                     <div className="uppercase mt-3 text-[#031B4E]">
@@ -25,7 +25,7 @@ const Tags = ({ tags, snippets }) => {
                 </div>
                 <div>
                   <div className="flex gap-2 flex-wrap -mt-4">
-                    {tags.slice(0, 10).map((tag, index) => (
+                    {tags.slice(0, 20).reverse().map((tag, index) => (
                       <Link key={index} href="/">
                         <div className="px-3 py-1 bg-[#c8dfff85] rounded-md cursor-pointer hover:opacity-70 mr-2 lowercase ease-in duration-300">
                           <p className="font-[500] text-sm SnippetHeadingTwo tracking-wide text-[#031B4E]">
@@ -35,6 +35,11 @@ const Tags = ({ tags, snippets }) => {
                       </Link>
                     ))}
                   </div>
+                </div>
+                <div className="text-center">
+                  <Link href="/tags">
+                  <Text b className="cursor-pointer hover:underline">SE ALLE</Text>
+                  </Link>
                 </div>
               </div>
             </Card>
