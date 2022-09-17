@@ -8,7 +8,7 @@ const Sidebar = () => {
 
   const Menu = [
     {
-      titel: "General",
+      titel: "Generel",
       link: "/settings/general",
     },
     {

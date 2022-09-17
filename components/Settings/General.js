@@ -6,7 +6,7 @@ const General = () => {
   return (
     <div>
       <div>
-        <Text h4>General</Text>
+        <Text h4>Generel</Text>
       </div>
       <hr />
       <div className="flex flex-col gap-4 my-2">
