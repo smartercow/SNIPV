@@ -138,7 +138,7 @@ const MyCodeSnippets = () => {
       {user ? (
         <div>
           <div className="mb-3 flex gap-1">
-          <Text>
+            <Text>
               <TbSortDescending />
             </Text>
             <Text transform="uppercase" h5>
