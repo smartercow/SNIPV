@@ -22,6 +22,7 @@ import { DeleteDocumentIcon } from "../../components/SVG/DeleteDocumentIcon";
 import { EditDocumentIcon } from "../../components/SVG/EditDocumentIcon";
 import { LoginIcon } from "../../components/SVG/LoginIcon";
 import { Paper } from "../../components/SVG/Paper";
+import { PaperFail } from "../../components/SVG/PaperFail";
 import { auth, db } from "../../Firebase/clientApp";
 
 const MySnippets = () => {
@@ -258,7 +259,7 @@ const MySnippets = () => {
                   </div>
                 ))}
                 <div className="text-center">
-                  <Link href="/mysnippets/codes">
+                  <Link href="/snips/codes">
                     <Text b className="cursor-pointer hover:underline">
                       SE ALLE
                     </Text>
@@ -290,8 +291,8 @@ const MySnippets = () => {
                             <div className="w-full flex flex-col gap-2">
                               <div className="flex gap-6 items-center">
                                 <div className="pl-2">
-                                  <Paper
-                                    fill="#0072F5"
+                                  <PaperFail
+                                    fill="#FF3137"
                                     className="cursor-pointer"
                                     width={50}
                                     height={50}
@@ -315,14 +316,14 @@ const MySnippets = () => {
                               </div>
                               <div className="flex">
                                 <div className="w-24 flex justify-center">
-                                  {snip.folder.folderSnippetType === "code" && (
+                                  {snip.folder.folderSnippetType === "error" && (
                                     <div className="pr-[.60rem]">
                                       <Badge
                                         isSquared
-                                        color="primary"
+                                        color="error"
                                         variant="flat"
                                       >
-                                        KODE
+                                        FEJL
                                       </Badge>
                                     </div>
                                   )}
@@ -411,7 +412,7 @@ const MySnippets = () => {
                   </div>
                 ))}
                 <div className="text-center">
-                  <Link href="/mysnippets/errors">
+                  <Link href="/snips/errors">
                     <Text b className="cursor-pointer hover:underline">
                       SE ALLE
                     </Text>
