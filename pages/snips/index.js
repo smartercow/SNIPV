@@ -316,7 +316,8 @@ const MySnippets = () => {
                               </div>
                               <div className="flex">
                                 <div className="w-24 flex justify-center">
-                                  {snip.folder.folderSnippetType === "error" && (
+                                  {snip.folder.folderSnippetType ===
+                                    "error" && (
                                     <div className="pr-[.60rem]">
                                       <Badge
                                         isSquared
