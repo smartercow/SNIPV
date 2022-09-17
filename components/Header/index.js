@@ -51,7 +51,7 @@ const Header = ({ user }) => {
           {lastUpdate && (
             <>
               {lastUpdate?.id !== currentUpdate?.id && (
-                <div className="flex justify-center bg-[#0072F5]">
+                <div className="h-12 flex justify-center bg-[#0072F5]">
                   <div className="flex gap-2 items-center">
                     <InfoCircle
                       fill="white"
