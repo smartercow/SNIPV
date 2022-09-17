@@ -29,7 +29,7 @@ const Tags = ({ tags, snippets }) => {
                       .slice(0, 20)
                       .reverse()
                       .map((tag, index) => (
-                        <Link key={index} href="/">
+                        <Link key={index} href={`/tags/codes/${tag}`}>
                           <div className="px-3 py-1 bg-[#c8dfff85] rounded-md cursor-pointer hover:opacity-70 mr-2 lowercase ease-in duration-300">
                             <p className="font-[500] text-sm SnippetHeadingTwo tracking-wide text-[#031B4E]">
                               {tag}

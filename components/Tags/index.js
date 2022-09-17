@@ -4,6 +4,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../../Firebase/clientApp";
+import TagType from "../Heading/TagType";
 
 const Tags = () => {
   const [user] = useAuthState(auth);
@@ -60,10 +61,9 @@ const Tags = () => {
 
   return (
     <div>
-      <div>
-        <Text h4>TAGS</Text>
+      <div className="mb-3">
+        <TagType />
       </div>
-      <hr />
       <div className="mt-4">
         <div>
           <div>
@@ -78,7 +78,7 @@ const Tags = () => {
                   .slice(0, 40)
                   .reverse()
                   .map((tag, index) => (
-                    <Link key={index} href={`/tags/codetags/${tag}`}>
+                    <Link key={index} href={`/tags/codes/${tag}`}>
                       <div className="px-3 py-1 bg-[#c8dfff85] rounded-md cursor-pointer hover:opacity-70 mr-2 lowercase ease-in duration-300">
                         <p className="font-[500] text-sm SnippetHeadingTwo tracking-wide text-[#031B4E]">
                           {tag}
@@ -89,7 +89,7 @@ const Tags = () => {
               </div>
             )}
             <div className="text-center">
-              <Link href="/codetags">
+              <Link href="/tags/codes">
                 <Text h5 className="cursor-pointer hover:underline">
                   SE ALLE
                 </Text>
@@ -110,7 +110,7 @@ const Tags = () => {
                   .slice(0, 40)
                   .reverse()
                   .map((tag, index) => (
-                    <Link key={index} href={`/tags/codetags/${tag}`}>
+                    <Link key={index} href={`/tags/errors/${tag}`}>
                       <div className="px-3 py-1 bg-[#c8dfff85] rounded-md cursor-pointer hover:opacity-70 mr-2 lowercase ease-in duration-300">
                         <p className="font-[500] text-sm SnippetHeadingTwo tracking-wide text-[#031B4E]">
                           {tag}
@@ -121,7 +121,7 @@ const Tags = () => {
               </div>
             )}
             <div className="text-center">
-              <Link href="/errortags">
+              <Link href="/tags/errors">
                 <Text h5 className="cursor-pointer hover:underline">
                   SE ALLE
                 </Text>
