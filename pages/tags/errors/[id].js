@@ -8,7 +8,7 @@ import {
   where,
 } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth, db } from "../../../Firebase/clientApp";
+import { auth, db } from "../../../firebase/clientApp";
 import { Badge, Button, Card, Loading, Text } from "@nextui-org/react";
 import Link from "next/link";
 import { LoginIcon } from "../../../components/SVG/LoginIcon";

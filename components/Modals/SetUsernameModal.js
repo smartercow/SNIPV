@@ -21,7 +21,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { setUsernameModal } from "../../atoms/setUsernameModal";
-import { auth, db } from "../../Firebase/clientApp";
+import { auth, db } from "../../firebase/clientApp";
 import { BsQuestionCircleFill, BsExclamationCircleFill } from "react-icons/bs";
 import { DebounceInput } from "react-debounce-input";
 //DEBOUNCEINPUT VIST SO  IKKE BRUGT MEN BRUGES!!!

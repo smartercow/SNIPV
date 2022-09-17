@@ -2,7 +2,7 @@ import { Card, Input, User } from "@nextui-org/react";
 import Link from "next/link";
 import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../../Firebase/clientApp";
+import { auth } from "../../firebase/clientApp";
 
 const Post = () => {
   const [user] = useAuthState(auth);

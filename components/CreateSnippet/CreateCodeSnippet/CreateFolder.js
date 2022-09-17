@@ -14,7 +14,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import Select from "react-select";
-import { auth, db } from "../../../Firebase/clientApp";
+import { auth, db } from "../../../firebase/clientApp";
 import { LanguageOptions } from "../../../utilities/LanguageOptions";
 import { JavascriptFrameworks } from "../../../utilities/JavascriptFrameworks";
 import { CSSprocessors } from "../../../utilities/CSSprocessors";

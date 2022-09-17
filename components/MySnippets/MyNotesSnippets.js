@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, Text } from "@nextui-org/react";
 import NoUser from "../NoPage/NoUser";
-import { auth } from "../../Firebase/clientApp";
+import { auth } from "../../firebase/clientApp";
 import { useAuthState } from "react-firebase-hooks/auth";
 
 const MyNotesSnippets = () => {

@@ -6,7 +6,7 @@ import Select from "react-select";
 import { useRecoilState } from "recoil";
 import { createCodeFolderModalState } from "../../../atoms/createCodeFolderModalAtom";
 import { updateStateAtom } from "../../../atoms/updateStateAtom";
-import { auth, db } from "../../../Firebase/clientApp";
+import { auth, db } from "../../../firebase/clientApp";
 import { FaFolderPlus } from "react-icons/fa";
 
 export default function CreatedFolders({

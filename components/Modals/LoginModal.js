@@ -3,7 +3,7 @@ import { Modal, Button, Text, Input, Row, Checkbox } from "@nextui-org/react";
 import Auth from "../Auth";
 import { useRecoilState } from "recoil";
 import { Login } from "../../atoms/loginModalStateAtom";
-import { auth } from "../../Firebase/clientApp";
+import { auth } from "../../firebase/clientApp";
 import { useAuthState } from "react-firebase-hooks/auth";
 
 export default function LoginModal() {

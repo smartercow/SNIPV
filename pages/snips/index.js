@@ -15,15 +15,13 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { SnippetsTypeLinks } from "../../components/Heading/SnippetsType";
-import MyCodeSnippets from "../../components/MySnippets/MyCodeSnippets";
-import MyErrorSnippets from "../../components/MySnippets/MyErrorSnippets";
 import { DeleteCodeSnippet } from "../../components/NonModal/DeleteCodeSnippet";
 import { DeleteDocumentIcon } from "../../components/SVG/DeleteDocumentIcon";
 import { EditDocumentIcon } from "../../components/SVG/EditDocumentIcon";
 import { LoginIcon } from "../../components/SVG/LoginIcon";
 import { Paper } from "../../components/SVG/Paper";
 import { PaperFail } from "../../components/SVG/PaperFail";
-import { auth, db } from "../../Firebase/clientApp";
+import { auth, db } from "../../firebase/clientApp";
 
 const MySnippets = () => {
   const [user] = useAuthState(auth);

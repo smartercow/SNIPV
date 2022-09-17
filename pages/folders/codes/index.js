@@ -2,7 +2,7 @@ import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import SnippetsFolderType from "../../../components/Heading/SnippetsFolderType";
-import { auth, db } from "../../../Firebase/clientApp";
+import { auth, db } from "../../../firebase/clientApp";
 import CodeFolders from "../../../components/Folders/CodeFolders";
 import NoUser from "../../../components/NoPage/NoUser";
 import { Text } from "@nextui-org/react";

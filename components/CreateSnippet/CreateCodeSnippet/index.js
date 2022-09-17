@@ -15,7 +15,7 @@ import {
   getDoc,
   serverTimestamp,
 } from "firebase/firestore";
-import { auth, db } from "../../../Firebase/clientApp";
+import { auth, db } from "../../../firebase/clientApp";
 import { useRouter } from "next/router";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { TagsInput } from "react-tag-input-component";

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { auth, db } from "../../Firebase/clientApp";
+import { auth, db } from "../../firebase/clientApp";
 import { useSignInWithGoogle } from "react-firebase-hooks/auth";
 import { Button, Input } from "@nextui-org/react";
 import { GoogleLogo } from "./GoogleLogo";

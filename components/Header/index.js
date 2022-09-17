@@ -4,7 +4,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useSetRecoilState } from "recoil";
 import { Login, loginModalState } from "../../atoms/loginModalStateAtom";
-import { auth } from "../../Firebase/clientApp";
+import { auth } from "../../firebase/clientApp";
 import { Edit } from "../SVG/Edit";
 import { InfoCircle } from "../SVG/InfoCircle";
 import { getUpdates } from "../../helpers/updates";

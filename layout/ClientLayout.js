@@ -15,7 +15,7 @@ import Header from "../components/Header";
 import CreateCodeFolderModal from "../components/Modals/CreateCodeFolderModal";
 import CreateErrorFolderModal from "../components/Modals/CreateErrorFolderModal";
 import LoginModal from "../components/Modals/LoginModal";
-import { auth, db } from "../Firebase/clientApp";
+import { auth, db } from "../firebase/clientApp";
 import { useRecoilState } from "recoil";
 import SetUsernameModal from "../components/Modals/SetUsernameModal";
 

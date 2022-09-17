@@ -4,7 +4,7 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth';
 import TagType from '../../../components/Heading/TagType';
-import { auth, db } from '../../../Firebase/clientApp';
+import { auth, db } from '../../../firebase/clientApp';
 
 const CodeTagsPage = () => {
   const [user] = useAuthState(auth);

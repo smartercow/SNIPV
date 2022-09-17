@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import CreateCodeSnippet from "../components/CreateSnippet/CreateCodeSnippet";
 import CreateErrorSnippet from "../components/CreateSnippet/CreateErrorSnippet";
-import { auth } from "../Firebase/clientApp";
+import { auth } from "../firebase/clientApp";
 import NoUser from "../components/NoPage/NoUser";
 import Head from "next/head";
 

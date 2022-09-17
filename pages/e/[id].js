@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { doc, getDoc } from "firebase/firestore";
-import { db } from "../../Firebase/clientApp";
+import { db } from "../../firebase/clientApp";
 import { Loading } from "@nextui-org/react";
 import ErrorSnippetPage from "../../components/SnippetPage/ErrorSnippetPage";
 import Head from "next/head";

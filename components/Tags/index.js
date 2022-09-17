@@ -3,7 +3,7 @@ import { collection, onSnapshot } from "firebase/firestore";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth, db } from "../../Firebase/clientApp";
+import { auth, db } from "../../firebase/clientApp";
 import TagType from "../Heading/TagType";
 
 const Tags = () => {

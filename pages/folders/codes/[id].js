@@ -11,7 +11,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth, db } from "../../../Firebase/clientApp";
+import { auth, db } from "../../../firebase/clientApp";
 import { Badge, Button, Card, Loading, Popover } from "@nextui-org/react";
 import { DeleteDocumentIcon } from "../../../components/SVG/DeleteDocumentIcon";
 import { EditDocumentIcon } from "../../../components/SVG/EditDocumentIcon";

@@ -4,7 +4,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import SnippetsFolderType from "../../../components/Heading/SnippetsFolderType";
-import { auth, db } from "../../../Firebase/clientApp";
+import { auth, db } from "../../../firebase/clientApp";
 import ErrorFolders from "../../../components/Folders/ErrorFolders";
 import NoUser from "../../../components/NoPage/NoUser";
 import Head from "next/head";

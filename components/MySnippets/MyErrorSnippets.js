@@ -13,7 +13,7 @@ import {
 } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth, db } from "../../Firebase/clientApp";
+import { auth, db } from "../../firebase/clientApp";
 import NoUser from "../NoPage/NoUser";
 import Link from "next/link";
 import { DeleteDocumentIcon } from "../SVG/DeleteDocumentIcon";
