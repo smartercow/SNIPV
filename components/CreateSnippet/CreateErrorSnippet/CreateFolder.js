@@ -9,9 +9,7 @@ import {
 import {
   addDoc,
   collection,
-  doc,
   serverTimestamp,
-  setDoc,
 } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";

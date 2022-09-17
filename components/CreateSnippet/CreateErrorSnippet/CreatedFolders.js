@@ -1,4 +1,4 @@
-import { Button, Container, Grid, Row, Spacer, Text } from "@nextui-org/react";
+import { Button, Text } from "@nextui-org/react";
 import { collection, doc, getDocs } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";

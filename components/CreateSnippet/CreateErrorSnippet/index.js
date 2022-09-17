@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Input,
   Spacer,
@@ -14,10 +14,7 @@ import {
   collection,
   doc,
   getDoc,
-  runTransaction,
-  serverTimestamp,
-  setDoc,
-  updateDoc,
+  serverTimestamp
 } from "firebase/firestore";
 import { auth, db } from "../../../firebase/clientApp";
 import { useRouter } from "next/router";
