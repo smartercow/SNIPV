@@ -11,7 +11,9 @@ const StatsPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <StatsSettings />
+      <div className="w-full">
+        <StatsSettings />
+      </div>
     </div>
   );
 };

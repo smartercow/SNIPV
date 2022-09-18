@@ -39,6 +39,7 @@ const General = () => {
               labelLeft="https://"
               placeholder="snipv.vercel.app"
               width="40vw"
+              disabled
             />
           </div>
         </div>
@@ -64,12 +65,13 @@ const General = () => {
               bordered
               placeholder="https://github.com/smartercow/SNIPV"
               width="40vw"
+              disabled
             />
           </div>
         </div>
 
         <div>
-            <Button>Gem</Button>
+            <Button disabled>Gem</Button>
         </div>
       </div>
     </div>

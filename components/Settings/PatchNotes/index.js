@@ -55,23 +55,24 @@ const PatchNotes = () => {
                     Opdatere ved at synkronisere de seneste commits på din
                   </Text>
                   <Link href="">
-                    <Text h6 color="primary" className="underline">
-                      Github repository
-                      <CgExternal />
-                    </Text>
+                    <a target="_blank">
+                      <Text h6 color="primary" className="underline">
+                        Github repository
+                        <CgExternal />
+                      </Text>
+                    </a>
                   </Link>
                 </div>
               </div>
             )}
-            
+
             {lastUpdate?.id === currentUpdate.id && (
               <div className="flex gap-1">
                 <Text h5>Din version </Text>
                 <Text h5 color="primary" className="underline">
-                    {lastUpdate.version}
-                  </Text>
+                  {lastUpdate.version}
+                </Text>
                 <Text h5>er up to date! 👍</Text>
-
               </div>
             )}
           </>
@@ -83,7 +84,16 @@ const PatchNotes = () => {
           <Text h5>Seneste versioner</Text>
           <Text small>
             Kun vigtigt commits er synlige som opdateringer, for små tweak
-            commits hold øje med den original repository.
+            commits hold øje med den{" "}
+            <span>
+              <Link href="https://github.com/smartercow/SNIPV">
+                <a target="_blank">
+                  original repository
+                  <CgExternal />
+                </a>
+              </Link>
+            </span>
+            .
           </Text>
         </div>
         <PatchTable updateData={updateData} />

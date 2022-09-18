@@ -25,11 +25,11 @@ const ForkProject = () => {
           </code>
         </pre>
       </div>
-      <div className="flex gap-1">
-        <Text b>
+      <div className="flex gap-1 items-center">
+        <Text b size={13}>
           Glem ikke og give en
         </Text>
-        <p className="text-yellow-400 text-lg"><BsStarFill /></p>
+        <p className="text-yellow-400 text-md pt-1"><BsStarFill /></p>
       </div>
     </div>
   );

@@ -36,6 +36,11 @@ const initialState = {
   link: "",
 };
 
+const initialStateLowercase = {
+  title: "",
+  description: "",
+};
+
 const initialSelectedFolderValue = {
   label: "",
   value: "",
@@ -55,6 +60,8 @@ const CreateCodeSnippet = () => {
   const [photoURL, setPhotoURL] = useState("");
   const [uid, setUid] = useState("");
 
+  const [lowercaseForm, setLowercaseForm] = useState(initialStateLowercase)
+
   const [selectedFolder, setSelectedFolder] = useState(
     initialSelectedFolderValue
   );
@@ -68,6 +75,7 @@ const CreateCodeSnippet = () => {
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+    setLowercaseForm({ ...lowercaseForm, [e?.target.name]: e?.target.value.toLowerCase() });
   };
 
   const lowercaseTags = tagInputValues.map((element) => {
@@ -99,6 +107,10 @@ const CreateCodeSnippet = () => {
       try {
         await addDoc(collection(db, "CodeSnippetsData1"), {
           ...form,
+          search: {
+            title: lowercaseForm.title,
+            description: lowercaseForm.description
+          },
           postedAt: serverTimestamp(),
           userData: {
             username: username,
@@ -125,7 +137,7 @@ const CreateCodeSnippet = () => {
     <div>
       <div className="">
         <form onSubmit={handleSubmit}>
-          <div className="flex flex-col gap-5">
+          <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-5 mx-3">
               <div className="w-full flex gap-4 items-center">
                 <div className="w-20">

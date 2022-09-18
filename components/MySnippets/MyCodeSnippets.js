@@ -35,8 +35,6 @@ const MyCodeSnippets = () => {
 
   const [isEmpty, setIsEmpty] = useState(false);
 
-  const [isOpen, setIsOpen] = React.useState(false);
-
   const [allOpenStates, setAllOpenStates] = useState({});
 
   const getMySnippets = async () => {
@@ -137,7 +135,6 @@ const MyCodeSnippets = () => {
     });
   }, [truncate]);
 
-  console.log("isopen", isOpen);
   return (
     <div className="min-h-[80vh]">
       {user ? (

@@ -38,6 +38,11 @@ const initialState = {
   link: "",
 };
 
+const initialStateLowercase = {
+  title: "",
+  description: "",
+};
+
 const initialSelectedFolderValue = {
   label: "",
   value: "",
@@ -58,6 +63,8 @@ const CreateCodeSnippet = () => {
   const { title, description, errorcode, solutioncode, linkHeading, link } =
     form;
 
+  const [lowercaseForm, setLowercaseForm] = useState(initialStateLowercase);
+
   const [userData, setUserData] = useState([]);
   const [username, setUsername] = useState("");
   const [usernameValue, setUsernameValue] = useState("");
@@ -71,6 +78,7 @@ const CreateCodeSnippet = () => {
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+    setLowercaseForm({ ...lowercaseForm, [e?.target.name]: e?.target.value.toLowerCase() });
   };
 
   useEffect(() => {
@@ -99,6 +107,10 @@ const CreateCodeSnippet = () => {
       try {
         await addDoc(collection(db, "ErrorSnippetsData1"), {
           ...form,
+          search: {
+            title: lowercaseForm.title,
+            description: lowercaseForm.description
+          },
           postedAt: serverTimestamp(),
           userData: {
             username: username,
@@ -112,7 +124,7 @@ const CreateCodeSnippet = () => {
           isPublic: snippetPublic,
           notes: notes,
         });
-        router.push("/mysnippets/errors");
+        router.push("/snips/errors");
       } catch (error) {
         console.log(error);
       }

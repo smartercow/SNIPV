@@ -23,7 +23,7 @@ const SidebarInfo = () => {
   
   return (
     <div>
-      <div className="flex flex-col gap-4 w-40 text-center">
+      <div className="flex flex-col gap-4 w-40 text-center mt-1">
         {Menu.map((item, index) => {
           if (asPath.startsWith(item.link))
             return (

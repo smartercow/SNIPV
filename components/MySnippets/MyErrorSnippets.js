@@ -148,7 +148,7 @@ const MyCodeSnippets = () => {
           <div className="flex flex-col gap-4">
             {myCodeSnippets?.map((snip, index) => (
               <div key={index} className="hoverable-item flex gap-2">
-                <Link href={`/s/${snip.id}`}>
+                <Link href={`/e/${snip.id}`}>
                   <div className="hoverable-item w-full">
                     <Card
                       isPressable
