@@ -2,7 +2,7 @@ import { Text } from "@nextui-org/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
-import {MdOutlineArrowRight} from "react-icons/md"
+import { MdOutlineArrowRight } from "react-icons/md";
 const Sidebar = () => {
   const { asPath } = useRouter();
 
@@ -22,28 +22,24 @@ const Sidebar = () => {
   ];
   return (
     <div className="w-40">
-      <ul>
-        {Menu.map((item, index) => {
-          if (asPath === item.link)
-            return (
-              <li key={index}>
-                <Link href={item.link}>
-                  <Text b className="cursor-pointer text">
-                    <MdOutlineArrowRight />{item.titel}
-                  </Text>
-                </Link>
-              </li>
-            );
-          else
-            return (
-              <li key={index}>
-                <Link href={item.link}>
-                  <Text className="cursor-pointer hover:underline">{item.titel}</Text>
-                </Link>
-              </li>
-            );
-        })}
-      </ul>
+      {Menu.map((item, index) => {
+        if (asPath.startsWith(item.link))
+          return (
+            <Link key={index} href={item.link}>
+              <Text h5 color="primary" className="cursor-pointer">
+                {item.titel}
+              </Text>
+            </Link>
+          );
+        else
+          return (
+            <Link key={index} href={item.link}>
+              <Text h5 className="cursor-pointer hover:underline">
+                {item.titel}
+              </Text>
+            </Link>
+          );
+      })}
     </div>
   );
 };
