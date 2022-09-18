@@ -15,7 +15,6 @@ export default function CreatedFolders({
 }) {
   const [folders, setFolders] = useState([]);
   const [selectValue, setSelectValue] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   const [open, setOpen] = useRecoilState(createErrorFolderModalState);
   const [update, setUpdate] = useRecoilState(updateErrorStateAtom);
@@ -76,7 +75,7 @@ export default function CreatedFolders({
                   h3
                   color="primary"
                   onClick={() => setOpen(true)}
-                  className="cursor-pointer"
+                  className="cursor-pointer pt-3"
                 >
                   <FaFolderPlus />
                 </Text>

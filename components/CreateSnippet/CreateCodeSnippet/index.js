@@ -24,6 +24,9 @@ import { oneLight } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import CreatedFolders from "./CreatedFolders";
 import { BsQuestionCircleFill } from "react-icons/bs";
 import { toast } from "react-toastify";
+import { InfoCircle } from "../../SVG/InfoCircle";
+import Link from "next/link";
+import { CgExternal } from "react-icons/cg";
 
 const initialState = {
   title: "",
@@ -42,16 +45,15 @@ const initialSelectedFolderValue = {
 const CreateCodeSnippet = () => {
   const [form, setForm] = useState(initialState);
   const [tags, setTags] = useState([]);
-  const [tagInputValues, setTagInputValues] = useState([])
+  const [tagInputValues, setTagInputValues] = useState([]);
   const [notes, setNotes] = useState("");
   const [snippetPublic, setSnippetPublic] = useState(false);
 
-  const [userData, setUserData] = useState([])
-  const [username, setUsername] = useState("")
-  const [usernameValue, setUsernameValue] = useState("")
-  const [photoURL, setPhotoURL] = useState("")
-  const [uid, setUid] = useState("")
-
+  const [userData, setUserData] = useState([]);
+  const [username, setUsername] = useState("");
+  const [usernameValue, setUsernameValue] = useState("");
+  const [photoURL, setPhotoURL] = useState("");
+  const [uid, setUid] = useState("");
 
   const [selectedFolder, setSelectedFolder] = useState(
     initialSelectedFolderValue
@@ -62,21 +64,19 @@ const CreateCodeSnippet = () => {
 
   const [user] = useAuthState(auth);
 
-
   const router = useRouter();
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const lowercaseTags = tagInputValues.map(element => {
+  const lowercaseTags = tagInputValues.map((element) => {
     return element.toLowerCase();
-    
   });
 
   useEffect(() => {
-    setTags(lowercaseTags)
-  }, [tagInputValues])
+    setTags(lowercaseTags);
+  }, [tagInputValues]);
 
   useEffect(() => {
     if (!user) return;
@@ -85,13 +85,13 @@ const CreateCodeSnippet = () => {
       const userData = await getDoc(userDocRef);
 
       setUserData(userData?.data());
-      setUsername(userData?.data().username)
-      setUsernameValue(userData?.data().usernameValue)
-      setUid(userData?.data().user?.uid)
-      setPhotoURL(userData?.data().user?.photoURL)
+      setUsername(userData?.data().username);
+      setUsernameValue(userData?.data().usernameValue);
+      setUid(userData?.data().user?.uid);
+      setPhotoURL(userData?.data().user?.photoURL);
     };
     getUser();
-  }, [user])
+  }, [user]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -257,28 +257,42 @@ const CreateCodeSnippet = () => {
                   </div>
                 </div>
               </Collapse>
-              <Collapse title={<Text b>Tags</Text>}>
-                <div className="flex justify-between gap-2 items-center">
-                  <div className="w-full">
-                    <TagsInput
-                      value={tags}
-                      onChange={setTagInputValues}
-                      name="tags"
-                      placeHolder="Skriv og tryk enter"
-                    />
-                  </div>
-                  <div className="">
-                    <Tooltip
-                      content={
-                        "Tags hjælper med at filtrering og søgning af snippets"
-                      }
+              <Collapse expanded title={<Text b>Tags</Text>}>
+                <div className="flex flex-col gap-2">
+                  <div className="w-full flex gap-2 items-center">
+                    <div className="w-full">
+                      <TagsInput
+                        value={tags}
+                        onChange={setTagInputValues}
+                        name="tags"
+                        placeHolder="Skriv og tryk ENTER"
+                      />
+                    </div>
+{/*                     <Tooltip
+                      content={"Undgå at bruge specialtegn."}
                       color="primary"
                       css={{ zIndex: 9999 }}
                     >
                       <Text h5 color="primary">
                         <BsQuestionCircleFill />
                       </Text>
-                    </Tooltip>
+                    </Tooltip> */}
+                  </div>
+                  <div className="mt-2">
+                    <Link href="/help/tags">
+                      <a target="_blank">
+                        <Text
+                          color="primary"
+                          className="cursor-pointer underline"
+                          size={14}
+                        >
+                          Læs hvordan man skriver søgbare tags
+                          <span className="text-blue-500">
+                            <CgExternal />
+                          </span>
+                        </Text>
+                      </a>
+                    </Link>
                   </div>
                 </div>
               </Collapse>

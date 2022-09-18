@@ -1,51 +1,29 @@
-import { Button, Text } from "@nextui-org/react";
-import React from "react";
+import { Text } from "@nextui-org/react";
 import Link from "next/link";
+import React from "react";
+import { CgExternal } from "react-icons/cg";
 
 const About = () => {
   return (
-    <div className="min-h-[70vh]">
-      <div className="flex justify-center items-center h-20">
-        <Text
-          h3
-          css={{
-            textGradient: "90deg, $blue600 -20%, $pink600 50%",
-          }}
-          weight="extrabold"
-        >
-          SNIPV
-        </Text>
-      </div>
-      <div className="flex justify-between gap-4">
-        <div className="flex flex-col gap-4 w-60 text-center">
-          <Link href="/about">
-            <Text h5 className="cursor-pointer hover:underline">
-              <Text b color="black">
-                Om SNIPV
-              </Text>
+    <div className="w-full">
+      <Text h4>Om SNIPV</Text>
+      <hr className="my-3" />
+      <div className="w-full flex flex-col gap-4">
+        <div>
+          <Text size="lg">
+            <Text size="lg" b>
+              SNIPV
             </Text>
-          </Link>
-          <Link href="/forkproject">
-            <Text h5 className="cursor-pointer hover:underline">
-              Fork projekt
-            </Text>
-          </Link>
+            (Snippets Vault) er en bankboks for genanvendelig kildekode,
+            maskinkode eller tekst.
+          </Text>
         </div>
-        <div className="w-full flex flex-col gap-4">
-          <div className="text-center">
-            <Text size="lg">
-              <Text size="lg" b>
-                SNIPV
-              </Text>
-              (Snippets Vault) er en bankboks for genanvendelig kildekode,
-              maskinkode eller tekst.
-            </Text>
-          </div>
-          <div className="text-center">
-            <div className="flex gap-3 justify-center items-center">
+        <div>
+          <div className="flex gap-3 items-center">
             <Text h5>Et projekt af PG -</Text>
-            <Text h5 className="underline text-blue-600">https://github.com/smartercow</Text>
-            </div>
+            <Text h5 className="underline text-blue-600">
+              <Link href="https://github.com/smartercow"><a target="_blank">https://github.com/smartercow<CgExternal /></a></Link>
+            </Text>
           </div>
         </div>
       </div>

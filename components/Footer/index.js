@@ -10,16 +10,38 @@ const Footer = () => {
         <div className="flex flex-col sm:flex-row gap-4">
           <div className="cursor-pointer">
             <Link href="/about">
-              <Text small b color="black" className="hover:underline cursor-pointer">
+              <Text
+                small
+                b
+                color="black"
+                className="hover:underline cursor-pointer"
+              >
                 OM SNIPV
               </Text>
             </Link>
           </div>
           <div>
-          <Link href="/forkproject">
-              <Text small b color="black" className="hover:underline cursor-pointer">
+            <Link href="/forkproject">
+              <Text
+                small
+                b
+                color="black"
+                className="hover:underline cursor-pointer"
+              >
                 <BiGitRepoForked />
                 FORK PROJEKT
+              </Text>
+            </Link>
+          </div>
+          <div>
+            <Link href="/help">
+              <Text
+                small
+                b
+                color="black"
+                className="hover:underline cursor-pointer"
+              >
+                HJÆLP
               </Text>
             </Link>
           </div>

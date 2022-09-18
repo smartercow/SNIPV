@@ -1,14 +1,15 @@
+import { Text } from "@nextui-org/react";
 import Head from "next/head";
 import React from "react";
-import About from "../components/SnipvInfo/About";
-import Heading from "../components/SnipvInfo/Heading";
-import SidebarInfo from "../components/SnipvInfo/Sidebar";
+import Heading from "../../components/SnipvInfo/Heading";
+import SidebarInfo from "../../components/SnipvInfo/Sidebar";
+import TagsInfo from "../../components/SnipvInfo/Tags";
 
-const about = () => {
+const TagsInfoPage = () => {
   return (
     <div className="min-h-[80vh]">
       <Head>
-        <title>Om SNIPV</title>
+        <title>Fork SNIPV projekt</title>
         <meta name="description" content="Created by Peter G" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -18,11 +19,11 @@ const about = () => {
           <Heading />
         </div>
         <div className="flex gap-4">
-          <div>
+        <div>
             <SidebarInfo />
           </div>
           <div className="w-full">
-            <About />
+            <TagsInfo />
           </div>
         </div>
       </div>
@@ -30,4 +31,4 @@ const about = () => {
   );
 };
 
-export default about;
+export default TagsInfoPage;

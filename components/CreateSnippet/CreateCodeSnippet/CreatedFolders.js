@@ -71,7 +71,7 @@ export default function CreatedFolders({
                   h3
                   color="primary"
                   onClick={() => setOpen(true)}
-                  className="cursor-pointer"
+                  className="cursor-pointer pt-3"
                 >
                   <FaFolderPlus />
                 </Text>
