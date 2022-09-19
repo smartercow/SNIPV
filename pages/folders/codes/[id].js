@@ -118,13 +118,9 @@ const Folder = () => {
                   </p>
                 </div>
                 <div className="mr-3">
-                  {folder?.folderSnippetType === "code" ? (
+                  {folder?.folderSnippetType === "code" && (
                     <div className="text-white bg-blue-300 px-1 rounded-md font-mono">
                       <p>kode</p>
-                    </div>
-                  ) : (
-                    <div className="bg-[#FF3137] text-white rounded-lg py-1 px-3 hover:langHover MonoHeading">
-                      <p className="">Fejl</p>
                     </div>
                   )}
                 </div>
