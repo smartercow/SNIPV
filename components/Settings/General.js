@@ -57,7 +57,7 @@ const General = () => {
               <Text h5 color="primary">
                 <BsQuestionCircleFill />
               </Text>
-            </Tooltip>
+            </Tooltip>  
           </div>
           <div>
             <Input
