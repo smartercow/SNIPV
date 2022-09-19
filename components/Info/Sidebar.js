@@ -9,21 +9,21 @@ const SidebarInfo = () => {
   const Menu = [
     {
       titel: "Om SNIPV",
-      link: "/about",
+      link: "/info/about",
     },
     {
       titel: "Fork projekt",
-      link: "/forkproject",
+      link: "/info/forkproject",
     },
     {
       titel: "Hjælp",
-      link: "/help",
+      link: "/info/help",
     },
   ];
   
   return (
-    <div>
-      <div className="flex flex-col gap-4 w-40 text-center mt-1">
+    <aside>
+      <div className="w-40 pt-1">
         {Menu.map((item, index) => {
           if (asPath.startsWith(item.link))
             return (
@@ -43,7 +43,7 @@ const SidebarInfo = () => {
             );
         })}
       </div>
-    </div>
+    </aside>
   );
 };
 

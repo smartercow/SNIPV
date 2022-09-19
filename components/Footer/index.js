@@ -5,11 +5,11 @@ import { BiGitRepoForked } from "react-icons/bi";
 
 const Footer = () => {
   return (
-    <footer className="max-w-5xl mx-5 lg:mx-auto my-10">
-      <div className="flex justify-between items-center">
+    <div>
+      <div className="flex justify-between items-center max-w-5xl mx-5 lg:mx-auto my-5">
         <div className="flex flex-col sm:flex-row gap-4">
           <div className="cursor-pointer">
-            <Link href="/about">
+            <Link href="/info/about">
               <Text
                 small
                 b
@@ -21,7 +21,7 @@ const Footer = () => {
             </Link>
           </div>
           <div>
-            <Link href="/forkproject">
+            <Link href="/info/forkproject">
               <Text
                 small
                 b
@@ -34,7 +34,7 @@ const Footer = () => {
             </Link>
           </div>
           <div>
-            <Link href="/help">
+            <Link href="/info/help">
               <Text
                 small
                 b
@@ -50,7 +50,7 @@ const Footer = () => {
           <Text small>© 2022 SNIPV</Text>
         </div>
       </div>
-    </footer>
+    </div>
   );
 };
 

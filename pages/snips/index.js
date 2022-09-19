@@ -101,7 +101,7 @@ const MySnippets = () => {
   };
 
   return (
-    <div className="min-h-[80vh]">
+    <div className="min-h-[70vh]">
       <Head>
         <title>Mine snips - SNIPV</title>
         <meta name="description" content="Created by Peter G" />

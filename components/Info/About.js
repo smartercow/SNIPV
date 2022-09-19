@@ -5,9 +5,7 @@ import { CgExternal } from "react-icons/cg";
 
 const About = () => {
   return (
-    <div className="w-full">
-      <Text h4>Om SNIPV</Text>
-      <hr className="my-3" />
+    <div>
       <div className="w-full flex flex-col gap-4">
         <div>
           <Text size="lg">

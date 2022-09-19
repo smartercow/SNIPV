@@ -35,10 +35,6 @@ const PatchNotes = () => {
 
   return (
     <div>
-      <div>
-        <Text h4>Opdateringer</Text>
-      </div>
-      <hr />
       <div className="my-5">
         {lastUpdate && (
           <>

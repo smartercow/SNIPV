@@ -53,7 +53,7 @@ const ErrorTagPage = () => {
   }, [user]);
 
   return (
-    <div className="min-h-[80vh]">
+    <div className="min-h-[70vh]">
       {user && (
         <div>
           <div className="flex gap-2 items-center">

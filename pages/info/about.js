@@ -1,29 +1,29 @@
 import { Text } from "@nextui-org/react";
 import Head from "next/head";
 import React from "react";
-import PatchNotes from "../../components/Settings/PatchNotes";
+import About from "../../components/Info/About";
 
-const PatchnotesSettings = () => {
+const AboutPage = () => {
   return (
-    <div className="min-h-[70vh]">
+    <div className="min-h-[70vh] w-full">
       <Head>
-        <title>Opdateringer - SNIPV</title>
+        <title>Om SNIPV</title>
         <meta name="description" content="Created by Peter G" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div>
+      <div className="w-full">
         <div>
-          <Text h4>Opdateringer</Text>
+          <Text h4>Om SNIPV</Text>
         </div>
-        <hr />
+        <hr className="w-full my-3" />
 
         <div>
-          <PatchNotes />
+          <About />
         </div>
       </div>
     </div>
   );
 };
 
-export default PatchnotesSettings;
+export default AboutPage;

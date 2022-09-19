@@ -8,7 +8,7 @@ import { BsStarFill } from "react-icons/bs";
 const ForkProject = () => {
   return (
     <div className="w-full">
-      <Text h4>Fork denne projekt på Github</Text>
+      <Text h4>Fork SNIPV projekt på Github</Text>
       <hr className="my-3" />
       <div className="flex">
         <Text h5>&#10149;</Text>
@@ -26,7 +26,7 @@ const ForkProject = () => {
         </pre>
       </div>
       <div className="flex gap-1 items-center">
-        <Text b size={13}>
+        <Text transform="uppercase" b size={13}>
           Glem ikke og give en
         </Text>
         <p className="text-yellow-400 text-md pt-1"><BsStarFill /></p>

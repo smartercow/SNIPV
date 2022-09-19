@@ -40,7 +40,7 @@ const MyErrorsFolders = () => {
   }, [user]);
 
   return (
-    <div className="min-h-[80vh]">
+    <div className="min-h-[70vh]">
       <Head>
         <title>Mine fejl mapper - SNIPV</title>
         <meta name="description" content="Created by Peter G" />

@@ -36,7 +36,7 @@ const CodeTagsPage = () => {
   }, [user]);
 
   return (
-    <div className="min-h-[80vh]">
+    <div className="min-h-[70vh]">
       <div className='mb-3'>
         <TagType />
       </div>

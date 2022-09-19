@@ -80,7 +80,7 @@ const Folder = () => {
   };
 
   return (
-    <div className="min-h-[80vh]">
+    <div className="min-h-[70vh]">
       <Head>
         <title>{folder?.folderName}&nbsp;- SNIPV</title>
         <meta name="description" content="Created by Peter G" />

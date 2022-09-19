@@ -38,9 +38,9 @@ const Upsert = () => {
   };
 
   return (
-    <div className="min-h-[80vh]">
+    <div className="min-h-[70vh]">
       <Head>
-        <title>Opret en snip - SNIPV</title>
+        <title>Opret en SNIP - SNIPV</title>
         <meta name="description" content="Created by Peter G" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

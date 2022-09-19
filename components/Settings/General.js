@@ -5,10 +5,6 @@ import { BsQuestionCircleFill } from "react-icons/bs";
 const General = () => {
   return (
     <div>
-      <div>
-        <Text h4>Generel</Text>
-      </div>
-      <hr />
       <div className="flex flex-col gap-4 my-2">
         <div>
           <div className="flex gap-1">

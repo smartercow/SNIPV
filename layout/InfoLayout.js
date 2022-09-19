@@ -1,15 +1,13 @@
-import { Text } from "@nextui-org/react";
 import React from "react";
-import Sidebar from "../components/Settings/Sidebar";
+import Sidebar from "../components/Info/Sidebar";
+import Heading from "../components/Info/Heading";
 
-const SettingsLayout = ({ children }) => {
+const InfoLayout = ({ children }) => {
   return (
-    <div className="min-h-[70vh]">
+    <div className="min-h-[70vh] w-full">
       <div className="">
         <div className="flex justify-center items-center h-20">
-          <Text h4 transform="uppercase">
-            Indstillinger
-          </Text>
+          <Heading />
         </div>
         <div className="flex gap-3">
           <div>
@@ -22,4 +20,4 @@ const SettingsLayout = ({ children }) => {
   );
 };
 
-export default SettingsLayout;
+export default InfoLayout;

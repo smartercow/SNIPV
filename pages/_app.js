@@ -11,6 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import { useRouter } from "next/router";
 import SettingsLayout from "../layout/SettingsLayout";
+import InfoLayout from "../layout/InfoLayout";
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
 
@@ -23,6 +24,21 @@ function MyApp({ Component, pageProps }) {
             <SettingsLayout>
               <Component {...pageProps} />
             </SettingsLayout>
+          </ClientLayout>
+        </NextUIProvider>
+      </RecoilRoot>
+    );
+  }
+
+  if (router.pathname.startsWith("/info")) {
+    return (
+      <RecoilRoot>
+        <NextUIProvider>
+          <ToastContainer position="top-center" className="z-[999999]" />
+          <ClientLayout>
+            <InfoLayout>
+              <Component {...pageProps} />
+            </InfoLayout>
           </ClientLayout>
         </NextUIProvider>
       </RecoilRoot>

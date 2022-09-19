@@ -134,7 +134,7 @@ const MyCodeSnippets = () => {
   }, [truncate]);
 
   return (
-    <div className="min-h-[80vh]">
+    <div className="min-h-[70vh]">
       {user ? (
         <div>
           <div className="mb-3 flex gap-1">

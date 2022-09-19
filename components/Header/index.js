@@ -8,7 +8,7 @@ import { auth } from "../../firebase/clientApp";
 import { Edit } from "../SVG/Edit";
 import { InfoCircle } from "../SVG/InfoCircle";
 import { getUpdates } from "../../helpers/updates";
-import { currentUpdate } from "../../pages/api/currentupdate";
+import { currentUpdate } from "../../pages/api/updates/CurrentVersion";
 import Nav from "./Nav";
 
 const Header = ({ user }) => {
@@ -174,6 +174,7 @@ const Header = ({ user }) => {
           )}
         </div>
       </div>
+      <hr />
     </div>
   );
 };

@@ -40,7 +40,6 @@ const ClientLayout = ({ children }) => {
             setOpen(true);
           }
         } else {
-
           //SET USER DATA KUN FØRSTE GANG
           await setDoc(doc(db, "UsersData1", user.uid), {
             usernameSet: false,
@@ -62,11 +61,17 @@ const ClientLayout = ({ children }) => {
   }, [user, update]);
 
   return (
-    <div>
-      <Header user={user} />
+    <div className="h-full">
+      <header>
+        <Header user={user} />
+      </header>
       <hr />
-      <div className="max-w-5xl mx-5 lg:mx-auto mt-3 text-[#4D5B7C]">{children}</div>
-      <Footer />
+      <main className="max-w-5xl mx-5 lg:mx-auto mt-3 text-[#4D5B7C] w-full">
+        {children}
+      </main>
+      <footer>
+        <Footer />
+      </footer>
       <CreateCodeFolderModal />
       <CreateErrorFolderModal />
       <SetUsernameModal />

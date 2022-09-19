@@ -1,19 +1,17 @@
 import Head from "next/head";
-import { Button } from "@nextui-org/react";
-import Feed from "../components/Home/Feed";
 import HomePage from "../components/Home";
 export default function Home() {
   return (
-    <div className="min-h-[80vh]">
+    <div className="min-h-[70vh]">
       <Head>
         <title>SNIPV - Bankboks for kildekode, maskinkode eller tekst.</title>
         <meta name="description" content="Created by Peter G" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="">
+      <div className="">
         <HomePage />
-      </main>
+      </div>
     </div>
   );
 }
