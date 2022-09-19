@@ -60,6 +60,9 @@ export default function CreateFolder() {
 
   const [inputStatus, setInputStatus] = useState("");
 
+  const [disableBtn, setDisableBtn] = useState(false)
+
+
   function handleSelectLang(data) {
     setLanguage(data);
   }
@@ -111,6 +114,7 @@ export default function CreateFolder() {
   const createFolder = async (e) => {
     e.preventDefault();
     if (language && folderName) {
+      setDisableBtn(true)
       try {
 
         await addDoc(collection(db, "UsersData1", user?.uid, "ErrorFolders"), {
@@ -128,7 +132,7 @@ export default function CreateFolder() {
         setOpen(false);
         setUpdate(!update);
       } catch (error) {
-        return null;
+        setDisableBtn(false)
       }
     } else {
       setInputStatus("- skal udfyldes!");
@@ -272,7 +276,7 @@ export default function CreateFolder() {
           <Button auto light color="error" onClick={() => setOpen(false)}>
             Luk
           </Button>
-          <Button color="primary" auto type="submit">
+          <Button disabled={disableBtn} color="primary" auto type="submit">
             Opret mappe
           </Button>
         </div>
