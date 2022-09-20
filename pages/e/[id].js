@@ -28,7 +28,7 @@ const Snippet = () => {
   }, [id]);
 
   return (
-    <div className="min-h-[80vh]">
+    <div className="min-h-[70vh]">
       <Head>
         <title>{snippet?.title}&nbsp;- SNIPV</title>
         <meta name="description" content="Created by Peter G" />
