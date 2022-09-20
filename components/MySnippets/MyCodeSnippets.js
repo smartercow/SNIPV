@@ -309,7 +309,7 @@ const MyCodeSnippets = () => {
 
             {!myCodeSnippets && (
               <div className="flex justify-center">
-                <Text b>Du har ingen fejl SNIPS! 😔</Text>
+                <Text b>Du har ingen kode SNIPS! 😔</Text>
               </div>
             )}
 

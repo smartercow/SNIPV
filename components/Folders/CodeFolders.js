@@ -1,4 +1,4 @@
-import { Card } from "@nextui-org/react";
+import { Card, Text } from "@nextui-org/react";
 import Link from "next/link";
 import React from "react";
 import { excerpt } from "../../utilities/excerpt";
@@ -70,6 +70,12 @@ const CodeFolders = ({ myCodeFolders }) => {
               </Link>
             </div>
           ))}
+
+          {!myCodeFolders && (
+            <div className="flex justify-center">
+              <Text b>Du har ingen kode mapper! 😔</Text>
+            </div>
+          )}
         </div>
       )}
     </div>
