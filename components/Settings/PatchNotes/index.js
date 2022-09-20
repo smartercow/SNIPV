@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import PatchTable from "./PatchTable";
 import { CgExternal } from "react-icons/cg";
 import { getUpdates } from "../../../helpers/updates";
-import { currentUpdate } from "../../../pages/api/currentupdate";
+import { CurrentVersion } from "../../../pages/api/updates/CurrentVersion";
 
 const PatchNotes = () => {
   const [updateData, setUpdateData] = useState();
@@ -38,7 +38,7 @@ const PatchNotes = () => {
       <div className="my-5">
         {lastUpdate && (
           <>
-            {lastUpdate?.id !== currentUpdate.id && (
+            {lastUpdate?.id !== CurrentVersion.id && (
               <div>
                 <div className="flex gap-1">
                   <Text h5>Der er en ny version</Text>
