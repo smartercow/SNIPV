@@ -6,7 +6,7 @@ const Codes = () => {
   return (
     <div className="min-h-[70vh]">
       <Head>
-        <title>Mine kode snippets - SNIPV</title>
+        <title>Mine kode SNIPS - SNIPV</title>
         <meta name="description" content="Created by Peter G" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

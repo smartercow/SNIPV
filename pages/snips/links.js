@@ -7,7 +7,7 @@ const Links = () => {
   return (
     <div className="min-h-[70vh]">
       <Head>
-        <title>Mine links snippetss - SNIPV</title>
+        <title>Mine links SNIPS - SNIPV</title>
         <meta name="description" content="Created by Peter G" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

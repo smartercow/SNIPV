@@ -7,7 +7,7 @@ const Notes = () => {
   return (
     <div className="min-h-[70vh]">
       <Head>
-        <title>Mine noter snippets - SNIPV</title>
+        <title>Mine noter SNIPS - SNIPV</title>
         <meta name="description" content="Created by Peter G" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

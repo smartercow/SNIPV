@@ -7,7 +7,7 @@ const Errors = () => {
   return (
     <div className="min-h-[70vh]">
       <Head>
-        <title>Mine fejl snippets - SNIPV</title>
+        <title>Mine fejl SNIPS - SNIPV</title>
         <meta name="description" content="Created by Peter G" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

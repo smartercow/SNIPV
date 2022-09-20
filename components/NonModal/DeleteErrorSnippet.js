@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, Button, Grid, Row } from "@nextui-org/react";
 
-export const DeleteErrorSnippet = ({ snip, handleDelete }) => {
+export const DeleteErrorSnippet = ({ snip, handleDelete, setAllOpenStates, index }) => {
   return (
     <Grid.Container
       css={{ borderRadius: "14px", padding: "0.75rem", maxWidth: "330px" }}
@@ -17,7 +17,7 @@ export const DeleteErrorSnippet = ({ snip, handleDelete }) => {
       </Row>
       <Grid.Container justify="space-between" alignContent="center">
         <Grid>
-          <Button size="sm" light>
+          <Button size="sm" light onClick={() => setAllOpenStates(oldState => ({...oldState, [index]: false}))}>
             Annullere
           </Button>
         </Grid>
@@ -28,6 +28,7 @@ export const DeleteErrorSnippet = ({ snip, handleDelete }) => {
             color="error"
             onClick={() => {
               handleDelete(snip.id);
+              setAllOpenStates(oldState => ({...oldState, [index]: false}))
             }}
           >
             Slet
