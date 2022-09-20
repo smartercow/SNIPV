@@ -62,7 +62,7 @@ const PatchNotes = () => {
               </div>
             )}
 
-            {lastUpdate?.id === currentUpdate.id && (
+            {lastUpdate?.id === CurrentVersion.id && (
               <div className="flex gap-1">
                 <Text h5>Din version </Text>
                 <Text h5 color="primary" className="underline">

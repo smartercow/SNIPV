@@ -8,7 +8,7 @@ import { auth } from "../../firebase/clientApp";
 import { Edit } from "../SVG/Edit";
 import { InfoCircle } from "../SVG/InfoCircle";
 import { getUpdates } from "../../helpers/updates";
-import { currentUpdate } from "../../pages/api/updates/CurrentVersion";
+import { CurrentVersion } from "../../pages/api/updates/CurrentVersion";
 import Nav from "./Nav";
 
 const Header = ({ user }) => {
@@ -50,7 +50,7 @@ const Header = ({ user }) => {
         <>
           {lastUpdate && (
             <>
-              {lastUpdate?.id !== currentUpdate?.id && (
+              {lastUpdate?.id !== CurrentVersion?.id && (
                 <div className="h-12 flex justify-center bg-[#0072F5]">
                   <div className="flex gap-2 items-center">
                     <InfoCircle
