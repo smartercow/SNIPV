@@ -307,16 +307,18 @@ const MyCodeSnippets = () => {
               </>
             )}
 
-            {!myCodeSnippets && (
-              <div className="flex justify-center">
-                <Text b>Du har ingen kode SNIPS! 😔</Text>
-              </div>
-            )}
-
-            {loading && (
+            {loading ? (
               <div className="flex justify-center items-center h-[20vh]">
                 <Loading size="lg" />
               </div>
+            ) : (
+              <>
+                {!myCodeSnippets && (
+                  <div className="flex justify-center">
+                    <Text b>Du har ingen kode SNIPS! 😔</Text>
+                  </div>
+                )}
+              </>
             )}
           </div>
         </div>

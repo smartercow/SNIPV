@@ -1,6 +1,5 @@
-import { Button, Text } from "@nextui-org/react";
+import { Text } from "@nextui-org/react";
 import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
-import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import SnippetsFolderType from "../../../components/Heading/SnippetsFolderType";
@@ -58,7 +57,7 @@ const MyErrorsFolders = () => {
               </Text>
               <hr />
             </div>
-            <ErrorFolders myErrorFolders={myErrorFolders} />
+            <ErrorFolders myErrorFolders={myErrorFolders} loading={loading} />
           </div>
         </div>
       )}

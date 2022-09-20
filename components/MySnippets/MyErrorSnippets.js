@@ -189,7 +189,8 @@ const MyCodeSnippets = () => {
                               </div>
                               <div className="flex">
                                 <div className="w-24 flex justify-center">
-                                  {snip.folder.folderSnippetType === "error" && (
+                                  {snip.folder.folderSnippetType ===
+                                    "error" && (
                                     <div className="pr-[.60rem]">
                                       <Badge
                                         isSquared
@@ -307,15 +308,17 @@ const MyCodeSnippets = () => {
               </>
             )}
 
-            {!myErrorSnippets && (
-                <div className="flex justify-center">
-                    <Text b>Du har ingen fejl SNIPS! 😔</Text>
-                </div>
-            )}
-
-            {loading && (
+            {loading ? (
               <div className="flex justify-center items-center h-[20vh]">
                 <Loading size="lg" />
+              </div>
+            ) : (
+              <div>
+                {!myErrorSnippets && (
+                  <div className="flex justify-center">
+                    <Text b>Du har ingen fejl SNIPS! 😔</Text>
+                  </div>
+                )}
               </div>
             )}
           </div>

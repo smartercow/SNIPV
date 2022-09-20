@@ -1,10 +1,10 @@
-import { Card, Text } from "@nextui-org/react";
+import { Card, Loading, Text } from "@nextui-org/react";
 import Link from "next/link";
 import React from "react";
 import { excerpt } from "../../utilities/excerpt";
 import { FolderIcon } from "../SVG/FolderIcon";
 
-const CodeFolders = ({ myCodeFolders }) => {
+const CodeFolders = ({ myCodeFolders, loading }) => {
   return (
     <div>
       {myCodeFolders && (
@@ -71,9 +71,17 @@ const CodeFolders = ({ myCodeFolders }) => {
             </div>
           ))}
 
-          {!myCodeFolders && (
-            <div className="flex justify-center">
-              <Text b>Du har ingen kode mapper! 😔</Text>
+          {loading ? (
+            <div className="flex justify-center items-center h-[20vh]">
+              <Loading size="lg" />
+            </div>
+          ) : (
+            <div>
+              {!myCodeFolders && (
+                <div className="flex justify-center">
+                  <Text b>Du har ingen kode mapper! 😔</Text>
+                </div>
+              )}
             </div>
           )}
         </div>

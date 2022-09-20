@@ -1,4 +1,4 @@
-import { Button, Card, Text } from "@nextui-org/react";
+import { Button, Card, Loading, Text } from "@nextui-org/react";
 import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
@@ -75,7 +75,9 @@ const MyFolders = () => {
           <div>
             <div>
               <div>
-                <Text transform="uppercase" h5>Seneste kode mapper</Text>
+                <Text transform="uppercase" h5>
+                  Seneste kode mapper
+                </Text>
               </div>
               {myCodeFolders && (
                 <div className="flex flex-col gap-3">
@@ -140,20 +142,37 @@ const MyFolders = () => {
                       </Link>
                     </div>
                   ))}
+
+                  <div className="text-center my-3">
+                    <Link href="/folders/codes">
+                      <Text h5 className="cursor-pointer hover:underline">
+                        SE ALLE
+                      </Text>
+                    </Link>
+                  </div>
                 </div>
               )}
-              <div className="text-center my-3">
-                <Link href="/folders/codes">
-                  <Text h5 className="cursor-pointer hover:underline">
-                    SE ALLE
-                  </Text>
-                </Link>
-              </div>
+
+              {loading ? (
+                <div className="flex justify-center items-center h-[20vh]">
+                  <Loading size="lg" />
+                </div>
+              ) : (
+                <div>
+                  {!myCodeFolders && (
+                    <div className="flex justify-center">
+                      <Text b>Du har ingen kode mapper! 😔</Text>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
 
             <div>
               <div>
-              <Text transform="uppercase" h5>Seneste fejl mapper</Text>
+                <Text transform="uppercase" h5>
+                  Seneste fejl mapper
+                </Text>
               </div>
               {myErrorFolders && (
                 <div className="flex flex-col gap-3">
@@ -218,15 +237,30 @@ const MyFolders = () => {
                       </Link>
                     </div>
                   ))}
+
+                  <div className="text-center my-3">
+                    <Link href="/folders/errors">
+                      <Text h5 className="cursor-pointer hover:underline">
+                        SE ALLE
+                      </Text>
+                    </Link>
+                  </div>
                 </div>
               )}
-              <div className="text-center my-3">
-                <Link href="/folders/errors">
-                  <Text h5 className="cursor-pointer hover:underline">
-                    SE ALLE
-                  </Text>
-                </Link>
-              </div>
+
+              {loading ? (
+                <div className="flex justify-center items-center h-[20vh]">
+                  <Loading size="lg" />
+                </div>
+              ) : (
+                <div>
+                  {!myErrorFolders && (
+                    <div className="flex justify-center">
+                      <Text b>Du har ingen fejl mapper! 😔</Text>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         </div>

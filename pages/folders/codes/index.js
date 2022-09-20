@@ -56,7 +56,7 @@ const MyCodesFolders = () => {
               </Text>
               <hr />
             </div>
-            <CodeFolders myCodeFolders={myCodeFolders} />
+            <CodeFolders myCodeFolders={myCodeFolders} loading={loading} />
           </div>
         </div>
       )}

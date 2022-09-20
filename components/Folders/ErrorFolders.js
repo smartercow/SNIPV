@@ -1,10 +1,10 @@
-import { Card, Text } from "@nextui-org/react";
+import { Card, Loading, Text } from "@nextui-org/react";
 import Link from "next/link";
 import React from "react";
 import { FolderIcon } from "../SVG/FolderIcon";
 import { excerpt } from "../../utilities/excerpt";
 
-const CodeFolders = ({ myErrorFolders }) => {
+const ErrorFolders = ({ myErrorFolders, loading }) => {
   return (
     <div>
       {myErrorFolders && (
@@ -73,13 +73,21 @@ const CodeFolders = ({ myErrorFolders }) => {
         </div>
       )}
 
-      {!myErrorFolders && (
-        <div className="flex justify-center">
-          <Text b>Du har ingen fejl mapper! 😔</Text>
+      {loading ? (
+        <div className="flex justify-center items-center h-[20vh]">
+          <Loading size="lg" />
+        </div>
+      ) : (
+        <div>
+          {!myErrorFolders && (
+            <div className="flex justify-center">
+              <Text b>Du har ingen fejl mapper! 😔</Text>
+            </div>
+          )}
         </div>
       )}
     </div>
   );
 };
 
-export default CodeFolders;
+export default ErrorFolders;
