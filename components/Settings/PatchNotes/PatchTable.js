@@ -1,7 +1,7 @@
 import { Table, Row, Col, Tooltip, User, Text, Badge } from "@nextui-org/react";
 import { StyledBadge } from "./StyledBadge";
 import { BsQuestionCircleFill } from "react-icons/bs";
-import { currentUpdate } from "../../../pages/api/currentupdate";
+import { CurrentVersion } from "../../../pages/api/updates/CurrentVersion";
 
 export default function PatchTable({ updateData }) {
   return (
@@ -42,7 +42,7 @@ export default function PatchTable({ updateData }) {
               </Table.Cell>
               <Table.Cell>
                 <div className="flex justify-center">
-                {item.id === currentUpdate.id ? (
+                {item.id === CurrentVersion.id ? (
                   <Badge color="secondary">nuværende</Badge>
                 ) : item.status === "nyeste" ? (
                   <Badge color="primary">nyeste</Badge>
