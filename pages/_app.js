@@ -12,6 +12,7 @@ import { ToastContainer } from "react-toastify";
 import { useRouter } from "next/router";
 import SettingsLayout from "../layout/SettingsLayout";
 import InfoLayout from "../layout/InfoLayout";
+import UpsertLayout from "../layout/UpsertLayout";
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
 
@@ -45,6 +46,20 @@ function MyApp({ Component, pageProps }) {
     );
   }
 
+  if (router.pathname.startsWith("/upsert")) {
+    return (
+      <RecoilRoot>
+        <NextUIProvider>
+          <ToastContainer position="top-center" className="z-[999999]" />
+          <ClientLayout>
+            <UpsertLayout>
+              <Component {...pageProps} />
+            </UpsertLayout>
+          </ClientLayout>
+        </NextUIProvider>
+      </RecoilRoot>
+    );
+  }
   return (
     <RecoilRoot>
       <NextUIProvider>

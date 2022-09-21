@@ -1,56 +1,43 @@
-import { Button, Card, Loading, Text } from "@nextui-org/react";
-import React, { useEffect, useState } from "react";
+import { Card, Text } from "@nextui-org/react";
+import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import CreateCodeSnippet from "../../../components/CreateSnippet/CreateCodeSnippet";
-import CreateErrorSnippet from "../../../components/CreateSnippet/CreateErrorSnippet";
 import { auth } from "../../../firebase/clientApp";
 import NoUser from "../../../components/NoPage/NoUser";
 import Head from "next/head";
-import { useRouter } from "next/router";
 
-const UpsertId = () => {
+const Upsert = () => {
   const [user] = useAuthState(auth);
-  const [loading, setLoading] = useState(true);
-
-  const {
-    query: { id },
-  } = useRouter();
 
   return (
     <div className="min-h-[70vh]">
       <Head>
-        <title>Opdatere kode SNIP - SNIPV</title>
+        <title>Opret kode SNIP - SNIPV</title>
         <meta name="description" content="Created by Peter G" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      {user && (
+      {user ? (
         <div>
           <div className="mt-3">
             <Card>
               <Card.Header>
                 <Text b transform="uppercase">
-                  Opdatere en kode SNIP
+                  Opret en kode SNIP
                 </Text>
               </Card.Header>
               <Card.Divider />
               <Card.Body>
-                <CreateCodeSnippet id={id} setLoading={setLoading}/>
+                <CreateCodeSnippet />
               </Card.Body>
             </Card>
           </div>
         </div>
+      ) : (
+        <NoUser />
       )}
-
-      {loading && (
-        <div className="flex justify-center items-center h-[20vh]">
-          <Loading size="lg" />
-        </div>
-      )}
-
-      {!user && <NoUser />}
     </div>
   );
 };
 
-export default UpsertId;
+export default Upsert;

@@ -18,7 +18,6 @@ export default function CreatedFolders({
 }) {
   const [folders, setFolders] = useState([]);
   const [selectValue, setSelectValue] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   const [open, setOpen] = useRecoilState(createCodeFolderModalState);
   const [update, setUpdate] = useRecoilState(updateStateAtom);
@@ -50,10 +49,6 @@ export default function CreatedFolders({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, dataFetched]);
-
-/*   console.log("SELECTED FOLDER",selectedFolder);
-  console.log("FOLDERS",folders);
-  console.log("SELECT VALUE",selectValue); */ 
 
   return (
     <div>

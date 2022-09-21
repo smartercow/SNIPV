@@ -12,6 +12,9 @@ import { FaFolderPlus } from "react-icons/fa";
 export default function CreatedFolders({
   setSelectedFolder,
   setSelectedCategory,
+  selectedFolder,
+  id,
+  dataFetched
 }) {
   const [folders, setFolders] = useState([]);
   const [selectValue, setSelectValue] = useState([]);
@@ -43,6 +46,14 @@ export default function CreatedFolders({
     };
     getFolders();
   }, [user, update]);
+
+  useEffect(() => {
+    if (id) {
+      setSelectValue(selectedFolder)
+      setUpdate(!update)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id, dataFetched]);
 
   return (
     <div>

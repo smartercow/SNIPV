@@ -116,13 +116,14 @@ const MySnippets = () => {
         <div className="flex flex-col gap-6">
           <div>
             {myCodeSnippets && (
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-2 w-full">
                 <div>
                   <Text transform="uppercase" h5>
                     Seneste kode SNIPS
                   </Text>
                 </div>
-                <div className="flex flex-col gap-4">
+                <hr />
+                <div className="flex flex-col gap-4 mt-2">
                   {myCodeSnippets.map((snip, index) => (
                     <div key={index} className="hoverable-item flex gap-2">
                       <Link href={`/s/${snip.id}`}>
@@ -297,17 +298,18 @@ const MySnippets = () => {
           </div>
 
           <div>
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2 w-full">
               <div>
                 <Text transform="uppercase" h5>
                   Seneste fejl snips
                 </Text>
               </div>
+              <hr />
               {myErrorSnippets && (
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-4 mt-2">
                   {myErrorSnippets.map((snip, index) => (
                     <div key={index} className="hoverable-item flex gap-2">
-                      <Link href={`/s/${snip.id}`}>
+                      <Link href={`/e/${snip.id}`}>
                         <div className="hoverable-item w-full">
                           <Card
                             isPressable

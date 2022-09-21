@@ -28,20 +28,6 @@ const UpsertId = () => {
     query: { id },
   } = useRouter();
 
-  const [selectedType, setSelectedType] = useState("code");
-  const [selectedTypeTranslate, setSelectedTypeTranslate] = useState("kode");
-
-  const renderType = (type) => {
-    switch (type) {
-      case "code":
-        return <CreateCodeSnippet id={id} />;
-      case "error":
-        return <CreateErrorSnippet id={id} />;
-      default:
-        return <CreateCodeSnippet id={id} />;
-    }
-  };
-
   return (
     <div className="min-h-[70vh]">
       <Head>
@@ -52,21 +38,6 @@ const UpsertId = () => {
 
       {user ? (
         <div>
-          <div>
-            <Button.Group color="primary" size="sm">
-              {SnippetType.map(({ type, title }) => (
-                <Button
-                  css={{ textTransform: "capitalize" }}
-                  key={type}
-                  onClick={() =>
-                    setSelectedType(type) | setSelectedTypeTranslate(title)
-                  }
-                >
-                  {title}
-                </Button>
-              ))}
-            </Button.Group>
-          </div>
           <div className="mt-3">
             <Card>
               <Card.Header>

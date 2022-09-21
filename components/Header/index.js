@@ -87,7 +87,7 @@ const Header = ({ user }) => {
           </div>
           <div>
             {user && (
-              <Link href="/upsert">
+              <Link href="/upsert/code">
                 <Edit
                   fill="#0072F5"
                   className="cursor-pointer"

@@ -1,7 +1,10 @@
 import { Text } from "@nextui-org/react";
+import Link from "next/link";
 import React from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneLight } from "react-syntax-highlighter/dist/cjs/styles/prism";
+import { CgExternal } from "react-icons/cg";
+
 const ErrorSnippetPage = ({ snippet }) => {
   return (
     <div className="flex flex-col gap-4">
@@ -103,22 +106,18 @@ const ErrorSnippetPage = ({ snippet }) => {
 
       {snippet.link && (
         <div className="linkSection bg-[#EFF2FB] px-4 py-1 ">
-          <div className="">
-            {snippet.linkHeading && (
-              <div>
-                <p className="font-semibold">{snippet.linkHeading}</p>
-              </div>
-            )}
-            {snippet.link && (
-              <div>
-                <a
-                  href={snippet.link}
-                  className="text-[#0072F5] underline underline-offset-4 text font-semibold text-lg"
-                >
-                  {snippet.link}
-                </a>
-              </div>
-            )}
+          <div>
+            <Link href={snippet.link}>
+              <a
+                target="_blank"
+                className="text-[#0072F5] underline underline-offset-4 text font-semibold text-lg"
+              >
+                {snippet.link}
+                <span className="text-blue-500">
+                  <CgExternal />
+                </span>
+              </a>
+            </Link>
           </div>
         </div>
       )}
@@ -130,12 +129,26 @@ const ErrorSnippetPage = ({ snippet }) => {
             {snippet.userData.username}
           </p>
         </div>
-        <div>
-          <p className="font-semibold text-[#031B4E]">
-            {new Date(snippet.postedAt.seconds * 1000).toLocaleDateString(
-              "da-DK"
-            )}
-          </p>
+        
+        <div className="flex gap-2 md:gap-4">
+          {snippet.updatedAt && (
+            <div>
+              <Text small b transform="uppercase" className="font-semibold text-[#031B4E]">
+                Opdateret:&nbsp;
+                {new Date(snippet.updatedAt.seconds * 1000).toLocaleDateString(
+                  "da-DK"
+                )}
+              </Text>
+            </div>
+          )}
+          <div>
+            <Text small b transform="uppercase" className="text-[#031B4E]">
+              Oprettet:&nbsp;
+              {new Date(snippet.postedAt.seconds * 1000).toLocaleDateString(
+                "da-DK"
+              )}
+            </Text>
+          </div>
         </div>
       </div>
     </div>

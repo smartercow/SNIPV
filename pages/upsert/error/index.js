@@ -1,4 +1,4 @@
-import { Button, Card, Loading, Text } from "@nextui-org/react";
+import { Button, Card, Text } from "@nextui-org/react";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import CreateCodeSnippet from "../../../components/CreateSnippet/CreateCodeSnippet";
@@ -6,51 +6,66 @@ import CreateErrorSnippet from "../../../components/CreateSnippet/CreateErrorSni
 import { auth } from "../../../firebase/clientApp";
 import NoUser from "../../../components/NoPage/NoUser";
 import Head from "next/head";
-import { useRouter } from "next/router";
 
-const UpsertId = () => {
+const SnippetType = [
+  {
+    type: "code",
+    title: "KODE",
+    component: CreateCodeSnippet,
+  },
+  {
+    type: "error",
+    title: "FEJL",
+    component: CreateErrorSnippet,
+  },
+];
+
+const Upsert = () => {
   const [user] = useAuthState(auth);
-  const [loading, setLoading] = useState(true);
 
-  const {
-    query: { id },
-  } = useRouter();
+  const [selectedType, setSelectedType] = useState("code");
+  const [selectedTypeTranslate, setSelectedTypeTranslate] = useState("kode");
+
+  const renderType = (type) => {
+    switch (type) {
+      case "code":
+        return <CreateCodeSnippet />;
+      case "error":
+        return <CreateErrorSnippet />;
+      default:
+        return <CreateCodeSnippet />;
+    }
+  };
 
   return (
     <div className="min-h-[70vh]">
       <Head>
-        <title>Opdatere kode SNIP - SNIPV</title>
+        <title>Opret fejl SNIP - SNIPV</title>
         <meta name="description" content="Created by Peter G" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      {user && (
+      {user ? (
         <div>
           <div className="mt-3">
             <Card>
               <Card.Header>
                 <Text b transform="uppercase">
-                  Opdatere en kode SNIP
+                  Opret en fejl SNIP
                 </Text>
               </Card.Header>
               <Card.Divider />
               <Card.Body>
-                <CreateCodeSnippet id={id} setLoading={setLoading}/>
+                <CreateErrorSnippet />
               </Card.Body>
             </Card>
           </div>
         </div>
+      ) : (
+        <NoUser />
       )}
-
-      {loading && (
-        <div className="flex justify-center items-center h-[20vh]">
-          <Loading size="lg" />
-        </div>
-      )}
-
-      {!user && <NoUser />}
     </div>
   );
 };
 
-export default UpsertId;
+export default Upsert;

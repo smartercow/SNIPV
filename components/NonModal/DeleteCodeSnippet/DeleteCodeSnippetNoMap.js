@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, Button, Grid, Row } from "@nextui-org/react";
 
-export const DeleteErrorSnippet = ({ snip, handleDelete, setAllOpenStates, index }) => {
+export const DeleteCodeSnippetNoMap = ({ id, handleDelete, setDeleteConfirm}) => {
   return (
     <Grid.Container
       css={{ borderRadius: "14px", padding: "0.75rem", maxWidth: "330px" }}
@@ -11,13 +11,13 @@ export const DeleteErrorSnippet = ({ snip, handleDelete, setAllOpenStates, index
       </Row>
       <Row css={{ py: ".5rem" }}>
         <Text>
-          Er du sikker på, at du vil slette denne fejl SNIP? Ved at gøre dette,
-          vil du ikke være i stand til at gendanne indhold.
+          Er du sikker på, at du vil slette denne kode SNIP? Ved at gøre
+          dette, vil du ikke være i stand til at gendanne indhold.
         </Text>
       </Row>
       <Grid.Container justify="space-between" alignContent="center">
         <Grid>
-          <Button size="sm" light onClick={() => setAllOpenStates(oldState => ({...oldState, [index]: false}))}>
+          <Button size="sm" light onClick={() => setDeleteConfirm(false)}>
             Annullere
           </Button>
         </Grid>
@@ -27,8 +27,8 @@ export const DeleteErrorSnippet = ({ snip, handleDelete, setAllOpenStates, index
             shadow
             color="error"
             onClick={() => {
-              handleDelete(snip.id);
-              setAllOpenStates(oldState => ({...oldState, [index]: false}))
+              handleDelete(id) 
+              setDeleteConfirm(false)
             }}
           >
             Slet
@@ -38,3 +38,4 @@ export const DeleteErrorSnippet = ({ snip, handleDelete, setAllOpenStates, index
     </Grid.Container>
   );
 };
+

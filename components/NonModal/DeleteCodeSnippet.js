@@ -11,7 +11,7 @@ export const DeleteCodeSnippet = ({ snip, handleDelete, setAllOpenStates, index 
       </Row>
       <Row css={{ py: ".5rem" }}>
         <Text>
-          Er du sikker på, at du vil slette denne kode snippet? Ved at gøre
+          Er du sikker på, at du vil slette denne kode SNIP? Ved at gøre
           dette, vil du ikke være i stand til at gendanne indhold.
         </Text>
       </Row>

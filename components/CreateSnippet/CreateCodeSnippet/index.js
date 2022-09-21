@@ -7,6 +7,7 @@ import {
   Collapse,
   Text,
   Tooltip,
+  Loading,
 } from "@nextui-org/react";
 import {
   addDoc,
@@ -48,14 +49,13 @@ const initialSelectedFolderValue = {
   langId: 0,
 };
 
-const CreateCodeSnippet = ({ id }) => {
+const CreateCodeSnippet = ({ id, setLoading }) => {
   const [form, setForm] = useState(initialState);
   const [tags, setTags] = useState([]);
   const [tagInputValues, setTagInputValues] = useState([]);
   const [notes, setNotes] = useState("");
   const [snippetPublic, setSnippetPublic] = useState(false);
 
-  const [userData, setUserData] = useState([]);
   const [username, setUsername] = useState("");
   const [usernameValue, setUsernameValue] = useState("");
   const [photoURL, setPhotoURL] = useState("");
@@ -69,12 +69,9 @@ const CreateCodeSnippet = ({ id }) => {
 
   const [selectedCategory, setSelectedCategory] = useState([]);
 
-  const [folderFetched, setFolderFetched] = useState(false);
   const [dataFetched, setDataFetched] = useState(false);
 
   const { title, description, code, linkHeading, link } = form;
-
-  const [update, setUpdate] = useState(false);
 
   const [user] = useAuthState(auth);
 
@@ -102,7 +99,6 @@ const CreateCodeSnippet = ({ id }) => {
     const getUser = async () => {
       const userData = await getDoc(userDocRef);
 
-      setUserData(userData?.data());
       setUsername(userData?.data().username);
       setUsernameValue(userData?.data().usernameValue);
       setUid(userData?.data().user?.uid);
@@ -115,6 +111,7 @@ const CreateCodeSnippet = ({ id }) => {
     e.preventDefault();
     if (title && code && selectedFolder?.language?.langId) {
       if (id) {
+        setLoading(false)
         try {
           await updateDoc(doc(db, "CodeSnippetsData1", id), {
             ...form,
@@ -137,9 +134,10 @@ const CreateCodeSnippet = ({ id }) => {
           });
           router.push(`/s/${id}`);
         } catch (error) {
-          console.log("Fejl i opdatering af SNIP!",error);
+          console.log("Fejl i opdatering af SNIP!", error);
         }
       } else {
+        setLoading(false)
         try {
           await addDoc(collection(db, "CodeSnippetsData1"), {
             ...form,
@@ -162,7 +160,7 @@ const CreateCodeSnippet = ({ id }) => {
           });
           router.push("/snips/codes");
         } catch (error) {
-          console.log("Fejl i opretning af SNIP!",error);
+          console.log("Fejl i opretning af SNIP!", error);
         }
       }
     } else {
@@ -170,25 +168,29 @@ const CreateCodeSnippet = ({ id }) => {
     }
   };
 
-  const getSnipData = async () => {
-    const docRef = doc(db, "CodeSnippetsData1", id);
-    const snapshot = await getDoc(docRef);
-    if (snapshot.exists()) {
-      //SNIP data from {id}
-      setForm({ ...snapshot.data() });
-      setSelectedCategory(snapshot.data().category);
-      setSelectedFolder(snapshot.data().folder);
-      setTags(snapshot.data().tags);
-      setNotes(snapshot.data().notes);
-
-      //SNIP data have been fetched
+  const getCodeSnipData = async () => {
+    try {
+      const docRef = doc(db, "CodeSnippetsData1", id);
+      const snapshot = await getDoc(docRef);
+      if (snapshot.exists()) {
+        //Code SNIP data from {id}
+        setForm({ ...snapshot.data() });
+        setSelectedCategory(snapshot.data().category);
+        setSelectedFolder(snapshot.data().folder);
+        setTags(snapshot.data().tags);
+        setNotes(snapshot.data().notes);
+      }
+    } catch (error) {
+      console.log("Kan ikke hente kode SNIP", error);
+    } finally {
+      //Code SNIP data have been fetched
       setDataFetched(true);
     }
   };
 
   useEffect(() => {
     if (id) {
-      getSnipData();
+      getCodeSnipData();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
@@ -355,14 +357,14 @@ const CreateCodeSnippet = ({ id }) => {
                       )}
                     </div>
                     {/*                     <Tooltip
-                      content={"Undgå at bruge specialtegn."}
-                      color="primary"
-                      css={{ zIndex: 9999 }}
-                    >
-                      <Text h5 color="primary">
-                        <BsQuestionCircleFill />
-                      </Text>
-                    </Tooltip> */}
+                            content={"Undgå at bruge specialtegn."}
+                            color="primary"
+                            css={{ zIndex: 9999 }}
+                          >
+                            <Text h5 color="primary">
+                              <BsQuestionCircleFill />
+                            </Text>
+                          </Tooltip> */}
                   </div>
                   <div className="mt-2">
                     <Link href="/help/tags">
@@ -400,6 +402,12 @@ const CreateCodeSnippet = ({ id }) => {
           </div>
         </form>
       </div>
+
+      {/*       {loading && (
+        <div className="flex justify-center items-center h-[20vh]">
+          <Loading size="lg" />
+        </div>
+      )} */}
     </div>
   );
 };
