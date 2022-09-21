@@ -49,7 +49,7 @@ const initialSelectedFolderValue = {
   langId: 0,
 };
 
-const CreateCodeSnippet = ({ id, setLoading }) => {
+const CreateCodeSnippet = ({ id, setLoading, setDataError }) => {
   const [form, setForm] = useState(initialState);
   const [tags, setTags] = useState([]);
   const [tagInputValues, setTagInputValues] = useState([]);
@@ -111,7 +111,6 @@ const CreateCodeSnippet = ({ id, setLoading }) => {
     e.preventDefault();
     if (title && code && selectedFolder?.language?.langId) {
       if (id) {
-        setLoading(false)
         try {
           await updateDoc(doc(db, "CodeSnippetsData1", id), {
             ...form,
@@ -137,7 +136,6 @@ const CreateCodeSnippet = ({ id, setLoading }) => {
           console.log("Fejl i opdatering af SNIP!", error);
         }
       } else {
-        setLoading(false)
         try {
           await addDoc(collection(db, "CodeSnippetsData1"), {
             ...form,
@@ -179,12 +177,16 @@ const CreateCodeSnippet = ({ id, setLoading }) => {
         setSelectedFolder(snapshot.data().folder);
         setTags(snapshot.data().tags);
         setNotes(snapshot.data().notes);
+        setLoading(false);
       }
     } catch (error) {
-      console.log("Kan ikke hente kode SNIP", error);
+      setDataError(true)
+      setLoading(false)
     } finally {
       //Code SNIP data have been fetched
       setDataFetched(true);
+      setDataError(false)
+      setLoading(false)
     }
   };
 
@@ -402,12 +404,6 @@ const CreateCodeSnippet = ({ id, setLoading }) => {
           </div>
         </form>
       </div>
-
-      {/*       {loading && (
-        <div className="flex justify-center items-center h-[20vh]">
-          <Loading size="lg" />
-        </div>
-      )} */}
     </div>
   );
 };

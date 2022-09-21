@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 const UpsertId = () => {
   const [user] = useAuthState(auth);
   const [loading, setLoading] = useState(true);
+  const [dataError, setDataError] = useState(false);
 
   const {
     query: { id },
@@ -35,7 +36,11 @@ const UpsertId = () => {
               </Card.Header>
               <Card.Divider />
               <Card.Body>
-                <CreateCodeSnippet id={id} setLoading={setLoading}/>
+                <CreateCodeSnippet
+                  id={id}
+                  setLoading={setLoading}
+                  setDataError={setDataError}
+                />
               </Card.Body>
             </Card>
           </div>
@@ -45,6 +50,14 @@ const UpsertId = () => {
       {loading && (
         <div className="flex justify-center items-center h-[20vh]">
           <Loading size="lg" />
+        </div>
+      )}
+
+      {dataError && (
+        <div className="flex justify-center items-center h-[20vh]">
+          <Text b transform="uppercase">
+            Ingen SNIP med angivet id!
+          </Text>
         </div>
       )}
 
