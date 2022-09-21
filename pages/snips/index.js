@@ -136,7 +136,7 @@ const MySnippets = () => {
                             <div className="cardHover bg-[#F1F7FF] hoverable-item flex gap-3 items-center p-2 border-b rounded-xl w-full">
                               <div className="w-full flex flex-col gap-2">
                                 <div className="flex gap-6 items-center">
-                                  <div className="pl-2">
+                                  <div className="pl-3">
                                     <Paper
                                       fill="#0072F5"
                                       className="cursor-pointer"
@@ -161,7 +161,7 @@ const MySnippets = () => {
                                   </div>
                                 </div>
                                 <div className="flex">
-                                  <div className="w-24 flex justify-center">
+                                  <div className="w-24 flex items-center justify-center">
                                     {snip.folder.folderSnippetType ===
                                       "code" && (
                                       <div className="pr-[.60rem]">
@@ -175,7 +175,7 @@ const MySnippets = () => {
                                       </div>
                                     )}
                                   </div>
-                                  <div className="w-full MonoHeading">
+                                  <div className="flex items-center justify-between w-full MonoHeading">
                                     <div className="flex gap-2">
                                       <div
                                         className={`l${snip.category.langId} lBadge rounded-3xl flex justify-center items-center`}
@@ -203,13 +203,23 @@ const MySnippets = () => {
                                         </div>
                                       )}
                                     </div>
-                                  </div>
-                                  <div className="text-[#031B4E]">
-                                    <p className="text-xs font-mono">
-                                      {new Date(
-                                        snip.postedAt.seconds * 1000
-                                      ).toLocaleDateString("da-DK")}
-                                    </p>
+                                    <div className="flex gap-3 text-[#031B4E]">
+                                      {snip.updatedAt && (
+                                        <p className="text-xs font-mono">
+                                          OPDATERET:&nbsp;
+                                          {new Date(
+                                            snip.updatedAt.seconds * 1000
+                                          ).toLocaleDateString("da-DK")}
+                                        </p>
+                                      )}
+
+                                      <p className="text-xs font-mono">
+                                        OPRETTET:&nbsp;
+                                        {new Date(
+                                          snip.postedAt.seconds * 1000
+                                        ).toLocaleDateString("da-DK")}
+                                      </p>
+                                    </div>
                                   </div>
                                 </div>
                               </div>
@@ -226,14 +236,16 @@ const MySnippets = () => {
                       </Link>
                       <div className="hoverable-show flex flex-col gap-1 justify-center items-center">
                         <div>
-                          <Button auto light>
-                            <EditDocumentIcon
-                              fill="#0072F5"
-                              className="cursor-pointer"
-                              width={26}
-                              height={26}
-                            />
-                          </Button>
+                          <a href={`/upsert/code/${snip.id}`}>
+                            <Button auto light>
+                              <EditDocumentIcon
+                                fill="#0072F5"
+                                className="cursor-pointer"
+                                width={26}
+                                height={26}
+                              />
+                            </Button>
+                          </a>
                         </div>
                         <div>
                           <Popover placement="top">
@@ -396,14 +408,16 @@ const MySnippets = () => {
                       </Link>
                       <div className="hoverable-show flex flex-col gap-1 justify-center items-center">
                         <div>
-                          <Button auto light>
-                            <EditDocumentIcon
-                              fill="#0072F5"
-                              className="cursor-pointer"
-                              width={26}
-                              height={26}
-                            />
-                          </Button>
+                          <a href={`/upsert/error/${snip.id}`}>
+                            <Button auto light>
+                              <EditDocumentIcon
+                                fill="#0072F5"
+                                className="cursor-pointer"
+                                width={26}
+                                height={26}
+                              />
+                            </Button>
+                          </a>
                         </div>
                         <div>
                           <Popover placement="top">

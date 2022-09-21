@@ -1,5 +1,5 @@
 import { Button, Text } from "@nextui-org/react";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDoc, getDocs } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import Select from "react-select";
@@ -12,6 +12,9 @@ import { FaFolderPlus } from "react-icons/fa";
 export default function CreatedFolders({
   setSelectedFolder,
   setSelectedCategory,
+  selectedFolder,
+  id,
+  dataFetched
 }) {
   const [folders, setFolders] = useState([]);
   const [selectValue, setSelectValue] = useState([]);
@@ -39,6 +42,18 @@ export default function CreatedFolders({
     };
     getFolders();
   }, [user, update]);
+
+  useEffect(() => {
+    if (id) {
+      setSelectValue(selectedFolder)
+      setUpdate(!update)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id, dataFetched]);
+
+/*   console.log("SELECTED FOLDER",selectedFolder);
+  console.log("FOLDERS",folders);
+  console.log("SELECT VALUE",selectValue); */ 
 
   return (
     <div>

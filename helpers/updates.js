@@ -2,7 +2,6 @@ import axios from "axios";
 
 const api = {
   baseUrl1: "https://snipv.vercel.app/api/updates",
-  baseUrl2: "/api/currentupdates",
 };
 
 export const getUpdates = () => {

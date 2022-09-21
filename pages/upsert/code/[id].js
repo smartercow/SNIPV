@@ -1,27 +1,32 @@
 import { Button, Card, Text } from "@nextui-org/react";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import CreateCodeSnippet from "../components/CreateSnippet/CreateCodeSnippet";
-import CreateErrorSnippet from "../components/CreateSnippet/CreateErrorSnippet";
-import { auth } from "../firebase/clientApp";
-import NoUser from "../components/NoPage/NoUser";
+import CreateCodeSnippet from "../../../components/CreateSnippet/CreateCodeSnippet";
+import CreateErrorSnippet from "../../../components/CreateSnippet/CreateErrorSnippet";
+import { auth } from "../../../firebase/clientApp";
+import NoUser from "../../../components/NoPage/NoUser";
 import Head from "next/head";
+import { useRouter } from "next/router";
 
 const SnippetType = [
   {
     type: "code",
-    title: "kode",
+    title: "KODE",
     component: CreateCodeSnippet,
   },
   {
     type: "error",
-    title: "fejl",
+    title: "FEJL",
     component: CreateErrorSnippet,
   },
 ];
 
-const Upsert = () => {
+const UpsertId = () => {
   const [user] = useAuthState(auth);
+
+  const {
+    query: { id },
+  } = useRouter();
 
   const [selectedType, setSelectedType] = useState("code");
   const [selectedTypeTranslate, setSelectedTypeTranslate] = useState("kode");
@@ -29,18 +34,18 @@ const Upsert = () => {
   const renderType = (type) => {
     switch (type) {
       case "code":
-        return <CreateCodeSnippet />;
+        return <CreateCodeSnippet id={id} />;
       case "error":
-        return <CreateErrorSnippet />;
+        return <CreateErrorSnippet id={id} />;
       default:
-        return <CreateCodeSnippet />;
+        return <CreateCodeSnippet id={id} />;
     }
   };
 
   return (
     <div className="min-h-[70vh]">
       <Head>
-        <title>Opret en SNIP - SNIPV</title>
+        <title>Opdatere kode SNIP - SNIPV</title>
         <meta name="description" content="Created by Peter G" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -65,10 +70,14 @@ const Upsert = () => {
           <div className="mt-3">
             <Card>
               <Card.Header>
-                <Text b>Opret en {selectedTypeTranslate} snippet</Text>
+                <Text b transform="uppercase">
+                  Opdatere en kode SNIP
+                </Text>
               </Card.Header>
               <Card.Divider />
-              <Card.Body>{renderType(selectedType)}</Card.Body>
+              <Card.Body>
+                <CreateCodeSnippet id={id} />
+              </Card.Body>
             </Card>
           </div>
         </div>
@@ -79,4 +88,4 @@ const Upsert = () => {
   );
 };
 
-export default Upsert;
+export default UpsertId;

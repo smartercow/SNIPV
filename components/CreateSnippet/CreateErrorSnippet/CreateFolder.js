@@ -84,7 +84,7 @@ export default function CreateFolder() {
   }, [frameworkOn]);
 
   useEffect(() => {
-    if (language.langId === "54") {
+    if (language.langId === "54" || language.langId === "127") {
       setFrameworkOption(true);
       setFramework(initialSelectedFramework);
     } else {

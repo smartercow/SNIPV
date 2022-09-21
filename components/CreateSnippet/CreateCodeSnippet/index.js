@@ -14,6 +14,7 @@ import {
   doc,
   getDoc,
   serverTimestamp,
+  updateDoc,
 } from "firebase/firestore";
 import { auth, db } from "../../../firebase/clientApp";
 import { useRouter } from "next/router";
@@ -47,7 +48,7 @@ const initialSelectedFolderValue = {
   langId: 0,
 };
 
-const CreateCodeSnippet = () => {
+const CreateCodeSnippet = ({ id }) => {
   const [form, setForm] = useState(initialState);
   const [tags, setTags] = useState([]);
   const [tagInputValues, setTagInputValues] = useState([]);
@@ -60,14 +61,20 @@ const CreateCodeSnippet = () => {
   const [photoURL, setPhotoURL] = useState("");
   const [uid, setUid] = useState("");
 
-  const [lowercaseForm, setLowercaseForm] = useState(initialStateLowercase)
+  const [lowercaseForm, setLowercaseForm] = useState(initialStateLowercase);
 
   const [selectedFolder, setSelectedFolder] = useState(
     initialSelectedFolderValue
   );
+
   const [selectedCategory, setSelectedCategory] = useState([]);
 
+  const [folderFetched, setFolderFetched] = useState(false);
+  const [dataFetched, setDataFetched] = useState(false);
+
   const { title, description, code, linkHeading, link } = form;
+
+  const [update, setUpdate] = useState(false);
 
   const [user] = useAuthState(auth);
 
@@ -75,7 +82,10 @@ const CreateCodeSnippet = () => {
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
-    setLowercaseForm({ ...lowercaseForm, [e?.target.name]: e?.target.value.toLowerCase() });
+    setLowercaseForm({
+      ...lowercaseForm,
+      [e?.target.name]: e?.target.value.toLowerCase(),
+    });
   };
 
   const lowercaseTags = tagInputValues.map((element) => {
@@ -104,34 +114,84 @@ const CreateCodeSnippet = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (title && code && selectedFolder?.language?.langId) {
-      try {
-        await addDoc(collection(db, "CodeSnippetsData1"), {
-          ...form,
-          search: {
-            title: lowercaseForm.title,
-            description: lowercaseForm.description
-          },
-          postedAt: serverTimestamp(),
-          userData: {
-            username: username,
-            usernameValue: usernameValue,
-            uid: uid,
-            photoURL: photoURL,
-          },
-          category: selectedCategory,
-          folder: selectedFolder,
-          tags: tags,
-          isPublic: snippetPublic,
-          notes: notes,
-        });
-        router.push("/snips/codes");
-      } catch (error) {
-        console.log(error);
+      if (id) {
+        try {
+          await updateDoc(doc(db, "CodeSnippetsData1", id), {
+            ...form,
+            search: {
+              title: lowercaseForm.title,
+              description: lowercaseForm.description,
+            },
+            updatedAt: serverTimestamp(),
+            userData: {
+              username: username,
+              usernameValue: usernameValue,
+              uid: uid,
+              photoURL: photoURL,
+            },
+            category: selectedCategory,
+            folder: selectedFolder,
+            tags: tags,
+            notes: notes,
+            /*             isPublic: snippetPublic, */
+          });
+          router.push(`/s/${id}`);
+        } catch (error) {
+          console.log("Fejl i opdatering af SNIP!",error);
+        }
+      } else {
+        try {
+          await addDoc(collection(db, "CodeSnippetsData1"), {
+            ...form,
+            search: {
+              title: lowercaseForm.title,
+              description: lowercaseForm.description,
+            },
+            postedAt: serverTimestamp(),
+            userData: {
+              username: username,
+              usernameValue: usernameValue,
+              uid: uid,
+              photoURL: photoURL,
+            },
+            category: selectedCategory,
+            folder: selectedFolder,
+            tags: tags,
+            notes: notes,
+            isPublic: snippetPublic,
+          });
+          router.push("/snips/codes");
+        } catch (error) {
+          console.log("Fejl i opretning af SNIP!",error);
+        }
       }
     } else {
       return toast.error("Valg en mappe!");
     }
   };
+
+  const getSnipData = async () => {
+    const docRef = doc(db, "CodeSnippetsData1", id);
+    const snapshot = await getDoc(docRef);
+    if (snapshot.exists()) {
+      //SNIP data from {id}
+      setForm({ ...snapshot.data() });
+      setSelectedCategory(snapshot.data().category);
+      setSelectedFolder(snapshot.data().folder);
+      setTags(snapshot.data().tags);
+      setNotes(snapshot.data().notes);
+
+      //SNIP data have been fetched
+      setDataFetched(true);
+    }
+  };
+
+  useEffect(() => {
+    if (id) {
+      getSnipData();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
 
   return (
     <div>
@@ -182,6 +242,8 @@ const CreateCodeSnippet = () => {
                   setSelectedFolder={setSelectedFolder}
                   selectedFolder={selectedFolder}
                   setSelectedCategory={setSelectedCategory}
+                  id={id}
+                  dataFetched={dataFetched}
                 />
               </div>
 
@@ -229,6 +291,7 @@ const CreateCodeSnippet = () => {
                   shadow="false"
                   animated="false"
                   aria-label="noter"
+                  value={notes}
                 />
               </Collapse>
               <Collapse title={<Text b>Link</Text>}>
@@ -273,14 +336,25 @@ const CreateCodeSnippet = () => {
                 <div className="flex flex-col gap-2">
                   <div className="w-full flex gap-2 items-center">
                     <div className="w-full">
-                      <TagsInput
-                        value={tags}
-                        onChange={setTagInputValues}
-                        name="tags"
-                        placeHolder="Skriv og tryk ENTER"
-                      />
+                      {!id && (
+                        <TagsInput
+                          value={tags}
+                          onChange={setTagInputValues}
+                          name="tags"
+                          placeHolder="Skriv og tryk ENTER"
+                        />
+                      )}
+
+                      {dataFetched && (
+                        <TagsInput
+                          value={tags}
+                          onChange={setTagInputValues}
+                          name="tags"
+                          placeHolder="Skriv og tryk ENTER"
+                        />
+                      )}
                     </div>
-{/*                     <Tooltip
+                    {/*                     <Tooltip
                       content={"Undgå at bruge specialtegn."}
                       color="primary"
                       css={{ zIndex: 9999 }}
@@ -312,9 +386,15 @@ const CreateCodeSnippet = () => {
 
             <div className="mx-3 flex flex-col gap-5">
               <div>
-                <Button color="primary" type="submit">
-                  Gem
-                </Button>
+                {id ? (
+                  <Button color="primary" type="submit">
+                    OPDATERE
+                  </Button>
+                ) : (
+                  <Button color="primary" type="submit">
+                    GEM
+                  </Button>
+                )}
               </div>
             </div>
           </div>
