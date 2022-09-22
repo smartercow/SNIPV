@@ -22,7 +22,7 @@ import { EditDocumentIcon } from "../SVG/EditDocumentIcon";
 import { LoginIcon } from "../SVG/LoginIcon";
 import { Paper } from "../SVG/Paper";
 import { MdRefresh } from "react-icons/md";
-import { TbSortDescending } from "react-icons/tb";
+import LatestHeading from "../Heading/LatestHeading";
 
 const MyCodeSnippets = () => {
   const [user] = useAuthState(auth);
@@ -139,15 +139,11 @@ const MyCodeSnippets = () => {
   return (
     <div className="min-h-[70vh]">
       {user ? (
-        <div>
-          <div className="mb-3 flex gap-1">
-            <Text>
-              <TbSortDescending />
-            </Text>
-            <Text transform="uppercase" h5>
-              Alle kode SNIPS
-            </Text>
-          </div>
+        <div className="w-full">
+          <>
+            <LatestHeading headingType={"Alle kode SNIPS"} />
+          </>
+
           <div className="flex flex-col gap-4">
             {myCodeSnippets && (
               <>
@@ -327,9 +323,11 @@ const MyCodeSnippets = () => {
               </div>
             ) : (
               <>
-                {!myCodeSnippets && (
-                  <div className="flex justify-center">
-                    <Text b>Du har ingen kode SNIPS! 😔</Text>
+                {!myCodeSnippets?.length > 0 && (
+                  <div className="flex justify-center mt-10">
+                    <Text b size={13} transform="uppercase">
+                      Du har ingen kode SNIPS! 😔
+                    </Text>
                   </div>
                 )}
               </>

@@ -11,12 +11,16 @@ const Errors = () => {
         <meta name="description" content="Created by Peter G" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div>
-        <SnippetsTypeLinks />
-      </div>
-      <div>
-        <MyErrorSnippets />
-      </div>
+
+      <>
+        <>
+          <SnippetsTypeLinks />
+        </>
+
+        <div>
+          <MyErrorSnippets />
+        </div>
+      </>
     </div>
   );
 };

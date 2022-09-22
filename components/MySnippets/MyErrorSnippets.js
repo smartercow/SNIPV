@@ -23,6 +23,7 @@ import { PaperFail } from "../SVG/PaperFail";
 import { MdRefresh } from "react-icons/md";
 import { TbSortDescending } from "react-icons/tb";
 import { DeleteErrorSnippet } from "../NonModal/DeleteErrorSnippet";
+import LatestHeading from "../Heading/LatestHeading";
 
 const MyCodeSnippets = () => {
   const [user] = useAuthState(auth);
@@ -139,14 +140,10 @@ const MyCodeSnippets = () => {
     <div className="min-h-[70vh]">
       {user ? (
         <div>
-          <div className="mb-3 flex gap-1">
-            <Text>
-              <TbSortDescending />
-            </Text>
-            <Text transform="uppercase" h5>
-              Alle fejl SNIPS
-            </Text>
-          </div>
+          <>
+            <LatestHeading headingType={"Alle fejl SNIPS"} />
+          </>
+
           <div className="flex flex-col gap-4">
             {myErrorSnippets && (
               <>
@@ -327,9 +324,11 @@ const MyCodeSnippets = () => {
               </div>
             ) : (
               <div>
-                {!myErrorSnippets && (
-                  <div className="flex justify-center">
-                    <Text b>Du har ingen fejl SNIPS! 😔</Text>
+                {!myErrorSnippets?.length > 0 && (
+                  <div className="flex justify-center mt-10">
+                    <Text b size={13} transform="uppercase">
+                      Du har ingen kode SNIPS! 😔
+                    </Text>
                   </div>
                 )}
               </div>

@@ -2,24 +2,24 @@ import { Text } from "@nextui-org/react";
 import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import SnippetsFolderType from "../../../components/Heading/SnippetsFolderType";
+import FolderType from "../../../components/Heading/FolderType";
 import { auth, db } from "../../../firebase/clientApp";
 import ErrorFolders from "../../../components/Folders/ErrorFolders";
 import NoUser from "../../../components/NoPage/NoUser";
 import Head from "next/head";
+import LatestHeading from "../../../components/Heading/LatestHeading";
 
 const MyErrorsFolders = () => {
   const [user] = useAuthState(auth);
   const [loading, setLoading] = useState(true);
+  const [update, setUpdate] = useState(false)
   const [myErrorFolders, setMyErrorFolders] = useState();
-
-  const [foldersType, setFoldersType] = useState("error");
 
   const getMyErrorFolders = async () => {
     try {
       const folderQuery = query(
         collection(db, "UsersData1", user?.uid, "ErrorFolders"),
-        where("folderSnippetType", "==", foldersType),
+        where("folderSnippetType", "==", "error"),
         orderBy("createdAt", "desc")
       );
       const folderDocs = await getDocs(folderQuery);
@@ -36,7 +36,7 @@ const MyErrorsFolders = () => {
 
   useEffect(() => {
     getMyErrorFolders();
-  }, [user]);
+  }, [user, update]);
 
   return (
     <div className="min-h-[70vh]">
@@ -47,17 +47,16 @@ const MyErrorsFolders = () => {
       </Head>
       {user && (
         <div>
-          <div className="mb-4">
-            <SnippetsFolderType />
-          </div>
-          <div className="flex flex-col gap-4">
-            <div>
-              <Text h5 className="text-[#031B4E]">
-                FEJL MAPPER
-              </Text>
-              <hr />
-            </div>
-            <ErrorFolders myErrorFolders={myErrorFolders} loading={loading} />
+          <>
+            <FolderType />
+          </>
+          
+          <div className="flex flex-col gap-3">
+            <>
+              <LatestHeading headingType={"Alle fejl mapper"} />
+            </>
+
+            <ErrorFolders myErrorFolders={myErrorFolders} loading={loading} update={update} setUpdate={setUpdate} />
           </div>
         </div>
       )}

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 
-const SnippetsFolderType = () => {
+const FolderType = () => {
   const { asPath } = useRouter();
 
   const Type = [
@@ -36,4 +36,4 @@ const SnippetsFolderType = () => {
   );
 };
 
-export default SnippetsFolderType;
+export default FolderType;
