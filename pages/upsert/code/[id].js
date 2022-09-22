@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 
 const UpsertId = () => {
   const [user] = useAuthState(auth);
+  
   const [loading, setLoading] = useState(true);
   const [dataError, setDataError] = useState(false);
 

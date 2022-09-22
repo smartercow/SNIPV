@@ -23,7 +23,7 @@ const Upsert = () => {
             <Card>
               <Card.Header>
                 <Text b transform="uppercase">
-                  Opret en kode SNIP
+                  Opret kode SNIP
                 </Text>
               </Card.Header>
               <Card.Divider />

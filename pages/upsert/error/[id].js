@@ -1,4 +1,4 @@
-import { Button, Card, Text } from "@nextui-org/react";
+import { Button, Card, Loading, Text } from "@nextui-org/react";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import CreateCodeSnippet from "../../../components/CreateSnippet/CreateCodeSnippet";
@@ -8,21 +8,11 @@ import NoUser from "../../../components/NoPage/NoUser";
 import Head from "next/head";
 import { useRouter } from "next/router";
 
-const SnippetType = [
-  {
-    type: "code",
-    title: "KODE",
-    component: CreateCodeSnippet,
-  },
-  {
-    type: "error",
-    title: "FEJL",
-    component: CreateErrorSnippet,
-  },
-];
-
 const UpsertId = () => {
   const [user] = useAuthState(auth);
+
+  const [loading, setLoading] = useState(true);
+  const [dataError, setDataError] = useState(false);
 
   const {
     query: { id },
@@ -36,7 +26,7 @@ const UpsertId = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      {user ? (
+      {user && (
         <div>
           <div className="mt-3">
             <Card>
@@ -47,14 +37,32 @@ const UpsertId = () => {
               </Card.Header>
               <Card.Divider />
               <Card.Body>
-                <CreateErrorSnippet id={id} />
+                <CreateErrorSnippet
+                  id={id}
+                  setLoading={setLoading}
+                  setDataError={setDataError}
+                />
               </Card.Body>
             </Card>
           </div>
         </div>
-      ) : (
-        <NoUser />
       )}
+
+      {loading && (
+        <div className="flex justify-center items-center h-[20vh]">
+          <Loading size="lg" />
+        </div>
+      )}
+
+      {dataError && (
+        <div className="flex justify-center items-center h-[20vh]">
+          <Text b transform="uppercase">
+            Ingen SNIP med angivet id!
+          </Text>
+        </div>
+      )}
+
+      {!user && <NoUser />}
     </div>
   );
 };

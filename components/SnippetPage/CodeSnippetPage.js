@@ -19,10 +19,6 @@ const SnippetPage = ({ snippet }) => {
     query: { id },
   } = useRouter();
 
-  console.log("SNIPPET", snippet);
-  console.log("ID", id);
-  console.log("USER", user);
-
   const [deleteConfirm, setDeleteConfirm] = useState(false);
 
   const handleDelete = async (id) => {

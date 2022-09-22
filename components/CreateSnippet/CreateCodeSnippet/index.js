@@ -110,32 +110,7 @@ const CreateCodeSnippet = ({ id, setLoading, setDataError }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (title && code && selectedFolder?.language?.langId) {
-      if (id) {
-        try {
-          await updateDoc(doc(db, "CodeSnippetsData1", id), {
-            ...form,
-            search: {
-              title: lowercaseForm.title,
-              description: lowercaseForm.description,
-            },
-            updatedAt: serverTimestamp(),
-            userData: {
-              username: username,
-              usernameValue: usernameValue,
-              uid: uid,
-              photoURL: photoURL,
-            },
-            category: selectedCategory,
-            folder: selectedFolder,
-            tags: tags,
-            notes: notes,
-            /*             isPublic: snippetPublic, */
-          });
-          router.push(`/s/${id}`);
-        } catch (error) {
-          console.log("Fejl i opdatering af SNIP!", error);
-        }
-      } else {
+      if (!id) {
         try {
           await addDoc(collection(db, "CodeSnippetsData1"), {
             ...form,
@@ -160,6 +135,31 @@ const CreateCodeSnippet = ({ id, setLoading, setDataError }) => {
         } catch (error) {
           console.log("Fejl i opretning af SNIP!", error);
         }
+      } else {
+        try {
+          await updateDoc(doc(db, "CodeSnippetsData1", id), {
+            ...form,
+            search: {
+              title: lowercaseForm.title,
+              description: lowercaseForm.description,
+            },
+            updatedAt: serverTimestamp(),
+            userData: {
+              username: username,
+              usernameValue: usernameValue,
+              uid: uid,
+              photoURL: photoURL,
+            },
+            category: selectedCategory,
+            folder: selectedFolder,
+            tags: tags,
+            notes: notes,
+            /*             isPublic: snippetPublic, */
+          });
+          router.push(`/s/${id}`);
+        } catch (error) {
+          console.log("Fejl i opdatering af SNIP!", error);
+        }
       }
     } else {
       return toast.error("Valg en mappe!");
@@ -177,9 +177,11 @@ const CreateCodeSnippet = ({ id, setLoading, setDataError }) => {
         setSelectedFolder(snapshot.data().folder);
         setTags(snapshot.data().tags);
         setNotes(snapshot.data().notes);
+
         setLoading(false);
       }
     } catch (error) {
+      console.log("Kan ikke hente kode SNIP til at opdatere!", error);
       setDataError(true)
       setLoading(false)
     } finally {

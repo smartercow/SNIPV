@@ -51,7 +51,7 @@ const Upsert = () => {
             <Card>
               <Card.Header>
                 <Text b transform="uppercase">
-                  Opret en fejl SNIP
+                  Opret fejl SNIP
                 </Text>
               </Card.Header>
               <Card.Divider />
