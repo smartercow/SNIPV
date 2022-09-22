@@ -100,7 +100,7 @@ const ErrorFolders = ({ myErrorFolders, loading, update, setUpdate }) => {
               </Link>
 
               <div className="hoverable-show flex flex-col gap-1 justify-center items-center">
-                <div>
+                <div> 
                   <a href="">
                     <Button auto light>
                       <EditDocumentIcon
@@ -108,7 +108,7 @@ const ErrorFolders = ({ myErrorFolders, loading, update, setUpdate }) => {
                         className="cursor-pointer"
                         width={26}
                         height={26}
-                      />
+                      /> 
                     </Button>
                   </a>
                 </div>
