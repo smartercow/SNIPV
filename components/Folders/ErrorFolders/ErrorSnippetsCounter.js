@@ -8,7 +8,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { db } from "../../../firebase/clientApp";
 
-const SnippetsCounter = ({ id }) => {
+const ErrorSnippetsCounter = ({ id }) => {
   const [thisFolderSnippets, setThisFolderSnippets] = useState();
   const getThisFolderSnippets = async () => {
     try {
@@ -26,7 +26,7 @@ const SnippetsCounter = ({ id }) => {
         setThisFolderSnippets(snippets);
       });
     } catch (error) {
-      console.log("getsnippet error", error.message);
+      console.log("Get snippet data error", error.message);
     }
   };
 
@@ -35,6 +35,7 @@ const SnippetsCounter = ({ id }) => {
       getThisFolderSnippets();
     }
   }, [id]);
+
   return (
     <div className="text-[#031b4eac]">
       {thisFolderSnippets && (
@@ -72,4 +73,4 @@ const SnippetsCounter = ({ id }) => {
   );
 };
 
-export default SnippetsCounter;
+export default ErrorSnippetsCounter;

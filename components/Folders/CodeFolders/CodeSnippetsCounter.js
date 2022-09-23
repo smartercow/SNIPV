@@ -8,7 +8,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { db } from "../../../firebase/clientApp";
 
-const SnippetsCounter = ({ id }) => {
+const CodeSnippetsCounter = ({ id }) => {
   const [thisFolderSnippets, setThisFolderSnippets] = useState();
   const getThisFolderSnippets = async () => {
     try {
@@ -72,4 +72,4 @@ const SnippetsCounter = ({ id }) => {
   );
 };
 
-export default SnippetsCounter;
+export default CodeSnippetsCounter;

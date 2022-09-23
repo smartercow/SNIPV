@@ -10,7 +10,7 @@ import { DeleteDocumentIcon } from "../../SVG/DeleteDocumentIcon";
 import { EditDocumentIcon } from "../../SVG/EditDocumentIcon";
 import { FolderIcon } from "../../SVG/FolderIcon";
 import { LoginIcon } from "../../SVG/LoginIcon";
-import SnippetsCounter from "./SnippetsCounter";
+import ErrorSnippetsCounter from "./ErrorSnippetsCounter";
 
 const ErrorFolders = ({ myErrorFolders, loading, update, setUpdate }) => {
   const [user] = useAuthState(auth)
@@ -57,11 +57,11 @@ const ErrorFolders = ({ myErrorFolders, loading, update, setUpdate }) => {
                             </p>
                           </div>
                           <div>
-                            <SnippetsCounter id={folder.id}/>
+                            <ErrorSnippetsCounter id={folder.id}/>
                           </div>
                         </div>
                         <div className="MonoHeading">
-                          <div className="flex gap-2">
+                          <div className="flex gap-2 flex-row-reverse">
                             <div
                               className={`l${folder.language.langId} lBadge rounded-3xl flex justify-center items-center whitespace-nowrap`}
                             >

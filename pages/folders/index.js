@@ -23,7 +23,8 @@ import { DeleteDocumentIcon } from "../../components/SVG/DeleteDocumentIcon";
 import { DeleteErrorFolder } from "../../components/NonModal/DeleteErrorFolder";
 import { EditDocumentIcon } from "../../components/SVG/EditDocumentIcon";
 import { LoginIcon } from "../../components/SVG/LoginIcon";
-import SnippetsCounter from "../../components/Folders/ErrorFolders/SnippetsCounter";
+import ErrorSnippetsCounter from "../../components/Folders/ErrorFolders/ErrorSnippetsCounter";
+import CodeSnippetsCounter from "../../components/Folders/CodeFolders/CodeSnippetsCounter";
 
 const MyFolders = () => {
   const [user] = useAuthState(auth);
@@ -144,11 +145,11 @@ const MyFolders = () => {
                                     </p>
                                   </div>
                                   <div>
-                                    <SnippetsCounter id={folder.id} />
+                                    <CodeSnippetsCounter id={folder.id} />
                                   </div>
                                 </div>
                                 <div className="MonoHeading">
-                                  <div className="flex gap-2">
+                                  <div className="flex gap-2 flex-row-reverse">
                                     <div
                                       className={`l${folder.language.langId} lBadge rounded-3xl flex justify-center items-center whitespace-nowrap`}
                                     >
@@ -297,11 +298,11 @@ const MyFolders = () => {
                                     </p>
                                   </div>
                                   <div>
-                                    <SnippetsCounter id={folder.id} />
+                                    <ErrorSnippetsCounter id={folder.id} />
                                   </div>
                                 </div>
                                 <div className="MonoHeading">
-                                  <div className="flex gap-2">
+                                  <div className="flex gap-2 flex-row-reverse">
                                     <div
                                       className={`l${folder.language.langId} lBadge rounded-3xl flex justify-center items-center whitespace-nowrap`}
                                     >
