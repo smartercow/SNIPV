@@ -138,7 +138,7 @@ const MyCodeSnippets = () => {
 
   return (
     <div className="min-h-[70vh]">
-      {user ? (
+      {user && (
         <div>
           <>
             <LatestHeading headingType={"Alle fejl SNIPS"} />
@@ -335,11 +335,9 @@ const MyCodeSnippets = () => {
             )}
           </div>
         </div>
-      ) : (
-        <div>
-          <NoUser />
-        </div>
       )}
+
+      {!user && <NoUser />}
     </div>
   );
 };

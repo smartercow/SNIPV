@@ -1,8 +1,12 @@
 import Head from "next/head";
-import React from "react";
+import { useRouter } from "next/router";
+import React, { useEffect } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
 import { SnippetsTypeLinks } from "../../components/Heading/SnippetsType";
 import MyCodeSnippets from "../../components/MySnippets/MyCodeSnippets";
+import { auth } from "../../firebase/clientApp";
 const Codes = () => {
+
   return (
     <div className="min-h-[70vh]">
       <Head>
@@ -14,7 +18,7 @@ const Codes = () => {
       <>
         <SnippetsTypeLinks />
       </>
-      
+
       <div>
         <MyCodeSnippets />
       </div>

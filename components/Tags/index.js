@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../../firebase/clientApp";
 import TagType from "../Heading/TagType";
+import TagHeading from "../Heading/TagType/TagHeading";
 
 const Tags = () => {
   const [user] = useAuthState(auth);
@@ -61,16 +62,16 @@ const Tags = () => {
 
   return (
     <div>
-      <div className="mb-3">
+      <>
         <TagType />
-      </div>
-      <div className="mt-4">
+      </>
+      
+      <div>
         <div>
-          <div>
-            <Text transform="uppercase" color="primary" h5>
-              Kode tags
-            </Text>
-          </div>
+          <>
+            <TagHeading headingType={"Kode"} colorType={"primary"} />
+          </>
+
           <div className="my-6 flex flex-col gap-4">
             {codeTags && (
               <>
@@ -101,11 +102,10 @@ const Tags = () => {
           </div>
         </div>
         <div>
-          <div>
-            <Text transform="uppercase" color="error" h5>
-              Fejl Tags
-            </Text>
-          </div>
+          <>
+            <TagHeading headingType={"Fejl"} colorType={"error"} />
+          </>
+
           <div className="my-6 flex flex-col gap-4">
             {errorTags && (
               <>

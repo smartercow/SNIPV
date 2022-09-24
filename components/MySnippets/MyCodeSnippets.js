@@ -138,7 +138,6 @@ const MyCodeSnippets = () => {
 
   return (
     <div className="min-h-[70vh]">
-      {user ? (
         <div className="w-full">
           <>
             <LatestHeading headingType={"Alle kode SNIPS"} />
@@ -334,11 +333,6 @@ const MyCodeSnippets = () => {
             )}
           </div>
         </div>
-      ) : (
-        <div>
-          <NoUser />
-        </div>
-      )}
     </div>
   );
 };

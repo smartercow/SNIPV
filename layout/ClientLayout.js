@@ -18,13 +18,47 @@ import LoginModal from "../components/Modals/LoginModal";
 import { auth, db } from "../firebase/clientApp";
 import { useRecoilState } from "recoil";
 import SetUsernameModal from "../components/Modals/SetUsernameModal";
+import { useRouter } from "next/router";
+import LoadingState from "../components/LoadingState";
 
-const ClientLayout = ({ children }) => {
-  const [user] = useAuthState(auth);
+const ProtectedRoutes = [
+  "/snips",
+  "/folders",
+  "/tags",
+  "/settings",
+  "/stats",
+  "/patchnotes",
+  "/search",
+];
+
+const ClientLayout = ({ children, user }) => {
+  const { pathname, asPath } = useRouter();
+  const router = useRouter();
+  const [loading, setLoading] = useState(true);
 
   const [open, setOpen] = useRecoilState(setUsernameModal);
-
   const [update, setUpdate] = useState(true);
+
+  const NoAccess = () => {
+    const pRoutes = ProtectedRoutes.filter((element) =>
+      String(element).startsWith(pathname)
+    );
+
+    try {
+      if (!user && asPath.startsWith(pRoutes)) {
+        router.push("/");
+      } else {
+        setLoading(false);
+      }
+    } catch (error) {
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    NoAccess();
+  }, []);
 
   const CheckUser = async () => {
     try {
@@ -66,9 +100,16 @@ const ClientLayout = ({ children }) => {
         <Header user={user} />
       </header>
       <hr />
-      <main className="max-w-5xl mx-5 lg:mx-auto mt-3 text-[#4D5B7C] w-full">
-        {children}
-      </main>
+      {!loading && (
+        <main className="max-w-5xl mx-5 lg:mx-auto mt-3 text-[#4D5B7C] w-full">
+          {children}
+        </main>
+      )}
+      {loading && (
+        <>
+          <LoadingState />
+        </>
+      )}
       <footer>
         <Footer />
       </footer>

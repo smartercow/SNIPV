@@ -266,11 +266,12 @@ const MyFolders = () => {
             </div>
 
             <div className="flex flex-col gap-2 w-full">
-              <div>
+              <>
                 <LatestHeading headingType={"Seneste fejl mapper"} />
-              </div>
+              </>
+
               {myErrorFolders?.length > 0 && (
-                <div className="flex flex-col gap-3 mt-2">
+                <div className="flex flex-col gap-3">
                   {myErrorFolders.slice(0, 5).map((folder) => (
                     <div key={folder.id} className="hoverable-item flex gap-2">
                       <Link href={`/folders/codes/${folder.id}`}>

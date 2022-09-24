@@ -25,7 +25,6 @@ const CodeFolders = ({ myCodeFolders, loading, update, setUpdate }) => {
     }
   };
 
-  console.log("myCodeFolders", myCodeFolders);
   return (
     <div>
       {myCodeFolders?.length > 0 && (

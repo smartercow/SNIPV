@@ -4,6 +4,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import TagType from "../../../components/Heading/TagType";
+import TagHeading from "../../../components/Heading/TagType/TagHeading";
 import { auth, db } from "../../../firebase/clientApp";
 
 const ErrorTagsPage = () => {
@@ -36,16 +37,15 @@ const ErrorTagsPage = () => {
   }, [user]);
   return (
     <div className="min-h-[70vh]">
-      <div className="mb-3">
+      <>
         <TagType />
-      </div>
+      </>
 
       <div className="flex flex-col gap-1">
-        <div>
-          <Text transform="uppercase" h5>
-            Fejl tags
-          </Text>
-        </div>
+        <>
+          <TagHeading headingType={"Fejl"} colorType={"error"} />
+        </>
+
         <div className="my-6 flex flex-col gap-4">
           {errorTags && (
             <div className="flex gap-2 flex-wrap -mt-4">

@@ -13,7 +13,11 @@ import { useRouter } from "next/router";
 import SettingsLayout from "../layout/SettingsLayout";
 import InfoLayout from "../layout/InfoLayout";
 import UpsertLayout from "../layout/UpsertLayout";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../firebase/clientApp";
 function MyApp({ Component, pageProps }) {
+  const [user] = useAuthState(auth);
+
   const router = useRouter();
 
   if (router.pathname.startsWith("/settings")) {
@@ -21,7 +25,7 @@ function MyApp({ Component, pageProps }) {
       <RecoilRoot>
         <NextUIProvider>
           <ToastContainer position="top-center" className="z-[999999]" />
-          <ClientLayout>
+          <ClientLayout user={user}>
             <SettingsLayout>
               <Component {...pageProps} />
             </SettingsLayout>
@@ -36,7 +40,7 @@ function MyApp({ Component, pageProps }) {
       <RecoilRoot>
         <NextUIProvider>
           <ToastContainer position="top-center" className="z-[999999]" />
-          <ClientLayout>
+          <ClientLayout user={user}>
             <InfoLayout>
               <Component {...pageProps} />
             </InfoLayout>
@@ -51,7 +55,7 @@ function MyApp({ Component, pageProps }) {
       <RecoilRoot>
         <NextUIProvider>
           <ToastContainer position="top-center" className="z-[999999]" />
-          <ClientLayout>
+          <ClientLayout user={user}>
             <UpsertLayout>
               <Component {...pageProps} />
             </UpsertLayout>
@@ -64,7 +68,7 @@ function MyApp({ Component, pageProps }) {
     <RecoilRoot>
       <NextUIProvider>
         <ToastContainer position="top-center" className="z-[999999]" />
-        <ClientLayout>
+        <ClientLayout user={user}>
           <Component {...pageProps} />
         </ClientLayout>
       </NextUIProvider>
