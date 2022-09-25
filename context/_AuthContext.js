@@ -1,3 +1,4 @@
+//KUN TIL TESTING
 import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase/clientApp";
@@ -7,7 +8,6 @@ const { Provider } = AuthContext;
 
 const AuthProvider = ({ children }) => {
   const [user] = useAuthState(auth);
-  
 
   const isUserAuthenticated = () => !!user;
 

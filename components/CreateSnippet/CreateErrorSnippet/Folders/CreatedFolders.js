@@ -1,12 +1,12 @@
 import { Button, Text } from "@nextui-org/react";
-import { collection, doc, getDocs } from "firebase/firestore";
+import { collection, getDoc, getDocs } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import Select from "react-select";
 import { useRecoilState } from "recoil";
-import { createErrorFolderModalState } from "../../../atoms/createErrorFolderModalAtom";
-import { updateErrorStateAtom } from "../../../atoms/updateErrorStateAtom";
-import { auth, db } from "../../../firebase/clientApp";
+import { createErrorFolderModalState } from "../../../../atoms/createErrorFolderModalAtom";
+import { updateStateAtom } from "../../../../atoms/updateStateAtom";
+import { auth, db } from "../../../../firebase/clientApp";
 import { FaFolderPlus } from "react-icons/fa";
 
 export default function CreatedFolders({
@@ -20,7 +20,7 @@ export default function CreatedFolders({
   const [selectValue, setSelectValue] = useState([]);
 
   const [open, setOpen] = useRecoilState(createErrorFolderModalState);
-  const [update, setUpdate] = useRecoilState(updateErrorStateAtom);
+  const [update, setUpdate] = useRecoilState(updateStateAtom);
 
   function handleSelect(data) {
     setSelectValue(data);
@@ -32,12 +32,7 @@ export default function CreatedFolders({
 
   useEffect(() => {
     if (!user) return;
-    const folderColRef = collection(
-      db,
-      "UsersData1",
-      user.uid,
-      "ErrorFolders"
-    );
+    const folderColRef = collection(db, "UsersData1", user.uid, "ErrorFolders");
     const getFolders = async () => {
       const userData = await getDocs(folderColRef);
       setFolders(
@@ -98,7 +93,7 @@ export default function CreatedFolders({
         <>
           <div className="flex flex-col gap-1">
             <Text>
-              Du har ingen mapper for fejl snippets&nbsp;
+              Du har ingen mapper for kode snippets&nbsp;
               <Text color="error" b>
                 *
               </Text>

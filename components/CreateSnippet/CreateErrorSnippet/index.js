@@ -24,7 +24,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { TagsInput } from "react-tag-input-component";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneLight } from "react-syntax-highlighter/dist/cjs/styles/prism";
-import CreatedFolders from "./CreatedFolders";
+import CreatedFolders from "./Folders/CreatedFolders";
 import { BsQuestionCircleFill } from "react-icons/bs";
 import { toast } from "react-toastify";
 import { InfoCircle } from "../../SVG/InfoCircle";

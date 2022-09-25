@@ -44,7 +44,7 @@ const CodeTagsPage = () => {
       </>
 
       <>
-        <div className="my-6 flex flex-col gap-4">
+        <div className="my-5 flex flex-col gap-4">
           {codeTags && (
             <div className="flex gap-2 flex-wrap">
               {codeTags

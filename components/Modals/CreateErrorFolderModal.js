@@ -1,8 +1,8 @@
 import React from "react";
 import { createErrorFolderModalState } from "../../atoms/createErrorFolderModalAtom";
 import { useRecoilState } from "recoil";
-import { Button, Input, Modal, Text } from "@nextui-org/react";
-import CreateFolder from "../CreateSnippet/CreateErrorSnippet/CreateFolder";
+import { Modal, Text } from "@nextui-org/react";
+import CreateFolder from "../CreateSnippet/CreateErrorSnippet/Folders/CreateFolder";
 
 const CreateFolderModal = () => {
   const [open, setOpen] = useRecoilState(createErrorFolderModalState);

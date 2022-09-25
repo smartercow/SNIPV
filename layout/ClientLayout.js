@@ -39,10 +39,10 @@ const ClientLayout = ({ children, user }) => {
   const [open, setOpen] = useRecoilState(setUsernameModal);
   const [update, setUpdate] = useState(true);
 
-  const NoAccess = () => {
-    const pRoutes = ProtectedRoutes.filter((element) =>
-      String(element).startsWith(pathname)
-    );
+  /*   const NoAccess = () => {
+  const findColor = Colors.filter((element) =>
+    String(element).startsWith("blue")
+  );
 
     try {
       if (!user && asPath.startsWith(pRoutes)) {
@@ -58,7 +58,7 @@ const ClientLayout = ({ children, user }) => {
 
   useEffect(() => {
     NoAccess();
-  }, []);
+  }, [user]); */
 
   const CheckUser = async () => {
     try {
@@ -100,16 +100,18 @@ const ClientLayout = ({ children, user }) => {
         <Header user={user} />
       </header>
       <hr />
-      {!loading && (
-        <main className="max-w-5xl mx-5 lg:mx-auto mt-3 text-[#4D5B7C] w-full">
-          {children}
-        </main>
-      )}
-      {loading && (
+      <main className="max-w-5xl mx-5 lg:mx-auto mt-3 text-[#4D5B7C] w-full">
+        {children}
+      </main>
+      {/*       {!loading && (
+        <></>
+      )} */}
+      
+      {/*       {loading && (
         <>
           <LoadingState />
         </>
-      )}
+      )} */}
       <footer>
         <Footer />
       </footer>

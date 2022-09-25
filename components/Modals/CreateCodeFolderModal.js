@@ -2,7 +2,7 @@ import React from "react";
 import { createCodeFolderModalState } from "../../atoms/createCodeFolderModalAtom";
 import { useRecoilState } from "recoil";
 import { Button, Input, Modal, Text } from "@nextui-org/react";
-import CreateFolder from "../CreateSnippet/CreateCodeSnippet/CreateFolder";
+import CreateFolder from "../CreateSnippet/CreateCodeSnippet/Folders/CreateFolder";
 
 const CreateCodeFolderModal = () => {
   const [open, setOpen] = useRecoilState(createCodeFolderModalState);
@@ -17,7 +17,7 @@ const CreateCodeFolderModal = () => {
       >
         <Modal.Header>
           <Text b size={18}>
-            Opret en mappe
+            Opret en KODE mappe
           </Text>
         </Modal.Header>
         <Modal.Body>

@@ -1,18 +1,9 @@
-import {
-  Badge,
-  Button,
-  Card,
-  Collapse,
-  Input,
-  Loading,
-  Text,
-} from "@nextui-org/react";
+import { Badge, Button, Card, Input, Loading, Text } from "@nextui-org/react";
 import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth, db } from "../../firebase/clientApp";
-import { InfoCircle } from "../SVG/InfoCircle";
+import React, { useState } from "react";
+import { db } from "../../firebase/clientApp";
+import TagHeading from "../Heading/TagType/TagHeading";
 import { LoginIcon } from "../SVG/LoginIcon";
 import { Paper } from "../SVG/Paper";
 
@@ -26,7 +17,10 @@ const Search = () => {
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
-    setInputValue({ ...inputValue, [e.target.name]: e.target.value.toLowerCase() });
+    setInputValue({
+      ...inputValue,
+      [e.target.name]: e.target.value.toLowerCase(),
+    });
   };
 
   const searchCodeSnip = async (e) => {
@@ -56,9 +50,7 @@ const Search = () => {
       <div className="flex flex-col gap-3">
         <div>
           <div>
-            <Text transform="uppercase" h5>
-              Søg en snip med tag
-            </Text>
+            <TagHeading headingType={"Søg en SNIPS med"} />
           </div>
         </div>
         <div className="flex flex-col gap-4">

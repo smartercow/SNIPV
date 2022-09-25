@@ -1,7 +1,9 @@
 import Head from "next/head";
 import React from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
 import { SnippetsTypeLinks } from "../../components/Heading/SnippetsType";
 import MyErrorSnippets from "../../components/MySnippets/MyErrorSnippets";
+import { auth } from "../../firebase/clientApp";
 
 const Errors = () => {
   const [user] = useAuthState(auth);

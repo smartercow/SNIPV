@@ -21,8 +21,6 @@ export const CreateSnipType = () => {
     },
   ];
 
-  console.log("ROUT", router);
-  console.log("aspath", asPath);
   return (
     <>
       {user && (

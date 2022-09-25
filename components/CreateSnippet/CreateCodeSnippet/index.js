@@ -23,7 +23,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { TagsInput } from "react-tag-input-component";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneLight } from "react-syntax-highlighter/dist/cjs/styles/prism";
-import CreatedFolders from "./CreatedFolders";
+import CreatedFolders from "./Folders/CreatedFolders";
 import { BsQuestionCircleFill } from "react-icons/bs";
 import { toast } from "react-toastify";
 import { InfoCircle } from "../../SVG/InfoCircle";
@@ -34,6 +34,7 @@ const initialState = {
   title: "",
   description: "",
   code: "",
+  output: "",
   linkHeading: "",
   link: "",
 };
@@ -71,7 +72,7 @@ const CreateCodeSnippet = ({ id, setLoading, setDataError }) => {
 
   const [dataFetched, setDataFetched] = useState(false);
 
-  const { title, description, code, linkHeading, link } = form;
+  const { title, description, code, output, linkHeading, link } = form;
 
   const [user] = useAuthState(auth);
 
@@ -182,13 +183,13 @@ const CreateCodeSnippet = ({ id, setLoading, setDataError }) => {
       }
     } catch (error) {
       console.log("Kan ikke hente kode SNIP til at opdatere!", error);
-      setDataError(true)
-      setLoading(false)
+      setDataError(true);
+      setLoading(false);
     } finally {
       //Code SNIP data have been fetched
       setDataFetched(true);
-      setDataError(false)
-      setLoading(false)
+      setDataError(false);
+      setLoading(false);
     }
   };
 
@@ -253,37 +254,76 @@ const CreateCodeSnippet = ({ id, setLoading, setDataError }) => {
                 />
               </div>
 
-              <div className="mt-1">
-                <Text>
-                  Din kode&nbsp;
-                  <Text color="error" b>
-                    *
+              <div>
+                <div className="mt-1">
+                  <Text>
+                    Din kode&nbsp;
+                    <Text color="error" b>
+                      *
+                    </Text>
                   </Text>
-                </Text>
-                <Spacer y={0.4} />
-                <Textarea
-                  placeholder="her..."
-                  name="code"
-                  value={code}
-                  onChange={handleChange}
-                  css={{ height: "auto" }}
-                  size="lg"
-                  cacheMeasurements
-                  width="100%"
-                  height="100%"
-                  shadow="false"
-                  animated="false"
-                  aria-label="kode"
-                  required
-                />
+                  <Spacer y={0.4} />
+                  <Textarea
+                    placeholder="her..."
+                    name="code"
+                    value={code}
+                    onChange={handleChange}
+                    css={{ height: "auto" }}
+                    size="lg"
+                    cacheMeasurements
+                    width="100%"
+                    height="100%"
+                    shadow="false"
+                    animated="false"
+                    aria-label="kode"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <Collapse.Group>
+                    <Collapse title={<Text b>Kode forhåndsvisning</Text>}>
+                      <SyntaxHighlighter language="javascript" style={oneLight}>
+                        {form.code}
+                      </SyntaxHighlighter>
+                    </Collapse>
+                  </Collapse.Group>
+                </div>
+              </div>
+
+              <div className="-mt-5">
+                <div className="mt-1">
+                  <Text>Output</Text>
+                  <Spacer y={0.4} />
+                  <Textarea
+                    placeholder="her..."
+                    name="output"
+                    value={output}
+                    onChange={handleChange}
+                    css={{ height: "auto" }}
+                    size="lg"
+                    cacheMeasurements
+                    width="100%"
+                    height="100%"
+                    shadow="false"
+                    animated="false"
+                    aria-label="output"
+                  />
+                </div>
+
+                <div>
+                  <Collapse.Group>
+                    <Collapse title={<Text b>Output forhåndsvisning</Text>}>
+                      <SyntaxHighlighter language="javascript" style={oneLight}>
+                        {form.output}
+                      </SyntaxHighlighter>
+                    </Collapse>
+                  </Collapse.Group>
+                </div>
               </div>
             </div>
+
             <Collapse.Group>
-              <Collapse title={<Text b>Kode forhåndsvisning</Text>}>
-                <SyntaxHighlighter language="javascript" style={oneLight}>
-                  {form.code}
-                </SyntaxHighlighter>
-              </Collapse>
               <Collapse title={<Text b>Notat</Text>}>
                 <Textarea
                   placeholder="her..."

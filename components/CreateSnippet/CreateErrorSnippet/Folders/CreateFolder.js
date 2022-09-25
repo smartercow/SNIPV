@@ -6,60 +6,57 @@ import {
   Text,
   Tooltip,
 } from "@nextui-org/react";
-import {
-  addDoc,
-  collection,
-  serverTimestamp,
-} from "firebase/firestore";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import Select from "react-select";
-import { auth, db } from "../../../firebase/clientApp";
-import { LanguageOptions } from "../../../utilities/LanguageOptions";
-import { JavascriptFrameworks } from "../../../utilities/JavascriptFrameworks";
-import { CSSprocessors } from "../../../utilities/CSSprocessors";
+import { auth, db } from "../../../../firebase/clientApp";
+import { LanguageOptions } from "../../../../utilities/LanguageOptions";
 import { BsQuestionCircleFill } from "react-icons/bs";
 import { useRecoilState } from "recoil";
-import { createCodeFolderModalState } from "../../../atoms/createCodeFolderModalAtom";
-import { updateStateAtom } from "../../../atoms/updateStateAtom";
+import { createErrorFolderModalState } from "../../../../atoms/createErrorFolderModalAtom";
+import { updateStateAtom } from "../../../../atoms/updateStateAtom";
+import Accessory from "../../Accessory";
 
 const initialSelectedLang = {
   label: "JavaScript",
   value: "javascript",
   langId: "54",
+  syntaxHighlight: "javascript",
+  accessory: true,
 };
+
 const initialSelectedFramework = {
   label: "React.js",
   value: "reactjs",
   frameworkId: "28",
+  syntaxHighlight: "jsx",
 };
 
 const initialSelectedProcessor = {
   label: "SCSS",
   value: "scss",
   processorId: "1",
+  syntaxHighlight: "scss",
 };
 
 export default function CreateFolder() {
   const [language, setLanguage] = useState(initialSelectedLang);
-
   const [framework, setFramework] = useState(initialSelectedFramework);
-  const [frameworkOn, setFrameworkOn] = useState(true);
-  const [frameworkOption, setFrameworkOption] = useState(true);
-
   const [processor, setProcessor] = useState(initialSelectedProcessor);
-  const [processorOn, setProcessorOn] = useState(true);
-  const [processorOption, setProcessorOption] = useState(true);
+
+  const [accessoryOption, setAccessoryOption] = useState(true);
+  const [additional, setAdditional] = useState(true);
 
   const [folderName, setFolderName] = useState("");
   const [user] = useAuthState(auth);
 
-  const [open, setOpen] = useRecoilState(createCodeFolderModalState);
+  const [open, setOpen] = useRecoilState(createErrorFolderModalState);
   const [update, setUpdate] = useRecoilState(updateStateAtom);
 
   const [inputStatus, setInputStatus] = useState("");
 
-  const [disableBtn, setDisableBtn] = useState(false)
+  const [disableBtn, setDisableBtn] = useState(false);
 
   function handleSelectLang(data) {
     setLanguage(data);
@@ -74,63 +71,75 @@ export default function CreateFolder() {
   }
 
   useEffect(() => {
-    if (!frameworkOn) {
-      setFramework([]);
-    } else {
-      setFramework(initialSelectedFramework);
-    }
-  }, [frameworkOn]);
+    if (language.accessory === true) {
+      setAccessoryOption(true);
 
-  useEffect(() => {
-    if (language.langId === "54" || language.langId === "127") {
-      setFrameworkOption(true);
-      setFramework(initialSelectedFramework);
+      if (language.langId === "54") {
+        setFramework(initialSelectedFramework);
+      } else {
+        setFramework({});
+      }
+
+      if (language.langId === "19") {
+        setProcessor(initialSelectedProcessor);
+      } else {
+        setProcessor({});
+      }
     } else {
-      setFrameworkOption(false);
-      setFramework([]);
+      setAdditional(false);
+      setAccessoryOption(false);
+      setFramework({});
+      setProcessor({});
     }
   }, [language]);
 
   useEffect(() => {
-    if (!processorOn) {
-      setProcessor([]);
+    if (accessoryOption) {
+      setAdditional(true);
     } else {
-      setProcessor(initialSelectedProcessor);
+      setAdditional(false);
+      setFramework({});
+      setProcessor({});
     }
-  }, [processorOn]);
+  }, [accessoryOption]);
 
   useEffect(() => {
-    if (language.langId === "19") {
-      setProcessorOption(true);
-      setProcessor(initialSelectedProcessor);
-    } else {
-      setProcessorOption(false);
-      setProcessor([]);
+    if (additional) {
+      if (language.langId === "54" || language.langId === "127") {
+        setFramework(initialSelectedFramework);
+      } else {
+        setFramework({});
+      }
+
+      if (language.langId === "19") {
+        setProcessor(initialSelectedProcessor);
+      } else {
+        setProcessor({});
+      }
     }
-  }, [language]);
+  }, [language, additional]);
 
   const createFolder = async (e) => {
     e.preventDefault();
     if (language && folderName) {
-      setDisableBtn(true)
+      setDisableBtn(true);
       try {
-
-        await addDoc(collection(db, "UsersData1", user?.uid, "CodeFolders"), {
+        await addDoc(collection(db, "UsersData1", user?.uid, "ErrorFolders"), {
           createdAt: serverTimestamp(),
+          additional: additional,
           userId: user.uid,
-          author: user.displayName,
           folderName: folderName,
           language: language,
           label: folderName,
           value: folderName,
           framework: framework,
           processor: processor,
-          folderSnippetType: "code",
+          folderSnippetType: "error",
         });
         setOpen(false);
         setUpdate(!update);
       } catch (error) {
-        setDisableBtn(false)
+        setDisableBtn(false);
       }
     } else {
       setInputStatus("- skal udfyldes!");
@@ -157,8 +166,8 @@ export default function CreateFolder() {
         <Spacer y={0.5} />
 
         <Text>Sprog</Text>
-        <Spacer y={0.4} />
-        <div className="flex justify-between items-center gap-3">
+        <Spacer y={0.1} />
+        <div className="flex justify-between items-center gap-2">
           <div className="w-full">
             <Select
               options={LanguageOptions}
@@ -173,7 +182,7 @@ export default function CreateFolder() {
             />
           </div>
 
-          <div className="">
+          <div className="pt-2">
             <Tooltip
               content={"Programmeringssprog for denne mappe"}
               color="primary"
@@ -188,14 +197,46 @@ export default function CreateFolder() {
         </div>
         <Spacer y={0.7} />
 
-        <div hidden={!frameworkOption}>
-          <Checkbox
-            size="sm"
-            defaultSelected={frameworkOn}
-            onChange={() => setFrameworkOn(!frameworkOn)}
-          >
-            Javascript framework
-          </Checkbox>
+        {language.accessory === true && (
+          <div>
+            <div>
+              <Checkbox
+                size="sm"
+                onChange={() => setAccessoryOption(!accessoryOption)}
+                isSelected={accessoryOption}
+              >
+                {language.langId === "54" && <>Javascript framework</>}
+                {language.langId === "127" && <>Javascript framework</>}
+                {language.langId === "19" && <>Pre/Post processors</>}
+                {/*                 {language.langId === "50" && <>Web template systems</>} */}
+              </Checkbox>
+            </div>
+            <Spacer y={0.1} />
+
+            {accessoryOption && (
+              <>
+                <Accessory
+                  language={language}
+                  framework={framework}
+                  processor={processor}
+                  handleSelectFramework={handleSelectFramework}
+                  handleSelectProcessor={handleSelectProcessor}
+                />
+              </>
+            )}
+          </div>
+        )}
+
+        <div className="flex gap-2 w-full justify-end my-3">
+          <Button auto light color="error" onClick={() => setOpen(false)}>
+            Luk
+          </Button>
+          <Button disabled={disableBtn} color="primary" auto type="submit">
+            Opret mappe
+          </Button>
+        </div>
+        {/*         <div hidden={!frameworkOption}>
+
           <Spacer y={0.7} />
 
           <div hidden={!frameworkOn}>
@@ -268,16 +309,7 @@ export default function CreateFolder() {
               </div>
             </div>
           </div>
-        </div>
-
-        <div className="flex gap-2 w-full justify-end my-3">
-          <Button auto light color="error" onClick={() => setOpen(false)}>
-            Luk
-          </Button>
-          <Button disabled={disableBtn} color="primary" auto type="submit">
-            Opret mappe
-          </Button>
-        </div>
+        </div> */}
       </form>
     </div>
   );

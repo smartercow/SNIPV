@@ -28,3 +28,7 @@
 
     max-width: 100%;
 }
+
+.syntaxStyle {
+    border: 1px solid black;
+}

@@ -6,6 +6,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../../firebase/clientApp";
 import TagType from "../Heading/TagType";
 import TagHeading from "../Heading/TagType/TagHeading";
+import SnippetLoading from "../LoadingState/SnippetLoading";
 
 const Tags = () => {
   const [user] = useAuthState(auth);
@@ -64,18 +65,15 @@ const Tags = () => {
     <div>
       <>
         <TagType />
+        <TagHeading headingType={"Kode"} headingColor={"primary"} />
       </>
-      
+
       <div>
         <div>
-          <>
-            <TagHeading headingType={"Kode"} colorType={"primary"} />
-          </>
-
-          <div className="my-6 flex flex-col gap-4">
-            {codeTags && (
+          <div className="my-5 flex flex-col gap-4">
+            {codeTags.length > 0 && (
               <>
-                <div className="flex gap-2 flex-wrap -mt-4">
+                <div className="flex gap-2 flex-wrap">
                   {codeTags
                     .slice(0, 40)
                     .reverse()
@@ -99,17 +97,33 @@ const Tags = () => {
                 </div>
               </>
             )}
+
+            {loading ? (
+              <div className="flex justify-center items-center h-[20vh]">
+                <SnippetLoading size="lg" />
+              </div>
+            ) : (
+              <div>
+                {!codeTags?.length > 0 && (
+                  <div className="flex justify-center mt-10">
+                    <Text b size={13} transform="uppercase">
+                      Du har ingen kode tags! 😔
+                    </Text>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </div>
         <div>
           <>
-            <TagHeading headingType={"Fejl"} colorType={"error"} />
+            <TagHeading headingType={"Fejl"} headingColor={"error"} />
           </>
 
-          <div className="my-6 flex flex-col gap-4">
-            {errorTags && (
+          <div className="my-5 flex flex-col gap-4">
+            {errorTags?.length > 0 && (
               <>
-                <div className="flex gap-2 flex-wrap -mt-4">
+                <div className="flex gap-2 flex-wrap">
                   {errorTags
                     .slice(0, 40)
                     .reverse()
@@ -132,6 +146,22 @@ const Tags = () => {
                   </Link>
                 </div>
               </>
+            )}
+
+            {loading ? (
+              <div className="flex justify-center items-center h-[20vh]">
+                <SnippetLoading size="lg" />
+              </div>
+            ) : (
+              <div>
+                {!errorTags?.length > 0 && (
+                  <div className="flex justify-center mt-10">
+                    <Text b size={13} transform="uppercase">
+                      Du har ingen kode tags! 😔
+                    </Text>
+                  </div>
+                )}
+              </div>
             )}
           </div>
         </div>

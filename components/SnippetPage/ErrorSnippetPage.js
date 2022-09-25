@@ -11,6 +11,9 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../../firebase/clientApp";
 import { useRouter } from "next/router";
 import { deleteDoc, doc } from "firebase/firestore";
+import SyntaxHandler from "../Syntax/Code/SyntaxHandler";
+import SyntaxErrorCodeHandler from "../Syntax/Error/CodeHandler";
+import SyntaxSolutionCodeHandler from "../Syntax/Error/SolutionHandler";
 
 const ErrorSnippetPage = ({ snippet }) => {
   const [user] = useAuthState(auth);
@@ -107,9 +110,9 @@ const ErrorSnippetPage = ({ snippet }) => {
         </div>
         <div>
           <div className="flex items-center">
-            <h2 style={{ color: "#031B4E" }} className="SnippetHeading">
+            <h3 style={{ color: "#031B4E" }} className="SnippetHeading">
               {snippet.title}
-            </h2>
+            </h3>
           </div>
           {snippet.description && (
             <div className="text-lg ">{snippet.description}</div>
@@ -130,33 +133,23 @@ const ErrorSnippetPage = ({ snippet }) => {
       )}
       <div>
         <div>
-          <Text h4 color="error">
+          <Text h6 transform="uppercase" color="error">
             Fejl Kode
           </Text>
         </div>
-        <SyntaxHighlighter
-          language="javascript"
-          style={oneLight}
-          className="rounded-lg"
-        >
-          {snippet.errorcode}
-        </SyntaxHighlighter>
+
+        <SyntaxErrorCodeHandler snippet={snippet} />
       </div>
 
       {snippet.solutioncode && (
         <div>
           <div>
-            <Text h4 color="success">
+            <Text h6 transform="uppercase" color="success">
               Løsning kode
             </Text>
           </div>
-          <SyntaxHighlighter
-            language="javascript"
-            style={oneLight}
-            className="rounded-lg"
-          >
-            {snippet.solutioncode}
-          </SyntaxHighlighter>
+
+          <SyntaxSolutionCodeHandler snippet={snippet} />
         </div>
       )}
 
@@ -165,7 +158,7 @@ const ErrorSnippetPage = ({ snippet }) => {
           <div className="bg-[#D4EFEE] p-4 rounded-lg">
             <Text color="#005955">
               <Text color="#005955" b>
-                Notat:&nbsp;
+                NOTER:&nbsp;
               </Text>
               {snippet?.notes}
             </Text>
@@ -175,18 +168,27 @@ const ErrorSnippetPage = ({ snippet }) => {
 
       {snippet.link && (
         <div className="linkSection bg-[#EFF2FB] px-4 py-1 ">
-          <div>
-            <Link href={snippet.link}>
-              <a
-                target="_blank"
-                className="text-[#0072F5] underline underline-offset-4 text font-semibold text-lg"
-              >
-                {snippet.link}
-                <span className="text-blue-500">
-                  <CgExternal />
-                </span>
-              </a>
-            </Link>
+          <div className="">
+            {snippet.linkHeading && (
+              <div>
+                <p className="font-semibold">{snippet.linkHeading}</p>
+              </div>
+            )}
+            {snippet.link && (
+              <div>
+                <Link href={snippet.link}>
+                  <a
+                    target="_blank"
+                    className="text-[#0072F5] underline underline-offset-4 text font-semibold text-lg"
+                  >
+                    {snippet.link}
+                    <span className="text-blue-500">
+                      <CgExternal />
+                    </span>
+                  </a>
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       )}

@@ -170,7 +170,7 @@ const Feed = ({ snippets }) => {
                 </div>
 
                 <div className="mt-5 text-center">
-                  <Link href="/mysnippets">
+                  <Link href="/snips">
                     <Text h5 className="cursor-pointer hover:underline">SE ALLE</Text>
                   </Link>
                 </div>

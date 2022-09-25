@@ -5,10 +5,12 @@ import PatchTable from "./PatchTable";
 import { CgExternal } from "react-icons/cg";
 import { getUpdates } from "../../../helpers/updates";
 import { CurrentVersion } from "../../../pages/api/updates/CurrentVersion";
+import SnippetLoading from "../../LoadingState/SnippetLoading";
 
 const PatchNotes = () => {
   const [updateData, setUpdateData] = useState();
   const [lastUpdate, setLastUpdate] = useState();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     getUpdates()
@@ -20,7 +22,7 @@ const PatchNotes = () => {
         }
       })
       .finally(() => {
-        console.log("");
+        setLoading(false);
       });
   }, []);
 
@@ -34,7 +36,7 @@ const PatchNotes = () => {
   }, [updateData]);
 
   return (
-    <div>
+    <div className="w-full">
       <div className="my-5">
         {lastUpdate && (
           <>
@@ -73,26 +75,39 @@ const PatchNotes = () => {
             )}
           </>
         )}
+
+        {loading && <SnippetLoading />}
       </div>
-      <hr />
-      <div className="my-3 flex flex-col gap-3">
-        <div>
-          <Text h5>Seneste versioner</Text>
-          <Text small>
-            Kun vigtigt commits er synlige som opdateringer, for små tweak
-            commits hold øje med den{" "}
-            <span>
-              <Link href="https://github.com/smartercow/SNIPV">
-                <a target="_blank">
-                  original repository
-                  <CgExternal />
-                </a>
-              </Link>
-            </span>
-            .
-          </Text>
+
+      <div className="w-full">
+        <Text h5>Seneste versioner</Text>
+        <hr />
+
+        <div className="my-3 flex flex-col gap-3">
+          {lastUpdate && (
+            <>
+              <div>
+                <Text small>
+                  Kun vigtigt commits er synlige som opdateringer, for små tweak
+                  commits hold øje med den&nbsp;
+                  <span>
+                    <Link href="https://github.com/smartercow/SNIPV">
+                      <a target="_blank">
+                        original repository
+                        <CgExternal />
+                      </a>
+                    </Link>
+                  </span>
+                  .
+                </Text>
+              </div>
+
+              <PatchTable updateData={updateData} />
+            </>
+          )}
+
+          {loading && <SnippetLoading />}
         </div>
-        <PatchTable updateData={updateData} />
       </div>
     </div>
   );

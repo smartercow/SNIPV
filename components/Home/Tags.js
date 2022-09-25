@@ -2,7 +2,7 @@ import { Card, Text } from "@nextui-org/react";
 import Link from "next/link";
 import React from "react";
 import { AiTwotoneTags } from "react-icons/ai";
-
+import TagHeading from "../Heading/TagType/TagHeading";
 const Tags = ({ tags, snippets }) => {
   return (
     <div>
@@ -11,17 +11,10 @@ const Tags = ({ tags, snippets }) => {
           {tags && (
             <Card variant="flat" css={{ w: "300px", padding: "$0" }}>
               <div className="bg-[#F1F7FF] bg-opacity-60 flex flex-col gap-5 pt-1 pb-5 px-3">
-                <div>
-                  <div className="flex items-center gap-2">
-                    <div className="pt-3">
-                      <Text h3 color="error">
-                        <AiTwotoneTags />
-                      </Text>
-                    </div>
-                    <div className="uppercase mt-3 text-[#031B4E]">
-                      <h5>Seneste tags</h5>
-                    </div>
-                  </div>
+                <div className="my-2">
+                  <>
+                    <TagHeading headingType={"Seneste"}/>
+                  </>
                 </div>
                 <div>
                   <div className="flex gap-2 flex-wrap -mt-4">
