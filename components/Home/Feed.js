@@ -45,7 +45,7 @@ const Feed = ({ snippets }) => {
                     <div key={index}>
                       <Link
                         href={
-                          snip.folder?.folderSnippetType === "code"
+                          snip.snippetType === "code"
                             ? `/s/${snip.id}`
                             : `/e/${snip.id}`
                         }
@@ -91,8 +91,7 @@ const Feed = ({ snippets }) => {
                                 </div>
                                 <div className="flex">
                                   <div className="w-24 flex justify-center">
-                                    {snip.folder.folderSnippetType ===
-                                      "code" && (
+                                    {snip.snippetType == "code" && (
                                       <div className="pr-[.60rem]">
                                         <Badge
                                           isSquared
@@ -103,8 +102,7 @@ const Feed = ({ snippets }) => {
                                         </Badge>
                                       </div>
                                     )}
-                                    {snip.folder.folderSnippetType ===
-                                      "error" && (
+                                    {snip.snippetType == "error" && (
                                       <div className="pr-[.60rem]">
                                         <Badge
                                           isSquared
@@ -119,27 +117,18 @@ const Feed = ({ snippets }) => {
                                   <div className="w-full MonoHeading">
                                     <div className="flex gap-2">
                                       <div
-                                        className={`l${snip.category.langId} lBadge rounded-3xl flex justify-center items-center`}
+                                        className={`${snip.folder?.classTree} lBadge rounded-3xl flex justify-center items-center`}
                                       >
                                         <p className="text-xs MonoHeading font-semibold lowercase">
-                                          {snip.folder.language?.label}
+                                          {snip.folder.label}
                                         </p>
                                       </div>
-                                      {snip.folder?.framework.frameworkId && (
+                                      {snip.folder.acc && (
                                         <div
-                                          className={`f${snip.folder.framework.frameworkId} lBadge rounded-3xl flex justify-center items-center`}
+                                          className={`${snip.folder.acc.classTree} lBadge rounded-3xl flex justify-center items-center`}
                                         >
                                           <p className="text-xs MonoHeading font-semibold lowercase">
-                                            {snip.folder.framework?.label}
-                                          </p>
-                                        </div>
-                                      )}
-                                      {snip?.folder?.processor.processorId && (
-                                        <div
-                                          className={`p${snip.folder?.processor.processorId} lBadge rounded-3xl flex justify-center items-center`}
-                                        >
-                                          <p className="text-xs MonoHeading font-semibold lowercase">
-                                            {snip.folder.processor?.label}
+                                            {snip.folder.acc.label}
                                           </p>
                                         </div>
                                       )}
@@ -171,7 +160,9 @@ const Feed = ({ snippets }) => {
 
                 <div className="mt-5 text-center">
                   <Link href="/snips">
-                    <Text h5 className="cursor-pointer hover:underline">SE ALLE</Text>
+                    <Text h5 className="cursor-pointer hover:underline">
+                      SE ALLE
+                    </Text>
                   </Link>
                 </div>
               </div>

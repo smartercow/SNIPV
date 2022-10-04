@@ -126,27 +126,18 @@ const CodeTagPage = () => {
                                 <div className="w-full MonoHeading">
                                   <div className="flex gap-2">
                                     <div
-                                      className={`l${snip.category.langId} lBadge rounded-3xl flex justify-center items-center`}
+                                      className={`l${snip.category?.langId} lBadge rounded-3xl flex justify-center items-center`}
                                     >
                                       <p className="text-xs MonoHeading font-semibold lowercase">
                                         {snip.folder.language?.label}
                                       </p>
                                     </div>
-                                    {snip.folder?.framework.frameworkId && (
+                                    {snip.folder?.framework?.frameworkId && (
                                       <div
                                         className={`f${snip.folder.framework.frameworkId} lBadge rounded-3xl flex justify-center items-center`}
                                       >
                                         <p className="text-xs MonoHeading font-semibold lowercase">
                                           {snip.folder.framework?.label}
-                                        </p>
-                                      </div>
-                                    )}
-                                    {snip?.folder?.processor.processorId && (
-                                      <div
-                                        className={`p${snip.folder?.processor.processorId} lBadge rounded-3xl flex justify-center items-center`}
-                                      >
-                                        <p className="text-xs MonoHeading font-semibold lowercase">
-                                          {snip.folder.processor?.label}
                                         </p>
                                       </div>
                                     )}

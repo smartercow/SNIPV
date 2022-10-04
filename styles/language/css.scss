@@ -1,0 +1,46 @@
+//CSS - 3
+.lang3 {
+    background-color: #1A6FB4;
+    color: white;
+    //PRE-PROCESSORS - 1
+    &__accs1 {
+        //Sass
+        &-acc1 {
+            background-color: #C76395;
+            color: white;
+        }
+        //Less
+        &-acc2 {
+            background-color: #29497D;
+            color: white;
+        }
+    }
+    //POST-PROCESSORS - 2
+    &__accs2 {
+        //Cssnext
+        &-acc1 {
+            background-color: #6D4CBC;
+            color: white;
+        }
+        //PostCSS
+        &-acc2 {
+            background-color: #D6380A;
+            color: #3D4F68;
+        }
+    }
+
+    //FRAMEWORK - 3
+    &__accs2 {
+        //Tailwind CSS
+        &-acc1 {
+            background-color: #39ABAA;
+            color: white;
+        }
+        //
+/*         &-acc2 {
+            background-color: #000000;
+            color: white;
+        } */
+    }
+
+}

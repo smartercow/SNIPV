@@ -44,7 +44,9 @@ const TagsInfo = () => {
                 <span className="font-semibold">&nbsp;SNIP&nbsp;</span>bliver
                 det ikke duplikeret i din&nbsp;
                 <span className="underline">
-                  <Link href="/tags"><a target="_blank">TAGS</a></Link>
+                  <Link href="/tags">
+                    <a target="_blank">TAGS</a>
+                  </Link>
                 </span>
                 &nbsp;side.
               </Text>
@@ -69,6 +71,13 @@ const TagsInfo = () => {
                   <div className="px-3 py-1 bg-[#c8dfff85] rounded-md cursor-pointer hover:opacity-70 lowercase ease-in duration-300">
                     <p className="font-[500] text-sm SnippetHeadingTwo tracking-wide text-[#031B4E]">
                       map loop
+                    </p>
+                  </div>
+                </div>
+                <div className="flex">
+                  <div className="px-3 py-1 bg-[#c8dfff85] rounded-md cursor-pointer hover:opacity-70 lowercase ease-in duration-300">
+                    <p className="font-[500] text-sm SnippetHeadingTwo tracking-wide text-[#031B4E]">
+                      react-router-dom
                     </p>
                   </div>
                 </div>

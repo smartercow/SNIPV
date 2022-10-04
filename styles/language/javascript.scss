@@ -1,0 +1,53 @@
+//JAVASCRIPT - 1
+.lang1 {
+    background-color: #F7E018;
+    color: #031B4E;
+    //FRAMEWORK - 1
+    &__accs1 {
+        //React.js
+        &-acc1 {
+            background-color: #00C6F7;
+            color: #212121;
+        }
+        //Next.js
+        &-acc2 {
+            background-color: #000000;
+            color: white;
+        }
+    }
+    //LIBRARY - 2
+    &__accs2 {
+        //React.js
+        &-acc1 {
+            background-color: #00C6F7; //edit
+            color: #212121;
+        }
+        //Next.js
+        &-acc2 {
+            background-color: #000000;
+            color: white;
+        }
+    }
+
+}
+
+
+//JAVASCRIPT - 2
+
+.lang2 {
+    background-color: #1D3163;
+    color: white;
+    //FRAMEWORK - 1
+    &__accs1 {
+        //React.js
+        &-acc1 {
+            background-color: #00C6F7;
+            color: #212121;
+        }
+        //Next.js
+        &-acc2 {
+            background-color: #000000;
+            color: white;
+        }
+    }
+}

@@ -136,6 +136,8 @@ const MyCodeSnippets = () => {
     });
   }, [truncate]);
 
+  console.log("MY SNIPPETS", myCodeSnippets);
+
   return (
     <div className="min-h-[70vh]">
         <div className="w-full">
@@ -185,7 +187,7 @@ const MyCodeSnippets = () => {
                               </div>
                               <div className="flex">
                                 <div className="w-24 flex justify-center">
-                                  {snip.folder.folderSnippetType === "code" && (
+                                  {snip.snippetType === "code" && (
                                     <div className="pr-[.60rem]">
                                       <Badge
                                         isSquared
@@ -200,27 +202,18 @@ const MyCodeSnippets = () => {
                                 <div className="flex items-center justify-between w-full MonoHeading">
                                   <div className="flex gap-2">
                                     <div
-                                      className={`l${snip.category.langId} lBadge rounded-3xl flex justify-center items-center`}
+                                      className={`${snip.folder?.classTree} lBadge rounded-3xl flex justify-center items-center`}
                                     >
                                       <p className="text-xs MonoHeading font-semibold lowercase">
-                                        {snip.folder.language?.label}
+                                        {snip.folder.label}
                                       </p>
                                     </div>
-                                    {snip.folder?.framework.frameworkId && (
+                                    {snip.folder?.acc && (
                                       <div
-                                        className={`f${snip.folder.framework.frameworkId} lBadge rounded-3xl flex justify-center items-center`}
+                                        className={`${snip.folder.acc.classTree} lBadge rounded-3xl flex justify-center items-center`}
                                       >
                                         <p className="text-xs MonoHeading font-semibold lowercase">
-                                          {snip.folder.framework?.label}
-                                        </p>
-                                      </div>
-                                    )}
-                                    {snip?.folder?.processor.processorId && (
-                                      <div
-                                        className={`p${snip.folder?.processor.processorId} lBadge rounded-3xl flex justify-center items-center`}
-                                      >
-                                        <p className="text-xs MonoHeading font-semibold lowercase">
-                                          {snip.folder.processor?.label}
+                                          {snip.folder.acc.label}
                                         </p>
                                       </div>
                                     )}

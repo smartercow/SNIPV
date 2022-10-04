@@ -31,7 +31,7 @@ const SnippetPage = ({ snippet }) => {
     }
   };
 
-  console.log("SNIPPET", snippet);
+  console.log("SNIPPET2", snippet);
 
   return (
     <div className="flex flex-col gap-4">
@@ -40,27 +40,18 @@ const SnippetPage = ({ snippet }) => {
           <div>
             <div className="flex gap-2">
               <div
-                className={`l${snippet.category.langId} lBadge rounded-3xl flex justify-center items-center`}
+                className={`${snippet.folder?.classTree} lBadge rounded-3xl flex justify-center items-center`}
               >
                 <p className="text-xs MonoHeading font-semibold lowercase">
-                  {snippet.folder.language?.label}
+                  {snippet.folder?.label}
                 </p>
               </div>
-              {snippet.folder?.framework.frameworkId && (
+              {snippet.folder.acc && (
                 <div
-                  className={`f${snippet.folder.framework.frameworkId} lBadge rounded-3xl flex justify-center items-center`}
+                  className={`${snippet.folder.acc.classTree} lBadge rounded-3xl flex justify-center items-center`}
                 >
                   <p className="text-xs MonoHeading font-semibold lowercase">
-                    {snippet.folder.framework?.label}
-                  </p>
-                </div>
-              )}
-              {snippet?.folder?.processor.processorId && (
-                <div
-                  className={`p${snippet.folder?.processor.processorId} lBadge rounded-3xl flex justify-center items-center`}
-                >
-                  <p className="text-xs MonoHeading font-semibold lowercase">
-                    {snippet.folder.processor?.label}
+                    {snippet.folder.acc.label}
                   </p>
                 </div>
               )}
@@ -138,15 +129,7 @@ const SnippetPage = ({ snippet }) => {
       )}
 
       <div>
-        <>
-          <Text h6 transform="uppercase" color="primary">
-            Kode
-          </Text>
-        </>
-
-        <>
-          <SyntaxCodeHandler snippet={snippet} />
-        </>
+        <SyntaxCodeHandler snippet={snippet} />
       </div>
 
       {snippet.output && (
@@ -181,33 +164,32 @@ const SnippetPage = ({ snippet }) => {
         </div>
       )}
 
-      {snippet.linkHeading ||
-        (snippet.link && (
-          <div className="linkSection bg-[#EFF2FB] px-4 py-1 ">
-            <div className="">
-              {snippet.linkHeading && (
-                <div>
-                  <p className="font-semibold">{snippet.linkHeading}</p>
-                </div>
-              )}
-              {snippet.link && (
-                <div>
-                  <Link href={snippet.link}>
-                    <a
-                      target="_blank"
-                      className="text-[#0072F5] underline underline-offset-4 text font-semibold text-lg"
-                    >
-                      {snippet.link}
-                      <span className="text-blue-500">
-                        <CgExternal />
-                      </span>
-                    </a>
-                  </Link>
-                </div>
-              )}
-            </div>
+      {snippet.link && (
+        <div className="linkSection bg-[#EFF2FB] px-4 py-1 ">
+          <div className="">
+            {snippet.linkHeading && (
+              <div>
+                <p className="font-semibold">{snippet.linkHeading}</p>
+              </div>
+            )}
+            {snippet.link && (
+              <div>
+                <Link href={snippet.link}>
+                  <a
+                    target="_blank"
+                    className="text-[#0072F5] underline underline-offset-4 text font-semibold text-lg"
+                  >
+                    {snippet.link}
+                    <span className="text-blue-500">
+                      <CgExternal />
+                    </span>
+                  </a>
+                </Link>
+              </div>
+            )}
           </div>
-        ))}
+        </div>
+      )}
 
       <div className="flex justify-between items-center">
         <div className="text-lg flex gap-1">

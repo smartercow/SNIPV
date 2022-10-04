@@ -11,7 +11,7 @@ import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import Select from "react-select";
 import { auth, db } from "../../../../firebase/clientApp";
-import { LanguageOptions } from "../../../../utilities/LanguageOptions";
+import { LanguageOptions } from "../../../../utilities/Language";
 import { BsQuestionCircleFill } from "react-icons/bs";
 import { useRecoilState } from "recoil";
 import { createErrorFolderModalState } from "../../../../atoms/createErrorFolderModalAtom";
@@ -23,7 +23,7 @@ const initialSelectedLang = {
   value: "javascript",
   langId: "54",
   syntaxHighlight: "javascript",
-  accessory: true,
+  secondary: true,
 };
 
 const initialSelectedFramework = {
@@ -45,7 +45,7 @@ export default function CreateFolder() {
   const [framework, setFramework] = useState(initialSelectedFramework);
   const [processor, setProcessor] = useState(initialSelectedProcessor);
 
-  const [accessoryOption, setAccessoryOption] = useState(true);
+  const [secondaryOption, setAccessoryOption] = useState(true);
   const [additional, setAdditional] = useState(true);
 
   const [folderName, setFolderName] = useState("");
@@ -71,7 +71,7 @@ export default function CreateFolder() {
   }
 
   useEffect(() => {
-    if (language.accessory === true) {
+    if (language.secondary === true) {
       setAccessoryOption(true);
 
       if (language.langId === "54") {
@@ -94,14 +94,14 @@ export default function CreateFolder() {
   }, [language]);
 
   useEffect(() => {
-    if (accessoryOption) {
+    if (secondaryOption) {
       setAdditional(true);
     } else {
       setAdditional(false);
       setFramework({});
       setProcessor({});
     }
-  }, [accessoryOption]);
+  }, [secondaryOption]);
 
   useEffect(() => {
     if (additional) {
@@ -197,13 +197,13 @@ export default function CreateFolder() {
         </div>
         <Spacer y={0.7} />
 
-        {language.accessory === true && (
+        {language.secondary === true && (
           <div>
             <div>
               <Checkbox
                 size="sm"
-                onChange={() => setAccessoryOption(!accessoryOption)}
-                isSelected={accessoryOption}
+                onChange={() => setAccessoryOption(!secondaryOption)}
+                isSelected={secondaryOption}
               >
                 {language.langId === "54" && <>Javascript framework</>}
                 {language.langId === "127" && <>Javascript framework</>}
@@ -213,7 +213,7 @@ export default function CreateFolder() {
             </div>
             <Spacer y={0.1} />
 
-            {accessoryOption && (
+            {secondaryOption && (
               <>
                 <Accessory
                   language={language}

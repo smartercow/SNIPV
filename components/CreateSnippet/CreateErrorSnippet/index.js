@@ -377,7 +377,7 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
                           </Tooltip> */}
                   </div>
                   <div className="mt-2">
-                    <Link href="/help/tags">
+                    <Link href="/info/help/tags">
                       <a target="_blank">
                         <Text
                           color="primary"

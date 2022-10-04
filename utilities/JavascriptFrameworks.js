@@ -1,9 +1,9 @@
 export const JavascriptFrameworks = [
-  { label: "Alpine.js", value: "alpinejs", frameworkId: "1", syntaxHighlight: "jsx" },
-  { label: "Angular", value: "angular", frameworkId: "2", syntaxHighlight: "jsx" },
+  // { label: "Alpine.js", value: "alpinejs", frameworkId: "1", syntaxHighlight: "jsx" },
+  // { label: "Angular", value: "angular", frameworkId: "2", syntaxHighlight: "jsx" },
   { label: "Astro", value: "astro", frameworkId: "3", syntaxHighlight: "jsx" },
-  { label: "Babylon.js", value: "babylonjs", frameworkId: "4", syntaxHighlight: "jsx" },
-  { label: "Blitz.js", value: "blitzjs", frameworkId: "5", syntaxHighlight: "jsx" },
+/*   { label: "Babylon.js", value: "babylonjs", frameworkId: "4", syntaxHighlight: "jsx" }, */ //LIBRARY
+  // { label: "Blitz.js", value: "blitzjs", frameworkId: "5", syntaxHighlight: "jsx" },
   { label: "Brunch", value: "brunch", frameworkId: "6", syntaxHighlight: "jsx" },
   { label: "Cylon.js", value: "clyonjs", frameworkId: "7", syntaxHighlight: "jsx" },
   { label: "Docusaurus 1", value: "docusaurus1", frameworkId: "8", syntaxHighlight: "jsx" },
