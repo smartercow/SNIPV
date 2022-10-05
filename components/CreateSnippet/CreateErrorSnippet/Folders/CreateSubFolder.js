@@ -2,7 +2,9 @@ import {
   Button,
   Checkbox,
   Input,
+  Spacer,
   Text,
+  Tooltip,
 } from "@nextui-org/react";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
@@ -15,8 +17,11 @@ import { useRecoilState, useSetRecoilState } from "recoil";
 import { createCodeFolderModalState } from "../../../../atoms/createCodeFolderModalAtom";
 import { updateStateAtom } from "../../../../atoms/updateStateAtom";
 import { NoOptionsMessage } from "../../Select/NoOptionsMessage";
+import { JavaScriptFrameworks } from "../../../../utilities/Language/Javascript/Frameworks";
+import { JavaScriptLibraries } from "../../../../utilities/Language/JavaScript/Libraries";
 import { TagsInput } from "react-tag-input-component";
 import CreatedFolders from "./CreatedFolders";
+import { OptionFileExt, ValueFileExt } from "../../Select/SelectProps";
 
 export default function CreateMainFolder() {
   const [user] = useAuthState(auth);
@@ -40,9 +45,6 @@ export default function CreateMainFolder() {
 
   const [tags, setTags] = useState([]);
   const [tagInputValues, setTagInputValues] = useState([]);
-
-  const [selectValue, setSelectValue] = useState([]);
-  const [selectSubValue, setSelectSubValue] = useState([]);
 
   const lowercaseTags = tagInputValues.map((element) => {
     return element.toLowerCase();
@@ -123,10 +125,10 @@ export default function CreateMainFolder() {
   }, [tagInputValues]);
 
   console.log("language", language);
-  // console.log("accessories", accessories);
+  console.log("accessories", accessories);
   console.log("accessory", accessory);
   // console.log("fileExtensions", fileExtensions);
-  // console.log("fileExtension", fileExtension);
+  console.log("fileExtension", fileExtension);
   // console.log("addAccessory", addAccessory);
   // console.log("folderName", folderName);
   // console.log("disableExtSelect", disableExtSelect);
@@ -152,9 +154,14 @@ export default function CreateMainFolder() {
             folderSnippetType: "code",
             label: folderName,
             value: randomValue,
-            mainFolder: selectedCodeMainFolder,
+            mainFolderId: selectedCodeMainFolder.mainFolderId,
             language: {
+              label: language.label,
+              value: language.value,
+              langId: language.langId,
               fileExtension: fileExtension,
+              accs: language.accessory,
+              classTree: `lang${language.langId}`,
               acc:
                 Object.keys(accessory).length > 0
                   ? {
@@ -163,7 +170,6 @@ export default function CreateMainFolder() {
                       accsType: accessory.accsType,
                       label: accessory.label,
                       mainLang: language.label,
-                      mainValue: language.value,
                       mainLangId: language.langId,
                       value: accessory.value,
                       classTree: `lang${language.langId}__accs${accessory.accsId}-acc${accessory.accId}`,
@@ -190,9 +196,6 @@ export default function CreateMainFolder() {
         <div className="flex flex-col gap-2">
           <div>
             <CreatedFolders
-              selectValue={selectValue}
-              setSelectValue={setSelectValue}
-              setSelectSubValue={setSelectSubValue}
               setSelectedCodeMainFolder={setSelectedCodeMainFolder}
             />
           </div>

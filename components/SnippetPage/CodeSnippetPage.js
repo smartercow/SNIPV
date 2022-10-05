@@ -40,18 +40,18 @@ const SnippetPage = ({ snippet }) => {
           <div>
             <div className="flex gap-2">
               <div
-                className={`${snippet.folder?.classTree} lBadge rounded-3xl flex justify-center items-center`}
+                className={`${snippet.folder?.mainFolder?.language?.classTree} lBadge rounded-3xl flex justify-center items-center`}
               >
                 <p className="text-xs MonoHeading font-semibold lowercase">
-                  {snippet.folder?.label}
+                  {snippet.folder?.mainFolder?.language?.label}
                 </p>
               </div>
-              {snippet.folder.acc && (
+              {snippet.folder.language.acc.accId && (
                 <div
-                  className={`${snippet.folder.acc.classTree} lBadge rounded-3xl flex justify-center items-center`}
+                  className={`${snippet.folder.language.acc.classTree} lBadge rounded-3xl flex justify-center items-center`}
                 >
                   <p className="text-xs MonoHeading font-semibold lowercase">
-                    {snippet.folder.acc.label}
+                    {snippet.folder.language.acc.label}
                   </p>
                 </div>
               )}

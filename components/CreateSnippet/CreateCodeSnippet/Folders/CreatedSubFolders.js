@@ -1,5 +1,5 @@
 import { Button, Text } from "@nextui-org/react";
-import { collection, getDoc, getDocs, query, where } from "firebase/firestore";
+import { collection, FieldPath, getDoc, getDocs, query, where } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import Select from "react-select";
@@ -37,7 +37,7 @@ export default function CreatedSubFolders({
     if (!user) return;
     if(selectedCodeMainFolder.language?.langId > 0) {
       const folderColRef = query(collection(db, "UsersData1", user.uid, "CodeSubFolders"),
-      where("mainFolderId", "==", selectedCodeMainFolder.mainFolderId))
+      where(new FieldPath("mainFolder", "mainFolderId"), "==", selectedCodeMainFolder.mainFolderId))
       const getFolders = async () => {
         const userData = await getDocs(folderColRef);
         setSubFolders(
@@ -56,8 +56,10 @@ export default function CreatedSubFolders({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, dataFetched]);
 
-  // console.log("selectedCodeSubFolder", selectedCodeSubFolder);
-  // console.log("subFolders", subFolders[0]);
+  // console.log("subFolders", subFolders);
+
+  // console.log("selectedCodeMainFolder", selectedCodeMainFolder);
+  // console.log("SELECTSUBVALUE", selectSubValue[0]);
 
   return (
     <div>

@@ -48,20 +48,20 @@ export const ValueFileExt = (props) => (
       )}
       <div className="w-full">{props.data?.label}</div>
       <div className="flex gap-2 justify-between items-center">
-        {props.data.language?.acc ? (
-          <div
-            className={`${props.data.language.acc.classTree} lBadge rounded-3xl flex justify-center items-center`}
-          >
-            <p className="text-xs MonoHeading font-semibold lowercase">
-              {props.data.language.acc?.label}
-            </p>
-          </div>
+        {props.data.folder?.language?.acc.accId ? (
+                    <div
+                    className={`${props.data.folder?.language.classTree} lBadge rounded-3xl flex justify-center items-center`}
+                  >
+                    <p className="text-xs MonoHeading font-semibold lowercase">
+                      {props.data.folder.language?.label}
+                    </p>
+                    </div>
         ) : (
           <div
-            className={`${props.data.language?.classTree} lBadge rounded-3xl flex justify-center items-center`}
+            className={`${props.data.folder?.mainFolder?.language.classTree} lBadge rounded-3xl flex justify-center items-center`}
           >
             <p className="text-xs MonoHeading font-semibold lowercase">
-              {props.data.language?.label}
+              {props.data.folder?.mainFolder?.language.label}
             </p>
           </div>
         )}

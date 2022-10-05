@@ -117,18 +117,18 @@ const Feed = ({ snippets }) => {
                                   <div className="w-full MonoHeading">
                                     <div className="flex gap-2">
                                       <div
-                                        className={`${snip.folder?.classTree} lBadge rounded-3xl flex justify-center items-center`}
+                                        className={`${snip.folder?.mainFolder?.language?.classTree} lBadge rounded-3xl flex justify-center items-center`}
                                       >
                                         <p className="text-xs MonoHeading font-semibold lowercase">
-                                          {snip.folder.label}
+                                          {snip.folder?.mainFolder?.language.label}
                                         </p>
                                       </div>
-                                      {snip.folder.acc && (
+                                      {snip.folder?.language?.acc?.accId && (
                                         <div
-                                          className={`${snip.folder.acc.classTree} lBadge rounded-3xl flex justify-center items-center`}
+                                          className={`${snip.folder?.language?.acc?.classTree} lBadge rounded-3xl flex justify-center items-center`}
                                         >
                                           <p className="text-xs MonoHeading font-semibold lowercase">
-                                            {snip.folder.acc.label}
+                                            {snip.folder?.language?.acc?.label}
                                           </p>
                                         </div>
                                       )}

@@ -7,7 +7,6 @@ import {
   Collapse,
   Text,
   Tooltip,
-  Loading,
   Card,
 } from "@nextui-org/react";
 import {
@@ -30,7 +29,6 @@ import { toast } from "react-toastify";
 import { InfoCircle } from "../../SVG/InfoCircle";
 import Link from "next/link";
 import { CgExternal } from "react-icons/cg";
-import AdditionalFileExt from "../../Testing/AdditionalFileExt";
 import CreatedSubFolders from "./Folders/CreatedSubFolders";
 
 const initialState = {
@@ -42,43 +40,37 @@ const initialState = {
   link: "",
 };
 
-const initialStateLowercase = {
-  title: "",
-  description: "",
-};
-
 const CreateCodeSnippet = ({ id, setLoading, setDataError }) => {
+  const [user] = useAuthState(auth);
+
+  const [selectedCodeMainFolder, setSelectedCodeMainFolder] = useState([]);
+  const [selectedCodeSubFolder, setSelectedCodeSubFolder] = useState();
+  const [subFolders, setSubFolders] = useState([]);
+
   const [form, setForm] = useState(initialState);
+  const { title, description, code, output, linkHeading, link } = form;
+  const [lowercaseForm, setLowercaseForm] = useState([]); //Search
+  const [notes, setNotes] = useState("");
   const [tags, setTags] = useState([]);
   const [tagInputValues, setTagInputValues] = useState([]);
-  const [notes, setNotes] = useState("");
+  
+  const [selectValue, setSelectValue] = useState([]);
+  const [selectSubValue, setSelectSubValue] = useState([]);
 
   const [username, setUsername] = useState("");
   const [usernameValue, setUsernameValue] = useState("");
   const [photoURL, setPhotoURL] = useState("");
   const [uid, setUid] = useState("");
 
-  const [lowercaseForm, setLowercaseForm] = useState([]);
-
-  const [selectedCodeMainFolder, setSelectedCodeMainFolder] = useState([]);
-
-  const [selectedCodeSubFolder, setSelectedCodeSubFolder] = useState();
-
-  const [subFolders, setSubFolders] = useState([]);
-
-  const [dataFetched, setDataFetched] = useState(false);
-
-  const { title, description, code, output, linkHeading, link } = form;
-
-  const [user] = useAuthState(auth);
 
   const router = useRouter();
+  const [dataFetched, setDataFetched] = useState(false);
+
 
   const [disableCode, setDisableCode] = useState(true);
   const [codeExpanded, setCodeExpanded] = useState(false);
   const [folderExpanded, setFolderExpanded] = useState(true);
 
-  const [selectSubValue, setSelectSubValue] = useState([]);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -129,7 +121,7 @@ const CreateCodeSnippet = ({ id, setLoading, setDataError }) => {
               uid: uid,
               photoURL: photoURL,
             },
-            folder: selectedCodeSubFolder.language,
+            folder: selectedCodeSubFolder,
             tags: tags,
             notes: notes,
           });
@@ -137,14 +129,15 @@ const CreateCodeSnippet = ({ id, setLoading, setDataError }) => {
         } catch (error) {
           console.log("Fejl i opretning af SNIP!", error);
         }
-      } /* else {
+      } else {
         try {
           await updateDoc(doc(db, "CodeSnippetsData1", id), {
             ...form,
             search: {
-              title: lowercaseForm.title,
-              description: lowercaseForm.description,
+              title: lowercaseForm.title ? lowercaseForm.title : form.title,
+              description: lowercaseForm.description ? lowercaseForm.description : form.description,
             },
+            snippetType: "code",
             updatedAt: serverTimestamp(),
             userData: {
               username: username,
@@ -152,8 +145,7 @@ const CreateCodeSnippet = ({ id, setLoading, setDataError }) => {
               uid: uid,
               photoURL: photoURL,
             },
-            category: selectedCategory,
-            folder: selectedFolder,
+            folder: selectedCodeSubFolder,
             tags: tags,
             notes: notes,
           });
@@ -161,12 +153,19 @@ const CreateCodeSnippet = ({ id, setLoading, setDataError }) => {
         } catch (error) {
           console.log("Fejl i opdatering af SNIP!", error);
         }
-      } */
+      }
     } else {
       // return toast.error("Valg en mappe!");
       return toast.error("FEJL!");
     }
   };
+
+  useEffect(() => {
+    if (id) {
+      getCodeSnipData();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
 
   const getCodeSnipData = async () => {
     try {
@@ -174,8 +173,18 @@ const CreateCodeSnippet = ({ id, setLoading, setDataError }) => {
       const snapshot = await getDoc(docRef);
       if (snapshot.exists()) {
         //Code SNIP data from {id}
-        setForm({ ...snapshot.data() });
-        setSelectedFolder(snapshot.data().folder);
+        setSelectedCodeMainFolder(snapshot.data().folder.mainFolder);
+        setSelectValue(snapshot.data().folder.mainFolder)
+        setSelectedCodeSubFolder(snapshot.data().folder);
+        setSelectSubValue(snapshot.data().folder)
+        setForm({
+          title: snapshot.data().title,
+          description: snapshot.data().description,
+          code: snapshot.data().code,
+          output: snapshot.data().output,
+          linkHeading: snapshot.data().linkHeading,
+          link: snapshot.data().link,
+        }); 
         setTags(snapshot.data().tags);
         setNotes(snapshot.data().notes);
 
@@ -194,31 +203,18 @@ const CreateCodeSnippet = ({ id, setLoading, setDataError }) => {
   };
 
   useEffect(() => {
-    if (id) {
-      getCodeSnipData();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
-
-  useEffect(() => {
-    if (selectedCodeMainFolder.langId > 0) {
+    if (selectedCodeMainFolder?.langId > 0) {
       setDisableCode(false);
-      if (Object.keys(selectedCodeSubFolder).length > 0) {
+      if (selectedCodeSubFolder) {
         setSelectSubValue(subFolders[0]);
-      } else {
-        setSelectSubValue({});
       }
     } else {
       setDisableCode(true);
     }
   }, [selectedCodeMainFolder, subFolders, selectedCodeSubFolder]);
 
-/*   useEffect(() => {
-
-  }, [selectedCodeSubFolder, subFolders]); */
-
   useEffect(() => {
-    if (Object.keys(selectSubValue).length > 0) {
+    if (selectedCodeSubFolder) {
       setCodeExpanded(true);
       setDisableCode(false);
       setFolderExpanded(false);
@@ -227,11 +223,17 @@ const CreateCodeSnippet = ({ id, setLoading, setDataError }) => {
       setFolderExpanded(true);
       setDisableCode(true);
     }
-  }, [selectSubValue]);
+  }, [selectedCodeSubFolder]);
 
   // console.log("selectedCodeMainFolder", selectedCodeMainFolder);
-  // console.log("selectedSubCodeFolder", selectedCodeSubFolder);
-  // console.log("selectedCodeFolder", selectedCodeSubFolder);
+  // console.log("selectValue", selectValue);
+  // console.log("selectedCodeSubFolder", selectedCodeSubFolder);
+  // console.log("lowercaseForm", lowercaseForm);
+  // console.log("lowercaseForm.title", lowercaseForm.title);
+  // console.log("lowercaseForm.description", lowercaseForm.description);
+  // console.log("form.title", form.title);
+  // console.log("form.description", form.description);
+  // console.log("IDDDDD", id);
 
   return (
     <div className="">
@@ -249,13 +251,13 @@ const CreateCodeSnippet = ({ id, setLoading, setDataError }) => {
                       <div className="flex items-center gap-4">
                         <div className="flex gap-2 items-center">
                           <Text h5 transform="uppercase">
-                            {selectedCodeMainFolder.label}
+                            {selectedCodeMainFolder?.label}
                           </Text>
                           <div
                             className={`${selectedCodeSubFolder?.language?.classTree} lBadge rounded-3xl flex justify-center items-center`}
                           >
                             <p className="text-xs MonoHeading font-semibold lowercase">
-                              {selectedCodeMainFolder.language?.label}
+                              {selectedCodeMainFolder?.language?.label}
                             </p>
                           </div>
                         </div>
@@ -295,9 +297,12 @@ const CreateCodeSnippet = ({ id, setLoading, setDataError }) => {
                 selectedCodeSubFolder={selectedCodeSubFolder}
                 id={id}
                 dataFetched={dataFetched}
+                selectValue={selectValue}
+                setSelectValue={setSelectValue}
+                setSelectSubValue={setSelectSubValue}
               />
 
-              {selectedCodeMainFolder.language?.langId > 0 && (
+              {selectedCodeMainFolder?.language?.langId > 0 && (
                 <div>
                   <CreatedSubFolders
                     setSelectedCodeSubFolder={setSelectedCodeSubFolder}

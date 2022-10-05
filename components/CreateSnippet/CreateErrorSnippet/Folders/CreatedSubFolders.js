@@ -10,96 +10,87 @@ import { auth, db } from "../../../../firebase/clientApp";
 import { FaFolderPlus } from "react-icons/fa";
 import { OptionFileExt, ValueFileExt } from "../../Select/SelectProps";
 import { NoOptionsMessage } from "../../Select/NoOptionsMessage";
-import CreatedSubFolders from "./CreatedSubFolders";
 
-export default function CreatedFolders({
-  setSelectedCodeMainFolder,
-  selectedCodeMainFolder,
+export default function CreatedSubFolders({
   setSelectedCodeSubFolder,
   selectedCodeSubFolder,
+  selectedCodeMainFolder,
+  setSubFolders,
+  subFolders,
   id,
   dataFetched,
-  selectValue,
-  setSelectValue,
-  setSelectSubValue
+  selectSubValue,
+  setSelectSubValue,
 }) {
-  const [folders, setFolders] = useState([]);
 
   const [open, setOpen] = useRecoilState(createCodeFolderModalState);
   const [update, setUpdate] = useRecoilState(updateStateAtom);
 
   function handleSelect(data) {
-    setSelectValue(data)
-    setSelectedCodeMainFolder(data);
-    setSelectSubValue(null)
+    setSelectSubValue(data);
+    setSelectedCodeSubFolder(data);
   }
 
   const [user] = useAuthState(auth);
 
   useEffect(() => {
     if (!user) return;
-    const folderColRef = collection(
-      db,
-      "UsersData1",
-      user.uid,
-      "CodeMainFolders"
-    );
-    const getFolders = async () => {
-      const userData = await getDocs(folderColRef);
-      setFolders(
-        userData.docs.map((doc) => ({ ...doc.data(), mainFolderId: doc.id }))
-      );
-    };
-    getFolders();
-  }, [user, update]);
+    if(selectedCodeMainFolder.language?.langId > 0) {
+      const folderColRef = query(collection(db, "UsersData1", user.uid, "CodeSubFolders"),
+      where("mainFolderId", "==", selectedCodeMainFolder.mainFolderId))
+      const getFolders = async () => {
+        const userData = await getDocs(folderColRef);
+        setSubFolders(
+          userData.docs.map((doc) => ({ ...doc.data(), subFolderId: doc.id }))
+        );
+      }
+      getFolders();
+    }
+  }, [user, update, selectedCodeMainFolder, setSelectedCodeSubFolder, setSubFolders]);
 
   useEffect(() => {
     if (id) {
-      setSelectValue(setSelectedCodeMainFolder);
-      setUpdate(!update);
+      setSelectSubValue(setSelectedCodeSubFolder)
+      setUpdate(!update)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, dataFetched]);
 
-  // console.log("FOLDERS", folders);
-  // console.log("selectedCodeMainFolder", selectedCodeMainFolder);
+  // console.log("selectedCodeSubFolder", selectedCodeSubFolder);
+  // console.log("subFolders", subFolders[0]);
 
   return (
     <div>
-      {folders.length > 0 ? (
+      {subFolders?.length > 0 ? ( 
         <div>
           <div className="flex flex-col">
             <div className="w-20">
-              <Text h6 transform="uppercase">
-                Rodmappe&nbsp;
+            <Text h6 transform="uppercase">
+                Undermappe&nbsp;
                 <Text color="error" b>
                   *
                 </Text>
               </Text>
             </div>
 
-            <div className="flex gap-3 items-center">
+            <div className="flex gap-3 items-center w-full">
               <div className="w-full">
                 <Select
-                  options={folders}
+                  options={subFolders} 
                   placeholder="Valg en rodmappe"
-                  value={selectValue}
+                  value={selectSubValue}
                   onChange={handleSelect}
                   isSearchable={true}
                   menuPortalTarget={document.body}
                   styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
-                  components={{
-                    NoOptionsMessage,
-                    Option: OptionFileExt,
-                    SingleValue: ValueFileExt,
-                  }}
+                  components={{ NoOptionsMessage, Option: OptionFileExt, SingleValue: ValueFileExt}}
                 />
               </div>
               <div>
                 <Text
                   h3
                   color="primary"
-                  onClick={() => {setOpen({default: true, view: 0})}}
+                  onClick={() => {setOpen({default: true, view: 1})}}
                   className="cursor-pointer pt-3"
                 >
                   <FaFolderPlus />
@@ -112,13 +103,13 @@ export default function CreatedFolders({
         <>
           <div className="flex flex-col gap-1">
             <Text>
-              Du har ingen rodmapper for kode snippets&nbsp;
+              Du har ingen undermappe for <span className="font-semibold">{selectedCodeMainFolder.label}</span>&nbsp;
               <Text color="error" b>
                 *
               </Text>
             </Text>
             <div>
-              <Button color="primary" auto onClick={() => {setOpen({default: true, view: 0})}}>
+              <Button color="primary" auto onClick={() => {setOpen({default: true, view: 1})}}>
                 Opret
               </Button>
             </div>

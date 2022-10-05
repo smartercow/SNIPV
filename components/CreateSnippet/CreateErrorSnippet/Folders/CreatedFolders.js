@@ -1,42 +1,50 @@
 import { Button, Text } from "@nextui-org/react";
-import { collection, getDoc, getDocs } from "firebase/firestore";
+import { collection, getDoc, getDocs, query, where } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import Select from "react-select";
 import { useRecoilState } from "recoil";
-import { createErrorFolderModalState } from "../../../../atoms/createErrorFolderModalAtom";
+import { createCodeFolderModalState } from "../../../../atoms/createCodeFolderModalAtom";
 import { updateStateAtom } from "../../../../atoms/updateStateAtom";
 import { auth, db } from "../../../../firebase/clientApp";
 import { FaFolderPlus } from "react-icons/fa";
+import { OptionFileExt, ValueFileExt } from "../../Select/SelectProps";
+import { NoOptionsMessage } from "../../Select/NoOptionsMessage";
+import CreatedSubFolders from "./CreatedSubFolders";
 
 export default function CreatedFolders({
-  setSelectedFolder,
-  setSelectedCategory,
-  selectedFolder,
+  setSelectedCodeMainFolder,
+  selectedCodeMainFolder,
+  setSelectedCodeSubFolder,
+  selectedCodeSubFolder,
   id,
-  dataFetched
+  dataFetched,
 }) {
   const [folders, setFolders] = useState([]);
   const [selectValue, setSelectValue] = useState([]);
 
-  const [open, setOpen] = useRecoilState(createErrorFolderModalState);
+  const [open, setOpen] = useRecoilState(createCodeFolderModalState);
   const [update, setUpdate] = useRecoilState(updateStateAtom);
 
   function handleSelect(data) {
+    setSelectedCodeMainFolder(data);
     setSelectValue(data);
-    setSelectedCategory(data.language);
-    setSelectedFolder(data);
   }
 
   const [user] = useAuthState(auth);
 
   useEffect(() => {
     if (!user) return;
-    const folderColRef = collection(db, "UsersData1", user.uid, "ErrorFolders");
+    const folderColRef = collection(
+      db,
+      "UsersData1",
+      user.uid,
+      "CodeMainFolders"
+    );
     const getFolders = async () => {
       const userData = await getDocs(folderColRef);
       setFolders(
-        userData.docs.map((doc) => ({ ...doc.data(), folderId: doc.id }))
+        userData.docs.map((doc) => ({ ...doc.data(), mainFolderId: doc.id }))
       );
     };
     getFolders();
@@ -44,43 +52,51 @@ export default function CreatedFolders({
 
   useEffect(() => {
     if (id) {
-      setSelectValue(selectedFolder)
-      setUpdate(!update)
+      setSelectValue(setSelectedCodeMainFolder);
+      setUpdate(!update);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, dataFetched]);
+
+  // console.log("FOLDERS", folders);
+  // console.log("selectedCodeMainFolder", selectedCodeMainFolder);
 
   return (
     <div>
       {folders.length > 0 ? (
         <div>
-          <div className="flex items-center gap-4 mt-3">
+          <div className="flex flex-col">
             <div className="w-20">
-              <Text>
-                Mappe&nbsp;
+              <Text h6 transform="uppercase">
+                Rodmappe&nbsp;
                 <Text color="error" b>
                   *
                 </Text>
               </Text>
             </div>
 
-            <div className="flex gap-3 items-center w-full">
-              <div className="w-1/2">
+            <div className="flex gap-3 items-center">
+              <div className="w-full">
                 <Select
                   options={folders}
-                  placeholder="Valg en mappe"
+                  placeholder="Valg en rodmappe"
                   value={selectValue}
                   onChange={handleSelect}
                   isSearchable={true}
                   menuPortalTarget={document.body}
                   styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
+                  components={{
+                    NoOptionsMessage,
+                    Option: OptionFileExt,
+                    SingleValue: ValueFileExt,
+                  }}
                 />
               </div>
               <div>
                 <Text
                   h3
                   color="primary"
-                  onClick={() => setOpen(true)}
+                  onClick={() => {setOpen({default: true, view: 0})}}
                   className="cursor-pointer pt-3"
                 >
                   <FaFolderPlus />
@@ -93,13 +109,13 @@ export default function CreatedFolders({
         <>
           <div className="flex flex-col gap-1">
             <Text>
-              Du har ingen mapper for kode snippets&nbsp;
+              Du har ingen rodmapper for kode snippets&nbsp;
               <Text color="error" b>
                 *
               </Text>
             </Text>
             <div>
-              <Button color="primary" auto onClick={() => setOpen(true)}>
+              <Button color="primary" auto onClick={() => {setOpen({default: true, view: 0})}}>
                 Opret
               </Button>
             </div>
