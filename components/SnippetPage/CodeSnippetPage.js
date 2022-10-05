@@ -12,8 +12,9 @@ import { deleteDoc, doc } from "firebase/firestore";
 import { auth, db } from "../../firebase/clientApp";
 import { useAuthState } from "react-firebase-hooks/auth";
 import SyntaxCodeHandler from "../Syntax/Code/SyntaxHandler";
+import LanguageBadge from "../Display/LanguageBadge";
 
-const SnippetPage = ({ snippet }) => {
+const SnippetPage = ({ snippets }) => {
   const [user] = useAuthState(auth);
   const router = useRouter();
   const {
@@ -31,34 +32,15 @@ const SnippetPage = ({ snippet }) => {
     }
   };
 
-  console.log("SNIPPET2", snippet);
-
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col gap-1">
         <div className="flex gap-2 justify-between items-center">
           <div>
-            <div className="flex gap-2">
-              <div
-                className={`${snippet.folder?.mainFolder?.language?.classTree} lBadge rounded-3xl flex justify-center items-center`}
-              >
-                <p className="text-xs MonoHeading font-semibold lowercase">
-                  {snippet.folder?.mainFolder?.language?.label}
-                </p>
-              </div>
-              {snippet.folder.language.acc.accId && (
-                <div
-                  className={`${snippet.folder.language.acc.classTree} lBadge rounded-3xl flex justify-center items-center`}
-                >
-                  <p className="text-xs MonoHeading font-semibold lowercase">
-                    {snippet.folder.language.acc.label}
-                  </p>
-                </div>
-              )}
-            </div>
+            <LanguageBadge snippet={snippets} />
           </div>
 
-          {user.uid === snippet.userData.uid && (
+          {user.uid === snippets.userData.uid && (
             <div className="flex gap-2 items-center">
               <div>
                 <a href={`/upsert/code/${id}`}>
@@ -90,7 +72,7 @@ const SnippetPage = ({ snippet }) => {
                   </Popover.Trigger>
                   <Popover.Content>
                     <DeleteCodeSnippetNoMap
-                      snippet={snippet}
+                      snippets={snippets}
                       handleDelete={handleDelete}
                       setDeleteConfirm={setDeleteConfirm}
                       id={id}
@@ -105,19 +87,19 @@ const SnippetPage = ({ snippet }) => {
         <div>
           <div className="flex items-center">
             <h3 style={{ color: "#031B4E" }} className="SnippetHeading">
-              {snippet.title}
+              {snippets.title}
             </h3>
           </div>
-          {snippet.description && (
+          {snippets.description && (
             <div className="text-lg ">
-              <p>{snippet.description}</p>
+              <p>{snippets.description}</p>
             </div>
           )}
         </div>
       </div>
-      {snippet.tags.length > 0 && (
+      {snippets.tags.length > 0 && (
         <div className="flex gap-2">
-          {snippet.tags.map((tag, index) => (
+          {snippets.tags.map((tag, index) => (
             <div
               key={index}
               className="bg-[#EFF2FB] text-[#4D5B7C] px-2 rounded-lg hover:tagHover flex items-center tagFont"
@@ -129,10 +111,10 @@ const SnippetPage = ({ snippet }) => {
       )}
 
       <div>
-        <SyntaxCodeHandler snippet={snippet} />
+        <SyntaxCodeHandler snippet={snippets} />
       </div>
 
-      {snippet.output && (
+      {snippets.output && (
         <div>
           <Text h6 transform="uppercase" color="warning">
             Output
@@ -145,41 +127,41 @@ const SnippetPage = ({ snippet }) => {
               className="rounded-lg"
               /*               showLineNumbers */
             >
-              {snippet.output}
+              {snippets.output}
             </SyntaxHighlighter>
           </div>
         </div>
       )}
 
-      {snippet.notes && (
+      {snippets.notes && (
         <div>
           <div className="bg-[#D4EFEE] p-4 rounded-lg">
             <Text color="#005955">
               <Text color="#005955" b>
                 NOTER:&nbsp;
               </Text>
-              {snippet?.notes}
+              {snippets?.notes}
             </Text>
           </div>
         </div>
       )}
 
-      {snippet.link && (
+      {snippets.link && (
         <div className="linkSection bg-[#EFF2FB] px-4 py-1 ">
           <div className="">
-            {snippet.linkHeading && (
+            {snippets.linkHeading && (
               <div>
-                <p className="font-semibold">{snippet.linkHeading}</p>
+                <p className="font-semibold">{snippets.linkHeading}</p>
               </div>
             )}
-            {snippet.link && (
+            {snippets.link && (
               <div>
-                <Link href={snippet.link}>
+                <Link href={snippets.link}>
                   <a
                     target="_blank"
                     className="text-[#0072F5] underline underline-offset-4 text font-semibold text-lg"
                   >
-                    {snippet.link}
+                    {snippets.link}
                     <span className="text-blue-500">
                       <CgExternal />
                     </span>
@@ -193,14 +175,14 @@ const SnippetPage = ({ snippet }) => {
 
       <div className="flex justify-between items-center">
         <div className="text-lg flex gap-1">
-          <p>Af</p> <p>{snippet.id}</p>
+          <p>Af</p> <p>{snippets.id}</p>
           <p className="font-bold text-[#031B4E]">
-            {snippet.userData.username}
+            {snippets.userData.username}
           </p>
         </div>
 
         <div className="flex gap-2 md:gap-4">
-          {snippet.updatedAt && (
+          {snippets.updatedAt && (
             <div className="flex gap-1 items-center">
               <Text
                 small
@@ -215,7 +197,7 @@ const SnippetPage = ({ snippet }) => {
                 transform="uppercase"
                 className="font-semibold text-[#031B4E]"
               >
-                {new Date(snippet.updatedAt.seconds * 1000).toLocaleDateString(
+                {new Date(snippets.updatedAt.seconds * 1000).toLocaleDateString(
                   "da-DK"
                 )}
               </Text>
@@ -226,7 +208,7 @@ const SnippetPage = ({ snippet }) => {
               Oprettet:
             </Text>
             <Text small transform="uppercase" className="text-[#031B4E]">
-              {new Date(snippet.postedAt.seconds * 1000).toLocaleDateString(
+              {new Date(snippets.postedAt.seconds * 1000).toLocaleDateString(
                 "da-DK"
               )}
             </Text>

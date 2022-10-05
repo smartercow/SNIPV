@@ -20,7 +20,7 @@ import { ArrowLeftSquare } from "../../../components/SVG/ArrowLeftSquare";
 import { LoginIcon } from "../../../components/SVG/LoginIcon";
 import Head from "next/head";
 import FolderType from "../../../components/Heading/FolderType";
-import { DeleteCodeSnippet } from "../../../components/NonModal/DeleteCodeSnippet";
+import { DeleteSnippet } from "../../../components/NonModal/DeleteSnippet";
 
 const Folder = () => {
   const [user] = useAuthState(auth);
@@ -254,7 +254,7 @@ const Folder = () => {
                         </Button>
                       </Popover.Trigger>
                       <Popover.Content>
-                        <DeleteCodeSnippet
+                        <DeleteSnippet
                           snip={snip}
                           handleDelete={handleDelete}
                         />

@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, Button, Grid, Row } from "@nextui-org/react";
 
-export const DeleteCodeSnippet = ({ id, handleCodeSnippetDelete, setAllOpenStates }) => {
+export const DeleteSnippet = ({ id, handleDelete, setAllOpenStates }) => {
   return (
     <Grid.Container
       css={{ borderRadius: "14px", padding: "0.75rem", maxWidth: "330px" }}
@@ -11,7 +11,7 @@ export const DeleteCodeSnippet = ({ id, handleCodeSnippetDelete, setAllOpenState
       </Row>
       <Row css={{ py: ".5rem" }}>
         <Text>
-          Er du sikker på, at du vil slette denne kode SNIP? Ved at gøre
+          Er du sikker på, at du vil slette denne SNIP? Ved at gøre
           dette, vil du ikke være i stand til at gendanne indhold.
         </Text>
       </Row>
@@ -27,7 +27,7 @@ export const DeleteCodeSnippet = ({ id, handleCodeSnippetDelete, setAllOpenState
             shadow
             color="error"
             onClick={() => {
-              handleCodeSnippetDelete(id) 
+              handleDelete(id) 
               setAllOpenStates(oldState => ({...oldState, [id]: false}))
             }}
           >

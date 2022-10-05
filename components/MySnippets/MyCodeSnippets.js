@@ -15,12 +15,6 @@ import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../../firebase/clientApp";
 import NoUser from "../NoPage/NoUser";
-import Link from "next/link";
-import { DeleteDocumentIcon } from "../SVG/DeleteDocumentIcon";
-import { DeleteCodeSnippet } from "../NonModal/DeleteCodeSnippet";
-import { EditDocumentIcon } from "../SVG/EditDocumentIcon";
-import { LoginIcon } from "../SVG/LoginIcon";
-import { Paper } from "../SVG/Paper";
 import { MdRefresh } from "react-icons/md";
 import LatestHeading from "../Heading/LatestHeading";
 import Snippet from "../Display/Snippet";
@@ -35,8 +29,6 @@ const MyCodeSnippets = () => {
   const [truncate, setTruncate] = useState(50);
 
   const [isEmpty, setIsEmpty] = useState(false);
-
-  const [allOpenStates, setAllOpenStates] = useState({});
 
   const getMySnippets = async () => {
     try {
@@ -144,16 +136,43 @@ const MyCodeSnippets = () => {
       <>
         <LatestHeading headingType={"Alle kode SNIPS"} />
       </>
-      <Snippet
 
-        myCodeSnippets={myCodeSnippets}
-        loading={loading}
-        allOpenStates={allOpenStates}
-        setAllOpenStates={setAllOpenStates}
-        handleDelete={handleDelete}
-        isEmpty={isEmpty}
-        fetchMore={fetchMore}
-      />
+      <div className="w-full">
+        <div className="flex flex-col gap-4">
+          {myCodeSnippets && (
+            <>
+              {myCodeSnippets?.map((snippet) => (
+                <Snippet key={snippet.id} handleDelete={handleDelete} snippet={snippet} />
+              ))}
+
+              {!isEmpty && (
+                <div className="flex justify-center">
+                  <Button size="sm" onClick={fetchMore}>
+                    <MdRefresh />
+                    HENT MERE
+                  </Button>
+                </div>
+              )}
+            </>
+          )}
+
+          {loading ? (
+            <div className="flex justify-center items-center h-[20vh]">
+              <Loading size="lg" />
+            </div>
+          ) : (
+            <>
+              {!myCodeSnippets?.length > 0 && (
+                <div className="flex justify-center mt-10">
+                  <Text b size={13} transform="uppercase">
+                    Du har ingen kode SNIPS! 😔
+                  </Text>
+                </div>
+              )}
+            </>
+          )}
+        </div>
+      </div>
     </div>
   );
 };

@@ -14,9 +14,10 @@ import Head from "next/head";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
+import LanguageBadge from "../../components/Display/LanguageBadge";
 import LatestHeading from "../../components/Heading/LatestHeading";
 import { SnippetsTypeLinks } from "../../components/Heading/SnippetsType";
-import { DeleteCodeSnippet } from "../../components/NonModal/DeleteCodeSnippet";
+import { DeleteSnippet } from "../../components/NonModal/DeleteSnippet";
 import { DeleteErrorSnippet } from "../../components/NonModal/DeleteErrorSnippet";
 import { DeleteDocumentIcon } from "../../components/SVG/DeleteDocumentIcon";
 import { EditDocumentIcon } from "../../components/SVG/EditDocumentIcon";
@@ -128,18 +129,18 @@ const MySnippets = () => {
                   <div className="flex flex-col gap-2 w-full">
                     {myCodeSnippets?.length > 0 && (
                       <div className="flex flex-col gap-3">
-                        {myCodeSnippets.map((snip, index) => (
+                        {myCodeSnippets.map((snippets, index) => (
                           <div
                             key={index}
                             className="hoverable-item flex gap-2"
                           >
-                            <Link href={`/s/${snip.id}`}>
+                            <Link href={`/s/${snippets.id}`}>
                               <div className="hoverable-item w-full">
                                 <Card
                                   isPressable
                                   variant="flat"
                                   css={{ mw: "100%", padding: "$0" }}
-                                  key={snip.id}
+                                  key={snippets.id}
                                 >
                                   <div className="cardHover bg-[#F1F7FF] hoverable-item flex gap-3 items-center p-2 border-b rounded-xl w-full">
                                     <div className="w-full flex flex-col gap-2">
@@ -156,14 +157,14 @@ const MySnippets = () => {
                                         <div className="w-full flex flex-col justify-center gap-3 MonoHeading">
                                           <div className="w-full">
                                             <p className="text-[#031B4E] text-lg font-[500] truncateText">
-                                              {snip.title}
+                                              {snippets.title}
                                             </p>
                                           </div>
 
-                                          {snip.description && (
+                                          {snippets.description && (
                                             <div className="-mt-2 h-5">
                                               <h6 className="text-[#031b4ed4] whitespace-nowrap MonoHeading truncateText">
-                                                {snip.description}
+                                                {snippets.description}
                                               </h6>
                                             </div>
                                           )}
@@ -184,27 +185,10 @@ const MySnippets = () => {
                                         </div>
 
                                         <div className="flex gap-1 items-center justify-between w-full MonoHeading">
-                                          <div className="flex gap-2">
-                                            <div
-                                              className={`${snip.folder.mainFolder?.language.classTree} lBadge rounded-3xl flex justify-center items-center`}
-                                            >
-                                              <p className="text-xs MonoHeading font-semibold lowercase">
-                                                {snip.folder.mainFolder?.language.label}
-                                              </p>
-                                            </div>
-                                            {snip.folder?.language?.acc?.accId && (
-                                              <div
-                                                className={`${snip.folder.language.acc.classTree} lBadge rounded-3xl flex justify-center items-center`}
-                                              >
-                                                <p className="text-xs MonoHeading font-semibold lowercase">
-                                                  {snip.folder.language.acc.label}
-                                                </p>
-                                              </div>
-                                            )}
-                                          </div>
+                                          <LanguageBadge snippets={snippets} />
 
                                           <div className="flex gap-3 text-[#031B4E]">
-                                            {snip.updatedAt && (
+                                            {snippets.updatedAt && (
                                               <div className="flex gap-1">
                                                 <p className="text-xs font-mono">
                                                   OPDATERET:
@@ -212,7 +196,7 @@ const MySnippets = () => {
 
                                                 <p className="text-xs font-mono font-semibold">
                                                   {new Date(
-                                                    snip.updatedAt.seconds *
+                                                    snippets.updatedAt.seconds *
                                                       1000
                                                   ).toLocaleDateString("da-DK")}
                                                 </p>
@@ -225,7 +209,7 @@ const MySnippets = () => {
                                               </p>
                                               <p className="text-xs font-mono font-semibold">
                                                 {new Date(
-                                                  snip.postedAt.seconds * 1000
+                                                  snippets.postedAt.seconds * 1000
                                                 ).toLocaleDateString("da-DK")}
                                               </p>
                                             </div>
@@ -246,7 +230,7 @@ const MySnippets = () => {
                             </Link>
                             <div className="hoverable-show flex flex-col gap-1 justify-center items-center">
                               <div>
-                                <a href={`/upsert/code/${snip.id}`}>
+                                <a href={`/upsert/code/${snippets.id}`}>
                                   <Button auto light>
                                     <EditDocumentIcon
                                       fill="#0072F5"
@@ -260,11 +244,11 @@ const MySnippets = () => {
                               <div>
                                 <Popover
                                   placement="top"
-                                  isOpen={allOpenStates[snip.id]}
+                                  isOpen={allOpenStates[snippets.id]}
                                   onOpenChange={(nowOpen) =>
                                     setAllOpenStates((oldState) => ({
                                       ...oldState,
-                                      [snip.id]: nowOpen,
+                                      [snippets.id]: nowOpen,
                                     }))
                                   }
                                 >
@@ -279,8 +263,8 @@ const MySnippets = () => {
                                     </Button>
                                   </Popover.Trigger>
                                   <Popover.Content>
-                                    <DeleteCodeSnippet
-                                      id={snip.id}
+                                    <DeleteSnippet
+                                      id={snippets.id}
                                       handleCodeSnippetDelete={
                                         handleCodeSnippetDelete
                                       }

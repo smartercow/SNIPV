@@ -12,7 +12,7 @@ import { auth, db } from "../../../firebase/clientApp";
 import { Badge, Button, Card, Loading, Popover, Text } from "@nextui-org/react";
 import Link from "next/link";
 import { DeleteDocumentIcon } from "../../../components/SVG/DeleteDocumentIcon";
-import { DeleteCodeSnippet } from "../../../components/NonModal/DeleteCodeSnippet";
+import { DeleteSnippet } from "../../../components/NonModal/DeleteSnippet";
 import { EditDocumentIcon } from "../../../components/SVG/EditDocumentIcon";
 import { LoginIcon } from "../../../components/SVG/LoginIcon";
 import { Paper } from "../../../components/SVG/Paper";
