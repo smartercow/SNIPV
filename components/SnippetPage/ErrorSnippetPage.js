@@ -11,9 +11,9 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../../firebase/clientApp";
 import { useRouter } from "next/router";
 import { deleteDoc, doc } from "firebase/firestore";
-import SyntaxHandler from "../Syntax/Code/SyntaxHandler";
-import SyntaxErrorCodeHandler from "../Syntax/Error/CodeHandler";
+import SyntaxHandler from "../Syntax/Error/SyntaxHandler";
 import SyntaxSolutionCodeHandler from "../Syntax/Error/SolutionHandler";
+import LanguageBadge from "../Display/LanguageBadge";
 
 const ErrorSnippetPage = ({ snippet }) => {
   const [user] = useAuthState(auth);
@@ -36,35 +36,10 @@ const ErrorSnippetPage = ({ snippet }) => {
     <div className="flex flex-col gap-4">
       <div className="flex flex-col gap-3">
         <div className="flex gap-2 justify-between items-center">
-          <div>
-            <div className="flex gap-2 -ml-1">
-              <div
-                className={`l${snippet.category.langId} lBadge rounded-3xl flex justify-center items-center`}
-              >
-                <p className="text-xs MonoHeading font-semibold lowercase">
-                  {snippet.folder.language?.label}
-                </p>
-              </div>
-              {snippet.folder?.framework.frameworkId && (
-                <div
-                  className={`f${snippet.folder.framework.frameworkId} lBadge rounded-3xl flex justify-center items-center`}
-                >
-                  <p className="text-xs MonoHeading font-semibold lowercase">
-                    {snippet.folder.framework?.label}
-                  </p>
-                </div>
-              )}
-              {snippet?.folder?.processor.processorId && (
-                <div
-                  className={`p${snippet.folder?.processor.processorId} lBadge rounded-3xl flex justify-center items-center`}
-                >
-                  <p className="text-xs MonoHeading font-semibold lowercase">
-                    {snippet.folder.processor?.label}
-                  </p>
-                </div>
-              )}
-            </div>
-          </div>
+          <>
+            <LanguageBadge snippet={snippet} />
+          </>
+
           {user.uid === snippet.userData.uid && (
             <div className="flex gap-2 items-center">
               <div>
@@ -132,13 +107,7 @@ const ErrorSnippetPage = ({ snippet }) => {
         </div>
       )}
       <div>
-        <div>
-          <Text h6 transform="uppercase" color="error">
-            Fejl Kode
-          </Text>
-        </div>
-
-        <SyntaxErrorCodeHandler snippet={snippet} />
+        <SyntaxHandler snippet={snippet} />
       </div>
 
       {snippet.solutioncode && (

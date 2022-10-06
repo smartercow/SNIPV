@@ -2,9 +2,7 @@ import {
   Button,
   Checkbox,
   Input,
-  Spacer,
   Text,
-  Tooltip,
 } from "@nextui-org/react";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
@@ -14,18 +12,15 @@ import { auth, db } from "../../../../firebase/clientApp";
 import { LanguageOptions } from "../../../../utilities/Language";
 import { BsQuestionCircleFill } from "react-icons/bs";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { createCodeFolderModalState } from "../../../../atoms/createCodeFolderModalAtom";
+import { createErrorFolderModalState } from "../../../../atoms/createErrorFolderModalAtom";
 import { updateStateAtom } from "../../../../atoms/updateStateAtom";
 import { NoOptionsMessage } from "../../Select/NoOptionsMessage";
-import { JavaScriptFrameworks } from "../../../../utilities/Language/Javascript/Frameworks";
-import { JavaScriptLibraries } from "../../../../utilities/Language/JavaScript/Libraries";
 import { TagsInput } from "react-tag-input-component";
 import CreatedFolders from "./CreatedFolders";
-import { OptionFileExt, ValueFileExt } from "../../Select/SelectProps";
 
 export default function CreateMainFolder() {
   const [user] = useAuthState(auth);
-  const setOpen = useSetRecoilState(createCodeFolderModalState);
+  const setOpen = useSetRecoilState(createErrorFolderModalState);
   const [update, setUpdate] = useRecoilState(updateStateAtom);
 
   const [folderName, setFolderName] = useState("");
@@ -41,10 +36,13 @@ export default function CreateMainFolder() {
   const [fileExtensions, setFileExtensions] = useState();
   const [fileExtension, setFileExtension] = useState({});
 
-  const [selectedCodeMainFolder, setSelectedCodeMainFolder] = useState([]);
+  const [selectedMainFolder, setSelectedMainFolder] = useState([]);
 
   const [tags, setTags] = useState([]);
   const [tagInputValues, setTagInputValues] = useState([]);
+
+  const [selectValue, setSelectValue] = useState([]);
+  const [selectSubValue, setSelectSubValue] = useState([]);
 
   const lowercaseTags = tagInputValues.map((element) => {
     return element.toLowerCase();
@@ -61,16 +59,16 @@ export default function CreateMainFolder() {
   }
 
   useEffect(() => {
-    if (Object.keys(selectedCodeMainFolder)?.length > 0) {
+    if (Object.keys(selectedMainFolder)?.length > 0) {
       const filteredLang = LanguageOptions.filter((lang) => {
-        if (lang.langId === selectedCodeMainFolder.language.langId) {
+        if (lang.langId === selectedMainFolder.language.langId) {
           return lang;
         }
       });
 
       setLanguage(filteredLang[0]);
     }
-  }, [selectedCodeMainFolder]);
+  }, [selectedMainFolder]);
 
   useEffect(() => {
     if (folderName) {
@@ -125,15 +123,15 @@ export default function CreateMainFolder() {
   }, [tagInputValues]);
 
   console.log("language", language);
-  console.log("accessories", accessories);
+  // console.log("accessories", accessories);
   console.log("accessory", accessory);
   // console.log("fileExtensions", fileExtensions);
-  console.log("fileExtension", fileExtension);
+  // console.log("fileExtension", fileExtension);
   // console.log("addAccessory", addAccessory);
   // console.log("folderName", folderName);
   // console.log("disableExtSelect", disableExtSelect);
   // console.log("fileExtensionsObject", Object.keys(fileExtensions).length);
-  // console.log("SELECTED MAIN", selectedCodeMainFolder);
+  // console.log("SELECTED MAIN", selectedMainFolder);
   // console.log("accessory.label", accessory.label);
   // console.log("accessory.langId", accessory.langId);
   // console.log("language.langId", language.langId);
@@ -147,21 +145,16 @@ export default function CreateMainFolder() {
       setDisableBtn(true);
       try {
         await addDoc(
-          collection(db, "UsersData1", user?.uid, "CodeSubFolders"),
+          collection(db, "UsersData1", user?.uid, "ErrorSubFolders"),
           {
             createdAt: serverTimestamp(),
             rootDirectory: "sub",
-            folderSnippetType: "code",
+            folderSnippetType: "error",
             label: folderName,
             value: randomValue,
-            mainFolderId: selectedCodeMainFolder.mainFolderId,
+            mainFolder: selectedMainFolder,
             language: {
-              label: language.label,
-              value: language.value,
-              langId: language.langId,
               fileExtension: fileExtension,
-              accs: language.accessory,
-              classTree: `lang${language.langId}`,
               acc:
                 Object.keys(accessory).length > 0
                   ? {
@@ -170,6 +163,7 @@ export default function CreateMainFolder() {
                       accsType: accessory.accsType,
                       label: accessory.label,
                       mainLang: language.label,
+                      mainValue: language.value,
                       mainLangId: language.langId,
                       value: accessory.value,
                       classTree: `lang${language.langId}__accs${accessory.accsId}-acc${accessory.accId}`,
@@ -196,11 +190,14 @@ export default function CreateMainFolder() {
         <div className="flex flex-col gap-2">
           <div>
             <CreatedFolders
-              setSelectedCodeMainFolder={setSelectedCodeMainFolder}
+              selectValue={selectValue}
+              setSelectValue={setSelectValue}
+              setSelectSubValue={setSelectSubValue}
+              setSelectedMainFolder={setSelectedMainFolder}
             />
           </div>
 
-          {Object.keys(selectedCodeMainFolder).length > 0 && (
+          {Object.keys(selectedMainFolder).length > 0 && (
             <div className="flex flex-col gap-4">
               <div className="flex gap-4">
                 <div>

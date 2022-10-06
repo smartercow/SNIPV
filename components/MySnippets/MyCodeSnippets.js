@@ -142,7 +142,11 @@ const MyCodeSnippets = () => {
           {myCodeSnippets && (
             <>
               {myCodeSnippets?.map((snippet) => (
-                <Snippet key={snippet.id} handleDelete={handleDelete} snippet={snippet} />
+                <Snippet
+                  key={snippet.id}
+                  handleDelete={handleDelete}
+                  snippet={snippet}
+                />
               ))}
 
               {!isEmpty && (

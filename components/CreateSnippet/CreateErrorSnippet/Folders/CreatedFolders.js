@@ -1,34 +1,36 @@
 import { Button, Text } from "@nextui-org/react";
-import { collection, getDoc, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import Select from "react-select";
 import { useRecoilState } from "recoil";
-import { createCodeFolderModalState } from "../../../../atoms/createCodeFolderModalAtom";
+import { createErrorFolderModalState } from "../../../../atoms/createErrorFolderModalAtom";
 import { updateStateAtom } from "../../../../atoms/updateStateAtom";
 import { auth, db } from "../../../../firebase/clientApp";
 import { FaFolderPlus } from "react-icons/fa";
 import { OptionFileExt, ValueFileExt } from "../../Select/SelectProps";
 import { NoOptionsMessage } from "../../Select/NoOptionsMessage";
-import CreatedSubFolders from "./CreatedSubFolders";
 
 export default function CreatedFolders({
-  setSelectedCodeMainFolder,
-  selectedCodeMainFolder,
-  setSelectedCodeSubFolder,
-  selectedCodeSubFolder,
+  setSelectedMainFolder,
+  selectedMainFolder,
+  setSelectedSubFolder,
+  selectedSubFolder,
   id,
   dataFetched,
+  selectValue,
+  setSelectValue,
+  setSelectSubValue
 }) {
   const [folders, setFolders] = useState([]);
-  const [selectValue, setSelectValue] = useState([]);
 
-  const [open, setOpen] = useRecoilState(createCodeFolderModalState);
+  const [open, setOpen] = useRecoilState(createErrorFolderModalState);
   const [update, setUpdate] = useRecoilState(updateStateAtom);
 
   function handleSelect(data) {
-    setSelectedCodeMainFolder(data);
-    setSelectValue(data);
+    setSelectValue(data)
+    setSelectedMainFolder(data);
+    setSelectSubValue(null)
   }
 
   const [user] = useAuthState(auth);
@@ -39,7 +41,7 @@ export default function CreatedFolders({
       db,
       "UsersData1",
       user.uid,
-      "CodeMainFolders"
+      "ErrorMainFolders"
     );
     const getFolders = async () => {
       const userData = await getDocs(folderColRef);
@@ -52,14 +54,14 @@ export default function CreatedFolders({
 
   useEffect(() => {
     if (id) {
-      setSelectValue(setSelectedCodeMainFolder);
+      setSelectValue(setSelectedMainFolder);
       setUpdate(!update);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, dataFetched]);
 
   // console.log("FOLDERS", folders);
-  // console.log("selectedCodeMainFolder", selectedCodeMainFolder);
+  // console.log("selectedMainFolder", selectedMainFolder);
 
   return (
     <div>
@@ -109,7 +111,7 @@ export default function CreatedFolders({
         <>
           <div className="flex flex-col gap-1">
             <Text>
-              Du har ingen rodmapper for kode snippets&nbsp;
+              Du har ingen rodmapper for fejl SNIPS&nbsp;
               <Text color="error" b>
                 *
               </Text>

@@ -32,3 +32,7 @@
 .syntaxStyle {
     border: 1px solid #0072f523;
 }
+
+.errorSyntaxStyle {
+    border: 1px solid #F3126023;
+}

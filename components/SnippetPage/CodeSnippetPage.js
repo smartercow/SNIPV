@@ -14,7 +14,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import SyntaxCodeHandler from "../Syntax/Code/SyntaxHandler";
 import LanguageBadge from "../Display/LanguageBadge";
 
-const SnippetPage = ({ snippets }) => {
+const SnippetPage = ({ snippet }) => {
   const [user] = useAuthState(auth);
   const router = useRouter();
   const {
@@ -32,15 +32,17 @@ const SnippetPage = ({ snippets }) => {
     }
   };
 
+  console.log("snippet", snippet);
+
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col gap-1">
         <div className="flex gap-2 justify-between items-center">
-          <div>
-            <LanguageBadge snippet={snippets} />
-          </div>
+          <>
+            <LanguageBadge snippet={snippet} />
+          </>
 
-          {user.uid === snippets.userData.uid && (
+          {user.uid === snippet.userData.uid && (
             <div className="flex gap-2 items-center">
               <div>
                 <a href={`/upsert/code/${id}`}>
@@ -72,10 +74,9 @@ const SnippetPage = ({ snippets }) => {
                   </Popover.Trigger>
                   <Popover.Content>
                     <DeleteCodeSnippetNoMap
-                      snippets={snippets}
                       handleDelete={handleDelete}
                       setDeleteConfirm={setDeleteConfirm}
-                      id={id}
+                      id={snippet.id}
                     />
                   </Popover.Content>
                 </Popover>
@@ -87,19 +88,19 @@ const SnippetPage = ({ snippets }) => {
         <div>
           <div className="flex items-center">
             <h3 style={{ color: "#031B4E" }} className="SnippetHeading">
-              {snippets.title}
+              {snippet.title}
             </h3>
           </div>
-          {snippets.description && (
+          {snippet.description && (
             <div className="text-lg ">
-              <p>{snippets.description}</p>
+              <p>{snippet.description}</p>
             </div>
           )}
         </div>
       </div>
-      {snippets.tags.length > 0 && (
+      {snippet.tags.length > 0 && (
         <div className="flex gap-2">
-          {snippets.tags.map((tag, index) => (
+          {snippet.tags.map((tag, index) => (
             <div
               key={index}
               className="bg-[#EFF2FB] text-[#4D5B7C] px-2 rounded-lg hover:tagHover flex items-center tagFont"
@@ -111,10 +112,10 @@ const SnippetPage = ({ snippets }) => {
       )}
 
       <div>
-        <SyntaxCodeHandler snippet={snippets} />
+        <SyntaxCodeHandler snippet={snippet} />
       </div>
 
-      {snippets.output && (
+      {snippet.output && (
         <div>
           <Text h6 transform="uppercase" color="warning">
             Output
@@ -127,41 +128,41 @@ const SnippetPage = ({ snippets }) => {
               className="rounded-lg"
               /*               showLineNumbers */
             >
-              {snippets.output}
+              {snippet.output}
             </SyntaxHighlighter>
           </div>
         </div>
       )}
 
-      {snippets.notes && (
+      {snippet.notes && (
         <div>
           <div className="bg-[#D4EFEE] p-4 rounded-lg">
             <Text color="#005955">
               <Text color="#005955" b>
                 NOTER:&nbsp;
               </Text>
-              {snippets?.notes}
+              {snippet?.notes}
             </Text>
           </div>
         </div>
       )}
 
-      {snippets.link && (
+      {snippet.link && (
         <div className="linkSection bg-[#EFF2FB] px-4 py-1 ">
           <div className="">
-            {snippets.linkHeading && (
+            {snippet.linkHeading && (
               <div>
-                <p className="font-semibold">{snippets.linkHeading}</p>
+                <p className="font-semibold">{snippet.linkHeading}</p>
               </div>
             )}
-            {snippets.link && (
+            {snippet.link && (
               <div>
-                <Link href={snippets.link}>
+                <Link href={snippet.link}>
                   <a
                     target="_blank"
                     className="text-[#0072F5] underline underline-offset-4 text font-semibold text-lg"
                   >
-                    {snippets.link}
+                    {snippet.link}
                     <span className="text-blue-500">
                       <CgExternal />
                     </span>
@@ -175,14 +176,14 @@ const SnippetPage = ({ snippets }) => {
 
       <div className="flex justify-between items-center">
         <div className="text-lg flex gap-1">
-          <p>Af</p> <p>{snippets.id}</p>
+          <p>Af</p> <p>{snippet.id}</p>
           <p className="font-bold text-[#031B4E]">
-            {snippets.userData.username}
+            {snippet.userData.username}
           </p>
         </div>
 
         <div className="flex gap-2 md:gap-4">
-          {snippets.updatedAt && (
+          {snippet.updatedAt && (
             <div className="flex gap-1 items-center">
               <Text
                 small
@@ -197,7 +198,7 @@ const SnippetPage = ({ snippets }) => {
                 transform="uppercase"
                 className="font-semibold text-[#031B4E]"
               >
-                {new Date(snippets.updatedAt.seconds * 1000).toLocaleDateString(
+                {new Date(snippet.updatedAt.seconds * 1000).toLocaleDateString(
                   "da-DK"
                 )}
               </Text>
@@ -208,7 +209,7 @@ const SnippetPage = ({ snippets }) => {
               Oprettet:
             </Text>
             <Text small transform="uppercase" className="text-[#031B4E]">
-              {new Date(snippets.postedAt.seconds * 1000).toLocaleDateString(
+              {new Date(snippet.postedAt.seconds * 1000).toLocaleDateString(
                 "da-DK"
               )}
             </Text>

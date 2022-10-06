@@ -7,7 +7,6 @@ import {
   Collapse,
   Text,
   Tooltip,
-  Loading,
   Card,
 } from "@nextui-org/react";
 import {
@@ -30,42 +29,45 @@ import { toast } from "react-toastify";
 import { InfoCircle } from "../../SVG/InfoCircle";
 import Link from "next/link";
 import { CgExternal } from "react-icons/cg";
-import AdditionalFileExt from "../../Testing/AdditionalFileExt";
 import CreatedSubFolders from "./Folders/CreatedSubFolders";
 
+const initialState = {
+  title: "",
+  description: "",
+  code: "",
+  output: "",
+  linkHeading: "",
+  link: "",
+};
+
 const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
+  const [user] = useAuthState(auth);
+
+  const [selectedMainFolder, setSelectedMainFolder] = useState([]);
+  const [selectedSubFolder, setSelectedSubFolder] = useState();
+  const [subFolders, setSubFolders] = useState([]);
+
   const [form, setForm] = useState(initialState);
+  const { title, description, code, output, linkHeading, link } = form;
+  const [lowercaseForm, setLowercaseForm] = useState([]); //Search
+  const [notes, setNotes] = useState("");
   const [tags, setTags] = useState([]);
   const [tagInputValues, setTagInputValues] = useState([]);
-  const [notes, setNotes] = useState("");
+
+  const [selectValue, setSelectValue] = useState([]);
+  const [selectSubValue, setSelectSubValue] = useState();
 
   const [username, setUsername] = useState("");
   const [usernameValue, setUsernameValue] = useState("");
   const [photoURL, setPhotoURL] = useState("");
   const [uid, setUid] = useState("");
 
-  const [lowercaseForm, setLowercaseForm] = useState([]);
-
-  const [selectedCodeMainFolder, setSelectedCodeMainFolder] = useState([]);
-
-  const [selectedCodeSubFolder, setSelectedCodeSubFolder] = useState();
-
-  const [subFolders, setSubFolders] = useState([]);
-
-  const [dataFetched, setDataFetched] = useState(false);
-
-  const { title, description, errorcode, solutioncode, linkHeading, link } =
-    form;
-
-  const [user] = useAuthState(auth);
-
   const router = useRouter();
+  const [dataFetched, setDataFetched] = useState(false);
 
   const [disableCode, setDisableCode] = useState(true);
   const [codeExpanded, setCodeExpanded] = useState(false);
   const [folderExpanded, setFolderExpanded] = useState(true);
-
-  const [selectSubValue, setSelectSubValue] = useState([]);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -116,7 +118,7 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
               uid: uid,
               photoURL: photoURL,
             },
-            folder: selectedCodeSubFolder.language,
+            folder: selectedSubFolder,
             tags: tags,
             notes: notes,
           });
@@ -124,14 +126,17 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
         } catch (error) {
           console.log("Fejl i opretning af SNIP!", error);
         }
-      } /* else {
+      } else {
         try {
-          await updateDoc(doc(db, "CodeSnippetsData1", id), {
+          await updateDoc(doc(db, "ErrorSnippetsData1", id), {
             ...form,
             search: {
-              title: lowercaseForm.title,
-              description: lowercaseForm.description,
+              title: lowercaseForm.title ? lowercaseForm.title : form.title,
+              description: lowercaseForm.description
+                ? lowercaseForm.description
+                : form.description,
             },
+            snippetType: "error",
             updatedAt: serverTimestamp(),
             userData: {
               username: username,
@@ -139,30 +144,47 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
               uid: uid,
               photoURL: photoURL,
             },
-            category: selectedCategory,
-            folder: selectedFolder,
+            folder: selectedSubFolder,
             tags: tags,
             notes: notes,
           });
-          router.push(`/s/${id}`);
+          router.push(`/e/${id}`);
         } catch (error) {
           console.log("Fejl i opdatering af SNIP!", error);
         }
-      } */
+      }
     } else {
       // return toast.error("Valg en mappe!");
       return toast.error("FEJL!");
     }
   };
 
+  useEffect(() => {
+    if (id) {
+      getCodeSnipData();
+      setDisableCode(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
+
   const getCodeSnipData = async () => {
     try {
-      const docRef = doc(db, "CodeSnippetsData1", id);
+      const docRef = doc(db, "ErrorSnippetsData1", id);
       const snapshot = await getDoc(docRef);
       if (snapshot.exists()) {
         //Code SNIP data from {id}
-        setForm({ ...snapshot.data() });
-        setSelectedFolder(snapshot.data().folder);
+        setSelectedMainFolder(snapshot.data().folder.mainFolder);
+        setSelectValue(snapshot.data().folder.mainFolder);
+        setSelectedSubFolder(snapshot.data().folder);
+        setSelectSubValue(snapshot.data().folder);
+        setForm({
+          title: snapshot.data().title,
+          description: snapshot.data().description,
+          code: snapshot.data().code,
+          output: snapshot.data().output,
+          linkHeading: snapshot.data().linkHeading,
+          link: snapshot.data().link,
+        });
         setTags(snapshot.data().tags);
         setNotes(snapshot.data().notes);
 
@@ -181,31 +203,7 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
   };
 
   useEffect(() => {
-    if (id) {
-      getCodeSnipData();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
-
-  useEffect(() => {
-    if (selectedCodeMainFolder.langId > 0) {
-      setDisableCode(false);
-      if (Object.keys(selectedCodeSubFolder).length > 0) {
-        setSelectSubValue(subFolders[0]);
-      } else {
-        setSelectSubValue({});
-      }
-    } else {
-      setDisableCode(true);
-    }
-  }, [selectedCodeMainFolder, subFolders, selectedCodeSubFolder]);
-
-/*   useEffect(() => {
-
-  }, [selectedCodeSubFolder, subFolders]); */
-
-  useEffect(() => {
-    if (Object.keys(selectSubValue).length > 0) {
+    if (selectSubValue) {
       setCodeExpanded(true);
       setDisableCode(false);
       setFolderExpanded(false);
@@ -214,11 +212,17 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
       setFolderExpanded(true);
       setDisableCode(true);
     }
-  }, [selectSubValue]);
+  }, [selectSubValue, selectedMainFolder]);
 
-  // console.log("selectedCodeMainFolder", selectedCodeMainFolder);
-  // console.log("selectedSubCodeFolder", selectedCodeSubFolder);
-  // console.log("selectedCodeFolder", selectedCodeSubFolder);
+  // console.log("selectedMainFolder", selectedMainFolder);
+  // console.log("selectValue", selectValue);
+  // console.log("selectedSubFolder", selectedSubFolder);
+  // console.log("lowercaseForm", lowercaseForm);
+  // console.log("lowercaseForm.title", lowercaseForm.title);
+  // console.log("lowercaseForm.description", lowercaseForm.description);
+  // console.log("form.title", form.title);
+  // console.log("form.description", form.description);
+  // console.log("selectSubValue", selectSubValue);
 
   return (
     <div className="">
@@ -236,13 +240,16 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
                       <div className="flex items-center gap-4">
                         <div className="flex gap-2 items-center">
                           <Text h5 transform="uppercase">
-                            {selectedCodeMainFolder.label}
+                            {selectedSubFolder?.mainFolder?.label}
                           </Text>
                           <div
-                            className={`${selectedCodeSubFolder?.language?.classTree} lBadge rounded-3xl flex justify-center items-center`}
+                            className={`${selectedSubFolder?.mainFolder?.language?.classTree} lBadge rounded-3xl flex justify-center items-center`}
                           >
                             <p className="text-xs MonoHeading font-semibold lowercase">
-                              {selectedCodeMainFolder.language?.label}
+                              {
+                                selectedSubFolder?.mainFolder?.language
+                                  ?.label
+                              }
                             </p>
                           </div>
                         </div>
@@ -256,15 +263,21 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
                       <div className="flex gap-2">
                         <div>
                           <Text h5 transform="uppercase">
-                            {selectedCodeSubFolder?.label}
+                            {selectedSubFolder?.label}
                           </Text>
                         </div>
                         <div
-                          className={`${selectedCodeSubFolder?.language.acc?.classTree} lBadge rounded-3xl flex justify-center items-center`}
+                          className={`${selectedSubFolder?.language.acc?.classTree} lBadge rounded-3xl flex justify-center items-center`}
                         >
                           <p className="text-xs MonoHeading font-semibold lowercase">
-                            {selectedCodeSubFolder?.language?.acc?.label}
+                            {selectedSubFolder?.language?.acc?.label}
                           </p>
+                        </div>
+                        <div className="">
+                          {
+                            selectedSubFolder?.language?.fileExtension
+                              ?.label
+                          }
                         </div>
                       </div>
                     </>
@@ -276,20 +289,23 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
           >
             <div className="mx-3 min-h-[10rem] w-[95%]">
               <CreatedFolders
-                setSelectedCodeMainFolder={setSelectedCodeMainFolder}
-                selectedCodeMainFolder={selectedCodeMainFolder}
-                setSelectedCodeSubFolder={setSelectedCodeSubFolder}
-                selectedCodeSubFolder={selectedCodeSubFolder}
+                setSelectedMainFolder={setSelectedMainFolder}
+                selectedMainFolder={selectedMainFolder}
+                setSelectedSubFolder={setSelectedSubFolder}
+                selectedSubFolder={selectedSubFolder}
                 id={id}
                 dataFetched={dataFetched}
+                selectValue={selectValue}
+                setSelectValue={setSelectValue}
+                setSelectSubValue={setSelectSubValue}
               />
 
-              {selectedCodeMainFolder.language?.langId > 0 && (
+              {selectedMainFolder?.language?.langId > 0 && (
                 <div>
                   <CreatedSubFolders
-                    setSelectedCodeSubFolder={setSelectedCodeSubFolder}
-                    selectedCodeSubFolder={selectedCodeSubFolder}
-                    selectedCodeMainFolder={selectedCodeMainFolder}
+                    setSelectedSubFolder={setSelectedSubFolder}
+                    selectedSubFolder={selectedSubFolder}
+                    selectedMainFolder={selectedMainFolder}
                     setSubFolders={setSubFolders}
                     subFolders={subFolders}
                     selectSubValue={selectSubValue}
@@ -305,7 +321,7 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
                 <div className="flex flex-col gap-4">
                   <div className="flex flex-col gap-5 mx-3">
                     <div className="w-full flex gap-4 items-center">
-                      <div className="w-20 text-right">
+                      <div className="w-24">
                         <Text h6 transform="uppercase">
                           Titel&nbsp;
                           <Text color="error" b>
@@ -327,9 +343,12 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
                     </div>
 
                     <div className="w-full flex gap-4 items-center">
-                      <div className="w-20 text-right">
+                      <div className="w-24">
                         <Text h6 transform="uppercase">
-                          Beskrivelse
+                          Beskrivelse&nbsp;
+                          <Text color="error" b>
+                            *
+                          </Text>
                         </Text>
                       </div>
                       <Input
@@ -341,13 +360,14 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
                         onChange={handleChange}
                         width="100%"
                         aria-label="Beskrivelse"
+                        required
                       />
                     </div>
 
                     <div>
                       <div className="mt-1">
                         <Text h6 transform="uppercase">
-                          Din kode&nbsp;
+                          Kode&nbsp;
                           <Text color="error" b>
                             *
                           </Text>
@@ -381,35 +401,6 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
                             </SyntaxHighlighter>
                           </Collapse>
                         </Collapse.Group>
-                      </div>
-                    </div>
-
-                    <div>
-                      <div className="mt-1">
-                        <Text>
-                          Fejl kode&nbsp;
-                          <Text color="error" b>
-                            *
-                          </Text>
-                        </Text>
-                        <Spacer y={0.4} />
-                        <Textarea
-                          placeholder="her..."
-                          name="errorcode"
-                          value={errorcode}
-                          onChange={handleChange}
-                          css={{ height: "auto" }}
-                          size="lg"
-                          width="100%"
-                          shadow="false"
-                          animated="false"
-                          aria-label="kode"
-                          required
-                        />
-                      </div>
-
-                      <div>
-                        
                       </div>
                     </div>
 
@@ -482,7 +473,7 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
                         </Text>
                       }
                     >
-                      <div className="flex flex-col gap-5">
+                      <div className="flex flex-col gap-5 mb-5">
                         <div className="w-full flex gap-4 items-center">
                           <div className="w-20">
                             <Text>Heading</Text>
@@ -527,7 +518,7 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
                         </Text>
                       }
                     >
-                      <div className="flex flex-col gap-2 py-1">
+                      <div className="flex flex-col gap-2 mb-5">
                         <div className="w-full flex gap-2 items-center">
                           <div className="w-full">
                             {!id && (
@@ -548,15 +539,6 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
                               />
                             )}
                           </div>
-                          {/*                     <Tooltip
-                            content={"Undgå at bruge specialtegn."}
-                            color="primary"
-                            css={{ zIndex: 9999 }}
-                          >
-                            <Text h5 color="primary">
-                              <BsQuestionCircleFill />
-                            </Text>
-                          </Tooltip> */}
                         </div>
                         <div className="mt-2">
                           <Link href="/info/help/tags">

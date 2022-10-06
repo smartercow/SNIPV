@@ -16,9 +16,17 @@ const CreateFolderModal = () => {
         onClose={() => setOpen(false)}
       >
         <Modal.Header>
-          <Text b size={18}>
-            Opret en mappe
-          </Text>
+          {open.view == 0 && (
+            <Text b size={16} transform="uppercase">
+              Opret en fejl rodmappe
+            </Text>
+          )}
+
+          {open.view == 1 && (
+            <Text b size={16} transform="uppercase">
+              Opret en fejl undermappe
+            </Text>
+          )}
         </Modal.Header>
         <Modal.Body>
           <div>

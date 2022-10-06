@@ -17,15 +17,15 @@ const SyntaxHandler = ({ snippet }) => {
     <div className="">
       <div className="flex items-center justify-between">
         <div>
-          <Text h6 transform="uppercase" color="primary">
-            Kode
+          <Text h6 transform="uppercase" color="error">
+            Fejl kode
           </Text>
         </div>
-        <div className="px-4 bg-blue-500 rounded-t-2xl">
+        <div className="px-4 bg-[#F31260] rounded-t-2xl">
           <Text color="white" weight="semibold">{snippet.folder.language.fileExtension?.label}</Text>
         </div>
       </div>
-      <div className="syntaxStyle">
+      <div className="errorSyntaxStyle">
         <SyntaxHighlighter
           language={codeLang}
           style={oneLight}

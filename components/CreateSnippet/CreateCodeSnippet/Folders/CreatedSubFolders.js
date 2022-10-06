@@ -12,9 +12,9 @@ import { OptionFileExt, ValueFileExt } from "../../Select/SelectProps";
 import { NoOptionsMessage } from "../../Select/NoOptionsMessage";
 
 export default function CreatedSubFolders({
-  setSelectedCodeSubFolder,
-  selectedCodeSubFolder,
-  selectedCodeMainFolder,
+  setSelectedSubFolder,
+  selectedSubFolder,
+  selectedMainFolder,
   setSubFolders,
   subFolders,
   id,
@@ -28,16 +28,16 @@ export default function CreatedSubFolders({
 
   function handleSelect(data) {
     setSelectSubValue(data);
-    setSelectedCodeSubFolder(data);
+    setSelectedSubFolder(data);
   }
 
   const [user] = useAuthState(auth);
 
   useEffect(() => {
     if (!user) return;
-    if(selectedCodeMainFolder.language?.langId > 0) {
+    if(selectedMainFolder.language?.langId > 0) {
       const folderColRef = query(collection(db, "UsersData1", user.uid, "CodeSubFolders"),
-      where(new FieldPath("mainFolder", "mainFolderId"), "==", selectedCodeMainFolder.mainFolderId))
+      where(new FieldPath("mainFolder", "mainFolderId"), "==", selectedMainFolder.mainFolderId))
       const getFolders = async () => {
         const userData = await getDocs(folderColRef);
         setSubFolders(
@@ -46,11 +46,11 @@ export default function CreatedSubFolders({
       }
       getFolders();
     }
-  }, [user, update, selectedCodeMainFolder, setSelectedCodeSubFolder, setSubFolders]);
+  }, [user, update, selectedMainFolder, setSelectedSubFolder, setSubFolders]);
 
   useEffect(() => {
     if (id) {
-      setSelectSubValue(setSelectedCodeSubFolder)
+      setSelectSubValue(setSelectedSubFolder)
       setUpdate(!update)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -58,7 +58,7 @@ export default function CreatedSubFolders({
 
   // console.log("subFolders", subFolders);
 
-  // console.log("selectedCodeMainFolder", selectedCodeMainFolder);
+  // console.log("selectedMainFolder", selectedMainFolder);
   // console.log("SELECTSUBVALUE", selectSubValue[0]);
 
   return (
@@ -105,7 +105,7 @@ export default function CreatedSubFolders({
         <>
           <div className="flex flex-col gap-1">
             <Text>
-              Du har ingen undermappe for <span className="font-semibold">{selectedCodeMainFolder.label}</span>&nbsp;
+              Du har ingen undermappe for <span className="font-semibold">{selectedMainFolder.label}</span>&nbsp;
               <Text color="error" b>
                 *
               </Text>

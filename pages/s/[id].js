@@ -11,13 +11,13 @@ const Snippet = () => {
     query: { id },
   } = useRouter();
 
-  const [snippets, setSnippets] = useState();
+  const [snippet, setSnippet] = useState();
   const [loading, setLoading] = useState(true);
 
   const getSnippetData = async () => {
     const snippetDocref = doc(db, "CodeSnippetsData1", `${id}`);
     const snippetData = await getDoc(snippetDocref);
-    setSnippets(snippetData.data());
+    setSnippet(snippetData.data());
     setLoading(false);
   };
 
@@ -30,12 +30,12 @@ const Snippet = () => {
   return (
     <div className="min-h-[70vh]">
       <Head>
-        <title>{snippets?.title}&nbsp;- SNIPV</title>
+        <title>{snippet?.title}&nbsp;- SNIPV</title>
         <meta name="description" content="Created by Peter G" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      {snippets && <CodeSnippetPage snippets={snippets} />}
+      {snippet && <CodeSnippetPage snippet={snippet} />}
       {loading && (
         <div className="flex justify-center items-center h-[20vh]">
           <Loading size="lg" />

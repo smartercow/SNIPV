@@ -3,9 +3,8 @@ import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import React, { useEffect, useMemo, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import Select from "react-select";
-import { TagsInput } from "react-tag-input-component";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { createCodeFolderModalState } from "../../../../atoms/createCodeFolderModalAtom";
+import { createErrorFolderModalState } from "../../../../atoms/createErrorFolderModalAtom";
 import { updateStateAtom } from "../../../../atoms/updateStateAtom";
 import { auth, db } from "../../../../firebase/clientApp";
 import { LanguageOptions } from "../../../../utilities/Language";
@@ -41,7 +40,7 @@ const initialSelectedLanguage = {
 
 const CreateMainFolder = () => {
   const [user] = useAuthState(auth);
-  const setOpen = useSetRecoilState(createCodeFolderModalState);
+  const setOpen = useSetRecoilState(createErrorFolderModalState);
   const [update, setUpdate] = useRecoilState(updateStateAtom);
 
   const sortedLanguageOptions = useMemo(
@@ -77,7 +76,7 @@ const CreateMainFolder = () => {
       setDisableBtn(true);
       try {
         await addDoc(
-          collection(db, "UsersData1", user?.uid, "CodeMainFolders"),
+          collection(db, "UsersData1", user?.uid, "ErrorMainFolders"),
           {
             language: {
               label: language.label,
@@ -89,7 +88,7 @@ const CreateMainFolder = () => {
             },
             createdAt: serverTimestamp(),
             rootDirectory: "main",
-            folderSnippetType: "code",
+            folderSnippetType: "error",
             label: folderName,
             value: randomValue,
             userId: user.uid,

@@ -1,13 +1,11 @@
-import { Button } from "@nextui-org/react";
-import React, { useState } from "react";
-import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { createCodeFolderModalState } from "../../../../atoms/createCodeFolderModalAtom";
+import React from "react";
+import { useRecoilValue } from "recoil";
+import { createErrorFolderModalState } from "../../../../atoms/createErrorFolderModalAtom";
 import CreateMainFolder from "./CreateMainFolder";
 import CreateSubFolder from "./CreateSubFolder";
 
 const CreateFolder = () => {
-  const tabOpen = useRecoilValue(createCodeFolderModalState)
+  const tabOpen = useRecoilValue(createErrorFolderModalState)
   return (
     <div>
       <div>

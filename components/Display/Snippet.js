@@ -1,14 +1,13 @@
-import { Badge, Button, Card, Loading, Popover, Text } from "@nextui-org/react";
-import Link from "next/link";
 import React, { useState } from "react";
-import { MdRefresh } from "react-icons/md";
-import LatestHeading from "../Heading/LatestHeading";
+import { Badge, Button, Card, Popover } from "@nextui-org/react";
+import Link from "next/link";
 import { DeleteSnippet } from "../NonModal/DeleteSnippet";
 import { DeleteDocumentIcon } from "../SVG/DeleteDocumentIcon";
 import { EditDocumentIcon } from "../SVG/EditDocumentIcon";
 import { LoginIcon } from "../SVG/LoginIcon";
 import { Paper } from "../SVG/Paper";
 import { PaperFail } from "../SVG/PaperFail";
+import FileExtension from "./FileExtension";
 import LanguageBadge from "./LanguageBadge";
 
 const Snippet = ({ snippet, handleDelete }) => {
@@ -16,7 +15,13 @@ const Snippet = ({ snippet, handleDelete }) => {
 
   return (
     <div className="hoverable-item flex gap-2">
-      <Link href={`/s/${snippet.id}`}>
+      <Link
+        href={
+          snippet.snippetType == "code"
+            ? `/s/${snippet.id}`
+            : `/e/${snippet.id}`
+        }
+      >
         <div className="hoverable-item w-full">
           <Card
             isPressable
@@ -27,14 +32,27 @@ const Snippet = ({ snippet, handleDelete }) => {
             <div className="cardHover bg-[#F1F7FF] hoverable-item flex gap-3 items-center p-2 border-b rounded-xl w-full">
               <div className="w-full flex flex-col gap-2">
                 <div className="flex gap-6 items-center">
-                  <div className="pl-3">
-                    <Paper
-                      fill="#0072F5"
-                      className="cursor-pointer"
-                      width={50}
-                      height={50}
-                    />
-                  </div>
+                  {snippet.snippetType == "code" && (
+                    <div className="pl-3">
+                      <Paper
+                        fill="#0072F5"
+                        className="cursor-pointer"
+                        width={50}
+                        height={50}
+                      />
+                    </div>
+                  )}
+
+                  {snippet.snippetType == "error" && (
+                    <div className="pl-3">
+                      <PaperFail
+                        fill="#F31260"
+                        className="cursor-pointer"
+                        width={50}
+                        height={50}
+                      />
+                    </div>
+                  )}
 
                   <div className="w-full flex flex-col justify-center gap-3 MonoHeading">
                     <div className="w-full">
@@ -53,16 +71,29 @@ const Snippet = ({ snippet, handleDelete }) => {
                 </div>
                 <div className="flex">
                   <div className="w-24 flex justify-center">
-                    {snippet.snippetType === "code" && (
+                    {snippet.snippetType == "code" && (
                       <div className="pr-[.60rem]">
                         <Badge isSquared color="primary" variant="flat">
                           KODE
                         </Badge>
                       </div>
                     )}
+
+                    {snippet.snippetType == "error" && (
+                      <div className="pr-[.60rem]">
+                        <Badge isSquared color="error" variant="flat">
+                          FEJL
+                        </Badge>
+                      </div>
+                    )}
                   </div>
                   <div className="flex items-center justify-between w-full MonoHeading">
-                    <LanguageBadge snippets={snippet} />
+                    <div className="flex items-center gap-2">
+                      <LanguageBadge snippet={snippet} />
+                      {snippet.folder?.language?.fileExtension?.extId && (
+                        <FileExtension snippet={snippet} />
+                      )}
+                    </div>
 
                     <div className="flex gap-3 text-[#031B4E]">
                       {snippet.updatedAt && (
@@ -93,7 +124,13 @@ const Snippet = ({ snippet, handleDelete }) => {
       </Link>
       <div className="hoverable-show flex flex-col gap-1 justify-center items-center">
         <div>
-          <a href={`/upsert/code/${snippet.id}`}>
+          <a
+            href={
+              snippet.snippetType == "code"
+                ? `/upsert/code/${snippet.id}`
+                : `/upsert/error/${snippet.id}`
+            }
+          >
             <Button auto light>
               <EditDocumentIcon
                 fill="#0072F5"

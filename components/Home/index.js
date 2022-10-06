@@ -26,14 +26,10 @@ const HomePage = () => {
     try {
       const codeQuery = query(
         collection(db, "CodeSnippetsData1"),
-/*         where("isPublic", "==", true),
-        orderBy("postedAt", "desc") */
       );
 
       const errorQuery = query(
         collection(db, "ErrorSnippetsData1"),
-/*         where("isPublic", "==", true),
-        orderBy("postedAt", "desc") */
       );
 
       const codeDocs = await getDocs(codeQuery);
@@ -107,7 +103,7 @@ const HomePage = () => {
                     <Feed
                       user={user}
                       loading={loading}
-                      snippets={snippets}
+                      snippet={snippets}
                       tags={tags}
                     />
                   </div>

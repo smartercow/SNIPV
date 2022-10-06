@@ -1,25 +1,25 @@
 import React from "react";
 
-const LanguageBadge = ({ snippets }) => {
+const LanguageBadge = ({ snippet }) => {
   return (
     <>
       <div className="flex gap-2">
-        {snippets?.folder?.mainFolder?.language?.langId && (
+        {snippet?.folder?.mainFolder?.language?.langId && (
           <div
-            className={`${snippets?.folder?.mainFolder?.language?.classTree} lBadge rounded-3xl flex justify-center items-center`}
+            className={`${snippet?.folder?.mainFolder?.language?.classTree} lBadge rounded-3xl flex justify-center items-center`}
           >
             <p className="text-xs MonoHeading font-semibold lowercase">
-              {snippets.folder?.mainFolder?.language?.label}
+              {snippet.folder?.mainFolder?.language?.label}
             </p>
           </div>
         )}
 
-        {snippets?.folder?.language?.acc?.accId && (
+        {snippet?.folder?.language?.acc?.accId && (
           <div
-            className={`${snippets?.folder?.language?.acc?.classTree} lBadge rounded-3xl flex justify-center items-center`}
+            className={`${snippet?.folder?.language?.acc?.classTree} lBadge rounded-3xl flex justify-center items-center`}
           >
             <p className="text-xs MonoHeading font-semibold lowercase">
-              {snippets?.folder?.language?.acc?.label}
+              {snippet?.folder?.language?.acc?.label}
             </p>
           </div>
         )}

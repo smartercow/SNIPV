@@ -43,8 +43,8 @@ const initialState = {
 const CreateCodeSnippet = ({ id, setLoading, setDataError }) => {
   const [user] = useAuthState(auth);
 
-  const [selectedCodeMainFolder, setSelectedCodeMainFolder] = useState([]);
-  const [selectedCodeSubFolder, setSelectedCodeSubFolder] = useState();
+  const [selectedMainFolder, setSelectedMainFolder] = useState([]);
+  const [selectedSubFolder, setSelectedSubFolder] = useState();
   const [subFolders, setSubFolders] = useState([]);
 
   const [form, setForm] = useState(initialState);
@@ -53,24 +53,21 @@ const CreateCodeSnippet = ({ id, setLoading, setDataError }) => {
   const [notes, setNotes] = useState("");
   const [tags, setTags] = useState([]);
   const [tagInputValues, setTagInputValues] = useState([]);
-  
+
   const [selectValue, setSelectValue] = useState([]);
-  const [selectSubValue, setSelectSubValue] = useState([]);
+  const [selectSubValue, setSelectSubValue] = useState();
 
   const [username, setUsername] = useState("");
   const [usernameValue, setUsernameValue] = useState("");
   const [photoURL, setPhotoURL] = useState("");
   const [uid, setUid] = useState("");
 
-
   const router = useRouter();
   const [dataFetched, setDataFetched] = useState(false);
-
 
   const [disableCode, setDisableCode] = useState(true);
   const [codeExpanded, setCodeExpanded] = useState(false);
   const [folderExpanded, setFolderExpanded] = useState(true);
-
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -121,7 +118,7 @@ const CreateCodeSnippet = ({ id, setLoading, setDataError }) => {
               uid: uid,
               photoURL: photoURL,
             },
-            folder: selectedCodeSubFolder,
+            folder: selectedSubFolder,
             tags: tags,
             notes: notes,
           });
@@ -135,7 +132,9 @@ const CreateCodeSnippet = ({ id, setLoading, setDataError }) => {
             ...form,
             search: {
               title: lowercaseForm.title ? lowercaseForm.title : form.title,
-              description: lowercaseForm.description ? lowercaseForm.description : form.description,
+              description: lowercaseForm.description
+                ? lowercaseForm.description
+                : form.description,
             },
             snippetType: "code",
             updatedAt: serverTimestamp(),
@@ -145,7 +144,7 @@ const CreateCodeSnippet = ({ id, setLoading, setDataError }) => {
               uid: uid,
               photoURL: photoURL,
             },
-            folder: selectedCodeSubFolder,
+            folder: selectedSubFolder,
             tags: tags,
             notes: notes,
           });
@@ -163,6 +162,7 @@ const CreateCodeSnippet = ({ id, setLoading, setDataError }) => {
   useEffect(() => {
     if (id) {
       getCodeSnipData();
+      setDisableCode(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
@@ -173,10 +173,10 @@ const CreateCodeSnippet = ({ id, setLoading, setDataError }) => {
       const snapshot = await getDoc(docRef);
       if (snapshot.exists()) {
         //Code SNIP data from {id}
-        setSelectedCodeMainFolder(snapshot.data().folder.mainFolder);
-        setSelectValue(snapshot.data().folder.mainFolder)
-        setSelectedCodeSubFolder(snapshot.data().folder);
-        setSelectSubValue(snapshot.data().folder)
+        setSelectedMainFolder(snapshot.data().folder.mainFolder);
+        setSelectValue(snapshot.data().folder.mainFolder);
+        setSelectedSubFolder(snapshot.data().folder);
+        setSelectSubValue(snapshot.data().folder);
         setForm({
           title: snapshot.data().title,
           description: snapshot.data().description,
@@ -184,7 +184,7 @@ const CreateCodeSnippet = ({ id, setLoading, setDataError }) => {
           output: snapshot.data().output,
           linkHeading: snapshot.data().linkHeading,
           link: snapshot.data().link,
-        }); 
+        });
         setTags(snapshot.data().tags);
         setNotes(snapshot.data().notes);
 
@@ -203,18 +203,7 @@ const CreateCodeSnippet = ({ id, setLoading, setDataError }) => {
   };
 
   useEffect(() => {
-    if (selectedCodeMainFolder?.langId > 0) {
-      setDisableCode(false);
-      if (selectedCodeSubFolder) {
-        setSelectSubValue(subFolders[0]);
-      }
-    } else {
-      setDisableCode(true);
-    }
-  }, [selectedCodeMainFolder, subFolders, selectedCodeSubFolder]);
-
-  useEffect(() => {
-    if (selectedCodeSubFolder) {
+    if (selectSubValue) {
       setCodeExpanded(true);
       setDisableCode(false);
       setFolderExpanded(false);
@@ -223,17 +212,17 @@ const CreateCodeSnippet = ({ id, setLoading, setDataError }) => {
       setFolderExpanded(true);
       setDisableCode(true);
     }
-  }, [selectedCodeSubFolder]);
+  }, [selectSubValue, selectedMainFolder]);
 
-  // console.log("selectedCodeMainFolder", selectedCodeMainFolder);
+  // console.log("selectedMainFolder", selectedMainFolder);
   // console.log("selectValue", selectValue);
-  // console.log("selectedCodeSubFolder", selectedCodeSubFolder);
+  console.log("selectedSubFolder", selectedSubFolder);
   // console.log("lowercaseForm", lowercaseForm);
   // console.log("lowercaseForm.title", lowercaseForm.title);
   // console.log("lowercaseForm.description", lowercaseForm.description);
   // console.log("form.title", form.title);
   // console.log("form.description", form.description);
-  // console.log("IDDDDD", id);
+  // console.log("selectSubValue", selectSubValue);
 
   return (
     <div className="">
@@ -251,13 +240,16 @@ const CreateCodeSnippet = ({ id, setLoading, setDataError }) => {
                       <div className="flex items-center gap-4">
                         <div className="flex gap-2 items-center">
                           <Text h5 transform="uppercase">
-                            {selectedCodeMainFolder?.label}
+                            {selectedSubFolder?.mainFolder?.label}
                           </Text>
                           <div
-                            className={`${selectedCodeSubFolder?.language?.classTree} lBadge rounded-3xl flex justify-center items-center`}
+                            className={`${selectedSubFolder?.mainFolder?.language?.classTree} lBadge rounded-3xl flex justify-center items-center`}
                           >
                             <p className="text-xs MonoHeading font-semibold lowercase">
-                              {selectedCodeMainFolder?.language?.label}
+                              {
+                                selectedSubFolder?.mainFolder?.language
+                                  ?.label
+                              }
                             </p>
                           </div>
                         </div>
@@ -271,15 +263,21 @@ const CreateCodeSnippet = ({ id, setLoading, setDataError }) => {
                       <div className="flex gap-2">
                         <div>
                           <Text h5 transform="uppercase">
-                            {selectedCodeSubFolder?.label}
+                            {selectedSubFolder?.label}
                           </Text>
                         </div>
                         <div
-                          className={`${selectedCodeSubFolder?.language.acc?.classTree} lBadge rounded-3xl flex justify-center items-center`}
+                          className={`${selectedSubFolder?.language.acc?.classTree} lBadge rounded-3xl flex justify-center items-center`}
                         >
                           <p className="text-xs MonoHeading font-semibold lowercase">
-                            {selectedCodeSubFolder?.language?.acc?.label}
+                            {selectedSubFolder?.language?.acc?.label}
                           </p>
+                        </div>
+                        <div className="">
+                          {
+                            selectedSubFolder?.language?.fileExtension
+                              ?.label
+                          }
                         </div>
                       </div>
                     </>
@@ -291,10 +289,10 @@ const CreateCodeSnippet = ({ id, setLoading, setDataError }) => {
           >
             <div className="mx-3 min-h-[10rem] w-[95%]">
               <CreatedFolders
-                setSelectedCodeMainFolder={setSelectedCodeMainFolder}
-                selectedCodeMainFolder={selectedCodeMainFolder}
-                setSelectedCodeSubFolder={setSelectedCodeSubFolder}
-                selectedCodeSubFolder={selectedCodeSubFolder}
+                setSelectedMainFolder={setSelectedMainFolder}
+                selectedMainFolder={selectedMainFolder}
+                setSelectedSubFolder={setSelectedSubFolder}
+                selectedSubFolder={selectedSubFolder}
                 id={id}
                 dataFetched={dataFetched}
                 selectValue={selectValue}
@@ -302,12 +300,12 @@ const CreateCodeSnippet = ({ id, setLoading, setDataError }) => {
                 setSelectSubValue={setSelectSubValue}
               />
 
-              {selectedCodeMainFolder?.language?.langId > 0 && (
+              {selectedMainFolder?.language?.langId > 0 && (
                 <div>
                   <CreatedSubFolders
-                    setSelectedCodeSubFolder={setSelectedCodeSubFolder}
-                    selectedCodeSubFolder={selectedCodeSubFolder}
-                    selectedCodeMainFolder={selectedCodeMainFolder}
+                    setSelectedSubFolder={setSelectedSubFolder}
+                    selectedSubFolder={selectedSubFolder}
+                    selectedMainFolder={selectedMainFolder}
                     setSubFolders={setSubFolders}
                     subFolders={subFolders}
                     selectSubValue={selectSubValue}
@@ -323,7 +321,7 @@ const CreateCodeSnippet = ({ id, setLoading, setDataError }) => {
                 <div className="flex flex-col gap-4">
                   <div className="flex flex-col gap-5 mx-3">
                     <div className="w-full flex gap-4 items-center">
-                      <div className="w-20 text-right">
+                      <div className="w-24">
                         <Text h6 transform="uppercase">
                           Titel&nbsp;
                           <Text color="error" b>
@@ -345,9 +343,12 @@ const CreateCodeSnippet = ({ id, setLoading, setDataError }) => {
                     </div>
 
                     <div className="w-full flex gap-4 items-center">
-                      <div className="w-20 text-right">
+                      <div className="w-24">
                         <Text h6 transform="uppercase">
-                          Beskrivelse
+                          Beskrivelse&nbsp;
+                          <Text color="error" b>
+                            *
+                          </Text>
                         </Text>
                       </div>
                       <Input
@@ -359,13 +360,14 @@ const CreateCodeSnippet = ({ id, setLoading, setDataError }) => {
                         onChange={handleChange}
                         width="100%"
                         aria-label="Beskrivelse"
+                        required
                       />
                     </div>
 
                     <div>
                       <div className="mt-1">
                         <Text h6 transform="uppercase">
-                          Din kode&nbsp;
+                          Kode&nbsp;
                           <Text color="error" b>
                             *
                           </Text>
@@ -471,7 +473,7 @@ const CreateCodeSnippet = ({ id, setLoading, setDataError }) => {
                         </Text>
                       }
                     >
-                      <div className="flex flex-col gap-5">
+                      <div className="flex flex-col gap-5 mb-5">
                         <div className="w-full flex gap-4 items-center">
                           <div className="w-20">
                             <Text>Heading</Text>
@@ -516,7 +518,7 @@ const CreateCodeSnippet = ({ id, setLoading, setDataError }) => {
                         </Text>
                       }
                     >
-                      <div className="flex flex-col gap-2 py-1">
+                      <div className="flex flex-col gap-2 mb-5">
                         <div className="w-full flex gap-2 items-center">
                           <div className="w-full">
                             {!id && (
@@ -537,15 +539,6 @@ const CreateCodeSnippet = ({ id, setLoading, setDataError }) => {
                               />
                             )}
                           </div>
-                          {/*                     <Tooltip
-                            content={"Undgå at bruge specialtegn."}
-                            color="primary"
-                            css={{ zIndex: 9999 }}
-                          >
-                            <Text h5 color="primary">
-                              <BsQuestionCircleFill />
-                            </Text>
-                          </Tooltip> */}
                         </div>
                         <div className="mt-2">
                           <Link href="/info/help/tags">

@@ -36,7 +36,7 @@ export default function CreateMainFolder() {
   const [fileExtensions, setFileExtensions] = useState();
   const [fileExtension, setFileExtension] = useState({});
 
-  const [selectedCodeMainFolder, setSelectedCodeMainFolder] = useState([]);
+  const [selectedMainFolder, setSelectedMainFolder] = useState([]);
 
   const [tags, setTags] = useState([]);
   const [tagInputValues, setTagInputValues] = useState([]);
@@ -59,16 +59,16 @@ export default function CreateMainFolder() {
   }
 
   useEffect(() => {
-    if (Object.keys(selectedCodeMainFolder)?.length > 0) {
+    if (Object.keys(selectedMainFolder)?.length > 0) {
       const filteredLang = LanguageOptions.filter((lang) => {
-        if (lang.langId === selectedCodeMainFolder.language.langId) {
+        if (lang.langId === selectedMainFolder.language.langId) {
           return lang;
         }
       });
 
       setLanguage(filteredLang[0]);
     }
-  }, [selectedCodeMainFolder]);
+  }, [selectedMainFolder]);
 
   useEffect(() => {
     if (folderName) {
@@ -131,7 +131,7 @@ export default function CreateMainFolder() {
   // console.log("folderName", folderName);
   // console.log("disableExtSelect", disableExtSelect);
   // console.log("fileExtensionsObject", Object.keys(fileExtensions).length);
-  // console.log("SELECTED MAIN", selectedCodeMainFolder);
+  // console.log("SELECTED MAIN", selectedMainFolder);
   // console.log("accessory.label", accessory.label);
   // console.log("accessory.langId", accessory.langId);
   // console.log("language.langId", language.langId);
@@ -152,7 +152,7 @@ export default function CreateMainFolder() {
             folderSnippetType: "code",
             label: folderName,
             value: randomValue,
-            mainFolder: selectedCodeMainFolder,
+            mainFolder: selectedMainFolder,
             language: {
               fileExtension: fileExtension,
               acc:
@@ -193,11 +193,11 @@ export default function CreateMainFolder() {
               selectValue={selectValue}
               setSelectValue={setSelectValue}
               setSelectSubValue={setSelectSubValue}
-              setSelectedCodeMainFolder={setSelectedCodeMainFolder}
+              setSelectedMainFolder={setSelectedMainFolder}
             />
           </div>
 
-          {Object.keys(selectedCodeMainFolder).length > 0 && (
+          {Object.keys(selectedMainFolder).length > 0 && (
             <div className="flex flex-col gap-4">
               <div className="flex gap-4">
                 <div>

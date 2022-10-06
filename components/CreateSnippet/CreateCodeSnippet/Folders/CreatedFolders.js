@@ -13,10 +13,10 @@ import { NoOptionsMessage } from "../../Select/NoOptionsMessage";
 import CreatedSubFolders from "./CreatedSubFolders";
 
 export default function CreatedFolders({
-  setSelectedCodeMainFolder,
-  selectedCodeMainFolder,
-  setSelectedCodeSubFolder,
-  selectedCodeSubFolder,
+  setSelectedMainFolder,
+  selectedMainFolder,
+  setSelectedSubFolder,
+  selectedSubFolder,
   id,
   dataFetched,
   selectValue,
@@ -30,7 +30,7 @@ export default function CreatedFolders({
 
   function handleSelect(data) {
     setSelectValue(data)
-    setSelectedCodeMainFolder(data);
+    setSelectedMainFolder(data);
     setSelectSubValue(null)
   }
 
@@ -55,14 +55,14 @@ export default function CreatedFolders({
 
   useEffect(() => {
     if (id) {
-      setSelectValue(setSelectedCodeMainFolder);
+      setSelectValue(setSelectedMainFolder);
       setUpdate(!update);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, dataFetched]);
 
   // console.log("FOLDERS", folders);
-  // console.log("selectedCodeMainFolder", selectedCodeMainFolder);
+  // console.log("selectedMainFolder", selectedMainFolder);
 
   return (
     <div>
@@ -112,7 +112,7 @@ export default function CreatedFolders({
         <>
           <div className="flex flex-col gap-1">
             <Text>
-              Du har ingen rodmapper for kode snippets&nbsp;
+              Du har ingen rodmapper for kode SNIPS&nbsp;
               <Text color="error" b>
                 *
               </Text>
