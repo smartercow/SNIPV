@@ -216,7 +216,7 @@ const CreateCodeSnippet = ({ id, setLoading, setDataError }) => {
 
   // console.log("selectedMainFolder", selectedMainFolder);
   // console.log("selectValue", selectValue);
-  console.log("selectedSubFolder", selectedSubFolder);
+  // console.log("selectedSubFolder", selectedSubFolder);
   // console.log("lowercaseForm", lowercaseForm);
   // console.log("lowercaseForm.title", lowercaseForm.title);
   // console.log("lowercaseForm.description", lowercaseForm.description);

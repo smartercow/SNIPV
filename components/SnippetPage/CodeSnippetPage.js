@@ -13,6 +13,7 @@ import { auth, db } from "../../firebase/clientApp";
 import { useAuthState } from "react-firebase-hooks/auth";
 import SyntaxCodeHandler from "../Syntax/Code/SyntaxHandler";
 import LanguageBadge from "../Display/LanguageBadge";
+import OutputSyntaxHandler from "../Syntax/OutputSyntaxHandler";
 
 const SnippetPage = ({ snippet }) => {
   const [user] = useAuthState(auth);
@@ -56,6 +57,7 @@ const SnippetPage = ({ snippet }) => {
                   </Text>
                 </a>
               </div>
+              
               <div>
                 <Popover
                   placement="bottom"
@@ -91,6 +93,7 @@ const SnippetPage = ({ snippet }) => {
               {snippet.title}
             </h3>
           </div>
+
           {snippet.description && (
             <div className="text-lg ">
               <p>{snippet.description}</p>
@@ -98,6 +101,7 @@ const SnippetPage = ({ snippet }) => {
           )}
         </div>
       </div>
+
       {snippet.tags.length > 0 && (
         <div className="flex gap-2">
           {snippet.tags.map((tag, index) => (
@@ -117,25 +121,11 @@ const SnippetPage = ({ snippet }) => {
 
       {snippet.output && (
         <div>
-          <Text h6 transform="uppercase" color="warning">
-            Output
-          </Text>
-
-          <div>
-            <SyntaxHighlighter
-              language=""
-              style={oneLight}
-              className="rounded-lg"
-              /*               showLineNumbers */
-            >
-              {snippet.output}
-            </SyntaxHighlighter>
-          </div>
+          <OutputSyntaxHandler snippet={snippet} />
         </div>
       )}
 
       {snippet.notes && (
-        <div>
           <div className="bg-[#D4EFEE] p-4 rounded-lg">
             <Text color="#005955">
               <Text color="#005955" b>
@@ -144,7 +134,6 @@ const SnippetPage = ({ snippet }) => {
               {snippet?.notes}
             </Text>
           </div>
-        </div>
       )}
 
       {snippet.link && (
@@ -155,6 +144,7 @@ const SnippetPage = ({ snippet }) => {
                 <p className="font-semibold">{snippet.linkHeading}</p>
               </div>
             )}
+
             {snippet.link && (
               <div>
                 <Link href={snippet.link}>
@@ -193,6 +183,7 @@ const SnippetPage = ({ snippet }) => {
               >
                 Opdateret:
               </Text>
+
               <Text
                 small
                 transform="uppercase"
@@ -204,6 +195,7 @@ const SnippetPage = ({ snippet }) => {
               </Text>
             </div>
           )}
+
           <div className="flex gap-1 items-center">
             <Text small b transform="uppercase" className="text-[#031B4E]">
               Oprettet:

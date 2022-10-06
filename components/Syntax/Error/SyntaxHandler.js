@@ -10,9 +10,6 @@ const SyntaxHandler = ({ snippet }) => {
     setCodeLang(snippet.folder.language.fileExtension?.syntaxHighlight);
   }, [snippet]);
 
-  // console.log("CODELANGSYNTAX", codeLang);
-  // console.log("SNIPPET", snippet);
-
   return (
     <div className="">
       <div className="flex items-center justify-between">
@@ -21,11 +18,13 @@ const SyntaxHandler = ({ snippet }) => {
             Fejl kode
           </Text>
         </div>
+
         <div className="px-4 bg-[#F31260] rounded-t-2xl">
           <Text color="white" weight="semibold">{snippet.folder.language.fileExtension?.label}</Text>
         </div>
       </div>
-      <div className="errorSyntaxStyle">
+      
+      <div className="errorCodeSyntaxStyle">
         <SyntaxHighlighter
           language={codeLang}
           style={oneLight}
@@ -36,7 +35,7 @@ const SyntaxHandler = ({ snippet }) => {
             style: { wordBreak: "break-all", whiteSpace: "pre-wrap" },
           }}
         >
-          {snippet.code}
+          {snippet.errorcode}
         </SyntaxHighlighter>
       </div>
     </div>

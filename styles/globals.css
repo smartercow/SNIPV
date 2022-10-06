@@ -11,6 +11,7 @@
   left: 0;
   right: 0;
 } */
+
 /* @tailwind base; */
 @tailwind components;
 @tailwind utilities;
@@ -37,6 +38,6 @@
   } */
 }
 
-.nextui-c-fMAxGR {
+/* .nextui-c-fMAxGR {
   padding-bottom: 0;
-}
+} */

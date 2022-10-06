@@ -34,7 +34,8 @@ import CreatedSubFolders from "./Folders/CreatedSubFolders";
 const initialState = {
   title: "",
   description: "",
-  code: "",
+  errorcode: "",
+  solutioncode: "",
   output: "",
   linkHeading: "",
   link: "",
@@ -48,7 +49,7 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
   const [subFolders, setSubFolders] = useState([]);
 
   const [form, setForm] = useState(initialState);
-  const { title, description, code, output, linkHeading, link } = form;
+  const { title, description, errorcode, solutioncode, output, linkHeading, link } = form;
   const [lowercaseForm, setLowercaseForm] = useState([]); //Search
   const [notes, setNotes] = useState("");
   const [tags, setTags] = useState([]);
@@ -101,7 +102,7 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (title && code) {
+    if (title && description && errorcode) {
       if (!id) {
         try {
           await addDoc(collection(db, "ErrorSnippetsData1"), {
@@ -180,7 +181,8 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
         setForm({
           title: snapshot.data().title,
           description: snapshot.data().description,
-          code: snapshot.data().code,
+          errorcode: snapshot.data().errorcode,
+          solutioncode: snapshot.data().solutioncode,
           output: snapshot.data().output,
           linkHeading: snapshot.data().linkHeading,
           link: snapshot.data().link,
@@ -205,8 +207,8 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
   useEffect(() => {
     if (selectSubValue) {
       setCodeExpanded(true);
-      setDisableCode(false);
       setFolderExpanded(false);
+      setDisableCode(false);
     } else {
       setCodeExpanded(false);
       setFolderExpanded(true);
@@ -367,7 +369,7 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
                     <div>
                       <div className="mt-1">
                         <Text h6 transform="uppercase">
-                          Kode&nbsp;
+                          Fejl kode&nbsp;
                           <Text color="error" b>
                             *
                           </Text>
@@ -375,8 +377,8 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
                         <Spacer y={0.4} />
                         <Textarea
                           placeholder="her..."
-                          name="code"
-                          value={code}
+                          name="errorcode"
+                          value={errorcode}
                           onChange={handleChange}
                           css={{ height: "auto" }}
                           size="lg"
@@ -392,12 +394,49 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
 
                       <div>
                         <Collapse.Group>
-                          <Collapse title={<Text b>Kode forhåndsvisning</Text>}>
+                          <Collapse title={<Text b>Forhåndsvisning</Text>}>
                             <SyntaxHighlighter
                               language="javascript"
                               style={oneLight}
                             >
-                              {form.code}
+                              {form.errorcode}
+                            </SyntaxHighlighter>
+                          </Collapse>
+                        </Collapse.Group>
+                      </div>
+                    </div>
+
+                    <div>
+                      <div className="mt-1">
+                        <Text h6 transform="uppercase">
+                          Løsning kode
+                        </Text>
+                        <Spacer y={0.4} />
+                        <Textarea
+                          placeholder="her..."
+                          name="solutioncode"
+                          value={solutioncode}
+                          onChange={handleChange}
+                          css={{ height: "auto" }}
+                          size="lg"
+                          cacheMeasurements
+                          width="100%"
+                          height="100%"
+                          shadow="false"
+                          animated="false"
+                          aria-label="kode"
+                          required
+                        />
+                      </div>
+
+                      <div>
+                        <Collapse.Group>
+                          <Collapse title={<Text b>Forhåndsvisning</Text>}>
+                            <SyntaxHighlighter
+                              language="javascript"
+                              style={oneLight}
+                            >
+                              {form.solutioncode}
                             </SyntaxHighlighter>
                           </Collapse>
                         </Collapse.Group>

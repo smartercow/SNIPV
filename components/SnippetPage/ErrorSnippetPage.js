@@ -12,8 +12,9 @@ import { auth, db } from "../../firebase/clientApp";
 import { useRouter } from "next/router";
 import { deleteDoc, doc } from "firebase/firestore";
 import SyntaxHandler from "../Syntax/Error/SyntaxHandler";
-import SyntaxSolutionCodeHandler from "../Syntax/Error/SolutionHandler";
+import SolutionSyntaxHandler from "../Syntax/Error/SolutionSyntaxHandler";
 import LanguageBadge from "../Display/LanguageBadge";
+import OutputSyntaxHandler from "../Syntax/OutputSyntaxHandler";
 
 const ErrorSnippetPage = ({ snippet }) => {
   const [user] = useAuthState(auth);
@@ -54,6 +55,7 @@ const ErrorSnippetPage = ({ snippet }) => {
                   </Text>
                 </a>
               </div>
+              
               <div>
                 <Popover
                   placement="bottom"
@@ -89,11 +91,13 @@ const ErrorSnippetPage = ({ snippet }) => {
               {snippet.title}
             </h3>
           </div>
+
           {snippet.description && (
             <div className="text-lg ">{snippet.description}</div>
           )}
         </div>
       </div>
+
       {snippet.tags && (
         <div className="flex gap-2">
           {snippet.tags.map((tag, index) => (
@@ -106,32 +110,31 @@ const ErrorSnippetPage = ({ snippet }) => {
           ))}
         </div>
       )}
+
       <div>
         <SyntaxHandler snippet={snippet} />
       </div>
 
       {snippet.solutioncode && (
         <div>
-          <div>
-            <Text h6 transform="uppercase" color="success">
-              Løsning kode
-            </Text>
-          </div>
+          <SolutionSyntaxHandler snippet={snippet} />
+        </div>
+      )}
 
-          <SyntaxSolutionCodeHandler snippet={snippet} />
+      {snippet.output && (
+        <div>
+          <OutputSyntaxHandler snippet={snippet} />
         </div>
       )}
 
       {snippet.notes && (
-        <div>
-          <div className="bg-[#D4EFEE] p-4 rounded-lg">
-            <Text color="#005955">
-              <Text color="#005955" b>
-                NOTER:&nbsp;
-              </Text>
-              {snippet?.notes}
+        <div className="bg-[#D4EFEE] p-4 rounded-lg">
+          <Text color="#005955">
+            <Text color="#005955" b>
+              NOTER:&nbsp;
             </Text>
-          </div>
+            {snippet?.notes}
+          </Text>
         </div>
       )}
 
@@ -143,6 +146,7 @@ const ErrorSnippetPage = ({ snippet }) => {
                 <p className="font-semibold">{snippet.linkHeading}</p>
               </div>
             )}
+
             {snippet.link && (
               <div>
                 <Link href={snippet.link}>
@@ -192,6 +196,7 @@ const ErrorSnippetPage = ({ snippet }) => {
               </Text>
             </div>
           )}
+
           <div className="flex gap-1 items-center">
             <Text small b transform="uppercase" className="text-[#031B4E]">
               Oprettet:

@@ -33,6 +33,15 @@
     border: 1px solid #0072f523;
 }
 
-.errorSyntaxStyle {
+.errorCodeSyntaxStyle {
     border: 1px solid #F3126023;
 }
+
+.solutionCodeSyntaxStyle {
+    border: 1px solid #17C96423;
+}
+
+.outputSyntaxStyle {
+    border: 1px solid #F5A52423;
+}
+
