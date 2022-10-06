@@ -1,5 +1,5 @@
 import { CSSPreprocessors, CSSPostprocessors, CSSFrameworks } from "./CSS";
-import { JavaScriptFrameworks, TypeScriptFrameworks } from "./Javascript/Frameworks";
+import { JavaScriptFrameworks, TypeScriptFrameworks } from "./JavaScript/Frameworks";
 import { JavaScriptLibraries } from "./JavaScript/Libraries";
 
 export const LanguageOptions = [

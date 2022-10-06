@@ -8,7 +8,7 @@ import { createErrorFolderModalState } from "../../../../atoms/createErrorFolder
 import { updateStateAtom } from "../../../../atoms/updateStateAtom";
 import { auth, db } from "../../../../firebase/clientApp";
 import { LanguageOptions } from "../../../../utilities/Language";
-import { JavaScriptFrameworks } from "../../../../utilities/Language/Javascript/Frameworks";
+import { JavaScriptFrameworks } from "../../../../utilities/Language/JavaScript/Frameworks";
 import { JavaScriptLibraries } from "../../../../utilities/Language/JavaScript/Libraries";
 import { NoOptionsMessage } from "../../Select/NoOptionsMessage";
 
