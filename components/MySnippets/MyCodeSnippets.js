@@ -19,7 +19,7 @@ import { MdRefresh } from "react-icons/md";
 import LatestHeading from "../Heading/LatestHeading";
 import Snippet from "../Display/Snippet";
 
-const MyCodeSnippets = () => {
+const MyCodeSnippets = ({ selectedMainFolder, selectedSubFolder }) => {
   const [user] = useAuthState(auth);
   const [loading, setLoading] = useState(true);
   const [myCodeSnippets, setMyCodeSnippets] = useState();
@@ -35,6 +35,11 @@ const MyCodeSnippets = () => {
       const snippetQuery = query(
         collection(db, "CodeSnippetsData1"),
         where(new FieldPath("userData", "uid"), "==", user?.uid),
+        where(
+          new FieldPath("folder", "subFolderId"),
+          "==",
+          selectedSubFolder.subFolderId
+        ),
         orderBy("postedAt", "desc"),
         limit(10)
       );
@@ -104,7 +109,7 @@ const MyCodeSnippets = () => {
       getMySnippets();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user, update]);
+  }, [user, update, selectedSubFolder]);
 
   const handleDelete = async (id) => {
     try {
@@ -133,50 +138,60 @@ const MyCodeSnippets = () => {
 
   return (
     <div className="min-h-[70vh] w-full">
-      <>
-        <LatestHeading headingType={"Alle kode SNIPS"} />
-      </>
+      {selectedMainFolder.mainFolderId ? (
+        <>
+          <>
+            <LatestHeading
+              headingType={`Kode SNIPS i mappen > ${selectedSubFolder.label}`}
+            />
+          </>
 
-      <div className="w-full">
-        <div className="flex flex-col gap-4">
-          {myCodeSnippets && (
-            <>
-              {myCodeSnippets?.map((snippet) => (
-                <Snippet
-                  key={snippet.id}
-                  handleDelete={handleDelete}
-                  snippet={snippet}
-                />
-              ))}
+          <div className="w-full">
+            <div className="flex flex-col gap-4">
+              {myCodeSnippets && (
+                <>
+                  {myCodeSnippets?.map((snippet) => (
+                    <Snippet
+                      key={snippet.id}
+                      handleDelete={handleDelete}
+                      snippet={snippet}
+                    />
+                  ))}
 
-              {!isEmpty && (
-                <div className="flex justify-center">
-                  <Button size="sm" onClick={fetchMore}>
-                    <MdRefresh />
-                    HENT MERE
-                  </Button>
-                </div>
+                  {!isEmpty && (
+                    <div className="flex justify-center">
+                      <Button size="sm" onClick={fetchMore}>
+                        <MdRefresh />
+                        HENT MERE
+                      </Button>
+                    </div>
+                  )}
+                </>
               )}
-            </>
-          )}
 
-          {loading ? (
-            <div className="flex justify-center items-center h-[20vh]">
-              <Loading size="lg" />
+              {loading ? (
+                <div className="flex justify-center items-center h-[20vh]">
+                  <Loading size="lg" />
+                </div>
+              ) : (
+                <>
+                  {!myCodeSnippets?.length > 0 && (
+                    <div className="flex justify-center mt-10">
+                      <Text b size={13} transform="uppercase">
+                        Du har ingen kode SNIPS! 😔
+                      </Text>
+                    </div>
+                  )}
+                </>
+              )}
             </div>
-          ) : (
-            <>
-              {!myCodeSnippets?.length > 0 && (
-                <div className="flex justify-center mt-10">
-                  <Text b size={13} transform="uppercase">
-                    Du har ingen kode SNIPS! 😔
-                  </Text>
-                </div>
-              )}
-            </>
-          )}
+          </div>
+        </>
+      ) : (
+        <div>
+          Valg mappe!
         </div>
-      </div>
+      )}
     </div>
   );
 };

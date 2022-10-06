@@ -3,7 +3,7 @@ import { Text, Button, Grid, Row } from "@nextui-org/react";
 import { collection, FieldPath, onSnapshot, query, where } from "firebase/firestore";
 import { db } from "../../firebase/clientApp";
 
-export const DeleteCodeFolder = ({ id, handleDelete, setAllOpenStates }) => {
+export const DeleteFolder = ({ id, handleDelete, setAllOpenStates }) => {
   const [thisFolderSnippets, setThisFolderSnippets] = useState();
   const [folderExcluded, setFolderExcluded] = useState(false);
   const getThisFolderSnippets = async () => {
