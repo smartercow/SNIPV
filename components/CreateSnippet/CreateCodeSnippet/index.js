@@ -30,6 +30,7 @@ import { InfoCircle } from "../../SVG/InfoCircle";
 import Link from "next/link";
 import { CgExternal } from "react-icons/cg";
 import CreatedSubFolders from "./Folders/CreatedSubFolders";
+import CreateSnippetFolderHeading from "../CreateSnippetFolderHeading";
 
 const initialState = {
   title: "",
@@ -234,55 +235,9 @@ const CreateCodeSnippet = ({ id, setLoading, setDataError }) => {
                 <div>
                   <Text h3>MAPPE</Text>
                 </div>
-                <div className="flex items-center gap-4">
-                  {codeExpanded && (
-                    <>
-                      <div className="flex items-center gap-4">
-                        <div className="flex gap-2 items-center">
-                          <Text h5 transform="uppercase">
-                            {selectedSubFolder?.mainFolder?.label}
-                          </Text>
-                          <div
-                            className={`${selectedSubFolder?.mainFolder?.language?.classTree} lBadge rounded-3xl flex justify-center items-center`}
-                          >
-                            <p className="text-xs MonoHeading font-semibold lowercase">
-                              {
-                                selectedSubFolder?.mainFolder?.language
-                                  ?.label
-                              }
-                            </p>
-                          </div>
-                        </div>
-                        <div>
-                          <Text className="text-gray-500" size={20}>
-                            &#129094;
-                          </Text>
-                        </div>
-                      </div>
-
-                      <div className="flex gap-2">
-                        <div>
-                          <Text h5 transform="uppercase">
-                            {selectedSubFolder?.label}
-                          </Text>
-                        </div>
-                        <div
-                          className={`${selectedSubFolder?.language?.acc?.classTree} lBadge rounded-3xl flex justify-center items-center`}
-                        >
-                          <p className="text-xs MonoHeading font-semibold lowercase">
-                            {selectedSubFolder?.language?.acc?.label}
-                          </p>
-                        </div>
-                        <div className="">
-                          {
-                            selectedSubFolder?.language?.fileExtension
-                              ?.label
-                          }
-                        </div>
-                      </div>
-                    </>
-                  )}
-                </div>
+                {codeExpanded && (
+                  <CreateSnippetFolderHeading selectedSubFolder={selectedSubFolder} />
+                )}
               </div>
             }
             expanded={folderExpanded}

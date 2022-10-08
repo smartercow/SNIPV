@@ -139,7 +139,7 @@ export default function CreatedSubFolders({
                 />
               </div>
 
-              <div className="w-40">
+              <div className="w-10">
                 {selectedSubFolder?.subFolderId && (
                   <SubFolderDropdown selectedSubFolder={selectedSubFolder} />
                 )}

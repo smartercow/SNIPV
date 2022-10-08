@@ -2,6 +2,7 @@ import { Button, Checkbox, Input, Text } from "@nextui-org/react";
 import {
   addDoc,
   collection,
+  doc,
   serverTimestamp,
   updateDoc,
 } from "firebase/firestore";
@@ -137,7 +138,7 @@ export default function CreateMainFolder() {
 
   // console.log("language", language);
   // console.log("accessories", accessories);
-  console.log("accessory", accessory);
+  // console.log("accessory", accessory);
   // console.log("fileExtensions", fileExtensions);
   // console.log("fileExtension", fileExtension);
   // console.log("addAccessory", addAccessory);
@@ -156,7 +157,7 @@ export default function CreateMainFolder() {
   const createFolder = async (e) => {
     e.preventDefault();
 
-    if (!open.folder.subFolderId) {
+    if (!open.folder?.subFolderId) {
       if (language && folderName) {
         setDisableBtn(true);
         try {
@@ -190,43 +191,49 @@ export default function CreateMainFolder() {
               userId: user.uid,
             }
           );
-          setOpen(false);
-          setUpdate(!update);
         } catch (error) {
           setDisableBtn(false);
-        }
-      } else {
-        setDisableBtn(true);
-        try {
-          await updateDoc(
-            doc(
-              db,
-              "UsersData1",
-              user?.uid,
-              "CodeSubFolders",
-              open.folder.subFolderId
-            ),
-            {
-              updatedAt: serverTimestamp(),
-              label: folderName,
-              language: {
-                fileExtension: fileExtension,
-                acc: {
-                  accId: accessory.accId,
-                  accsId: accessory.accsId,
-                  accsType: accessory.accsType,
-                  label: accessory.label,
-                  classTree: `lang${language.langId}__accs${accessory.accsId}-acc${accessory.accId}`,
-                },
-              },
-              tags: tags,
-            }
-          );
+        } finally {
+          setDisableBtn(false);
           setOpen(false);
           setUpdate(!update);
-        } catch (error) {
-          setDisableBtn(false);
         }
+      }
+    } else {
+      try {
+        await updateDoc(
+          doc(
+            db,
+            "UsersData1",
+            user?.uid,
+            "CodeSubFolders",
+            open.folder?.subFolderId
+          ),
+          {
+            updatedAt: serverTimestamp(),
+            label: folderName,
+            language: {
+              fileExtension: fileExtension,
+              acc:
+                Object.keys(accessory).length > 0
+                  ? {
+                      accId: accessory.accId,
+                      accsId: accessory.accsId,
+                      accsType: accessory.accsType,
+                      label: accessory.label,
+                      classTree: `lang${language.langId}__accs${accessory.accsId}-acc${accessory.accId}`,
+                    }
+                  : {},
+            },
+            tags: tags,
+          }
+        );
+      } catch (error) {
+        setDisableBtn(false);
+      } finally {
+        setDisableBtn(false);
+        setOpen(false);
+        setUpdate(!update);
       }
     }
     /* else {
@@ -234,7 +241,17 @@ export default function CreateMainFolder() {
       } */
   };
 
-  console.log("GOOD NIGHT");
+  // console.log("folderName>", folderName);
+  // console.log("open.folder.subFolderId>", open.folder.subFolderId);
+  // console.log("fileExtension>", fileExtension);
+  // console.log("accessory.accId>", accessory.accId);
+  // console.log("accessory.accsType>", accessory.accsType);
+  // console.log("accessory.label>", accessory.label);
+  // console.log(
+  //   "classTree>",
+  //   `lang${language.langId}__accs${accessory.accsId}-acc${accessory.accId}`
+  // );
+  // console.log("tags>", tags);
 
   return (
     <div>

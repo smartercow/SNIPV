@@ -13,7 +13,7 @@ export default function SubFolderDropdown({ selectedSubFolder }) {
   return (
     <Dropdown>
       <Dropdown.Button light size="sm" color="primary">
-        Redigere
+
       </Dropdown.Button>
       <Dropdown.Menu color="primary" aria-label="Actions">
         <Dropdown.Item

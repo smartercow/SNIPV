@@ -26,7 +26,7 @@ export const OptionFileExt = (props) => (
           <div
             className={`${props.data.language.acc.classTree} lBadge rounded-3xl flex justify-center items-center`}
           >
-            <p className="text-xs MonoHeading font-semibold lowercase">
+            <p className="text-xs MonoHeading font-semibold lowercase whitespace-nowrap">
               {props.data.language.acc?.label}
             </p>
           </div>
@@ -34,7 +34,7 @@ export const OptionFileExt = (props) => (
           <div
             className={`${props.data.language?.classTree} lBadge rounded-3xl flex justify-center items-center`}
           >
-            <p className="text-xs MonoHeading font-semibold lowercase">
+            <p className="text-xs MonoHeading font-semibold lowercase whitespace-nowrap">
               {props.data.language?.label}
             </p>
           </div>

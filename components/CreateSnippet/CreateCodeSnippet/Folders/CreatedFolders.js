@@ -44,6 +44,7 @@ export default function CreatedFolders({
     setSelectValue(data);
     setSelectedMainFolder(data);
     setSelectSubValue(null);
+    // setSelectedSubFolder({})
   }
 
   useEffect(() => {
@@ -136,7 +137,7 @@ export default function CreatedFolders({
                 />
               </div>
 
-              <div className="w-40">
+              <div className="w-10">
                 {selectedMainFolder?.mainFolderId && (
                   <MainFolderDropdown selectedMainFolder={selectedMainFolder} />
                 )}
