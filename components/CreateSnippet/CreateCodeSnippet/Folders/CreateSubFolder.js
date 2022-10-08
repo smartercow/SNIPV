@@ -1,10 +1,10 @@
+import { Button, Checkbox, Input, Text } from "@nextui-org/react";
 import {
-  Button,
-  Checkbox,
-  Input,
-  Text,
-} from "@nextui-org/react";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+  addDoc,
+  collection,
+  serverTimestamp,
+  updateDoc,
+} from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import Select from "react-select";
@@ -20,7 +20,7 @@ import CreatedFolders from "./CreatedFolders";
 
 export default function CreateMainFolder() {
   const [user] = useAuthState(auth);
-  const setOpen = useSetRecoilState(createCodeFolderModalState);
+  const [open, setOpen] = useRecoilState(createCodeFolderModalState);
   const [update, setUpdate] = useRecoilState(updateStateAtom);
 
   const [folderName, setFolderName] = useState("");
@@ -28,9 +28,10 @@ export default function CreateMainFolder() {
   const [disableExtSelect, setDisableExtSelect] = useState(false);
   const [disableAccSelect, setDisableAccSelect] = useState(false);
   const [disableBtn, setDisableBtn] = useState(true);
+  const [disableSelectInput, setDisableSelectInput] = useState(false);
 
   const [language, setLanguage] = useState([]);
-  const [accessories, setAccessories] = useState({});
+  const [accessories, setAccessories] = useState([]);
   const [accessory, setAccessory] = useState({});
   const [addAccessory, setAddAccessory] = useState(true);
   const [fileExtensions, setFileExtensions] = useState();
@@ -57,6 +58,22 @@ export default function CreateMainFolder() {
   function handleSelectFileExtension(data) {
     setFileExtension(data);
   }
+
+  useEffect(() => {
+    setTags(lowercaseTags);
+  }, [tagInputValues]);
+
+  useEffect(() => {
+    if (open.folder?.subFolderId) {
+      setSelectedMainFolder(open.folder.mainFolder);
+      setSelectValue(open.folder.mainFolder);
+      setDisableSelectInput(true);
+      setAccessory(open.folder.language.acc);
+      setFileExtension(open.folder.language.fileExtension);
+      setFolderName(open.folder.label);
+      setTags(open.folder.tags);
+    }
+  }, [open]);
 
   useEffect(() => {
     if (Object.keys(selectedMainFolder)?.length > 0) {
@@ -106,7 +123,7 @@ export default function CreateMainFolder() {
 
   useEffect(() => {
     if (Object.keys(language).length > 0) {
-      if (fileExtensions) {
+      if (!open.folder?.subFolder && fileExtensions) {
         setFileExtension(fileExtensions[0]);
 
         if (Object.keys(fileExtensions)?.length == 1) {
@@ -116,13 +133,9 @@ export default function CreateMainFolder() {
         }
       }
     }
-  }, [language, fileExtensions]);
+  }, [language, fileExtensions, open]);
 
-  useEffect(() => {
-    setTags(lowercaseTags);
-  }, [tagInputValues]);
-
-  console.log("language", language);
+  // console.log("language", language);
   // console.log("accessories", accessories);
   console.log("accessory", accessory);
   // console.log("fileExtensions", fileExtensions);
@@ -138,51 +151,90 @@ export default function CreateMainFolder() {
   // console.log("accessory.value", accessory.value);
   // console.log("accessory.accessoryId", accessory.value);
   // console.log("accessory.accessoryLangId", accessory.accessoryLangId);
+  // console.log("TAGSS", open?.folder);
 
   const createFolder = async (e) => {
     e.preventDefault();
-    if (language && folderName) {
-      setDisableBtn(true);
-      try {
-        await addDoc(
-          collection(db, "UsersData1", user?.uid, "CodeSubFolders"),
-          {
-            createdAt: serverTimestamp(),
-            rootDirectory: "sub",
-            folderSnippetType: "code",
-            label: folderName,
-            value: randomValue,
-            mainFolder: selectedMainFolder,
-            language: {
-              fileExtension: fileExtension,
-              acc:
-                Object.keys(accessory).length > 0
-                  ? {
-                      accId: accessory.accId,
-                      accsId: accessory.accsId,
-                      accsType: accessory.accsType,
-                      label: accessory.label,
-                      mainLang: language.label,
-                      mainValue: language.value,
-                      mainLangId: language.langId,
-                      value: accessory.value,
-                      classTree: `lang${language.langId}__accs${accessory.accsId}-acc${accessory.accId}`,
-                    }
-                  : {},
-            },
-            tags: tags,
-            userId: user.uid,
-          }
-        );
-        setOpen(false);
-        setUpdate(!update);
-      } catch (error) {
-        setDisableBtn(false);
+
+    if (!open.folder.subFolderId) {
+      if (language && folderName) {
+        setDisableBtn(true);
+        try {
+          await addDoc(
+            collection(db, "UsersData1", user?.uid, "CodeSubFolders"),
+            {
+              createdAt: serverTimestamp(),
+              rootDirectory: "sub",
+              folderSnippetType: "code",
+              label: folderName,
+              value: randomValue,
+              mainFolder: selectedMainFolder,
+              language: {
+                fileExtension: fileExtension,
+                acc:
+                  Object.keys(accessory).length > 0
+                    ? {
+                        accId: accessory.accId,
+                        accsId: accessory.accsId,
+                        accsType: accessory.accsType,
+                        label: accessory.label,
+                        mainLang: language.label,
+                        mainValue: language.value,
+                        mainLangId: language.langId,
+                        value: accessory.value,
+                        classTree: `lang${language.langId}__accs${accessory.accsId}-acc${accessory.accId}`,
+                      }
+                    : {},
+              },
+              tags: tags,
+              userId: user.uid,
+            }
+          );
+          setOpen(false);
+          setUpdate(!update);
+        } catch (error) {
+          setDisableBtn(false);
+        }
+      } else {
+        setDisableBtn(true);
+        try {
+          await updateDoc(
+            doc(
+              db,
+              "UsersData1",
+              user?.uid,
+              "CodeSubFolders",
+              open.folder.subFolderId
+            ),
+            {
+              updatedAt: serverTimestamp(),
+              label: folderName,
+              language: {
+                fileExtension: fileExtension,
+                acc: {
+                  accId: accessory.accId,
+                  accsId: accessory.accsId,
+                  accsType: accessory.accsType,
+                  label: accessory.label,
+                  classTree: `lang${language.langId}__accs${accessory.accsId}-acc${accessory.accId}`,
+                },
+              },
+              tags: tags,
+            }
+          );
+          setOpen(false);
+          setUpdate(!update);
+        } catch (error) {
+          setDisableBtn(false);
+        }
       }
-    } /* else {
+    }
+    /* else {
         setInputStatus("- skal udfyldes!");
       } */
   };
+
+  console.log("GOOD NIGHT");
 
   return (
     <div>
@@ -194,6 +246,7 @@ export default function CreateMainFolder() {
               setSelectValue={setSelectValue}
               setSelectSubValue={setSelectSubValue}
               setSelectedMainFolder={setSelectedMainFolder}
+              disableSelectInput={disableSelectInput}
             />
           </div>
 
@@ -245,6 +298,7 @@ export default function CreateMainFolder() {
                   underlined
                   placeholder="Mappe navn"
                   onChange={(e) => setFolderName(e.target.value)}
+                  value={folderName}
                   width="100%"
                   size="lg"
                   aria-label="Folder name"
@@ -315,12 +369,23 @@ export default function CreateMainFolder() {
                   <Text>Mappe tags</Text>
                 </div>
                 <div>
-                  <TagsInput
-                    value={tags}
-                    onChange={setTagInputValues}
-                    name="tags"
-                    placeHolder="Skriv og tryk ENTER"
-                  />
+                  {!open.folder?.subFolderId && (
+                    <TagsInput
+                      value={tags}
+                      onChange={setTagInputValues}
+                      name="tags"
+                      placeHolder="Skriv og tryk ENTER"
+                    />
+                  )}
+
+                  {open.folder?.subFolderId && (
+                    <TagsInput
+                      value={tags}
+                      onChange={setTagInputValues}
+                      name="tags"
+                      placeHolder="Skriv og tryk ENTER"
+                    />
+                  )}
                 </div>
               </div>
             </div>
@@ -331,9 +396,16 @@ export default function CreateMainFolder() {
           <Button auto light color="error" onClick={() => setOpen(false)}>
             Luk
           </Button>
-          <Button disabled={disableBtn} color="primary" auto type="submit">
-            Opret mappe
-          </Button>
+
+          {open.folder?.subFolderId ? (
+            <Button disabled={disableBtn} color="primary" auto type="submit">
+              Opdatere mappe
+            </Button>
+          ) : (
+            <Button disabled={disableBtn} color="primary" auto type="submit">
+              Opret mappe
+            </Button>
+          )}
         </div>
       </form>
     </div>

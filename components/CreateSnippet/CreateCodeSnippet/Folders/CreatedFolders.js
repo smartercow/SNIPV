@@ -5,12 +5,16 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import Select from "react-select";
 import { useRecoilState } from "recoil";
 import { createCodeFolderModalState } from "../../../../atoms/createCodeFolderModalAtom";
+import { mainFolderDeleteUpdateState } from "../../../../atoms/mainFolderDeleteUpdateState";
+import { mainFolderEditUpdateState } from "../../../../atoms/mainFolderEditUpdateState";
 import { updateStateAtom } from "../../../../atoms/updateStateAtom";
 import { auth, db } from "../../../../firebase/clientApp";
 import { FaFolderPlus } from "react-icons/fa";
 import { OptionFileExt, ValueFileExt } from "../../Select/SelectProps";
 import { NoOptionsMessage } from "../../Select/NoOptionsMessage";
 import CreatedSubFolders from "./CreatedSubFolders";
+import { AddNoteIcon } from "../../../SVG/AddNoteIcon";
+import MainFolderDropdown from "../../../Display/MainFolderDropdown";
 
 export default function CreatedFolders({
   setSelectedMainFolder,
@@ -21,20 +25,26 @@ export default function CreatedFolders({
   dataFetched,
   selectValue,
   setSelectValue,
-  setSelectSubValue
+  setSelectSubValue,
+  disableSelectInput,
 }) {
   const [folders, setFolders] = useState([]);
+  const [user] = useAuthState(auth);
 
   const [open, setOpen] = useRecoilState(createCodeFolderModalState);
+  const [mainDeleted, setMainDeleted] = useRecoilState(
+    mainFolderDeleteUpdateState
+  );
+
+  const [mainEdited, setMainEdited] = useRecoilState(mainFolderEditUpdateState);
+
   const [update, setUpdate] = useRecoilState(updateStateAtom);
 
   function handleSelect(data) {
-    setSelectValue(data)
+    setSelectValue(data);
     setSelectedMainFolder(data);
-    setSelectSubValue(null)
+    setSelectSubValue(null);
   }
-
-  const [user] = useAuthState(auth);
 
   useEffect(() => {
     if (!user) return;
@@ -51,7 +61,7 @@ export default function CreatedFolders({
       );
     };
     getFolders();
-  }, [user, update]);
+  }, [user, update, mainDeleted]);
 
   useEffect(() => {
     if (id) {
@@ -61,8 +71,22 @@ export default function CreatedFolders({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, dataFetched]);
 
-  // console.log("FOLDERS", folders);
-  // console.log("selectedMainFolder", selectedMainFolder);
+  useEffect(() => {
+    if (mainDeleted) {
+      setSelectValue(null);
+      setSelectedMainFolder({});
+      setMainDeleted(false);
+    }
+  }, [mainDeleted]);
+
+  useEffect(() => {
+      if (mainEdited) {
+        setSelectValue(null);
+        setSelectedMainFolder({});
+        setMainEdited(false)
+      }
+
+  }, [mainEdited]);
 
   return (
     <div>
@@ -79,6 +103,19 @@ export default function CreatedFolders({
             </div>
 
             <div className="flex gap-3 items-center">
+              <div>
+                <Text
+                  h3
+                  color="primary"
+                  onClick={() => {
+                    setOpen({ default: true, view: 0 });
+                  }}
+                  className="cursor-pointer pt-3"
+                >
+                  <AddNoteIcon size={30} fill="var(--nextui-colors-primary)" />
+                </Text>
+              </div>
+
               <div className="w-full">
                 <Select
                   options={folders}
@@ -86,8 +123,11 @@ export default function CreatedFolders({
                   value={selectValue}
                   onChange={handleSelect}
                   isSearchable={true}
+                  isDisabled={disableSelectInput}
                   menuPortalTarget={document.body}
-                  styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
+                  styles={{
+                    menuPortal: (base) => ({ ...base, zIndex: 9999 }),
+                  }}
                   components={{
                     NoOptionsMessage,
                     Option: OptionFileExt,
@@ -95,22 +135,18 @@ export default function CreatedFolders({
                   }}
                 />
               </div>
-              <div>
-                <Text
-                  h3
-                  color="primary"
-                  onClick={() => {setOpen({default: true, view: 0})}}
-                  className="cursor-pointer pt-3"
-                >
-                  <FaFolderPlus />
-                </Text>
+
+              <div className="w-40">
+                {selectedMainFolder?.mainFolderId && (
+                  <MainFolderDropdown selectedMainFolder={selectedMainFolder} />
+                )}
               </div>
             </div>
           </div>
         </div>
       ) : (
         <>
-          <div className="flex flex-col gap-1">
+          <div className="flex flex-col gap-2">
             <Text>
               Du har ingen rodmapper for kode SNIPS&nbsp;
               <Text color="error" b>
@@ -118,7 +154,15 @@ export default function CreatedFolders({
               </Text>
             </Text>
             <div>
-              <Button color="primary" auto onClick={() => {setOpen({default: true, view: 0})}}>
+              <Button
+                flat
+                color="primary"
+                size="sm"
+                auto
+                onClick={() => {
+                  setOpen({ default: true, view: 0 });
+                }}
+              >
                 Opret
               </Button>
             </div>

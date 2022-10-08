@@ -8,15 +8,17 @@ import CreateSubFolder from "./CreateSubFolder";
 
 const CreateFolder = () => {
   const tabOpen = useRecoilValue(createCodeFolderModalState)
+
+  console.log("tabOpen", tabOpen.folder);
   return (
     <div>
       <div>
         {tabOpen.view == 0 && (
-            <CreateMainFolder />
+            <CreateMainFolder selectedMainFolder={tabOpen.folder} />
         )}
 
         {tabOpen.view == 1 && (
-            <CreateSubFolder />
+            <CreateSubFolder /* selectedMainFolder={tabOpen.folder} *//>
         )}
       </div>
     </div>

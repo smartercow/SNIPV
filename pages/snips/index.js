@@ -35,8 +35,6 @@ const MySnippets = () => {
   const [update, setUpdate] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  const [allOpenStates, setAllOpenStates] = useState({});
-
   const getMyCodeSnippets = async () => {
     try {
       const snippetQuery = query(

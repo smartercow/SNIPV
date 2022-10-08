@@ -267,7 +267,7 @@ const CreateCodeSnippet = ({ id, setLoading, setDataError }) => {
                           </Text>
                         </div>
                         <div
-                          className={`${selectedSubFolder?.language.acc?.classTree} lBadge rounded-3xl flex justify-center items-center`}
+                          className={`${selectedSubFolder?.language?.acc?.classTree} lBadge rounded-3xl flex justify-center items-center`}
                         >
                           <p className="text-xs MonoHeading font-semibold lowercase">
                             {selectedSubFolder?.language?.acc?.label}
@@ -300,7 +300,7 @@ const CreateCodeSnippet = ({ id, setLoading, setDataError }) => {
                 setSelectSubValue={setSelectSubValue}
               />
 
-              {selectedMainFolder?.language?.langId > 0 && (
+              {selectedMainFolder?.language?.langId && (
                 <div>
                   <CreatedSubFolders
                     setSelectedSubFolder={setSelectedSubFolder}

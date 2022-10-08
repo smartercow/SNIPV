@@ -15,7 +15,7 @@ const CodeSnippetsCounter = ({ id }) => {
       const snippetsColRef = collection(db, "CodeSnippetsData1");
       const snippetsQuery = query(
         snippetsColRef,
-        where(new FieldPath("folder", "folderId"), "==", id)
+        where(new FieldPath("folder", "subFolderId"), "==", id)
       );
 
       onSnapshot(snippetsQuery, (snapshot) => {
@@ -36,7 +36,7 @@ const CodeSnippetsCounter = ({ id }) => {
     }
   }, [id]);
   return (
-    <div className="text-[#031b4eac]">
+    <div className="text-[#031b4eac] bg-[#ECF4FF] py-[.35rem] px-3 rounded-lg whitespace-nowrap">
       {thisFolderSnippets && (
         <div>
           {thisFolderSnippets.length > 1 && (

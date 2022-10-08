@@ -56,7 +56,7 @@ const Snippet = ({ snippet, handleDelete }) => {
 
                   <div className="w-full flex flex-col justify-center gap-3 MonoHeading">
                     <div className="w-full">
-                      <p className="text-[#031B4E] text-lg font-[500] truncateText">
+                      <p className="text-[#031B4E] text-[16px] font-[500] truncateText">
                         {snippet.title}
                       </p>
                     </div>

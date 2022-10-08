@@ -11,7 +11,7 @@ export const DeleteFolder = ({ id, handleDelete, setAllOpenStates }) => {
       const snippetsColRef = collection(db, "CodeSnippetsData1");
       const snippetsQuery = query(
         snippetsColRef,
-        where(new FieldPath("folder", "folderId"), "==", id)
+        where(new FieldPath("folder", "subFolderId"), "==", id)
       );
 
       onSnapshot(snippetsQuery, (snapshot) => {
@@ -39,6 +39,7 @@ export const DeleteFolder = ({ id, handleDelete, setAllOpenStates }) => {
   }, [thisFolderSnippets]);
 
   console.log("IDDD", id);
+  console.log("thisFolderSnippets", thisFolderSnippets);
 
   return (
     <Grid.Container

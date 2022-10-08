@@ -18,11 +18,19 @@ import NoUser from "../NoPage/NoUser";
 import { MdRefresh } from "react-icons/md";
 import LatestHeading from "../Heading/LatestHeading";
 import Snippet from "../Display/Snippet";
+import CodeSnippetsCounter from "../Folders/CodeFolders/CodeSnippetsCounter";
 
-const MyCodeSnippets = ({ selectedMainFolder, selectedSubFolder }) => {
+const MyCodeSnippets = ({
+  selectedMainFolder,
+  selectedSubFolder,
+  setSelectedSubFolder,
+  loadingMain,
+  setLoadingMain,
+}) => {
   const [user] = useAuthState(auth);
-  const [loading, setLoading] = useState(true);
-  const [myCodeSnippets, setMyCodeSnippets] = useState();
+  const [loading, setLoading] = useState(false);
+  const [loadingSub, setLoadingSub] = useState(false);
+  const [myCodeSnippets, setMyCodeSnippets] = useState([]);
   const [lastSnippet, setLastSnippet] = useState();
   const [update, setUpdate] = useState(false);
 
@@ -31,6 +39,8 @@ const MyCodeSnippets = ({ selectedMainFolder, selectedSubFolder }) => {
   const [isEmpty, setIsEmpty] = useState(false);
 
   const getMySnippets = async () => {
+    // setLoadingMain(false)
+    // setLoadingSub(true)
     try {
       const snippetQuery = query(
         collection(db, "CodeSnippetsData1"),
@@ -60,10 +70,10 @@ const MyCodeSnippets = ({ selectedMainFolder, selectedSubFolder }) => {
 
         setLastSnippet(lastDoc);
         setMyCodeSnippets(snippets);
-        setLoading(false);
+        setLoadingSub(false);
       } else {
         setIsEmpty(true);
-        setLoading(false);
+        setLoadingSub(false);
       }
     } catch (error) {
       console.log("getPosts error", error.message);
@@ -71,7 +81,7 @@ const MyCodeSnippets = ({ selectedMainFolder, selectedSubFolder }) => {
   };
 
   const fetchMore = async () => {
-    setLoading(true);
+    setLoadingSub(true);
     try {
       const snippetQuery = query(
         collection(db, "CodeSnippetsData1"),
@@ -94,10 +104,10 @@ const MyCodeSnippets = ({ selectedMainFolder, selectedSubFolder }) => {
         setLastSnippet(lastDoc);
 
         setMyCodeSnippets((prev) => [...prev, ...snippets]);
-        setLoading(false);
+        setLoadingSub(false);
       } else {
         setIsEmpty(true);
-        setLoading(false);
+        setLoadingSub(false);
       }
     } catch (error) {
       console.log("getPosts error", error.message);
@@ -105,11 +115,13 @@ const MyCodeSnippets = ({ selectedMainFolder, selectedSubFolder }) => {
   };
 
   useEffect(() => {
-    if (user) {
+    setMyCodeSnippets([]);
+
+    if (user && selectedSubFolder) {
       getMySnippets();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user, update, selectedSubFolder]);
+  }, [user, selectedSubFolder]);
 
   const handleDelete = async (id) => {
     try {
@@ -134,21 +146,19 @@ const MyCodeSnippets = ({ selectedMainFolder, selectedSubFolder }) => {
     });
   }, [truncate]);
 
-  // console.log("MY SNIPPETS", myCodeSnippets);
-
   return (
     <div className="min-h-[70vh] w-full">
-      {selectedMainFolder.mainFolderId ? (
+      {selectedSubFolder?.mainFolder?.mainFolderId && (
         <>
           <>
             <LatestHeading
-              headingType={`Kode SNIPS i mappen > ${selectedSubFolder.label}`}
+              headingType={`${selectedSubFolder.label}`}
             />
           </>
 
           <div className="w-full">
             <div className="flex flex-col gap-4">
-              {myCodeSnippets && (
+              {Object.keys(myCodeSnippets).length > 0 && (
                 <>
                   {myCodeSnippets?.map((snippet) => (
                     <Snippet
@@ -169,28 +179,34 @@ const MyCodeSnippets = ({ selectedMainFolder, selectedSubFolder }) => {
                 </>
               )}
 
-              {loading ? (
-                <div className="flex justify-center items-center h-[20vh]">
-                  <Loading size="lg" />
+              {loadingMain ? (
+                <div className="flex justify-center mt-10">
+                  <Text b size={13} transform="uppercase">
+                    Valg en undermappe!
+                  </Text>
                 </div>
               ) : (
                 <>
-                  {!myCodeSnippets?.length > 0 && (
-                    <div className="flex justify-center mt-10">
-                      <Text b size={13} transform="uppercase">
-                        Du har ingen kode SNIPS! 😔
-                      </Text>
+                  {loadingSub ? (
+                    <div className="flex justify-center items-center h-[20vh]">
+                      <Loading size="lg" />
                     </div>
+                  ) : (
+                    <>
+                      {!myCodeSnippets?.length > 0 && (
+                        <div className="flex justify-center mt-10">
+                          <Text b size={13} transform="uppercase">
+                            Du har ingen SNIPS i denne mappe! 😔
+                          </Text>
+                        </div>
+                      )}
+                    </>
                   )}
                 </>
               )}
             </div>
           </div>
         </>
-      ) : (
-        <div>
-          Valg mappe!
-        </div>
       )}
     </div>
   );

@@ -1,11 +1,18 @@
 import { Button, Input, Text } from "@nextui-org/react";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  serverTimestamp,
+  updateDoc,
+} from "firebase/firestore";
 import React, { useEffect, useMemo, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import Select from "react-select";
 import { TagsInput } from "react-tag-input-component";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { createCodeFolderModalState } from "../../../../atoms/createCodeFolderModalAtom";
+import { mainFolderEditUpdateState } from "../../../../atoms/mainFolderEditUpdateState";
 import { updateStateAtom } from "../../../../atoms/updateStateAtom";
 import { auth, db } from "../../../../firebase/clientApp";
 import { LanguageOptions } from "../../../../utilities/Language";
@@ -39,10 +46,19 @@ const initialSelectedLanguage = {
   ],
 };
 
-const CreateMainFolder = () => {
+const CreateMainFolder = ({ selectedMainFolder }) => {
   const [user] = useAuthState(auth);
   const setOpen = useSetRecoilState(createCodeFolderModalState);
+  const setEdit = useSetRecoilState(mainFolderEditUpdateState);
   const [update, setUpdate] = useRecoilState(updateStateAtom);
+
+  const [folderName, setFolderName] = useState("");
+  const randomValue = (Math.random() + 2).toString(36).substring(2);
+
+  const [language, setLanguage] = useState(initialSelectedLanguage);
+
+  const [disableBtn, setDisableBtn] = useState(true);
+  const [disableSelectInput, setDisableSelectInput] = useState(false);
 
   const sortedLanguageOptions = useMemo(
     () =>
@@ -51,13 +67,6 @@ const CreateMainFolder = () => {
       ),
     [LanguageOptions]
   );
-
-  const [folderName, setFolderName] = useState("");
-  const randomValue = (Math.random() + 2).toString(36).substring(2);
-
-  const [language, setLanguage] = useState(initialSelectedLanguage);
-
-  const [disableBtn, setDisableBtn] = useState(true);
 
   function handleSelectLanguage(data) {
     setLanguage(data);
@@ -71,41 +80,73 @@ const CreateMainFolder = () => {
     }
   }, [language, folderName]);
 
+  useEffect(() => {
+    if (selectedMainFolder?.mainFolderId) {
+      setDisableSelectInput(true);
+      setLanguage(selectedMainFolder.language);
+      setFolderName(selectedMainFolder.label);
+    }
+  }, [selectedMainFolder]);
+
   const createFolder = async (e) => {
     e.preventDefault();
     if (folderName) {
       setDisableBtn(true);
-      try {
-        await addDoc(
-          collection(db, "UsersData1", user?.uid, "CodeMainFolders"),
-          {
-            language: {
-              label: language.label,
-              value: language.value,
-              langId: language.langId,
-              accessory: language.accessory,
-              classTree: `lang${language.langId}`,
-              fileExtension: language.fileExtensions,
-            },
-            createdAt: serverTimestamp(),
-            rootDirectory: "main",
-            folderSnippetType: "code",
-            label: folderName,
-            value: randomValue,
-            userId: user.uid,
-          }
-        );
-        setOpen({ default: true, view: 1 }), setUpdate(!update);
-      } catch (error) {
-        setDisableBtn(false);
+
+      if (!selectedMainFolder?.mainFolderId) {
+        try {
+          await addDoc(
+            collection(db, "UsersData1", user?.uid, "CodeMainFolders"),
+            {
+              language: {
+                label: language.label,
+                value: language.value,
+                langId: language.langId,
+                accessory: language.accessory,
+                classTree: `lang${language.langId}`,
+                fileExtension: language.fileExtensions,
+              },
+              createdAt: serverTimestamp(),
+              rootDirectory: "main",
+              folderSnippetType: "code",
+              label: folderName,
+              value: randomValue,
+              userId: user.uid,
+            }
+          );
+          setOpen({ default: true, view: 1 }), setUpdate(!update);
+        } catch (error) {
+          setDisableBtn(false);
+        }
+      } else {
+        try {
+          await updateDoc(
+            doc(
+              db,
+              "UsersData1",
+              user?.uid,
+              "CodeMainFolders",
+              selectedMainFolder.mainFolderId
+            ),
+            {
+              updatedAt: serverTimestamp(),
+              label: folderName,
+            }
+          );
+        } catch (error) {
+          setDisableBtn(false);
+        } finally {
+          setOpen(false), setUpdate(!update), setEdit({default: true, folder: selectedMainFolder});
+        }
       }
     } /* else {
       setInputStatus("- skal udfyldes!");
     } */
   };
 
-  console.log("language", language);
+  // console.log("language", language);
   // console.log("folderName", folderName);
+  // console.log("MODALselectedMainFolder", selectedMainFolder);
 
   return (
     <div>
@@ -126,6 +167,7 @@ const CreateMainFolder = () => {
               onChange={(e) => setFolderName(e.target.value)}
               width="100%"
               size="lg"
+              value={folderName}
               aria-label="Folder name"
             />
           </div>
@@ -140,6 +182,7 @@ const CreateMainFolder = () => {
                 placeholder="Søg og valg"
                 value={language}
                 onChange={handleSelectLanguage}
+                isDisabled={disableSelectInput}
                 isSearchable={true}
                 className="w-full"
                 aria-label="Select"
@@ -156,9 +199,15 @@ const CreateMainFolder = () => {
             <Button auto light color="error" onClick={() => setOpen(false)}>
               Luk
             </Button>
-            <Button disabled={disableBtn} color="primary" auto type="submit">
-              Opret mappe
-            </Button>
+            {selectedMainFolder?.mainFolderId ? (
+              <Button disabled={disableBtn} color="primary" auto type="submit">
+                Opdatere
+              </Button>
+            ) : (
+              <Button disabled={disableBtn} color="primary" auto type="submit">
+                Opret
+              </Button>
+            )}
           </div>
         </div>
       </form>

@@ -20,6 +20,8 @@ import { useRecoilState } from "recoil";
 import SetUsernameModal from "../components/Modals/SetUsernameModal";
 import { useRouter } from "next/router";
 import LoadingState from "../components/LoadingState";
+import DeleteCodeSubFolderModal from "../components/Modals/DeleteCodeSubFolderModal";
+import DeleteCodeMainFolderModal from "../components/Modals/DeleteCodeMainFolderModal";
 
 const ProtectedRoutes = [
   "/snips",
@@ -119,6 +121,8 @@ const ClientLayout = ({ children, user }) => {
       <CreateErrorFolderModal />
       <SetUsernameModal />
       <LoginModal />
+      <DeleteCodeMainFolderModal />
+      <DeleteCodeSubFolderModal />
     </div>
   );
 };

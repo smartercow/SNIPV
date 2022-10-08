@@ -34,7 +34,7 @@ const Feed = ({ snippet }) => {
                   </div>
                   <div className="w-full ">
                     <div className="uppercase">
-                      <p className="font-semibold">Seneste snippet</p>
+                      <p className="font-semibold">Seneste SNIPS</p>
                     </div>
                   </div>
                 </div>
