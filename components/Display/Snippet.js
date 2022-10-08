@@ -122,25 +122,29 @@ const Snippet = ({ snippet, handleDelete }) => {
           </Card>
         </div>
       </Link>
+
       <div className="hoverable-show flex flex-col gap-1 justify-center items-center">
-        <div>
-          <a
-            href={
-              snippet.snippetType == "code"
-                ? `/upsert/code/${snippet.id}`
-                : `/upsert/error/${snippet.id}`
-            }
-          >
-            <Button auto light>
-              <EditDocumentIcon
-                fill="#0072F5"
-                className="cursor-pointer"
-                width={26}
-                height={26}
-              />
-            </Button>
-          </a>
-        </div>
+        {snippet.folder.subFolderId && (
+          <div>
+            <a
+              href={
+                snippet.snippetType == "code"
+                  ? `/upsert/code/${snippet.id}`
+                  : `/upsert/error/${snippet.id}`
+              }
+            >
+              <Button auto light>
+                <EditDocumentIcon
+                  fill="#0072F5"
+                  className="cursor-pointer"
+                  width={26}
+                  height={26}
+                />
+              </Button>
+            </a>
+          </div>
+        )}
+
         <div>
           <Popover
             placement="bottom"

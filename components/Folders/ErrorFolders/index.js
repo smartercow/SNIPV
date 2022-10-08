@@ -25,7 +25,6 @@ const ErrorFolders = ({ myErrorFolders, loading, update, setUpdate }) => {
     }
   };
 
-  console.log(myErrorFolders);
   return (
     <div>
       {myErrorFolders && (

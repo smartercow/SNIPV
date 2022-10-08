@@ -25,6 +25,10 @@ export default function MainFolderDropdown({ selectedMainFolder }) {
         >
           <Text
             aria-label="Redigere"
+            color="primary"
+            b
+            size={12}
+            transform="uppercase"
             onClick={() => setOpen({ default: true, view: 0, folder: selectedMainFolder })}
           >
             Redigere mappe
@@ -40,7 +44,10 @@ export default function MainFolderDropdown({ selectedMainFolder }) {
           <Text
             aria-label="Slet"
             color="error"
-            onClick={() => setMainOpen({ default: true, id: selectedMainFolder.mainFolderId })}
+            b
+            size={12}
+            transform="uppercase"
+            onClick={() => setMainOpen({ default: true, id: selectedMainFolder?.mainFolderId })}
           >
             Slet mappe
           </Text>

@@ -12,8 +12,7 @@ const RootAccessory = ({
   handleSelectFramework,
   handleSelectProcessor,
 }) => {
-/*   console.log("language", language);
-  console.log("framework", framework); */
+
   return (
     <div>
       {(language?.langId === "54" || language?.langId === "127") && (

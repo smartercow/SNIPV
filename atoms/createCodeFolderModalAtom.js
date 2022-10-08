@@ -5,4 +5,5 @@ export const createCodeFolderModalState = atom({
   default: false,
   view: 0,
   folder: {},
+  main: false,
 });

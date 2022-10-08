@@ -6,6 +6,7 @@ import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useRecoilState } from "recoil";
 import { mainFolderDeleteUpdateState } from "../../atoms/mainFolderDeleteUpdateState";
+import { mainFolderEditUpdateState } from "../../atoms/mainFolderEditUpdateState";
 import CodeFolders from "../../components/Folders/CodeFolders";
 import { SnippetsTypeLinks } from "../../components/Heading/SnippetsType";
 import MyCodeSnippets from "../../components/MySnippets/MyCodeSnippets";
@@ -18,6 +19,8 @@ const Codes = () => {
 
   const [update, setUpdate] = useState(false);
   const [mainDeleted, setMainDeleted] = useRecoilState(mainFolderDeleteUpdateState);
+  const [mainEdited, setMainEdited] = useRecoilState(mainFolderEditUpdateState);
+
 
   const [selectedMainFolder, setSelectedMainFolder] = useState();
   const [selectedSubFolder, setSelectedSubFolder] = useState([]);
@@ -36,9 +39,7 @@ const Codes = () => {
     };
 
     getFolders();
-  }, [user, mainDeleted]);
-
-  console.log("selectedSubFolder", selectedSubFolder);
+  }, [user, mainDeleted, mainEdited]);
 
   return (
     <div className="min-h-[70vh] w-full">

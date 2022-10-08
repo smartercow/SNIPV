@@ -1,5 +1,6 @@
 import { components } from "react-select";
 import FileExtension from "../../Display/FileExtension";
+import CodeFoldersCounter from "../../Folders/CodeFolders/CodeFoldersCounter";
 import CodeSnippetsCounter from "../../Folders/CodeFolders/CodeSnippetsCounter";
 
 const { Option, SingleValue } = components;
@@ -7,11 +8,17 @@ const { Option, SingleValue } = components;
 export const OptionFileExt = (props) => (
   <Option {...props}>
     <div className="flex items-center gap-2">
-      {props.data.subFolderId && (
+      {props.data?.rootDirectory == "main" && (
+        <CodeFoldersCounter id={props.data.mainFolderId} />
+      )}
+
+      {props.data?.subFolderId && (
         <CodeSnippetsCounter id={props.data.subFolderId} />
       )}
 
-      <div className="w-full font-semibold text-[14px]">{props.data?.label}</div>
+      <div className="w-full font-semibold text-[14px]">
+        {props.data?.label}
+      </div>
 
       {props.data.language?.fileExtension?.label && (
         <div className="fileExtBadge bg-[#ECF4FF] rounded-3xl flex justify-center items-center">
@@ -47,11 +54,17 @@ export const OptionFileExt = (props) => (
 export const ValueFileExt = (props) => (
   <SingleValue {...props}>
     <div className="flex items-center gap-2">
+      {props.data?.rootDirectory == "main" && (
+        <CodeFoldersCounter id={props.data.mainFolderId} />
+      )}
+
       {props.data.subFolderId && (
         <CodeSnippetsCounter id={props.data.subFolderId} />
       )}
 
-      <div className="w-full font-semibold text-[14px]">{props.data?.label}</div>
+      <div className="w-full font-semibold text-[14px]">
+        {props.data?.label}
+      </div>
 
       {props.data.language?.fileExtension?.label && (
         <div className="fileExtBadge bg-[#ECF4FF] rounded-3xl flex justify-center items-center">

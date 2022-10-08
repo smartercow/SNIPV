@@ -25,6 +25,10 @@ export default function SubFolderDropdown({ selectedSubFolder }) {
         >
           <Text
             aria-label="Slet"
+            color="primary"
+            b
+            size={12}
+            transform="uppercase"
             onClick={() =>
               setOpen({ default: true, view: 1, folder: selectedSubFolder })
             }
@@ -42,7 +46,10 @@ export default function SubFolderDropdown({ selectedSubFolder }) {
           <Text
             aria-label="Slet"
             color="error"
-            onClick={() => setSubOpen({ default: true, id: selectedSubFolder.subFolderId })}
+            b
+            size={12}
+            transform="uppercase"
+            onClick={() => setSubOpen({ default: true, id: selectedSubFolder?.subFolderId })}
           >
             Slet mappe
           </Text>

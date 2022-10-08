@@ -114,7 +114,7 @@ const CreateMainFolder = ({ selectedMainFolder }) => {
               userId: user.uid,
             }
           );
-          setOpen({ default: true, view: 1 }), setUpdate(!update);
+          setOpen(false), setUpdate(!update);
         } catch (error) {
           setDisableBtn(false);
         }
@@ -143,10 +143,6 @@ const CreateMainFolder = ({ selectedMainFolder }) => {
       setInputStatus("- skal udfyldes!");
     } */
   };
-
-  // console.log("language", language);
-  // console.log("folderName", folderName);
-  // console.log("MODALselectedMainFolder", selectedMainFolder);
 
   return (
     <div>

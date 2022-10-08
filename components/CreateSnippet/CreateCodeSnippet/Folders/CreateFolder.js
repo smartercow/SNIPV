@@ -9,7 +9,6 @@ import CreateSubFolder from "./CreateSubFolder";
 const CreateFolder = () => {
   const tabOpen = useRecoilValue(createCodeFolderModalState)
 
-  console.log("tabOpen", tabOpen.folder);
   return (
     <div>
       <div>

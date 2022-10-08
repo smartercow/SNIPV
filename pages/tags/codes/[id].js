@@ -27,8 +27,6 @@ const CodeTagPage = () => {
   const [codeTagSnippetsSearch, setCodeTagSnippetsSearch] = useState();
   const [loading, setLoading] = useState(true);
 
-  console.log("QUERY", id);
-
   const getMySnippets = async () => {
     try {
       const snippetQuery = query(
@@ -56,7 +54,6 @@ const CodeTagPage = () => {
     }
   }, [user]);
 
-  console.log(codeTagSnippetsSearch);
   return (
     <div className="min-h-[70vh]">
       {user && (

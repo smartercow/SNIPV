@@ -11,25 +11,27 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import Select from "react-select";
 import { auth, db } from "../../../../firebase/clientApp";
 import { LanguageOptions } from "../../../../utilities/Language";
-import { BsQuestionCircleFill } from "react-icons/bs";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { createCodeFolderModalState } from "../../../../atoms/createCodeFolderModalAtom";
+import { subFolderEditUpdateState } from "../../../../atoms/subFolderEditUpdateState";
 import { updateStateAtom } from "../../../../atoms/updateStateAtom";
 import { NoOptionsMessage } from "../../Select/NoOptionsMessage";
 import { TagsInput } from "react-tag-input-component";
-import CreatedFolders from "./CreatedFolders";
 
 export default function CreateMainFolder() {
   const [user] = useAuthState(auth);
   const [open, setOpen] = useRecoilState(createCodeFolderModalState);
   const [update, setUpdate] = useRecoilState(updateStateAtom);
 
+    const [subEdited, setSubEdited] = useRecoilState(
+      subFolderEditUpdateState
+  );
+
   const [folderName, setFolderName] = useState("");
 
   const [disableExtSelect, setDisableExtSelect] = useState(false);
   const [disableAccSelect, setDisableAccSelect] = useState(false);
   const [disableBtn, setDisableBtn] = useState(true);
-  const [disableSelectInput, setDisableSelectInput] = useState(false);
 
   const [language, setLanguage] = useState([]);
   const [accessories, setAccessories] = useState([]);
@@ -42,9 +44,6 @@ export default function CreateMainFolder() {
 
   const [tags, setTags] = useState([]);
   const [tagInputValues, setTagInputValues] = useState([]);
-
-  const [selectValue, setSelectValue] = useState([]);
-  const [selectSubValue, setSelectSubValue] = useState([]);
 
   const lowercaseTags = tagInputValues.map((element) => {
     return element.toLowerCase();
@@ -67,12 +66,12 @@ export default function CreateMainFolder() {
   useEffect(() => {
     if (open.folder?.subFolderId) {
       setSelectedMainFolder(open.folder.mainFolder);
-      setSelectValue(open.folder.mainFolder);
-      setDisableSelectInput(true);
       setAccessory(open.folder.language.acc);
       setFileExtension(open.folder.language.fileExtension);
       setFolderName(open.folder.label);
       setTags(open.folder.tags);
+    } else {
+      setSelectedMainFolder(open.folder);
     }
   }, [open]);
 
@@ -135,24 +134,6 @@ export default function CreateMainFolder() {
       }
     }
   }, [language, fileExtensions, open]);
-
-  // console.log("language", language);
-  // console.log("accessories", accessories);
-  // console.log("accessory", accessory);
-  // console.log("fileExtensions", fileExtensions);
-  // console.log("fileExtension", fileExtension);
-  // console.log("addAccessory", addAccessory);
-  // console.log("folderName", folderName);
-  // console.log("disableExtSelect", disableExtSelect);
-  // console.log("fileExtensionsObject", Object.keys(fileExtensions).length);
-  // console.log("SELECTED MAIN", selectedMainFolder);
-  // console.log("accessory.label", accessory.label);
-  // console.log("accessory.langId", accessory.langId);
-  // console.log("language.langId", language.langId);
-  // console.log("accessory.value", accessory.value);
-  // console.log("accessory.accessoryId", accessory.value);
-  // console.log("accessory.accessoryLangId", accessory.accessoryLangId);
-  // console.log("TAGSS", open?.folder);
 
   const createFolder = async (e) => {
     e.preventDefault();
@@ -228,6 +209,7 @@ export default function CreateMainFolder() {
             tags: tags,
           }
         );
+        setSubEdited(true)
       } catch (error) {
         setDisableBtn(false);
       } finally {
@@ -241,30 +223,19 @@ export default function CreateMainFolder() {
       } */
   };
 
-  // console.log("folderName>", folderName);
-  // console.log("open.folder.subFolderId>", open.folder.subFolderId);
-  // console.log("fileExtension>", fileExtension);
-  // console.log("accessory.accId>", accessory.accId);
-  // console.log("accessory.accsType>", accessory.accsType);
-  // console.log("accessory.label>", accessory.label);
-  // console.log(
-  //   "classTree>",
-  //   `lang${language.langId}__accs${accessory.accsId}-acc${accessory.accId}`
-  // );
-  // console.log("tags>", tags);
-
   return (
     <div>
       <form onSubmit={createFolder}>
         <div className="flex flex-col gap-2">
-          <div>
-            <CreatedFolders
-              selectValue={selectValue}
-              setSelectValue={setSelectValue}
-              setSelectSubValue={setSelectSubValue}
-              setSelectedMainFolder={setSelectedMainFolder}
-              disableSelectInput={disableSelectInput}
-            />
+          <div className="flex gap-2 items-center">
+            <Text h6 size={13} transform="uppercase">
+              Rodmappe:
+            </Text>
+            <div>
+              <Text h6 transform="uppercase">
+                {selectedMainFolder?.label}
+              </Text>
+            </div>
           </div>
 
           {Object.keys(selectedMainFolder).length > 0 && (
@@ -381,7 +352,7 @@ export default function CreateMainFolder() {
                 )}
               </div>
 
-              <div>
+              <div className="flex flex-col gap-1">
                 <div>
                   <Text>Mappe tags</Text>
                 </div>

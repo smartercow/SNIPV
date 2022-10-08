@@ -1,6 +1,6 @@
 import React from "react";
 import { createCodeFolderModalState } from "../../atoms/createCodeFolderModalAtom";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { Modal, Text } from "@nextui-org/react";
 import CreateFolder from "../CreateSnippet/CreateCodeSnippet/Folders/CreateFolder";
 

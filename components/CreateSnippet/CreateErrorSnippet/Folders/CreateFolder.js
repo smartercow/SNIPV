@@ -6,11 +6,12 @@ import CreateSubFolder from "./CreateSubFolder";
 
 const CreateFolder = () => {
   const tabOpen = useRecoilValue(createErrorFolderModalState)
+
   return (
     <div>
       <div>
         {tabOpen.view == 0 && (
-            <CreateMainFolder />
+            <CreateMainFolder selectedMainFolder={tabOpen.folder} />
         )}
 
         {tabOpen.view == 1 && (

@@ -38,9 +38,6 @@ export const DeleteFolder = ({ id, handleDelete, setAllOpenStates }) => {
     }
   }, [thisFolderSnippets]);
 
-  console.log("IDDD", id);
-  console.log("thisFolderSnippets", thisFolderSnippets);
-
   return (
     <Grid.Container
       css={{ borderRadius: "14px", padding: "0.75rem", maxWidth: "330px" }}

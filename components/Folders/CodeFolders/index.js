@@ -28,6 +28,8 @@ import { useRecoilState } from "recoil";
 import { subFolderDeleteUpdateState } from "../../../atoms/subFolderDeleteUpdateState";
 import { mainFolderDeleteUpdateState } from "../../../atoms/mainFolderDeleteUpdateState";
 import MainFolderDropdown from "../../Display/MainFolderDropdown";
+import { mainFolderEditUpdateState } from "../../../atoms/mainFolderEditUpdateState";
+import { subFolderEditUpdateState } from "../../../atoms/subFolderEditUpdateState";
 
 const CodeFolders = ({
   folders,
@@ -41,22 +43,18 @@ const CodeFolders = ({
   setSelectedSubFolder,
 }) => {
   const [user] = useAuthState(auth);
-  // const [loading, setLoading] = useState(true);
+
+  const [mainDeleted, setMainDeleted] = useRecoilState(mainFolderDeleteUpdateState);
   const [subDeleted, setSubDeleted] = useRecoilState(
     subFolderDeleteUpdateState
   );
-  const [mainDeleted, setMainDeleted] = useRecoilState(mainFolderDeleteUpdateState);
+  const [mainEdited, setMainEdited] = useRecoilState(mainFolderEditUpdateState);
+  const [subEdited, setSubEdited] = useRecoilState(subFolderEditUpdateState);
 
   const [subFolders, setSubFolders] = useState([]);
 
   const [selectValue, setSelectValue] = useState();
   const [selectSubValue, setSelectSubValue] = useState({});
-
-  const [updateSub, setUpdateSub] = useState(false);
-
-  const [loading, setLoading] = useState(true);
-
-  const [allOpenStates, setAllOpenStates] = useState({});
 
   function handleMainSelect(data) {
     setSelectValue(data);
@@ -72,40 +70,24 @@ const CodeFolders = ({
     setLoadingMain(false);
   }
 
-  const handleDeleteMainFolders = async (id) => {
-    try {
-      await deleteDoc(doc(db, "UsersData1", user?.uid, "CodeMainFolders", id));
-      setUpdate(!update);
-    } catch (error) {
-      console.log("Fejl i sletning!", error.message);
-    }
-  };
-
-  const handleDeleteSubFolders = async (id) => {
-    try {
-      await deleteDoc(doc(db, "UsersData1", user?.uid, "CodeSubFolders", id));
-    } catch (error) {
-      console.log("Fejl i sletning!", error.message);
-    }
-  };
-
   useEffect(() => {
-    if (subDeleted) {
-      // setUpdateSub(!updateSub);
-      setSelectSubValue(null);
-      setSelectedSubFolder({});
-      setSubDeleted(false);
-    }
-  }, [subDeleted]);
-
-  useEffect(() => {
-    if (mainDeleted) {
-      // setUpdateSub(!updateSub);
+    if (mainEdited || mainDeleted) {
       setSelectValue(null);
       setSelectedMainFolder({});
+      setMainEdited(false)
       setMainDeleted(false);
     }
-  }, [mainDeleted]);
+  }, [mainEdited, mainDeleted]);
+  
+  useEffect(() => {
+    if (subEdited || subDeleted) {
+      setSelectSubValue(null);
+      setSelectedSubFolder({});
+      setSubEdited(false)
+      setSubDeleted(false);
+    }
+  }, [subEdited, subDeleted]);
+
 
   useEffect(() => {
     if (!user) return;
@@ -126,11 +108,7 @@ const CodeFolders = ({
       };
       getFolders();
     }
-  }, [user, selectedMainFolder, updateSub]);
-
-  console.log("selectedMainFolder", selectedMainFolder);
-  // console.log("subFolders", subFolders);
-  // console.log("selectedSubFolder", selectedSubFolder);
+  }, [user, selectedMainFolder, subEdited, subDeleted]);
 
   return (
     <div>
@@ -158,9 +136,9 @@ const CodeFolders = ({
               />
             </div>
 
-            <div className="w-40">
+            <div className="w-10">
               {selectedMainFolder?.mainFolderId && (
-                <MainFolderDropdown id={selectedMainFolder.mainFolderId} />
+                <MainFolderDropdown selectedMainFolder={selectedMainFolder} />
               )}
             </div>
           </div>
@@ -190,9 +168,9 @@ const CodeFolders = ({
                 />
               </div>
 
-              <div className="w-40">
+              <div className="w-10">
                 {selectedSubFolder.subFolderId && (
-                  <SubFolderDropdown id={selectedSubFolder.subFolderId} />
+                  <SubFolderDropdown selectedSubFolder={selectedSubFolder} />
                 )}
               </div>
             </div>

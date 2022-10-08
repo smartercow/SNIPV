@@ -131,14 +131,6 @@ const AdditionalFileExt = () => {
     </SingleValue>
   );
 
-  // console.log("AdditionalFileExtensions", AdditionalFileExtensions1);
-/*   console.log("language", language);
-  console.log("accessories", accessories);
-  console.log("accessory", accessory); */
-  // console.log("accessory[0]", accessory[0]?.options[0]);
-  // console.log("EXTTTT", ext);
-  // console.log("defaultExt", defaultExt);
-
   return (
     <div>
       <p>Main</p>

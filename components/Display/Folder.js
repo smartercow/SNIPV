@@ -7,13 +7,11 @@ import { DeleteDocumentIcon } from "../SVG/DeleteDocumentIcon";
 import { EditDocumentIcon } from "../SVG/EditDocumentIcon";
 import { FolderIcon } from "../SVG/FolderIcon";
 import { LoginIcon } from "../SVG/LoginIcon";
-import LanguageBadge from "./LanguageBadge";
 import { excerpt } from "../../utilities/excerpt";
 
 const Folder = ({ folder, handleDelete }) => {
   const [allOpenStates, setAllOpenStates] = useState({});
 
-  console.log("folder", folder);
   return (
     <div>
       <div key={folder.id} className="hoverable-item flex gap-2">

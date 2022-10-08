@@ -12,10 +12,10 @@ const Nav = () => {
       titel: "Snips",
       link: "/snips",
     },
-    {
+/*     {
       titel: "Mapper",
       link: "/folders",
-    },
+    }, */
     {
       titel: "Tags",
       link: "/tags",
@@ -58,13 +58,13 @@ const Nav = () => {
           })}
         </ul>
       </div>
-      <div>
+{/*       <div>
         <Link href="/search">
           <Text className="cursor-pointer">
             <BsSearch />
           </Text>
         </Link>
-      </div>
+      </div> */}
     </div>
   );
 };

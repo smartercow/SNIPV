@@ -27,13 +27,11 @@ const SnippetPage = ({ snippet }) => {
   const handleDelete = async (id) => {
     try {
       await deleteDoc(doc(db, "CodeSnippetsData1", id));
-      router.push("/snips/codes");
+      router.push("/snips");
     } catch (error) {
-      console.log("Fejl i sletning!", error.message);
+      console.log("Fejl i sletning af SNIP!", error.message);
     }
   };
-
-  console.log("snippet", snippet);
 
   return (
     <div className="flex flex-col gap-4">
@@ -76,9 +74,9 @@ const SnippetPage = ({ snippet }) => {
                   </Popover.Trigger>
                   <Popover.Content>
                     <DeleteCodeSnippetNoMap
+                    id={id}
                       handleDelete={handleDelete}
                       setDeleteConfirm={setDeleteConfirm}
-                      id={snippet.id}
                     />
                   </Popover.Content>
                 </Popover>

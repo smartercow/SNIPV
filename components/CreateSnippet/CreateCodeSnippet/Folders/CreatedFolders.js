@@ -1,4 +1,4 @@
-import { Button, Text } from "@nextui-org/react";
+import { Button, Loading, Text } from "@nextui-org/react";
 import { collection, getDoc, getDocs, query, where } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -22,14 +22,14 @@ export default function CreatedFolders({
   setSelectedSubFolder,
   selectedSubFolder,
   id,
-  dataFetched,
   selectValue,
   setSelectValue,
   setSelectSubValue,
   disableSelectInput,
 }) {
-  const [folders, setFolders] = useState([]);
   const [user] = useAuthState(auth);
+  const [folders, setFolders] = useState([]);
+  const [mainLoading, setMainLoading] = useState(true);
 
   const [open, setOpen] = useRecoilState(createCodeFolderModalState);
   const [mainDeleted, setMainDeleted] = useRecoilState(
@@ -44,11 +44,15 @@ export default function CreatedFolders({
     setSelectValue(data);
     setSelectedMainFolder(data);
     setSelectSubValue(null);
-    // setSelectedSubFolder({})
+
+    if (!open) {
+      setSelectedSubFolder({});
+    }
   }
 
   useEffect(() => {
     if (!user) return;
+    setMainLoading(true);
     const folderColRef = collection(
       db,
       "UsersData1",
@@ -60,17 +64,10 @@ export default function CreatedFolders({
       setFolders(
         userData.docs.map((doc) => ({ ...doc.data(), mainFolderId: doc.id }))
       );
+      setMainLoading(false);
     };
     getFolders();
   }, [user, update, mainDeleted]);
-
-  useEffect(() => {
-    if (id) {
-      setSelectValue(setSelectedMainFolder);
-      setUpdate(!update);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, dataFetched]);
 
   useEffect(() => {
     if (mainDeleted) {
@@ -81,94 +78,106 @@ export default function CreatedFolders({
   }, [mainDeleted]);
 
   useEffect(() => {
-      if (mainEdited) {
-        setSelectValue(null);
-        setSelectedMainFolder({});
-        setMainEdited(false)
-      }
-
+    if (mainEdited) {
+      setSelectValue(null);
+      setSelectedMainFolder({});
+      setMainEdited(false);
+    }
   }, [mainEdited]);
 
   return (
     <div>
-      {folders.length > 0 ? (
-        <div>
-          <div className="flex flex-col">
-            <div className="w-20">
-              <Text h6 transform="uppercase">
-                Rodmappe&nbsp;
-                <Text color="error" b>
-                  *
-                </Text>
-              </Text>
-            </div>
-
-            <div className="flex gap-3 items-center">
-              <div>
-                <Text
-                  h3
-                  color="primary"
-                  onClick={() => {
-                    setOpen({ default: true, view: 0 });
-                  }}
-                  className="cursor-pointer pt-3"
-                >
-                  <AddNoteIcon size={30} fill="var(--nextui-colors-primary)" />
-                </Text>
-              </div>
-
-              <div className="w-full">
-                <Select
-                  options={folders}
-                  placeholder="Valg en rodmappe"
-                  value={selectValue}
-                  onChange={handleSelect}
-                  isSearchable={true}
-                  isDisabled={disableSelectInput}
-                  menuPortalTarget={document.body}
-                  styles={{
-                    menuPortal: (base) => ({ ...base, zIndex: 9999 }),
-                  }}
-                  components={{
-                    NoOptionsMessage,
-                    Option: OptionFileExt,
-                    SingleValue: ValueFileExt,
-                  }}
-                />
-              </div>
-
-              <div className="w-10">
-                {selectedMainFolder?.mainFolderId && (
-                  <MainFolderDropdown selectedMainFolder={selectedMainFolder} />
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-      ) : (
+      {!mainLoading && (
         <>
-          <div className="flex flex-col gap-2">
-            <Text>
-              Du har ingen rodmapper for kode SNIPS&nbsp;
-              <Text color="error" b>
-                *
-              </Text>
-            </Text>
-            <div>
-              <Button
-                flat
-                color="primary"
-                size="sm"
-                auto
-                onClick={() => {
-                  setOpen({ default: true, view: 0 });
-                }}
-              >
-                Opret
-              </Button>
-            </div>
+          <div>
+            {folders.length > 0 ? (
+              <div className="flex flex-col">
+                <div className="w-20">
+                  <Text h6 transform="uppercase">
+                    Rodmappe&nbsp;
+                    <Text color="error" b>
+                      *
+                    </Text>
+                  </Text>
+                </div>
+
+                <div className="flex gap-3 items-center w-full">
+                  <div>
+                    <Text
+                      h3
+                      color="primary"
+                      onClick={() => {
+                        setOpen({ default: true, view: 0 });
+                      }}
+                      className="cursor-pointer pt-3"
+                    >
+                      <AddNoteIcon
+                        size={30}
+                        fill="var(--nextui-colors-primary)"
+                      />
+                    </Text>
+                  </div>
+
+                  <div className="w-full">
+                    <Select
+                      options={folders}
+                      placeholder="Valg en rodmappe"
+                      value={selectValue}
+                      onChange={handleSelect}
+                      isSearchable={true}
+                      isDisabled={disableSelectInput}
+                      menuPortalTarget={document.body}
+                      styles={{
+                        menuPortal: (base) => ({ ...base, zIndex: 9999 }),
+                      }}
+                      components={{
+                        NoOptionsMessage,
+                        Option: OptionFileExt,
+                        SingleValue: ValueFileExt,
+                      }}
+                    />
+                  </div>
+
+                  <div className="w-10">
+                    {selectedMainFolder?.mainFolderId && (
+                      <MainFolderDropdown
+                        selectedMainFolder={selectedMainFolder}
+                      />
+                    )}
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <>
+                <div className="flex flex-col gap-2">
+                  <Text b size={13} transform="uppercase">
+                    Du har ingen rodmapper for kode SNIPS&nbsp;
+                  </Text>
+
+                  <div>
+                    <Button
+                      flat
+                      color="primary"
+                      size="sm"
+                      auto
+                      onClick={() => {
+                        setOpen({ default: true, view: 0 });
+                      }}
+                    >
+                      Opret
+                    </Button>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
         </>
+      )}
+
+      {mainLoading && (
+        <div className="flex justify-center items-center h-20">
+          <Loading size="md" />
+        </div>
       )}
     </div>
   );
