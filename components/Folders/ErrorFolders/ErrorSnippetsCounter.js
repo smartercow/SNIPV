@@ -15,7 +15,7 @@ const ErrorSnippetsCounter = ({ id }) => {
       const snippetsColRef = collection(db, "ErrorSnippetsData1");
       const snippetsQuery = query(
         snippetsColRef,
-        where(new FieldPath("folder", "folderId"), "==", id)
+        where(new FieldPath("folder", "subFolderId"), "==", id)
       );
 
       onSnapshot(snippetsQuery, (snapshot) => {
@@ -26,7 +26,7 @@ const ErrorSnippetsCounter = ({ id }) => {
         setThisFolderSnippets(snippets);
       });
     } catch (error) {
-      console.log("Get snippet data error", error.message);
+      console.log("Get snippets error", error.message);
     }
   };
 
@@ -35,25 +35,28 @@ const ErrorSnippetsCounter = ({ id }) => {
       getThisFolderSnippets();
     }
   }, [id]);
-
   return (
-    <div className="text-[#031b4eac]">
+    <div className="text-[#031b4eac] bg-[#ECF4FF] py-[.35rem] px-3 rounded-lg whitespace-nowrap">
       {thisFolderSnippets && (
         <div>
-          {thisFolderSnippets.length > 1 && (
+          {thisFolderSnippets.length > 0 ? (
             <div className="flex gap-1 items-center">
               <div>
                 <p className="text-xs font-bold">{thisFolderSnippets.length}</p>
               </div>
-              <div>
+              {/*               <div>
                 <p className="text-xs font-bold">SNIPS</p>
-              </div>
+              </div> */}
+            </div>
+          ) : (
+            <div>
+              <p className="text-xs font-bold">0</p>
             </div>
           )}
 
-          {thisFolderSnippets.length === 0 && (
+          {/*           {thisFolderSnippets.length === 0 && (
               <div>
-                <p className=" text-xs font-bold">INGEN SNIPS</p>
+                <p className=" text-xs font-bold">0 SNIPS</p>
               </div>
             )}
 
@@ -66,7 +69,7 @@ const ErrorSnippetsCounter = ({ id }) => {
                 <p className="text-xs font-bold">SNIP</p>
               </div>
             </div>
-          )}
+          )} */}
         </div>
       )}
     </div>

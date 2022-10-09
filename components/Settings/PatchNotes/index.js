@@ -44,22 +44,28 @@ const PatchNotes = () => {
               <div>
                 <div className="flex gap-1">
                   <Text h5>Der er en ny version</Text>
-                  <Text h5 color="primary" className="underline">
-                    {lastUpdate.version}
-                  </Text>
+                  <Link href="https://github.com/smartercow/SNIPV">
+                    <a target="_blank" className="font-bold">
+                      {lastUpdate.version}
+
+                      <CgExternal />
+                    </a>
+                  </Link>
                 </div>
+
                 <div className="flex gap-1">
                   <Text h6>
-                    Opdatere ved at synkronisere de seneste commits på din
+                    Opdatere ved at synkronisere de seneste commits på din Github repository.
                   </Text>
-                  <Link href="">
+
+{/*                   <Link href="">
                     <a target="_blank">
                       <Text h6 color="primary" className="underline">
                         Github repository
                         <CgExternal />
                       </Text>
                     </a>
-                  </Link>
+                  </Link> */}
                 </div>
               </div>
             )}
@@ -67,9 +73,11 @@ const PatchNotes = () => {
             {lastUpdate?.id === CurrentVersion.id && (
               <div className="flex gap-1">
                 <Text h5>Din version </Text>
+
                 <Text h5 color="primary" className="underline">
                   {lastUpdate.version}
                 </Text>
+                
                 <Text h5>er up to date! 👍</Text>
               </div>
             )}

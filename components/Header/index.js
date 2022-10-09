@@ -139,11 +139,6 @@ const Header = ({ user }) => {
                       <div className="w-full">Snips</div>
                     </Link>
                   </Dropdown.Item>
-                  <Dropdown.Item key="folders">
-                    <Link href="/folders">
-                      <div className="w-full">Mapper</div>
-                    </Link>
-                  </Dropdown.Item>
                   <Dropdown.Item key="tags">
                     <Link href="/tags">
                       <div className="w-full">Tags</div>

@@ -15,21 +15,19 @@ import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../../firebase/clientApp";
 import NoUser from "../NoPage/NoUser";
-import Link from "next/link";
-import { DeleteDocumentIcon } from "../SVG/DeleteDocumentIcon";
-import { EditDocumentIcon } from "../SVG/EditDocumentIcon";
-import { LoginIcon } from "../SVG/LoginIcon";
-import { PaperFail } from "../SVG/PaperFail";
 import { MdRefresh } from "react-icons/md";
-import { TbSortDescending } from "react-icons/tb";
-import { DeleteErrorSnippet } from "../NonModal/DeleteErrorSnippet";
 import LatestHeading from "../Heading/LatestHeading";
 import Snippet from "../Display/Snippet";
 
-const MyCodeSnippets = () => {
+const MyErrorSnippets = ({
+  selectedSubFolder,
+  loadingMain,
+  setLoadingMain,
+}) => {
   const [user] = useAuthState(auth);
-  const [loading, setLoading] = useState(true);
-  const [myErrorSnippets, setMyErrorSnippets] = useState();
+  const [loading, setLoading] = useState(false);
+  const [loadingSub, setLoadingSub] = useState(false);
+  const [myErrorSnippets, setMyErrorSnippets] = useState([]);
   const [lastSnippet, setLastSnippet] = useState();
   const [update, setUpdate] = useState(false);
 
@@ -37,13 +35,18 @@ const MyCodeSnippets = () => {
 
   const [isEmpty, setIsEmpty] = useState(false);
 
-  const [allOpenStates, setAllOpenStates] = useState({});
-
-  const getMyErrorSnippets = async () => {
+  const getMySnippets = async () => {
+    setLoadingMain(false)
+    setLoadingSub(true)
     try {
       const snippetQuery = query(
         collection(db, "ErrorSnippetsData1"),
         where(new FieldPath("userData", "uid"), "==", user?.uid),
+        where(
+          new FieldPath("folder", "subFolderId"),
+          "==",
+          selectedSubFolder.subFolderId
+        ),
         orderBy("postedAt", "desc"),
         limit(10)
       );
@@ -64,10 +67,10 @@ const MyCodeSnippets = () => {
 
         setLastSnippet(lastDoc);
         setMyErrorSnippets(snippets);
-        setLoading(false);
+        setLoadingSub(false);
       } else {
         setIsEmpty(true);
-        setLoading(false);
+        setLoadingSub(false);
       }
     } catch (error) {
       console.log("getPosts error", error.message);
@@ -75,7 +78,7 @@ const MyCodeSnippets = () => {
   };
 
   const fetchMore = async () => {
-    setLoading(true);
+    setLoadingSub(true);
     try {
       const snippetQuery = query(
         collection(db, "ErrorSnippetsData1"),
@@ -98,10 +101,10 @@ const MyCodeSnippets = () => {
         setLastSnippet(lastDoc);
 
         setMyErrorSnippets((prev) => [...prev, ...snippets]);
-        setLoading(false);
+        setLoadingSub(false);
       } else {
         setIsEmpty(true);
-        setLoading(false);
+        setLoadingSub(false);
       }
     } catch (error) {
       console.log("getPosts error", error.message);
@@ -109,10 +112,13 @@ const MyCodeSnippets = () => {
   };
 
   useEffect(() => {
-    if (user) {
-      getMyErrorSnippets();
+    setMyErrorSnippets([]);
+
+    if (user && selectedSubFolder) {
+      getMySnippets();
     }
-  }, [user, update]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user, selectedSubFolder]);
 
   const handleDelete = async (id) => {
     try {
@@ -138,57 +144,69 @@ const MyCodeSnippets = () => {
   }, [truncate]);
 
   return (
-    <div className="min-h-[70vh]">
-      {user && (
-        <div>
+    <div className="min-h-[70vh] w-full">
+      {selectedSubFolder?.mainFolder?.mainFolderId && (
+        <>
           <>
-            <LatestHeading headingType={"Alle fejl SNIPS"} />
+            <LatestHeading
+              headingType={`${selectedSubFolder.label}`}
+            />
           </>
 
-          <div className="flex flex-col gap-4">
-            {myErrorSnippets && (
-              <>
-                {myErrorSnippets?.map((snippet) => (
-                  <Snippet
-                    key={snippet.id}
-                    handleDelete={handleDelete}
-                    snippet={snippet}
-                  />
-                ))}
+          <div className="w-full">
+            <div className="flex flex-col gap-4">
+              {Object.keys(myErrorSnippets).length > 0 && (
+                <>
+                  {myErrorSnippets?.map((snippet) => (
+                    <Snippet
+                      key={snippet.id}
+                      handleDelete={handleDelete}
+                      snippet={snippet}
+                    />
+                  ))}
 
-                {!isEmpty && (
-                  <div className="flex justify-center">
-                    <Button size="sm" onClick={fetchMore}>
-                      <MdRefresh />
-                      HENT MERE
-                    </Button>
-                  </div>
-                )}
-              </>
-            )}
+                  {!isEmpty && (
+                    <div className="flex justify-center">
+                      <Button size="sm" onClick={fetchMore}>
+                        <MdRefresh />
+                        HENT MERE
+                      </Button>
+                    </div>
+                  )}
+                </>
+              )}
 
-            {loading ? (
-              <div className="flex justify-center items-center h-[20vh]">
-                <Loading size="lg" />
-              </div>
-            ) : (
-              <div>
-                {!myErrorSnippets?.length > 0 && (
-                  <div className="flex justify-center mt-10">
-                    <Text b size={13} transform="uppercase">
-                      Du har ingen kode SNIPS! 😔
-                    </Text>
-                  </div>
-                )}
-              </div>
-            )}
+              {loadingMain ? (
+                <div className="flex justify-center mt-10">
+                  <Text b size={13} transform="uppercase">
+                    Valg en undermappe!
+                  </Text>
+                </div>
+              ) : (
+                <>
+                  {loadingSub ? (
+                    <div className="flex justify-center items-center h-[20vh]">
+                      <Loading size="lg" />
+                    </div>
+                  ) : (
+                    <>
+                      {!myErrorSnippets?.length > 0 && (
+                        <div className="flex justify-center mt-10">
+                          <Text b size={13} transform="uppercase">
+                            Du har ingen SNIPS i denne mappe! 😔
+                          </Text>
+                        </div>
+                      )}
+                    </>
+                  )}
+                </>
+              )}
+            </div>
           </div>
-        </div>
+        </>
       )}
-
-      {!user && <NoUser />}
     </div>
   );
 };
 
-export default MyCodeSnippets;
+export default MyErrorSnippets;

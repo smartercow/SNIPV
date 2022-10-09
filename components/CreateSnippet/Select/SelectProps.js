@@ -1,7 +1,9 @@
 import { components } from "react-select";
 import FileExtension from "../../Display/FileExtension";
 import CodeFoldersCounter from "../../Folders/CodeFolders/CodeFoldersCounter";
+import ErrorFoldersCounter from "../../Folders/ErrorFolders/ErrorFoldersCounter";
 import CodeSnippetsCounter from "../../Folders/CodeFolders/CodeSnippetsCounter";
+import ErrorSnippetsCounter from "../../Folders/ErrorFolders/ErrorSnippetsCounter";
 
 const { Option, SingleValue } = components;
 
@@ -9,11 +11,27 @@ export const OptionFileExt = (props) => (
   <Option {...props}>
     <div className="flex items-center gap-2">
       {props.data?.rootDirectory == "main" && (
-        <CodeFoldersCounter id={props.data.mainFolderId} />
+        <>
+          {props.data?.folderSnippetType == "code" && (
+            <CodeFoldersCounter id={props.data.mainFolderId} />
+          )}
+
+          {props.data?.folderSnippetType == "error" && (
+            <ErrorFoldersCounter id={props.data.mainFolderId} />
+          )}
+        </>
       )}
 
       {props.data?.subFolderId && (
-        <CodeSnippetsCounter id={props.data.subFolderId} />
+        <>
+          {props.data?.folderSnippetType == "code" && (
+            <CodeSnippetsCounter id={props.data.subFolderId} />
+          )}
+
+          {props.data?.folderSnippetType == "error" && (
+            <ErrorSnippetsCounter id={props.data.subFolderId} />
+          )}
+        </>
       )}
 
       <div className="w-full font-semibold text-[14px]">
@@ -55,11 +73,27 @@ export const ValueFileExt = (props) => (
   <SingleValue {...props}>
     <div className="flex items-center gap-2">
       {props.data?.rootDirectory == "main" && (
-        <CodeFoldersCounter id={props.data.mainFolderId} />
+        <>
+          {props.data?.folderSnippetType == "code" && (
+            <CodeFoldersCounter id={props.data.mainFolderId} />
+          )}
+
+          {props.data?.folderSnippetType == "error" && (
+            <ErrorFoldersCounter id={props.data.mainFolderId} />
+          )}
+        </>
       )}
 
-      {props.data.subFolderId && (
-        <CodeSnippetsCounter id={props.data.subFolderId} />
+      {props.data?.subFolderId && (
+        <>
+          {props.data?.folderSnippetType == "code" && (
+            <CodeSnippetsCounter id={props.data.subFolderId} />
+          )}
+
+          {props.data.folderSnippetType == "error" && (
+            <ErrorSnippetsCounter id={props.data.subFolderId} />
+          )}
+        </>
       )}
 
       <div className="w-full font-semibold text-[14px]">

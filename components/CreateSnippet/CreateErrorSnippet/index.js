@@ -377,7 +377,6 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
                         shadow="false"
                         animated="false"
                         aria-label="kode"
-                        required
                       />
                     </div>
 

@@ -6,12 +6,20 @@ export default function UpdateVersions(req, res) {
       status: 200,
       data: [
         {
+          id: "150",
+          version: "1.5.0",
+          date: "09/10/2022",
+          commit: "PatchNotes",
+          commitMsg: "Vigtigt: Lav en rodmappe & undermappe også gå til /snips/codes & /snips/errors og create Firestore indexes via console",
+          status: "nyeste",
+        },
+        {
           id: "127",
           version: "1.2.7",
           date: "18/09/2022",
           commit: "PatchNotes",
           commitMsg: "Vigtigt: gå til /tags og create indexes i firebase via console",
-          status: "nyeste",
+          status: "forældet",
         },
         {
           id: "126",

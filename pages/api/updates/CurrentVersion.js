@@ -1,4 +1,4 @@
 export const CurrentVersion = {
-    id: "127",
-    version: "1.2.7",
+    id: "150",
+    version: "1.5.0",
   }
