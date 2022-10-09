@@ -74,6 +74,10 @@ export default function CreateMainFolder() {
       setSelectedMainFolder(open.folder);
     }
   }, [open]);
+  console.log("open.folder", open?.folder);
+  console.log("open.folder.mainFolder", open?.folder?.mainFolder);
+  console.log("open.folder.language.acc", open?.folder?.language?.acc);
+  console.log("open.folder.language.fileExtension", open?.folder?.language?.fileExtension);
 
   useEffect(() => {
     if (Object.keys(selectedMainFolder)?.length > 0) {

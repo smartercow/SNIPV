@@ -13,11 +13,9 @@ import MyCodeSnippets from "../../components/MySnippets/MyCodeSnippets";
 import { auth, db } from "../../firebase/clientApp";
 const Codes = () => {
   const [user] = useAuthState(auth);
-  const [loading, setLoading] = useState(true);
   const [loadingMain, setLoadingMain] = useState(false);
   const [folders, setFolders] = useState([]);
 
-  const [update, setUpdate] = useState(false);
   const [mainDeleted, setMainDeleted] = useRecoilState(mainFolderDeleteUpdateState);
   const [mainEdited, setMainEdited] = useRecoilState(mainFolderEditUpdateState);
 
@@ -58,8 +56,6 @@ const Codes = () => {
           folders={folders}
           loadingMain={loadingMain}
           setLoadingMain={setLoadingMain}
-          update={update}
-          setUpdate={setUpdate}
           selectedMainFolder={selectedMainFolder}
           setSelectedMainFolder={setSelectedMainFolder}
           selectedSubFolder={selectedSubFolder}
@@ -70,7 +66,6 @@ const Codes = () => {
           <MyCodeSnippets
             loadingMain={loadingMain}
             setLoadingMain={setLoadingMain}
-            selectedMainFolder={selectedMainFolder}
             selectedSubFolder={selectedSubFolder}
           />
         )}

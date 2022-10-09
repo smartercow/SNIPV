@@ -20,9 +20,6 @@ import {
   ValueFileExt,
 } from "../../CreateSnippet/Select/SelectProps";
 import { NoOptionsMessage } from "../../CreateSnippet/Select/NoOptionsMessage";
-import { DeleteDocumentIcon } from "../../SVG/DeleteDocumentIcon";
-import { DeleteSnippet } from "../../NonModal/DeleteSnippet";
-import { DeleteFolder } from "../../NonModal/DeleteFolder";
 import SubFolderDropdown from "../../Display/SubFolderDropdown";
 import { useRecoilState } from "recoil";
 import { subFolderDeleteUpdateState } from "../../../atoms/subFolderDeleteUpdateState";
@@ -35,8 +32,6 @@ const CodeFolders = ({
   folders,
   loadingMain,
   setLoadingMain,
-  update,
-  setUpdate,
   selectedMainFolder,
   setSelectedMainFolder,
   selectedSubFolder,

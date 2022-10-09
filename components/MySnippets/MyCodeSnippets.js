@@ -18,12 +18,9 @@ import NoUser from "../NoPage/NoUser";
 import { MdRefresh } from "react-icons/md";
 import LatestHeading from "../Heading/LatestHeading";
 import Snippet from "../Display/Snippet";
-import CodeSnippetsCounter from "../Folders/CodeFolders/CodeSnippetsCounter";
 
 const MyCodeSnippets = ({
-  selectedMainFolder,
   selectedSubFolder,
-  setSelectedSubFolder,
   loadingMain,
   setLoadingMain,
 }) => {
@@ -39,8 +36,8 @@ const MyCodeSnippets = ({
   const [isEmpty, setIsEmpty] = useState(false);
 
   const getMySnippets = async () => {
-    // setLoadingMain(false)
-    // setLoadingSub(true)
+    setLoadingMain(false)
+    setLoadingSub(true)
     try {
       const snippetQuery = query(
         collection(db, "CodeSnippetsData1"),

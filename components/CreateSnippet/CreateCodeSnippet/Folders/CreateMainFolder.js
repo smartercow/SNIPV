@@ -98,6 +98,11 @@ const CreateMainFolder = ({ selectedMainFolder }) => {
           await addDoc(
             collection(db, "UsersData1", user?.uid, "CodeMainFolders"),
             {
+              createdAt: serverTimestamp(),
+              rootDirectory: "main",
+              folderSnippetType: "code",
+              label: folderName,
+              value: randomValue,
               language: {
                 label: language.label,
                 value: language.value,
@@ -106,11 +111,6 @@ const CreateMainFolder = ({ selectedMainFolder }) => {
                 classTree: `lang${language.langId}`,
                 fileExtension: language.fileExtensions,
               },
-              createdAt: serverTimestamp(),
-              rootDirectory: "main",
-              folderSnippetType: "code",
-              label: folderName,
-              value: randomValue,
               userId: user.uid,
             }
           );
