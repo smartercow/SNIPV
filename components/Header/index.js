@@ -126,31 +126,31 @@ const Header = ({ user }) => {
                   color="primary"
                   aria-label="Avatar Actions"
                 >
-                  <Dropdown.Item key="profile" css={{ height: "$18" }}>
-                    <Text b color="inherit" css={{ d: "flex" }}>
+                  <Dropdown.Item key="profile" css={{ height: "$14" }}>
+{/*                     <Text size={14} b color="inherit" css={{ d: "flex" }}>
                       Logget ind som
-                    </Text>
-                    <Text b color="inherit" css={{ d: "flex" }}>
+                    </Text> */}
+                    <Text size={12} b color="inherit" css={{ d: "flex" }}>
                       {user?.email}
                     </Text>
                   </Dropdown.Item>
                   <Dropdown.Item key="mysnips" withDivider>
                     <Link href="/snips">
-                      <div className="w-full">Snips</div>
+                      <div className="w-full font-semibold">Snips</div>
                     </Link>
                   </Dropdown.Item>
                   <Dropdown.Item key="tags">
                     <Link href="/tags">
-                      <div className="w-full">Tags</div>
+                      <div className="w-full font-semibold">Tags</div>
                     </Link>
                   </Dropdown.Item>
                   <Dropdown.Item key="settings" withDivider>
                     <Link href="/settings">
-                      <div className="w-full">Indstillinger</div>
+                      <div className="w-full font-semibold">Indstillinger</div>
                     </Link>
                   </Dropdown.Item>
                   <Dropdown.Item key="logout" color="error" withDivider>
-                    <div className="w-full" onClick={logout}>
+                    <div className="w-full font-semibold" onClick={logout}>
                       Log ud
                     </div>
                   </Dropdown.Item>
