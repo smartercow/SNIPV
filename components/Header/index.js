@@ -135,7 +135,7 @@ const Header = ({ user }) => {
                     </Text>
                   </Dropdown.Item>
                   <Dropdown.Item key="mysnips" withDivider>
-                    <Link href="/mysnips">
+                    <Link href="/snips">
                       <div className="w-full">Snips</div>
                     </Link>
                   </Dropdown.Item>
