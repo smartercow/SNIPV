@@ -101,7 +101,7 @@ export default function CreatedFolders({
                   </Text>
                 </div>
 
-                <div className="flex gap-3 items-center w-full">
+                <div className="flex gap-1 items-center w-full">
                   <div>
                     <Text
                       h3

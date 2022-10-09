@@ -12,8 +12,8 @@ export default function MainFolderDropdown({ selectedMainFolder }) {
 
   return (
     <Dropdown>
-      <Dropdown.Button size="sm" light color="primary">
-        
+      <Dropdown.Button auto size="sm" light color="primary">
+        {" "}
       </Dropdown.Button>
       <Dropdown.Menu color="primary" aria-label="Actions">
         <Dropdown.Item
@@ -29,7 +29,9 @@ export default function MainFolderDropdown({ selectedMainFolder }) {
             b
             size={12}
             transform="uppercase"
-            onClick={() => setOpen({ default: true, view: 0, folder: selectedMainFolder })}
+            onClick={() =>
+              setOpen({ default: true, view: 0, folder: selectedMainFolder })
+            }
           >
             Redigere mappe
           </Text>
@@ -47,7 +49,12 @@ export default function MainFolderDropdown({ selectedMainFolder }) {
             b
             size={12}
             transform="uppercase"
-            onClick={() => setMainOpen({ default: true, id: selectedMainFolder?.mainFolderId })}
+            onClick={() =>
+              setMainOpen({
+                default: true,
+                id: selectedMainFolder?.mainFolderId,
+              })
+            }
           >
             Slet mappe
           </Text>

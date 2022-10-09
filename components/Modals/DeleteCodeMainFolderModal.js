@@ -75,8 +75,6 @@ export default function DeleteCodeMainFolderModal() {
     }
   }, [thisFolderFolders]);
 
-  console.log("thisFolderFolders", thisFolderFolders);
-
   return (
     <div>
       <Modal

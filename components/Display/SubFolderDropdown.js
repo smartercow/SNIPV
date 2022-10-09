@@ -12,8 +12,8 @@ export default function SubFolderDropdown({ selectedSubFolder }) {
 
   return (
     <Dropdown>
-      <Dropdown.Button light size="sm" color="primary">
-
+      <Dropdown.Button auto light size="sm" color="primary">
+        {" "}
       </Dropdown.Button>
       <Dropdown.Menu color="primary" aria-label="Actions">
         <Dropdown.Item
@@ -49,7 +49,9 @@ export default function SubFolderDropdown({ selectedSubFolder }) {
             b
             size={12}
             transform="uppercase"
-            onClick={() => setSubOpen({ default: true, id: selectedSubFolder?.subFolderId })}
+            onClick={() =>
+              setSubOpen({ default: true, id: selectedSubFolder?.subFolderId })
+            }
           >
             Slet mappe
           </Text>
