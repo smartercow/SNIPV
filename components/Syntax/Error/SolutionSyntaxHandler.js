@@ -15,7 +15,7 @@ const SolutionSyntaxHandler = ({ snippet }) => {
       <div className="flex items-center justify-between">
         <div>
           <Text h6 transform="uppercase" color="success">
-            Fejl kode
+            Løsning kode
           </Text>
         </div>
 
