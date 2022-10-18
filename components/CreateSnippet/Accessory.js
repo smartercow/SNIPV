@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Select from "react-select";
+import { Select, CreatableSelect, AsyncSelect } from "chakra-react-select";
 import { JavascriptFrameworks } from "../../utilities/JavascriptFrameworks";
 import { CSSprocessors } from "../../utilities/CSSprocessors";
 import { Text, Tooltip } from "@nextui-org/react";
@@ -12,7 +12,6 @@ const Accessory = ({
   handleSelectFramework,
   handleSelectProcessor,
 }) => {
-
   return (
     <div>
       {(language?.langId === "54" || language?.langId === "127") && (

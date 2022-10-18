@@ -1,4 +1,4 @@
-import { Card, Input, User } from "@nextui-org/react";
+import { Avatar, Box, Input } from "@chakra-ui/react";
 import Link from "next/link";
 import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -9,16 +9,15 @@ const Post = () => {
   return (
     <div>
       <Link href="/upsert">
-        <Card isPressable variant="flat" css={{ mw: "100%", padding: "$0" }}>
-          <div className="flex justify-between py-3 pl-2 pr-6 bg-[#F1F7FF]">
-            <div>
-              <User bordered src={user.photoURL} squared color="primary" />
-            </div>
+        <Box display={{ md: "flex" }}>
+          <div className="flex justify-between items-center gap-4 py-3 pl-2 pr-6 bg-[#ebecf0] w-full">
+            <Avatar src={user.photoURL} size="md" />
+
             <div className="w-full">
-              <Input width="100%" bordered labelPlaceholder="Gem en snippet" />
+              <Input backgroundColor="white" placeholder="GEM EN SNIP" />
             </div>
           </div>
-        </Card>
+        </Box>
       </Link>
     </div>
   );

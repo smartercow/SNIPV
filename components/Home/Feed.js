@@ -1,22 +1,10 @@
-import {
-  Avatar,
-  Badge,
-  Button,
-  Card,
-  Collapse,
-  Dropdown,
-  Grid,
-  Loading,
-  Pagination,
-  Text,
-  Tooltip,
-  User,
-} from "@nextui-org/react";
-import React, { useEffect, useState } from "react";
+import { Badge, Tooltip, User } from "@nextui-org/react";
+import React from "react";
 import Link from "next/link";
 import { MdFormatIndentIncrease } from "react-icons/md";
 import { LoginIcon } from "../SVG/LoginIcon";
 import LanguageBadge from "../Display/LanguageBadge";
+import { Box, Icon, Text } from "@chakra-ui/react";
 
 const Feed = ({ snippet }) => {
   return (
@@ -25,17 +13,22 @@ const Feed = ({ snippet }) => {
         <div className="max-w-[46rem]">
           {snippet.snips && (
             <div className="flex flex-col gap-4 ">
-              <div className="bg-gradient-to-r from-cyan-500 to-blue-500 text-white">
-                <div className="flex items-center gap-2 pl-2 h-10">
-                  <div className="pt-3">
-                    <Text h3 color="white">
-                      <MdFormatIndentIncrease />
-                    </Text>
-                  </div>
+              <div>
+                <div className="flex items-center bg-[#ebecf0] gap-2 px-2 bg h-10">
+                  <Icon
+                    as={MdFormatIndentIncrease}
+                    w={6}
+                    h={6}
+                    color="BlackLighter"
+                  />
                   <div className="w-full ">
-                    <div className="uppercase">
-                      <p className="font-semibold">Seneste SNIPS</p>
-                    </div>
+                    <Text
+                      color="Primary"
+                      className="font-semibold"
+                      variant="headUppercase"
+                    >
+                      Seneste SNIPS
+                    </Text>
                   </div>
                 </div>
               </div>
@@ -51,14 +44,17 @@ const Feed = ({ snippet }) => {
                             : `/e/${snippet.id}`
                         }
                       >
-                        <div className="hoverable-item">
-                          <Card
-                            isPressable
-                            variant="flat"
-                            css={{ mw: "100%", padding: "$0" }}
+                        <div className="hoverable-item cursor-pointer">
+                          <Box
                             key={snippet.id}
+                            // borderColor="Primary"
+                            borderWidth={1}
+                            borderRadius="lg"
+                            p={2}
+                            bg="GrayLight"
+                            _hover={{ bg: "gray.200" }}
                           >
-                            <div className="cardHover bg-[#F1F7FF] hoverable-item flex gap-3 items-center p-2 border-b rounded-xl w-full">
+                            <div className="hoverable-item flex gap-3 items-center w-full">
                               <div className="w-full flex flex-col gap-2">
                                 <div className="flex items-center">
                                   <div className="">
@@ -75,17 +71,21 @@ const Feed = ({ snippet }) => {
                                     </Tooltip>
                                   </div>
 
-                                  <div className="w-full flex flex-col justify-center gap-3 MonoHeading">
+                                  <div className="w-full flex flex-col justify-center gap-2 MonoHeading">
                                     <div className="w-full">
-                                      <p className="text-[#031B4E] text-lg font-[500] truncateText">
+                                      <Text variant="snipHeading">
                                         {snippet.title}
-                                      </p>
+                                      </Text>
                                     </div>
+
                                     {snippet.description && (
                                       <div className="-mt-2 h-5">
-                                        <h6 className="text-[#031b4ed4] whitespace-nowrap MonoHeading truncateText">
+                                        <p
+                                          variant="snipDescription"
+                                          className="text-sm MonoHeading font-semibold whitespace-nowrap"
+                                        >
                                           {snippet.description}
-                                        </h6>
+                                        </p>
                                       </div>
                                     )}
                                   </div>
@@ -128,14 +128,15 @@ const Feed = ({ snippet }) => {
                                 </div>
                               </div>
                               <div className="hoverable-show">
-                                <LoginIcon
+                                <Icon
+                                  as={LoginIcon}
                                   width={30}
                                   height={30}
-                                  fill="#0072F5"
+                                  fill="Primary"
                                 />
                               </div>
                             </div>
-                          </Card>
+                          </Box>
                         </div>
                       </Link>
                     </div>
@@ -144,9 +145,7 @@ const Feed = ({ snippet }) => {
 
                 <div className="mt-5 text-center">
                   <Link href="/snips">
-                    <Text h5 className="cursor-pointer hover:underline">
-                      SE ALLE
-                    </Text>
+                    <Text variant="seeMore">SE ALLE</Text>
                   </Link>
                 </div>
               </div>

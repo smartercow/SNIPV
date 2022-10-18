@@ -14,13 +14,13 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../../../firebase/clientApp";
 import Folder from "../../Display/Folder";
 import ErrorSnippetsCounter from "./ErrorSnippetsCounter";
-import Select from "react-select";
+import { Select, CreatableSelect, AsyncSelect } from "chakra-react-select";
 import {
   OptionFileExt,
   ValueFileExt,
 } from "../../CreateSnippet/Select/SelectProps";
 import { NoOptionsMessage } from "../../CreateSnippet/Select/NoOptionsMessage";
-import SubFolderDropdown from "../../Display/SubFolderDropdown";
+import SubFolderDropdown from "../../Display/Error/SubFolderDropdown";
 import { useRecoilState } from "recoil";
 import { subFolderDeleteUpdateState } from "../../../atoms/subFolderDeleteUpdateState";
 import { mainFolderDeleteUpdateState } from "../../../atoms/mainFolderDeleteUpdateState";
@@ -39,7 +39,9 @@ const ErrorFolders = ({
 }) => {
   const [user] = useAuthState(auth);
 
-  const [mainDeleted, setMainDeleted] = useRecoilState(mainFolderDeleteUpdateState);
+  const [mainDeleted, setMainDeleted] = useRecoilState(
+    mainFolderDeleteUpdateState
+  );
   const [subDeleted, setSubDeleted] = useRecoilState(
     subFolderDeleteUpdateState
   );
@@ -69,20 +71,19 @@ const ErrorFolders = ({
     if (mainEdited || mainDeleted) {
       setSelectValue(null);
       setSelectedMainFolder({});
-      setMainEdited(false)
+      setMainEdited(false);
       setMainDeleted(false);
     }
   }, [mainEdited, mainDeleted]);
-  
+
   useEffect(() => {
     if (subEdited || subDeleted) {
       setSelectSubValue(null);
       setSelectedSubFolder({});
-      setSubEdited(false)
+      setSubEdited(false);
       setSubDeleted(false);
     }
   }, [subEdited, subDeleted]);
-
 
   useEffect(() => {
     if (!user) return;

@@ -6,7 +6,7 @@ import { BiGitRepoForked } from "react-icons/bi";
 const Footer = () => {
   return (
     <div>
-      <div className="flex justify-between items-center max-w-5xl mx-5 lg:mx-auto my-5">
+      <div className="flex justify-between items-center max-w-6xl mx-5 lg:mx-auto my-5">
         <div className="flex flex-col sm:flex-row gap-4">
           <div className="cursor-pointer">
             <Link href="/info/about">

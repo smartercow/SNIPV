@@ -1,4 +1,4 @@
-import { Button, Loading, Text } from "@nextui-org/react";
+import { Button, Loading } from "@nextui-org/react";
 import {
   collection,
   FieldPath,
@@ -8,17 +8,18 @@ import {
 } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import Select from "react-select";
+import { Select, CreatableSelect, AsyncSelect } from "chakra-react-select";
 import { useRecoilState } from "recoil";
 import { createErrorFolderModalState } from "../../../../atoms/createErrorFolderModalAtom";
 import { updateStateAtom } from "../../../../atoms/updateStateAtom";
 import { auth, db } from "../../../../firebase/clientApp";
 import { OptionFileExt, ValueFileExt } from "../../Select/SelectProps";
 import { NoOptionsMessage } from "../../Select/NoOptionsMessage";
-import SubFolderDropdown from "../../../Display/SubFolderDropdown";
+import SubFolderDropdown from "../../../Display/Error/SubFolderDropdown";
 import { AddNoteIcon } from "../../../SVG/AddNoteIcon";
 import { subFolderDeleteUpdateState } from "../../../../atoms/subFolderDeleteUpdateState";
 import { subFolderEditUpdateState } from "../../../../atoms/subFolderEditUpdateState";
+import { Icon, Text } from "@chakra-ui/react";
 
 export default function CreatedSubFolders({
   setSelectedSubFolder,
@@ -34,13 +35,12 @@ export default function CreatedSubFolders({
   const [user] = useAuthState(auth);
   const [open, setOpen] = useRecoilState(createErrorFolderModalState);
   const [update, setUpdate] = useRecoilState(updateStateAtom);
-  
+
   const [subEdited, setSubEdited] = useRecoilState(subFolderEditUpdateState);
   const [subDeleted, setSubDeleted] = useRecoilState(
     subFolderDeleteUpdateState
   );
   const [subLoading, setSubLoading] = useState(true);
-
 
   function handleSelect(data) {
     setSelectSubValue(data);
@@ -102,36 +102,24 @@ export default function CreatedSubFolders({
         <>
           {subFolders?.length > 0 ? (
             <div>
-              <div className="flex flex-col">
-                <div className="w-20">
-                  <Text h6 transform="uppercase">
-                    Undermappe&nbsp;
-                    <Text color="error" b>
-                      *
-                    </Text>
-                  </Text>
-                </div>
+              <div className="flex flex-col gap-2">
+                <Text variant="folderLabel">Undermappe</Text>
 
                 <div className="flex gap-3 items-center w-full">
-                  <div>
-                    <Text
-                      h3
-                      color="primary"
-                      onClick={() => {
-                        setOpen({
-                          default: true,
-                          view: 1,
-                          folder: selectedMainFolder,
-                        });
-                      }}
-                      className="cursor-pointer pt-3"
-                    >
-                      <AddNoteIcon
-                        size={30}
-                        fill="var(--nextui-colors-primary)"
-                      />
-                    </Text>
-                  </div>
+                  <Icon
+                    as={AddNoteIcon}
+                    w={9}
+                    h={9}
+                    fill="Primary"
+                    cursor="pointer"
+                    onClick={() => {
+                      setOpen({
+                        default: true,
+                        view: 1,
+                        folder: selectedMainFolder,
+                      });
+                    }}
+                  />
 
                   <div className="w-full">
                     <Select
@@ -165,9 +153,7 @@ export default function CreatedSubFolders({
           ) : (
             <>
               <div className="flex flex-col gap-2">
-                <Text b size={13} transform="uppercase">
-                  Ingen undermapper!
-                </Text>
+                <Text variant="nonLabel">Ingen undermapper!</Text>
 
                 <div>
                   <Button

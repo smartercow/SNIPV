@@ -1,14 +1,13 @@
-import { Button, Dropdown, Text } from "@nextui-org/react";
-import { EditDocumentIcon } from "../SVG/EditDocumentIcon.js";
-import { DeleteDocumentIcon } from "../SVG/DeleteDocumentIcon.js";
-import { AddNoteIcon } from "../SVG/AddNoteIcon.js";
-import { deleteSubFolderModalState } from "../../atoms/deleteSubFolderModalState.js";
+import { Dropdown, Text } from "@nextui-org/react";
+import { EditDocumentIcon } from "../../SVG/EditDocumentIcon.js";
+import { DeleteDocumentIcon } from "../../SVG/DeleteDocumentIcon.js";
+import { deleteSubFolderModalState } from "../../../atoms/deleteSubFolderModalState.js";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { createCodeFolderModalState } from "../../atoms/createCodeFolderModalAtom.js";
+import { createCodeFolderModalState } from "../../../atoms/createCodeFolderModalAtom.js";
 
 export default function SubFolderDropdown({ selectedSubFolder }) {
-  const [subOpen, setSubOpen] = useRecoilState(deleteSubFolderModalState);
-  const setOpen = useSetRecoilState(createCodeFolderModalState);
+  const setEditOpen = useSetRecoilState(createCodeFolderModalState);
+  const setDelOpen = useRecoilState(deleteSubFolderModalState);
 
   return (
     <Dropdown>
@@ -30,10 +29,10 @@ export default function SubFolderDropdown({ selectedSubFolder }) {
             size={12}
             transform="uppercase"
             onClick={() =>
-              setOpen({ default: true, view: 1, folder: selectedSubFolder })
+              setEditOpen({ default: true, view: 1, folder: selectedSubFolder })
             }
           >
-            Redigere mappe
+            Redigere
           </Text>
         </Dropdown.Item>
         <Dropdown.Item
@@ -50,10 +49,10 @@ export default function SubFolderDropdown({ selectedSubFolder }) {
             size={12}
             transform="uppercase"
             onClick={() =>
-              setSubOpen({ default: true, id: selectedSubFolder?.subFolderId })
+              setDelOpen({ default: true, id: selectedSubFolder?.subFolderId })
             }
           >
-            Slet mappe
+            Slet
           </Text>
         </Dropdown.Item>
       </Dropdown.Menu>

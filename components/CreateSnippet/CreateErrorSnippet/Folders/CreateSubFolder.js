@@ -8,7 +8,7 @@ import {
 } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import Select from "react-select";
+import { Select, CreatableSelect, AsyncSelect } from "chakra-react-select";
 import { auth, db } from "../../../../firebase/clientApp";
 import { LanguageOptions } from "../../../../utilities/Language";
 import { useRecoilState, useSetRecoilState } from "recoil";
@@ -23,9 +23,7 @@ export default function CreateMainFolder() {
   const [open, setOpen] = useRecoilState(createErrorFolderModalState);
   const [update, setUpdate] = useRecoilState(updateStateAtom);
 
-    const [subEdited, setSubEdited] = useRecoilState(
-      subFolderEditUpdateState
-  );
+  const [subEdited, setSubEdited] = useRecoilState(subFolderEditUpdateState);
 
   const [folderName, setFolderName] = useState("");
 
@@ -209,7 +207,7 @@ export default function CreateMainFolder() {
             tags: tags,
           }
         );
-        setSubEdited(true)
+        setSubEdited(true);
       } catch (error) {
         setDisableBtn(false);
       } finally {

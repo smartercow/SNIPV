@@ -8,14 +8,14 @@ import {
 } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import Select from "react-select";
+import { Select, CreatableSelect, AsyncSelect } from "chakra-react-select";
 import { useRecoilState } from "recoil";
 import { createCodeFolderModalState } from "../../../../atoms/createCodeFolderModalAtom";
 import { updateStateAtom } from "../../../../atoms/updateStateAtom";
 import { auth, db } from "../../../../firebase/clientApp";
 import { OptionFileExt, ValueFileExt } from "../../Select/SelectProps";
 import { NoOptionsMessage } from "../../Select/NoOptionsMessage";
-import SubFolderDropdown from "../../../Display/SubFolderDropdown";
+import SubFolderDropdown from "../../../Display/Code/SubFolderDropdown";
 import { AddNoteIcon } from "../../../SVG/AddNoteIcon";
 import { subFolderDeleteUpdateState } from "../../../../atoms/subFolderDeleteUpdateState";
 import { subFolderEditUpdateState } from "../../../../atoms/subFolderEditUpdateState";
@@ -34,13 +34,12 @@ export default function CreatedSubFolders({
   const [user] = useAuthState(auth);
   const [open, setOpen] = useRecoilState(createCodeFolderModalState);
   const [update, setUpdate] = useRecoilState(updateStateAtom);
-  
+
   const [subEdited, setSubEdited] = useRecoilState(subFolderEditUpdateState);
   const [subDeleted, setSubDeleted] = useRecoilState(
     subFolderDeleteUpdateState
   );
   const [subLoading, setSubLoading] = useState(true);
-
 
   function handleSelect(data) {
     setSelectSubValue(data);

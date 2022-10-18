@@ -51,7 +51,7 @@ const Header = ({ user }) => {
           {lastUpdate && (
             <>
               {lastUpdate?.id !== CurrentVersion?.id && (
-                <div className="h-12 flex justify-center bg-[#0072F5]">
+                <div className="flex justify-center bg-[#0072F5]">
                   <div className="flex gap-2 items-center">
                     <InfoCircle
                       fill="white"
@@ -66,7 +66,13 @@ const Header = ({ user }) => {
                       </Text>
                       <Text>👉</Text>
                       <Link href="/settings/patchnotes">
-                      <Text color="white" b className="cursor-pointer hover:underline">Opdatere nu</Text>
+                        <Text
+                          color="white"
+                          b
+                          className="cursor-pointer hover:underline"
+                        >
+                          Opdatere nu
+                        </Text>
                       </Link>
                     </div>
                   </div>
@@ -76,11 +82,11 @@ const Header = ({ user }) => {
           )}
         </>
       )}
-      <div className="flex justify-between items-center max-w-5xl mx-5 lg:mx-auto h-16">
+      <div className="flex justify-between items-center max-w-6xl mx-5 lg:mx-auto h-16">
         <div className="flex gap-4 items-center">
           <div className="cursor-pointer">
             <Link href="/">
-              <Text color="#031B4E" h2 weight="extrabold">
+              <Text size={34} className="font-extrabold">
                 SNIPV
               </Text>
             </Link>
@@ -122,12 +128,9 @@ const Header = ({ user }) => {
                     pointer
                   />
                 </Dropdown.Trigger>
-                <Dropdown.Menu
-                  color="primary"
-                  aria-label="Avatar Actions"
-                >
+                <Dropdown.Menu color="primary" aria-label="Avatar Actions">
                   <Dropdown.Item key="profile" css={{ height: "$14" }}>
-{/*                     <Text size={14} b color="inherit" css={{ d: "flex" }}>
+                    {/*                     <Text size={14} b color="inherit" css={{ d: "flex" }}>
                       Logget ind som
                     </Text> */}
                     <Text size={12} b color="inherit" css={{ d: "flex" }}>

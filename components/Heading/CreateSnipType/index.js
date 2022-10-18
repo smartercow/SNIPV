@@ -1,9 +1,9 @@
 import React from "react";
-import { Button, Text } from "@nextui-org/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../../firebase/clientApp";
+import { Text } from "@chakra-ui/react";
 
 export const CreateSnipType = () => {
   const { asPath } = useRouter();
@@ -19,6 +19,10 @@ export const CreateSnipType = () => {
       titel: "Fejl",
       link: "/upsert/error",
     },
+    {
+      titel: "Opsætning",
+      link: "/upsert/setup",
+    },
   ];
 
   return (
@@ -29,13 +33,7 @@ export const CreateSnipType = () => {
             if (asPath.startsWith(item.link))
               return (
                 <Link key={index} href={item.link}>
-                  <Text
-                    size={18}
-                    h5
-                    transform="uppercase"
-                    color="primary"
-                    className="cursor-pointer"
-                  >
+                  <Text color="Primary" variant="NavHeading">
                     {item.titel}
                   </Text>
                 </Link>
@@ -43,14 +41,7 @@ export const CreateSnipType = () => {
             else
               return (
                 <Link key={index} href={item.link}>
-                  <Text
-                    size={18}
-                    h5
-                    transform="uppercase"
-                    className="cursor-pointer hover:underline"
-                  >
-                    {item.titel}
-                  </Text>
+                  <Text variant="NavHeading">{item.titel}</Text>
                 </Link>
               );
           })}

@@ -6,6 +6,7 @@ import CreateFolder from "../CreateSnippet/CreateErrorSnippet/Folders/CreateFold
 
 const CreateFolderModal = () => {
   const [open, setOpen] = useRecoilState(createErrorFolderModalState);
+  console.log("setOpen", setOpen);
 
   return (
     <div>

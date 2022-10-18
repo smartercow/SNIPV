@@ -1,4 +1,5 @@
-import { Text } from "@nextui-org/react";
+// import { Text } from "@nextui-org/react";
+import { Text } from "@chakra-ui/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
@@ -12,10 +13,10 @@ const Nav = () => {
       titel: "Snips",
       link: "/snips",
     },
-/*     {
-      titel: "Mapper",
-      link: "/folders",
-    }, */
+    {
+      titel: "Opsætning",
+      link: "/setups",
+    },
     {
       titel: "Tags",
       link: "/tags",
@@ -30,12 +31,7 @@ const Nav = () => {
               return (
                 <li key={index}>
                   <Link href={item.link}>
-                    <Text
-                      h4
-                      transform="uppercase"
-                      color="primary"
-                      className="cursor-pointer text"
-                    >
+                    <Text color="Primary" variant="header">
                       {item.titel}
                     </Text>
                   </Link>
@@ -45,20 +41,14 @@ const Nav = () => {
               return (
                 <li key={index}>
                   <Link href={item.link}>
-                    <Text
-                      h4
-                      transform="uppercase"
-                      className="cursor-pointer hover:underline"
-                    >
-                      {item.titel}
-                    </Text>
+                    <Text variant="header">{item.titel}</Text>
                   </Link>
                 </li>
               );
           })}
         </ul>
       </div>
-{/*       <div>
+      {/*       <div>
         <Link href="/search">
           <Text className="cursor-pointer">
             <BsSearch />

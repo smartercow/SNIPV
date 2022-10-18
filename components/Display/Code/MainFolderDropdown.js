@@ -1,10 +1,10 @@
 import { Button, Dropdown, Text } from "@nextui-org/react";
-import { EditDocumentIcon } from "../SVG/EditDocumentIcon.js";
-import { DeleteDocumentIcon } from "../SVG/DeleteDocumentIcon.js";
-import { AddNoteIcon } from "../SVG/AddNoteIcon.js";
-import { deleteMainFolderModalState } from "../../atoms/deleteMainFolderModalState";
+import { EditDocumentIcon } from "../../SVG/EditDocumentIcon.js";
+import { DeleteDocumentIcon } from "../../SVG/DeleteDocumentIcon.js";
+import { AddNoteIcon } from "../../SVG/AddNoteIcon.js";
+import { deleteMainFolderModalState } from "../../../atoms/deleteMainFolderModalState";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { createCodeFolderModalState } from "../../atoms/createCodeFolderModalAtom.js";
+import { createCodeFolderModalState } from "../../../atoms/createCodeFolderModalAtom.js";
 
 export default function MainFolderDropdown({ selectedMainFolder }) {
   const [mainOpen, setMainOpen] = useRecoilState(deleteMainFolderModalState);

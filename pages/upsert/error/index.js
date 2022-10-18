@@ -1,4 +1,3 @@
-import { Button, Card, Text } from "@nextui-org/react";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import CreateCodeSnippet from "../../../components/CreateSnippet/CreateCodeSnippet";
@@ -6,6 +5,7 @@ import CreateErrorSnippet from "../../../components/CreateSnippet/CreateErrorSni
 import { auth } from "../../../firebase/clientApp";
 import NoUser from "../../../components/NoPage/NoUser";
 import Head from "next/head";
+import { Box, Text } from "@chakra-ui/react";
 
 const SnippetType = [
   {
@@ -20,7 +20,7 @@ const SnippetType = [
   },
 ];
 
-const Upsert = () => {
+const UpsertError = () => {
   const [user] = useAuthState(auth);
 
   const [selectedType, setSelectedType] = useState("code");
@@ -38,7 +38,7 @@ const Upsert = () => {
   };
 
   return (
-    <div className="min-h-[70vh]">
+    <div>
       <Head>
         <title>Opret fejl SNIP - SNIPV</title>
         <meta name="description" content="Created by Peter G" />
@@ -46,20 +46,15 @@ const Upsert = () => {
       </Head>
 
       {user ? (
-        <div>
-          <div className="mt-3">
-            <Card>
-              <Card.Header>
-                <Text b transform="uppercase">
-                  Opret fejl SNIP
-                </Text>
-              </Card.Header>
-              <Card.Divider />
-              <Card.Body>
-                <CreateErrorSnippet />
-              </Card.Body>
-            </Card>
-          </div>
+        <div className="mt-5">
+          <Box
+            boxShadow="lg"
+            borderRadius="lg"
+            padding={2}
+            backgroundColor="#fff"
+          >
+            <CreateErrorSnippet />
+          </Box>
         </div>
       ) : (
         <NoUser />
@@ -68,4 +63,4 @@ const Upsert = () => {
   );
 };
 
-export default Upsert;
+export default UpsertError;

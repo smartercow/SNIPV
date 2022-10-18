@@ -1,12 +1,5 @@
 import { Card, Loading, Text } from "@nextui-org/react";
-import {
-  collection,
-  getDocs,
-  onSnapshot,
-  orderBy,
-  query,
-  where,
-} from "firebase/firestore";
+import { collection, getDocs, onSnapshot, query } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../../firebase/clientApp";
@@ -24,13 +17,9 @@ const HomePage = () => {
 
   const getSnippets = async () => {
     try {
-      const codeQuery = query(
-        collection(db, "CodeSnippetsData1"),
-      );
+      const codeQuery = query(collection(db, "CodeSnippetsData1"));
 
-      const errorQuery = query(
-        collection(db, "ErrorSnippetsData1"),
-      );
+      const errorQuery = query(collection(db, "ErrorSnippetsData1"));
 
       const codeDocs = await getDocs(codeQuery);
       const errorDocs = await getDocs(errorQuery);
@@ -41,7 +30,7 @@ const HomePage = () => {
 
           PromiseResults.forEach((snapshot) => {
             snapshot.forEach((doc) => {
-              mergedSnippets.push({ ...doc.data(), id: doc.id })
+              mergedSnippets.push({ ...doc.data(), id: doc.id });
             });
           });
           return mergedSnippets;
@@ -56,12 +45,10 @@ const HomePage = () => {
           }));
         })
         .catch((e) => console.log("error", e));
-
     } catch (error) {
       console.log("getPosts error", error.message);
     }
   };
-
 
   useEffect(() => {
     getSnippets();

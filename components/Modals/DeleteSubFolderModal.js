@@ -22,8 +22,13 @@ import {
 import { auth, db } from "../../firebase/clientApp";
 import { subFolderDeleteUpdateState } from "../../atoms/subFolderDeleteUpdateState";
 import { useAuthState } from "react-firebase-hooks/auth";
-export default function DeleteCodeSubFolderModal() {
+import { useRouter } from "next/router";
+export default function DeleteSubFolderModal() {
   const [user] = useAuthState(auth);
+  const { asPath } = useRouter();
+
+  const [subF, setSubF] = useState("");
+
   const [subOpen, setSubOpen] = useRecoilState(deleteSubFolderModalState);
   const [deleted, setDeleted] = useRecoilState(subFolderDeleteUpdateState);
 
@@ -32,9 +37,7 @@ export default function DeleteCodeSubFolderModal() {
 
   const handleDelete = async (id) => {
     try {
-      await deleteDoc(
-        doc(db, "UsersData1", user?.uid, "CodeSubFolders", subOpen.id)
-      );
+      await deleteDoc(doc(db, "UsersData1", user?.uid, subF, subOpen.id));
       setDeleted(true);
     } catch (error) {
       console.log("Fejl i sletning!", error.message);
@@ -74,6 +77,20 @@ export default function DeleteCodeSubFolderModal() {
       setFolderExcluded(false);
     }
   }, [thisFolderSnippets]);
+
+  useEffect(() => {
+    if (asPath === "/upsert/code") {
+      setSubF("CodeSubFolders");
+    }
+
+    if (asPath === "/upsert/error") {
+      setSubF("ErrorSubFolders");
+    }
+
+    if (asPath === "/upsert/setup") {
+      setSubF("SetupSubFolders");
+    }
+  }, [asPath]);
 
   return (
     <div>

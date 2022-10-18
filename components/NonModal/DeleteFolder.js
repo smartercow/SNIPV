@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Text, Button, Grid, Row } from "@nextui-org/react";
-import { collection, FieldPath, onSnapshot, query, where } from "firebase/firestore";
+import {
+  collection,
+  FieldPath,
+  onSnapshot,
+  query,
+  where,
+} from "firebase/firestore";
 import { db } from "../../firebase/clientApp";
 
 export const DeleteFolder = ({ id, handleDelete, setAllOpenStates }) => {
@@ -33,8 +39,8 @@ export const DeleteFolder = ({ id, handleDelete, setAllOpenStates }) => {
   }, [id]);
 
   useEffect(() => {
-    if(thisFolderSnippets?.length > 0) {
-      setFolderExcluded(true)
+    if (thisFolderSnippets?.length > 0) {
+      setFolderExcluded(true);
     }
   }, [thisFolderSnippets]);
 

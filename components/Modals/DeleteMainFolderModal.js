@@ -22,19 +22,25 @@ import {
 import { auth, db } from "../../firebase/clientApp";
 import { mainFolderDeleteUpdateState } from "../../atoms/mainFolderDeleteUpdateState";
 import { useAuthState } from "react-firebase-hooks/auth";
-export default function DeleteCodeMainFolderModal() {
+import { useRouter } from "next/router";
+export default function DeleteMainFolderModal() {
   const [user] = useAuthState(auth);
+  const { asPath } = useRouter();
+
+  const [mainF, setMainF] = useState("");
+  const [subF, setSubF] = useState("");
+
   const [mainOpen, setMainOpen] = useRecoilState(deleteMainFolderModalState);
-  const [mainDeleted, setMainDeleted] = useRecoilState(mainFolderDeleteUpdateState);
+  const [mainDeleted, setMainDeleted] = useRecoilState(
+    mainFolderDeleteUpdateState
+  );
 
   const [thisFolderFolders, setThisFolderFolders] = useState();
   const [folderExcluded, setFolderExcluded] = useState(false);
 
   const handleDelete = async (id) => {
     try {
-      await deleteDoc(
-        doc(db, "UsersData1", user?.uid, "CodeMainFolders", mainOpen.id)
-      );
+      await deleteDoc(doc(db, "UsersData1", user?.uid, mainF, mainOpen.id));
       setMainDeleted(true);
     } catch (error) {
       console.log("Fejl i sletning!", error.message);
@@ -43,7 +49,7 @@ export default function DeleteCodeMainFolderModal() {
 
   const getThisFolderFolders = async () => {
     try {
-      const foldersColRef = collection(db, "UsersData1", user?.uid, "CodeSubFolders");
+      const foldersColRef = collection(db, "UsersData1", user?.uid, subF);
       const foldersQuery = query(
         foldersColRef,
         where(new FieldPath("mainFolder", "mainFolderId"), "==", mainOpen.id)
@@ -75,6 +81,27 @@ export default function DeleteCodeMainFolderModal() {
     }
   }, [thisFolderFolders]);
 
+  useEffect(() => {
+    if (asPath === "/upsert/code") {
+      setMainF("CodeMainFolders");
+      setSubF("CodeSubFolders");
+    }
+
+    if (asPath === "/upsert/error") {
+      setMainF("ErrorMainFolders");
+      setSubF("ErrorSubFolders");
+    }
+
+    if (asPath === "/upsert/setup") {
+      setMainF("SetupMainFolders");
+      setSubF("SetupSubFolders");
+    }
+  }, [asPath]);
+
+  console.log("asPath", asPath);
+  console.log("mainF", mainF);
+  console.log("subF", subF);
+  console.log("mainOpen.id", mainOpen.id);
   return (
     <div>
       <Modal
@@ -100,8 +127,8 @@ export default function DeleteCodeMainFolderModal() {
             <Row css={{ py: ".5rem" }}>
               {folderExcluded ? (
                 <Text>
-                  Denne mappe har en eller flere undermapper, for at slette skal du
-                  fjerne alle mapper i den!
+                  Denne mappe har en eller flere undermapper, for at slette skal
+                  du fjerne alle mapper i den!
                 </Text>
               ) : (
                 <Text>Er du sikker på, at du vil slette denne mappe?</Text>

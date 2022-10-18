@@ -20,8 +20,9 @@ import { useRecoilState } from "recoil";
 import SetUsernameModal from "../components/Modals/SetUsernameModal";
 import { useRouter } from "next/router";
 import LoadingState from "../components/LoadingState";
-import DeleteCodeSubFolderModal from "../components/Modals/DeleteCodeSubFolderModal";
-import DeleteCodeMainFolderModal from "../components/Modals/DeleteCodeMainFolderModal";
+import DeleteMainFolderModal from "../components/Modals/DeleteMainFolderModal";
+import DeleteSubFolderModal from "../components/Modals/DeleteSubFolderModal";
+import CreateSetupFolderModal from "../components/Modals/CreateSetupFolderModal";
 
 const ProtectedRoutes = [
   "/snips",
@@ -97,32 +98,24 @@ const ClientLayout = ({ children, user }) => {
   }, [user, update]);
 
   return (
-    <div className="h-full">
-      <header>
+    <div className="flex flex-col">
+      <header className="h-[6vh]">
         <Header user={user} />
       </header>
       <hr />
-      <main className="max-w-5xl mx-5 lg:mx-auto mt-3 text-[#4D5B7C] w-full">
+      <main className="max-w-6xl mx-5 lg:mx-auto mt-3 min-h-[82vh] w-full">
         {children}
       </main>
-      {/*       {!loading && (
-        <></>
-      )} */}
-      
-      {/*       {loading && (
-        <>
-          <LoadingState />
-        </>
-      )} */}
-      <footer>
+      <footer className="h-[10vh]">
         <Footer />
       </footer>
       <CreateCodeFolderModal />
       <CreateErrorFolderModal />
+      <CreateSetupFolderModal />
       <SetUsernameModal />
       <LoginModal />
-      <DeleteCodeMainFolderModal />
-      <DeleteCodeSubFolderModal />
+      <DeleteMainFolderModal />
+      <DeleteSubFolderModal />
     </div>
   );
 };

@@ -8,7 +8,7 @@ import {
 } from "firebase/firestore";
 import React, { useEffect, useMemo, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import Select from "react-select";
+import { Select, CreatableSelect, AsyncSelect } from "chakra-react-select";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { createErrorFolderModalState } from "../../../../atoms/createErrorFolderModalAtom";
 import { mainFolderEditUpdateState } from "../../../../atoms/mainFolderEditUpdateState";
@@ -135,7 +135,9 @@ const CreateMainFolder = ({ selectedMainFolder }) => {
         } catch (error) {
           setDisableBtn(false);
         } finally {
-          setOpen(false), setUpdate(!update), setEdit({default: true, folder: selectedMainFolder});
+          setOpen(false),
+            setUpdate(!update),
+            setEdit({ default: true, folder: selectedMainFolder });
         }
       }
     } /* else {

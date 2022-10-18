@@ -6,11 +6,11 @@ import { auth } from "../../../firebase/clientApp";
 import NoUser from "../../../components/NoPage/NoUser";
 import Head from "next/head";
 
-const Upsert = () => {
+const UpsertCode = () => {
   const [user] = useAuthState(auth);
 
   return (
-    <div className="min-h-[70vh]">
+    <div>
       <Head>
         <title>Opret kode SNIP - SNIPV</title>
         <meta name="description" content="Created by Peter G" />
@@ -36,4 +36,4 @@ const Upsert = () => {
   );
 };
 
-export default Upsert;
+export default UpsertCode;

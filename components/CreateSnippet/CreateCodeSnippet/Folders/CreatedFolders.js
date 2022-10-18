@@ -2,7 +2,7 @@ import { Button, Loading, Text } from "@nextui-org/react";
 import { collection, getDoc, getDocs, query, where } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import Select from "react-select";
+import { Select, CreatableSelect, AsyncSelect } from "chakra-react-select";
 import { useRecoilState } from "recoil";
 import { createCodeFolderModalState } from "../../../../atoms/createCodeFolderModalAtom";
 import { mainFolderDeleteUpdateState } from "../../../../atoms/mainFolderDeleteUpdateState";
@@ -14,7 +14,7 @@ import { OptionFileExt, ValueFileExt } from "../../Select/SelectProps";
 import { NoOptionsMessage } from "../../Select/NoOptionsMessage";
 import CreatedSubFolders from "./CreatedSubFolders";
 import { AddNoteIcon } from "../../../SVG/AddNoteIcon";
-import MainFolderDropdown from "../../../Display/MainFolderDropdown";
+import MainFolderDropdown from "../../../Display/Code/MainFolderDropdown";
 
 export default function CreatedFolders({
   setSelectedMainFolder,
