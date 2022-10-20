@@ -1,10 +1,10 @@
-import { Card, Text } from "@nextui-org/react";
 import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import CreateCodeSnippet from "../../../components/CreateSnippet/CreateCodeSnippet";
 import { auth } from "../../../firebase/clientApp";
 import NoUser from "../../../components/NoPage/NoUser";
 import Head from "next/head";
+import { Box } from "@chakra-ui/react";
 
 const UpsertCode = () => {
   const [user] = useAuthState(auth);
@@ -18,16 +18,15 @@ const UpsertCode = () => {
       </Head>
 
       {user ? (
-        <div>
-          <div className="mt-3">
-            <Card>
-              <Card.Body>
-                <div className="h-full">
-                  <CreateCodeSnippet />
-                </div>
-              </Card.Body>
-            </Card>
-          </div>
+        <div className="mt-5">
+          <Box
+            boxShadow="lg"
+            borderRadius="lg"
+            padding={2}
+            backgroundColor="#fff"
+          >
+            <CreateCodeSnippet />
+          </Box>
         </div>
       ) : (
         <NoUser />

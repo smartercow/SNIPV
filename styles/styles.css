@@ -1,52 +1,52 @@
 .hoverable-show {
-    visibility: hidden;
-    opacity: 0;
+  visibility: hidden;
+  opacity: 0;
 }
 
 .hoverable-item:hover .hoverable-show {
-    visibility: visible;
-    opacity: 1;
-    transition: visibility .5s, opacity .6s linear;
+  visibility: visible;
+  opacity: 1;
+  transition: visibility 0.5s, opacity 0.6s linear;
 }
 
 /* Link Snippets Page */
 .linkSection {
-    border-left: 8px solid #0072F5;
-    border-radius: 5px;
+  border-left: 8px solid #0072f5;
+  border-radius: 5px;
 }
 
 .codeBanner {
-    border-bottom: 4px solid #0072F5;
-    border-radius: .4rem;
+  border-bottom: 4px solid #0072f5;
+  border-radius: 0.4rem;
 }
 
 .truncateText {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    width: 500px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 500px;
 
-    max-width: 100%;
+  max-width: 100%;
 }
 
 .syntaxStyle {
-    border: 1px solid #0072f523;
+  border: 1px solid #0072f523;
 }
 
 .errorCodeSyntaxStyle {
-    border: 1px solid #F3126023;
+  border: 1px solid #f3126023;
 }
 
 .solutionCodeSyntaxStyle {
-    border: 1px solid #17C96423;
+  border: 1px solid #17c96423;
 }
 
 .outputSyntaxStyle {
-    border: 1px solid #F5A52423;
+  border: 1px solid #f5a52423;
 }
 
 /* NEXT UI */
 .nextui-c-clSMyX {
-    width: 180px;
-    min-width: 180px;
+  width: 180px;
+  min-width: 180px;
 }

@@ -1,12 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import {
-  Input,
-  Spacer,
-  Textarea,
-  Button,
-  Collapse,
-  Text,
-} from "@nextui-org/react";
+
 import {
   addDoc,
   collection,
@@ -23,10 +16,24 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneLight } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import CreatedFolders from "./Folders/CreatedFolders";
 import { toast } from "react-toastify";
-import Link from "next/link";
+import NextLink from "next/link";
 import { CgExternal } from "react-icons/cg";
 import CreatedSubFolders from "./Folders/CreatedSubFolders";
 import CreateSnippetFolderHeading from "../CreateSnippetFolderHeading";
+import {
+  Accordion,
+  AccordionButton,
+  AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
+  Box,
+  Button,
+  Divider,
+  Input,
+  Link,
+  Text,
+  Textarea,
+} from "@chakra-ui/react";
 
 const initialState = {
   title: "",
@@ -214,307 +221,301 @@ const CreateCodeSnippet = ({ id, setLoading, setDataError }) => {
   return (
     <div className="">
       <div className="">
-        <Collapse.Group className="pb-0">
-          <Collapse title="MAPPE" expanded={folderExpanded}>
-            <div className="flex flex-col gap-2 mx-3 min-h-[10rem]">
-              <CreatedFolders
-                selectedMainFolder={selectedMainFolder}
-                setSelectedMainFolder={setSelectedMainFolder}
-                selectedSubFolder={selectedSubFolder}
-                setSelectedSubFolder={setSelectedSubFolder}
-                id={id}
-                selectValue={selectValue}
-                setSelectValue={setSelectValue}
-                setSelectSubValue={setSelectSubValue}
-              />
+        <Accordion defaultIndex={[0]} allowToggle variant="main">
+          <AccordionItem border="none">
+            <h2>
+              <AccordionButton>
+                <Box flex="1" textAlign="left">
+                  <Text variant="folderHeading">Mappe</Text>
+                </Box>
+                <AccordionIcon />
+              </AccordionButton>
+            </h2>
+            <AccordionPanel pb={4}>
+              <div className="flex flex-col gap-4 mx-1 h-40">
+                <CreatedFolders
+                  selectedMainFolder={selectedMainFolder}
+                  setSelectedMainFolder={setSelectedMainFolder}
+                  selectedSubFolder={selectedSubFolder}
+                  setSelectedSubFolder={setSelectedSubFolder}
+                  id={id}
+                  selectValue={selectValue}
+                  setSelectValue={setSelectValue}
+                  setSelectSubValue={setSelectSubValue}
+                />
 
-              {selectedMainFolder?.language?.langId && (
-                <div>
-                  <CreatedSubFolders
-                    selectedMainFolder={selectedMainFolder}
-                    selectedSubFolder={selectedSubFolder}
-                    setSelectedSubFolder={setSelectedSubFolder}
-                    setSubFolders={setSubFolders}
-                    subFolders={subFolders}
-                    selectSubValue={selectSubValue}
-                    setSelectSubValue={setSelectSubValue}
-                  />
-                </div>
-              )}
-            </div>
-          </Collapse>
-          <Collapse
-            title="SNIP"
-            subtitle={
-              <div className="flex items-center gap-7">
-                {codeExpanded && (
-                  <CreateSnippetFolderHeading
-                    selectedSubFolder={selectedSubFolder}
-                  />
+                {selectedMainFolder?.language?.langId && (
+                  <div>
+                    <CreatedSubFolders
+                      selectedMainFolder={selectedMainFolder}
+                      selectedSubFolder={selectedSubFolder}
+                      setSelectedSubFolder={setSelectedSubFolder}
+                      setSubFolders={setSubFolders}
+                      subFolders={subFolders}
+                      selectSubValue={selectSubValue}
+                      setSelectSubValue={setSelectSubValue}
+                    />
+                  </div>
                 )}
               </div>
-            }
-            disabled={disableCode}
-            expanded={codeExpanded}
-          >
-            <form onSubmit={handleSubmit}>
-              <div className="flex flex-col gap-4">
-                <div className="flex flex-col gap-5 mx-3">
-                  <div className="w-full flex gap-4 items-center">
-                    <div className="w-24">
-                      <Text h6 transform="uppercase">
-                        Titel&nbsp;
-                        <Text color="error" b>
-                          *
-                        </Text>
-                      </Text>
-                    </div>
-                    <Input
-                      underlined
-                      clearable
-                      name="title"
-                      value={title}
-                      size="lg"
-                      onChange={handleChange}
-                      required
-                      width="100%"
-                      aria-label="Titel"
-                    />
-                  </div>
-
-                  <div className="w-full flex gap-4 items-center">
-                    <div className="w-24">
-                      <Text h6 transform="uppercase">
-                        Beskrivelse&nbsp;
-                        <Text color="error" b>
-                          *
-                        </Text>
-                      </Text>
-                    </div>
-                    <Input
-                      underlined
-                      clearable
-                      name="description"
-                      value={description}
-                      size="lg"
-                      onChange={handleChange}
-                      width="100%"
-                      aria-label="Beskrivelse"
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    <div className="mt-1">
-                      <Text h6 transform="uppercase">
-                        Kode&nbsp;
-                        <Text color="error" b>
-                          *
-                        </Text>
-                      </Text>
-                      <Spacer y={0.4} />
-                      <Textarea
-                        placeholder="her..."
-                        name="code"
-                        value={code}
-                        onChange={handleChange}
-                        css={{ height: "auto" }}
-                        size="lg"
-                        cacheMeasurements
-                        width="100%"
-                        height="100%"
-                        shadow="false"
-                        animated="false"
-                        aria-label="kode"
-                        required
+            </AccordionPanel>
+          </AccordionItem>
+          <Divider my={2} />
+          <AccordionItem isDisabled={disableCode} borderBottom="none">
+            <h2>
+              <AccordionButton>
+                <Box flex="1" textAlign="left">
+                  <div className="flex gap-5">
+                    <Text variant="folderHeading">SNIP</Text>
+                    {codeExpanded && (
+                      <CreateSnippetFolderHeading
+                        selectedSubFolder={selectedSubFolder}
                       />
-                    </div>
-
-                    <div>
-                      <Collapse.Group>
-                        <Collapse title={<Text b>Kode forhåndsvisning</Text>}>
-                          <SyntaxHighlighter
-                            language="javascript"
-                            style={oneLight}
-                          >
-                            {form.code}
-                          </SyntaxHighlighter>
-                        </Collapse>
-                      </Collapse.Group>
-                    </div>
-                  </div>
-
-                  <div className="-mt-5">
-                    <div className="mt-1">
-                      <Text h6 transform="uppercase">
-                        Output
-                      </Text>
-                      <Spacer y={0.4} />
-                      <Textarea
-                        placeholder="her..."
-                        name="output"
-                        value={output}
-                        onChange={handleChange}
-                        css={{ height: "auto" }}
-                        size="lg"
-                        cacheMeasurements
-                        width="100%"
-                        height="100%"
-                        shadow="false"
-                        animated="false"
-                        aria-label="output"
-                      />
-                    </div>
-
-                    <div>
-                      <Collapse.Group>
-                        <Collapse title={<Text b>Output forhåndsvisning</Text>}>
-                          <SyntaxHighlighter
-                            language="javascript"
-                            style={oneLight}
-                          >
-                            {form.output}
-                          </SyntaxHighlighter>
-                        </Collapse>
-                      </Collapse.Group>
-                    </div>
-                  </div>
-                </div>
-
-                <Collapse.Group className="pb-0">
-                  <Collapse
-                    title={
-                      <Text h6 transform="uppercase">
-                        Notat
-                      </Text>
-                    }
-                  >
-                    <Textarea
-                      placeholder="her..."
-                      name="notes"
-                      onChange={(e) => setNotes(e.target.value)}
-                      css={{ height: "auto" }}
-                      size="lg"
-                      cacheMeasurements
-                      width="100%"
-                      height="100%"
-                      shadow="false"
-                      animated="false"
-                      aria-label="noter"
-                      value={notes}
-                    />
-                  </Collapse>
-                  <Collapse
-                    title={
-                      <Text h6 transform="uppercase">
-                        Link
-                      </Text>
-                    }
-                  >
-                    <div className="flex flex-col gap-5 mb-5">
-                      <div className="w-full flex gap-4 items-center">
-                        <div className="w-20">
-                          <Text>Heading</Text>
-                        </div>
-                        <div className="w-full">
-                          <Input
-                            underlined
-                            clearable
-                            name="linkHeading"
-                            value={linkHeading}
-                            size="lg"
-                            onChange={handleChange}
-                            width="100%"
-                            aria-label="linkHeading"
-                          />
-                        </div>
-                      </div>
-                      <div className="w-full flex gap-4 items-center">
-                        <div className="w-20">
-                          <Text>Link</Text>
-                        </div>
-                        <div className="w-full">
-                          <Input
-                            underlined
-                            clearable
-                            name="link"
-                            value={link}
-                            size="lg"
-                            onChange={handleChange}
-                            width="100%"
-                            aria-label="link"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </Collapse>
-                  <Collapse
-                    expanded
-                    title={
-                      <Text h6 transform="uppercase">
-                        Tags
-                      </Text>
-                    }
-                  >
-                    <div className="flex flex-col gap-2 mb-5">
-                      <div className="w-full flex gap-2 items-center">
-                        <div className="w-full">
-                          {!id && (
-                            <TagsInput
-                              value={tags}
-                              onChange={setTagInputValues}
-                              name="tags"
-                              placeHolder="Skriv og tryk ENTER"
-                            />
-                          )}
-
-                          {dataFetched && (
-                            <TagsInput
-                              value={tags}
-                              onChange={setTagInputValues}
-                              name="tags"
-                              placeHolder="Skriv og tryk ENTER"
-                            />
-                          )}
-                        </div>
-                      </div>
-                      <div className="mt-2">
-                        <Link href="/info/help/tags">
-                          <a target="_blank">
-                            <Text
-                              color="primary"
-                              className="cursor-pointer underline"
-                              size={14}
-                            >
-                              Læs hvordan man skriver søgbare tags
-                              <span className="text-blue-500">
-                                <CgExternal />
-                              </span>
-                            </Text>
-                          </a>
-                        </Link>
-                      </div>
-                    </div>
-                  </Collapse>
-                </Collapse.Group>
-
-                <div className="mx-3 flex flex-col gap-5">
-                  <div>
-                    {id ? (
-                      <Button color="primary" type="submit">
-                        OPDATERE
-                      </Button>
-                    ) : (
-                      <Button color="primary" type="submit">
-                        GEM
-                      </Button>
                     )}
                   </div>
+                </Box>
+                <AccordionIcon />
+              </AccordionButton>
+            </h2>
+            <AccordionPanel pb={4}>
+              <form onSubmit={handleSubmit}>
+                <div className="flex flex-col gap-4">
+                  <div className="flex flex-col gap-5 mx-3">
+                    <div className="w-full flex gap-4 items-center">
+                      <div className="w-24">
+                        <Text variant="label">Titel</Text>
+                      </div>
+                      <Input
+                        name="title"
+                        size="md"
+                        required
+                        variant="main"
+                        maxLength={100}
+                        onChange={handleChange}
+                        value={title}
+                      />
+                    </div>
+
+                    <div className="w-full flex gap-4 items-center">
+                      <div className="w-24">
+                        <Text variant="label">Beskrivelse</Text>
+                      </div>
+                      <Input
+                        name="description"
+                        size="md"
+                        required
+                        variant="main"
+                        maxLength={100}
+                        onChange={handleChange}
+                        value={description}
+                      />
+                    </div>
+
+                    <div>
+                      <div className="flex flex-col gap-2">
+                        <Text variant="label">Kode</Text>
+
+                        <Textarea
+                          name="code"
+                          size="md"
+                          required
+                          onChange={handleChange}
+                          value={code}
+                        />
+                      </div>
+
+                      <div>
+                        <Accordion allowToggle variant="preview">
+                          <AccordionItem>
+                            <h2>
+                              <AccordionButton role="heading">
+                                <Box flex="1" textAlign="left">
+                                  <Text variant="preview">Forhåndsvisning</Text>
+                                </Box>
+                                <AccordionIcon />
+                              </AccordionButton>
+                            </h2>
+                            <AccordionPanel>
+                              <SyntaxHighlighter
+                                language="javascript"
+                                style={oneLight}
+                              >
+                                {form.code}
+                              </SyntaxHighlighter>
+                            </AccordionPanel>
+                          </AccordionItem>
+                        </Accordion>
+                      </div>
+                    </div>
+
+                    <div className="">
+                      <div className="flex flex-col gap-2">
+                        <Text variant="label">Output</Text>
+                        <Textarea
+                          name="output"
+                          size="md"
+                          variant="main"
+                          value={output}
+                          onChange={handleChange}
+                        />
+                      </div>
+
+                      <div>
+                        <Accordion allowToggle variant="preview">
+                          <AccordionItem>
+                            <h2>
+                              <AccordionButton role="heading">
+                                <Box flex="1" textAlign="left">
+                                  <Text variant="preview">Forhåndsvisning</Text>
+                                </Box>
+                                <AccordionIcon />
+                              </AccordionButton>
+                            </h2>
+                            <AccordionPanel>
+                              <SyntaxHighlighter
+                                language="javascript"
+                                style={oneLight}
+                              >
+                                {form.output}
+                              </SyntaxHighlighter>
+                            </AccordionPanel>
+                          </AccordionItem>
+                        </Accordion>
+                      </div>
+                    </div>
+                  </div>
+
+                  <Accordion allowToggle variant="sub">
+                    <AccordionItem>
+                      <h2>
+                        <AccordionButton role="heading">
+                          <Box flex="1" textAlign="left">
+                            <Text variant="accLabel">Noter</Text>
+                          </Box>
+                          <AccordionIcon mr={2} />
+                        </AccordionButton>
+                      </h2>
+                      <AccordionPanel pb={4}>
+                        <Textarea
+                          name="notes"
+                          size="md"
+                          maxLength={400}
+                          onChange={(e) => setNotes(e.target.value)}
+                          value={notes}
+                        />
+                      </AccordionPanel>
+                    </AccordionItem>
+
+                    <AccordionItem>
+                      <h2>
+                        <AccordionButton role="heading">
+                          <Box flex="1" textAlign="left">
+                            <Text variant="accLabel">Link</Text>
+                          </Box>
+                          <AccordionIcon mr={2} />
+                        </AccordionButton>
+                      </h2>
+                      <AccordionPanel pb={4}>
+                        <div className="flex flex-col gap-5 mb-5">
+                          <div className="w-full flex gap-4 items-center">
+                            <div className="w-20">
+                              <Text variant="subLabel">Heading</Text>
+                            </div>
+
+                            <div className="w-full">
+                              <Input
+                                name="linkHeading"
+                                size="md"
+                                onChange={handleChange}
+                                value={linkHeading}
+                              />
+                            </div>
+                          </div>
+
+                          <div className="w-full flex gap-4 items-center">
+                            <div className="w-20">
+                              <Text variant="subLabel">Link</Text>
+                            </div>
+
+                            <div className="w-full">
+                              <Input
+                                name="link"
+                                size="md"
+                                onChange={handleChange}
+                                value={link}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </AccordionPanel>
+                    </AccordionItem>
+
+                    <AccordionItem>
+                      <h2>
+                        <AccordionButton role="heading">
+                          <Box flex="1" textAlign="left">
+                            <Text variant="accLabel">Tags</Text>
+                          </Box>
+                          <AccordionIcon mr={2} />
+                        </AccordionButton>
+                      </h2>
+                      <AccordionPanel pb={4}>
+                        <div className="flex flex-col gap-2">
+                          <div className="w-full flex gap-2 items-center">
+                            <div className="w-full">
+                              {!id && (
+                                <TagsInput
+                                  value={tags}
+                                  onChange={setTagInputValues}
+                                  name="tags"
+                                  placeHolder="Skriv og tryk ENTER"
+                                />
+                              )}
+
+                              {dataFetched && (
+                                <TagsInput
+                                  value={tags}
+                                  onChange={setTagInputValues}
+                                  name="tags"
+                                  placeHolder="Skriv og tryk ENTER"
+                                />
+                              )}
+                            </div>
+                          </div>
+                          <div className="mt-2">
+                            <NextLink href="/info/help/tags" passHref>
+                              <Link
+                                target="_blank"
+                                colorScheme="Primary"
+                                variant="info"
+                              >
+                                Læs hvordan man skriver søgbare tags.
+                              </Link>
+                            </NextLink>
+                          </div>
+                        </div>
+                      </AccordionPanel>
+                    </AccordionItem>
+                  </Accordion>
+
+                  <div className="mx-3 flex flex-col gap-5">
+                    <div>
+                      {id ? (
+                        <Button variant="create" color="primary" type="submit">
+                          OPDATERE
+                        </Button>
+                      ) : (
+                        <Button variant="create" color="primary" type="submit">
+                          GEM
+                        </Button>
+                      )}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </form>
-          </Collapse>
-        </Collapse.Group>
+              </form>
+            </AccordionPanel>
+          </AccordionItem>
+        </Accordion>
       </div>
     </div>
   );

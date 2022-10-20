@@ -18,9 +18,11 @@ const SyntaxHandler = ({ snippet }) => {
             Kode
           </Text>
         </div>
-        
+
         <div className="px-4 bg-blue-500 rounded-t-2xl">
-          <Text color="white" weight="semibold">{snippet.folder.language.fileExtension?.label}</Text>
+          <Text color="white" weight="semibold">
+            {snippet.folder.language.fileExtension?.label}
+          </Text>
         </div>
       </div>
 

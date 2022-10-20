@@ -1,4 +1,4 @@
-import { Button, Loading } from "@nextui-org/react";
+import { Loading } from "@nextui-org/react";
 import {
   collection,
   FieldPath,
@@ -19,7 +19,7 @@ import SubFolderDropdown from "../../../Display/Error/SubFolderDropdown";
 import { AddNoteIcon } from "../../../SVG/AddNoteIcon";
 import { subFolderDeleteUpdateState } from "../../../../atoms/subFolderDeleteUpdateState";
 import { subFolderEditUpdateState } from "../../../../atoms/subFolderEditUpdateState";
-import { Icon, Text } from "@chakra-ui/react";
+import { Button, Icon, Text } from "@chakra-ui/react";
 
 export default function CreatedSubFolders({
   setSelectedSubFolder,
@@ -157,10 +157,7 @@ export default function CreatedSubFolders({
 
                 <div>
                   <Button
-                    flat
-                    color="primary"
-                    size="sm"
-                    auto
+                    variant="noFolder"
                     onClick={() => {
                       setOpen({
                         default: true,

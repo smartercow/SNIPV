@@ -145,10 +145,8 @@ export default function CreatedFolders({
 
                   <div>
                     <Button
-                      flat
-                      color="primary"
+                      variant="noFolder"
                       size="sm"
-                      auto
                       onClick={() => {
                         setOpen({ default: true, view: 0 });
                       }}

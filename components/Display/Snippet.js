@@ -19,7 +19,9 @@ const Snippet = ({ snippet, handleDelete }) => {
         href={
           snippet.snippetType == "code"
             ? `/s/${snippet.id}`
-            : `/e/${snippet.id}`
+            : snippet.snippetType == "error"
+            ? `/e/${snippet.id}`
+            : `/setup/${snippet.id}`
         }
       >
         <div className="hoverable-item w-full">
@@ -47,6 +49,17 @@ const Snippet = ({ snippet, handleDelete }) => {
                     <div className="pl-3">
                       <PaperFail
                         fill="#F31260"
+                        className="cursor-pointer"
+                        width={50}
+                        height={50}
+                      />
+                    </div>
+                  )}
+
+                  {snippet.snippetType == "setup" && (
+                    <div className="pl-3">
+                      <Paper
+                        fill="#0072F5"
                         className="cursor-pointer"
                         width={50}
                         height={50}

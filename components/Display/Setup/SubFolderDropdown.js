@@ -1,16 +1,14 @@
-import { Button, Dropdown, Text } from "@nextui-org/react";
 import { EditDocumentIcon } from "../../SVG/EditDocumentIcon.js";
 import { DeleteDocumentIcon } from "../../SVG/DeleteDocumentIcon.js";
-import { AddNoteIcon } from "../../SVG/AddNoteIcon.js";
-import { deleteMainFolderModalState } from "../../../atoms/deleteMainFolderModalState";
-import { useRecoilState, useSetRecoilState } from "recoil";
-import { createCodeFolderModalState } from "../../../atoms/createCodeFolderModalAtom.js";
+import { deleteSubFolderModalState } from "../../../atoms/deleteSubFolderModalState.js";
+import { useSetRecoilState } from "recoil";
+import { createSetupFolderModalState } from "../../../atoms/createSetupFolderModalAtom.js";
 import { Icon, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
 import { CgChevronDown } from "react-icons/cg";
 
-export default function MainFolderDropdown({ selectedMainFolder }) {
-  const setEditOpen = useSetRecoilState(createCodeFolderModalState);
-  const setDelOpen = useSetRecoilState(deleteMainFolderModalState);
+export default function SubFolderDropdown({ selectedSubFolder }) {
+  const setEditOpen = useSetRecoilState(createSetupFolderModalState);
+  const setDelOpen = useSetRecoilState(deleteSubFolderModalState);
 
   return (
     <Menu>
@@ -31,11 +29,7 @@ export default function MainFolderDropdown({ selectedMainFolder }) {
       <MenuList minWidth={0} width="36" p={1} mt={-2}>
         <MenuItem
           onClick={() =>
-            setEditOpen({
-              default: true,
-              view: 0,
-              folder: selectedMainFolder,
-            })
+            setEditOpen({ default: true, view: 1, folder: selectedSubFolder })
           }
         >
           <Icon as={EditDocumentIcon} h={7} w={7} fill="Primary" />
@@ -43,10 +37,7 @@ export default function MainFolderDropdown({ selectedMainFolder }) {
         </MenuItem>
         <MenuItem
           onClick={() =>
-            setDelOpen({
-              default: true,
-              id: selectedMainFolder?.mainFolderId,
-            })
+            setDelOpen({ default: true, id: selectedSubFolder?.subFolderId })
           }
         >
           <Icon as={DeleteDocumentIcon} h={7} w={7} fill="Red" />

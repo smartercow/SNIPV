@@ -3,7 +3,7 @@ export const Text = {
     borderRadius: "12px",
     fontSize: "15px",
     fontWeight: 500,
-    fontFamily: "Ubuntu",
+    fontFamily: "Anek Malayalam",
     _focus: {
       boxShadow: "none",
     },
@@ -23,6 +23,23 @@ export const Text = {
         color: "Primary",
         cursor: "pointer",
       },
+    },
+    heading: {
+      color: "BlackLight",
+      fontSize: "16px",
+      fontWeight: 500,
+    },
+    title: {
+      color: "BlackLight",
+      fontSize: "28px",
+      fontWeight: 600,
+      letterSpacing: "0.3px",
+    },
+    description: {
+      color: "BlackLight",
+      fontSize: "18px",
+      fontWeight: 500,
+      letterSpacing: "0.3px",
     },
     snipHeading: {
       color: "Primary",
@@ -64,7 +81,7 @@ export const Text = {
     label: {
       color: "BlackLight",
       fontSize: "16px",
-      // textTransform: "uppercase",
+      textTransform: "uppercase",
     },
     subLabel: {
       color: "Black",

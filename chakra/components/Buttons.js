@@ -1,12 +1,5 @@
 export const Button = {
-  baseStyle: {
-    borderRadius: "12px",
-    fontSize: "12px",
-    fontWeight: 500,
-    _focus: {
-      boxShadow: "none",
-    },
-  },
+  baseStyle: {},
   sizes: {
     sm: {
       fontSize: "8pt",
@@ -22,12 +15,27 @@ export const Button = {
   },
   variants: {
     main: {
-      color: "white",
+      color: "red.400",
       bg: "Primary",
       minW: "130px",
-
       _hover: {
         bg: "PrimaryLight",
+      },
+    },
+    sub: {
+      bg: "PrimaryLighter",
+      fontWeight: 500,
+      minW: "100px",
+      _hover: {
+        opacity: 0.8,
+      },
+    },
+    entry: {
+      bg: "Primary",
+      fontWeight: 500,
+      minW: "100px",
+      _hover: {
+        opacity: 0.8,
       },
     },
     dropdown: {
@@ -37,8 +45,16 @@ export const Button = {
       bg: "Primary",
       minW: "130px",
       fontSize: "1.1rem",
+      fontWeight: 600,
+      h: "40px",
+      _hover: {
+        bg: "PrimaryLight",
+      },
+    },
+    noFolder: {
+      bg: "Primary",
       color: "white",
-      h: "45px",
+      h: "20px",
       _hover: {
         bg: "PrimaryLight",
       },

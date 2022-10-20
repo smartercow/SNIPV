@@ -8,6 +8,7 @@ import { Box } from "./components/Boxes";
 import { Avatar } from "./components/Avatars";
 import { Link } from "./components/Links";
 import { Textarea } from "./components/Textareas";
+import { Tabs } from "./components/TabsStyle";
 
 export const theme = extendTheme({
   colors: {
@@ -57,5 +58,6 @@ export const theme = extendTheme({
     Avatar,
     Link,
     Textarea,
+    Tabs,
   },
 });

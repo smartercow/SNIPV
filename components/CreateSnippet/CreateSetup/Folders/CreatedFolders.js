@@ -1,4 +1,4 @@
-import { Button, Loading, Text } from "@nextui-org/react";
+import { Loading } from "@nextui-org/react";
 import { collection, getDoc, getDocs, query, where } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -9,12 +9,11 @@ import { mainFolderDeleteUpdateState } from "../../../../atoms/mainFolderDeleteU
 import { mainFolderEditUpdateState } from "../../../../atoms/mainFolderEditUpdateState";
 import { updateStateAtom } from "../../../../atoms/updateStateAtom";
 import { auth, db } from "../../../../firebase/clientApp";
-import { FaFolderPlus } from "react-icons/fa";
 import { OptionFileExt, ValueFileExt } from "../../Select/SelectProps";
 import { NoOptionsMessage } from "../../Select/NoOptionsMessage";
-import CreatedSubFolders from "./CreatedSubFolders";
 import { AddNoteIcon } from "../../../SVG/AddNoteIcon";
 import MainFolderDropdown from "../../../Display/Setup/MainFolderDropdown";
+import { Button, Icon, Text } from "@chakra-ui/react";
 
 export default function CreatedFolders({
   setSelectedMainFolder,
@@ -91,32 +90,20 @@ export default function CreatedFolders({
         <>
           <div>
             {folders.length > 0 ? (
-              <div className="flex flex-col">
-                <div className="w-20">
-                  <Text h6 transform="uppercase">
-                    Rodmappe&nbsp;
-                    <Text color="error" b>
-                      *
-                    </Text>
-                  </Text>
-                </div>
+              <div className="flex flex-col gap-2">
+                <Text variant="folderLabel">Rodmappe</Text>
 
-                <div className="flex gap-1 items-center w-full">
-                  <div>
-                    <Text
-                      h3
-                      color="primary"
-                      onClick={() => {
-                        setOpen({ default: true, view: 0 });
-                      }}
-                      className="cursor-pointer pt-3"
-                    >
-                      <AddNoteIcon
-                        size={30}
-                        fill="var(--nextui-colors-primary)"
-                      />
-                    </Text>
-                  </div>
+                <div className="flex gap-3 items-center w-full">
+                  <Icon
+                    as={AddNoteIcon}
+                    w={9}
+                    h={9}
+                    fill="Primary"
+                    cursor="pointer"
+                    onClick={() => {
+                      setOpen({ default: true, view: 0 });
+                    }}
+                  />
 
                   <div className="w-full">
                     <Select
@@ -150,13 +137,14 @@ export default function CreatedFolders({
             ) : (
               <>
                 <div className="flex flex-col gap-2">
-                  <Text b size={13} transform="uppercase">
-                    Du har ingen rodmapper for kode SNIPS&nbsp;
+                  <Text variant="nonLabel">
+                    Du har ingen rodmapper for fejl Setups!
                   </Text>
 
                   <div>
                     <Button
-                      size="md"
+                      variant="noFolder"
+                      size="sm"
                       onClick={() => {
                         setOpen({ default: true, view: 0 });
                       }}

@@ -9,7 +9,6 @@ import {
 import React, { useEffect, useMemo, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Select, CreatableSelect, AsyncSelect } from "chakra-react-select";
-import { TagsInput } from "react-tag-input-component";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { createSetupFolderModalState } from "../../../../atoms/createSetupFolderModalAtom";
 import { mainFolderEditUpdateState } from "../../../../atoms/mainFolderEditUpdateState";

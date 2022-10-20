@@ -1,7 +1,5 @@
-import { Button } from "@nextui-org/react";
-import React, { useState } from "react";
-import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
-import { useRecoilState, useRecoilValue } from "recoil";
+import React from "react";
+import { useRecoilValue } from "recoil";
 import { createSetupFolderModalState } from "../../../../atoms/createSetupFolderModalAtom";
 import CreateMainFolder from "./CreateMainFolder";
 import CreateSubFolder from "./CreateSubFolder";

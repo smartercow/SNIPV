@@ -8,6 +8,7 @@ export const Link = {
   variants: {
     info: {
       color: "PrimaryLight",
+      fontSize: 14,
     },
   },
 };

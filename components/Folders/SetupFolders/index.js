@@ -13,7 +13,7 @@ import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../../../firebase/clientApp";
 import Folder from "../../Display/Folder";
-import ErrorSnippetsCounter from "./ErrorSnippetsCounter";
+import SetupFoldersCounter from "./SetupFoldersCounter";
 import { Select, CreatableSelect, AsyncSelect } from "chakra-react-select";
 import {
   OptionFileExt,
@@ -28,7 +28,7 @@ import MainFolderDropdown from "../../Display/Error/MainFolderDropdown";
 import { mainFolderEditUpdateState } from "../../../atoms/mainFolderEditUpdateState";
 import { subFolderEditUpdateState } from "../../../atoms/subFolderEditUpdateState";
 
-const ErrorFolders = ({
+const SetupFolders = ({
   folders,
   loadingMain,
   setLoadingMain,
@@ -89,7 +89,7 @@ const ErrorFolders = ({
     if (!user) return;
     if (selectedMainFolder?.mainFolderId) {
       const folderColRef = query(
-        collection(db, "UsersData1", user.uid, "ErrorSubFolders"),
+        collection(db, "UsersData1", user.uid, "SetupSubFolders"),
         where(
           new FieldPath("mainFolder", "mainFolderId"),
           "==",
@@ -177,4 +177,4 @@ const ErrorFolders = ({
   );
 };
 
-export default ErrorFolders;
+export default SetupFolders;

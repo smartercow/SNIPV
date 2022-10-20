@@ -1,65 +1,56 @@
-import { Button, Dropdown, Text } from "@nextui-org/react";
 import { EditDocumentIcon } from "../../SVG/EditDocumentIcon.js";
 import { DeleteDocumentIcon } from "../../SVG/DeleteDocumentIcon.js";
-import { AddNoteIcon } from "../../SVG/AddNoteIcon.js";
 import { deleteMainFolderModalState } from "../../../atoms/deleteMainFolderModalState";
-import { useRecoilState, useSetRecoilState } from "recoil";
-import { createCodeFolderModalState } from "../../../atoms/createCodeFolderModalAtom.js";
+import { useSetRecoilState } from "recoil";
+import { createSetupFolderModalState } from "../../../atoms/createSetupFolderModalAtom.js";
+import { Icon, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
+import { CgChevronDown } from "react-icons/cg";
 
 export default function MainFolderDropdown({ selectedMainFolder }) {
-  const [mainOpen, setMainOpen] = useRecoilState(deleteMainFolderModalState);
-  const setOpen = useSetRecoilState(createCodeFolderModalState);
+  const setEditOpen = useSetRecoilState(createSetupFolderModalState);
+  const setDelOpen = useSetRecoilState(deleteMainFolderModalState);
 
   return (
-    <Dropdown>
-      <Dropdown.Button auto size="sm" light color="primary">
-        {" "}
-      </Dropdown.Button>
-      <Dropdown.Menu color="primary" aria-label="Actions">
-        <Dropdown.Item
-          key="edit"
-          icon={
-            <EditDocumentIcon size={22} fill="var(--nextui-colors-primary)" />
+    <Menu>
+      <MenuButton
+        px={4}
+        py={2}
+        transition="all 0.2s"
+        borderRadius="md"
+        borderWidth="1px"
+        borderTopLeftRadius={0}
+        height={10}
+        _hover={{ bg: "iGray" }}
+        _expanded={{ bg: "PrimaryLighter" }}
+        _focus={{ boxShadow: "outline" }}
+      >
+        <CgChevronDown />
+      </MenuButton>
+      <MenuList minWidth={0} width="36" p={1} mt={-2}>
+        <MenuItem
+          onClick={() =>
+            setEditOpen({
+              default: true,
+              view: 0,
+              folder: selectedMainFolder,
+            })
           }
-          textValue
         >
-          <Text
-            aria-label="Redigere"
-            color="primary"
-            b
-            size={12}
-            transform="uppercase"
-            onClick={() =>
-              setOpen({ default: true, view: 0, folder: selectedMainFolder })
-            }
-          >
-            Redigere mappe
-          </Text>
-        </Dropdown.Item>
-        <Dropdown.Item
-          withDivider
-          key="delete"
-          color="error"
-          icon={<DeleteDocumentIcon size={22} fill="currentColor" />}
-          textValue
+          <Icon as={EditDocumentIcon} h={7} w={7} fill="Primary" />
+          &nbsp; Redigere
+        </MenuItem>
+        <MenuItem
+          onClick={() =>
+            setDelOpen({
+              default: true,
+              id: selectedMainFolder?.mainFolderId,
+            })
+          }
         >
-          <Text
-            aria-label="Slet"
-            color="error"
-            b
-            size={12}
-            transform="uppercase"
-            onClick={() =>
-              setMainOpen({
-                default: true,
-                id: selectedMainFolder?.mainFolderId,
-              })
-            }
-          >
-            Slet mappe
-          </Text>
-        </Dropdown.Item>
-      </Dropdown.Menu>
-    </Dropdown>
+          <Icon as={DeleteDocumentIcon} h={7} w={7} fill="Red" />
+          &nbsp; Slet
+        </MenuItem>
+      </MenuList>
+    </Menu>
   );
 }
