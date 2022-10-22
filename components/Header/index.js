@@ -45,7 +45,7 @@ const Header = ({ user }) => {
   }, [updateData]);
 
   return (
-    <div>
+    <div className="border-b border-gray-100 shadow-md">
       {user && (
         <>
           {lastUpdate && (

@@ -14,16 +14,11 @@ import {
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../../firebase/clientApp";
-import NoUser from "../NoPage/NoUser";
 import { MdRefresh } from "react-icons/md";
 import LatestHeading from "../Heading/LatestHeading";
 import Snippet from "../Display/Snippet";
 
-const MyCodeSnippets = ({
-  selectedSubFolder,
-  loadingMain,
-  setLoadingMain,
-}) => {
+const MyCodeSnippets = ({ selectedSubFolder, loadingMain, setLoadingMain }) => {
   const [user] = useAuthState(auth);
   const [loading, setLoading] = useState(false);
   const [loadingSub, setLoadingSub] = useState(false);
@@ -36,8 +31,8 @@ const MyCodeSnippets = ({
   const [isEmpty, setIsEmpty] = useState(false);
 
   const getMySnippets = async () => {
-    setLoadingMain(false)
-    setLoadingSub(true)
+    setLoadingMain(false);
+    setLoadingSub(true);
     try {
       const snippetQuery = query(
         collection(db, "CodeSnippetsData1"),
@@ -129,28 +124,12 @@ const MyCodeSnippets = ({
     }
   };
 
-  useEffect(() => {
-    window.addEventListener("resize", function () {
-      if (window.matchMedia("(min-width: 1100px)").matches) {
-        setTruncate(90);
-      } else if (window.matchMedia("(min-width: 900px)").matches) {
-        setTruncate(60);
-      } else if (window.matchMedia("(min-width: 600px)").matches) {
-        setTruncate(40);
-      } else if (window.matchMedia("(min-width: 400px)").matches) {
-        setTruncate(20);
-      }
-    });
-  }, [truncate]);
-
   return (
     <div className="min-h-[70vh] w-full">
       {selectedSubFolder?.mainFolder?.mainFolderId && (
         <>
           <>
-            <LatestHeading
-              headingType={`${selectedSubFolder.label}`}
-            />
+            <LatestHeading headingType={`${selectedSubFolder.label}`} />
           </>
 
           <div className="w-full">

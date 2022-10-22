@@ -2,8 +2,10 @@ import React, { useEffect, useMemo, useState } from "react";
 
 import {
   addDoc,
+  arrayUnion,
   collection,
   doc,
+  FieldValue,
   getDoc,
   serverTimestamp,
   updateDoc,
@@ -76,7 +78,8 @@ const CreateSetup = ({ id, setLoading, setDataError }) => {
   const [selectValue, setSelectValue] = useState([]);
   const [selectSubValue, setSelectSubValue] = useState();
 
-  const [enteries, setEnteries] = useState([]);
+  const [allEntries, setAllEntries] = useState([]);
+  const [entries, setEntries] = useState([]);
   const [selectLangFileExt, setSelectLangFileExt] = useState(
     initialSelectedLangFileExt
   );
@@ -129,6 +132,9 @@ const CreateSetup = ({ id, setLoading, setDataError }) => {
     getUser();
   }, [user]);
 
+  console.log("allEntries", allEntries);
+  console.log("entries", entries);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (title && description) {
@@ -140,7 +146,7 @@ const CreateSetup = ({ id, setLoading, setDataError }) => {
               title: lowercaseForm.title,
               description: lowercaseForm.description,
             },
-            entries: { ...enteries },
+            entries: { ...allEntries },
             snippetType: "setup",
             postedAt: serverTimestamp(),
             userData: {
@@ -246,7 +252,7 @@ const CreateSetup = ({ id, setLoading, setDataError }) => {
     }
   }, [selectSubValue, selectedMainFolder]);
 
-  // console.log("enteries", enteries);
+  // console.log("entries", entries);
 
   return (
     <div className="">
@@ -324,7 +330,7 @@ const CreateSetup = ({ id, setLoading, setDataError }) => {
                         size="md"
                         required
                         variant="main"
-                        maxLength={100}
+                        maxLength={130}
                         onChange={handleChange}
                         value={title}
                       />
@@ -339,7 +345,7 @@ const CreateSetup = ({ id, setLoading, setDataError }) => {
                         size="md"
                         required
                         variant="main"
-                        maxLength={100}
+                        maxLength={180}
                         onChange={handleChange}
                         value={description}
                       />
@@ -397,8 +403,10 @@ const CreateSetup = ({ id, setLoading, setDataError }) => {
 
                   <div className="">
                     <Entries
-                      enteries={enteries}
-                      setEnteries={setEnteries}
+                      allEntries={allEntries}
+                      setAllEntries={setAllEntries}
+                      entries={entries}
+                      setEntries={setEntries}
                       selectLangFileExt={selectLangFileExt}
                       setSelectLangFileExt={setSelectLangFileExt}
                       selectFileExt={selectFileExt}

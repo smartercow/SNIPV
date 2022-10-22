@@ -3,8 +3,14 @@ import { useRouter } from "next/router";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../firebase/clientApp";
 import { Loading } from "@nextui-org/react";
-import ErrorSnippetPage from "../../components/SnippetPage/ErrorSnippetPage";
 import Head from "next/head";
+import Details from "../../components/Elements/Page/Details";
+import SyntaxHandler from "../../components/Syntax/Error/SyntaxHandler";
+import SolutionSyntaxHandler from "../../components/Syntax/Error/SolutionSyntaxHandler";
+import OutputSyntaxHandler from "../../components/Syntax/OutputSyntaxHandler";
+import Notes from "../../components/Elements/Page/Notes";
+import ExternalLink from "../../components/Elements/Page/ExternalLink";
+import Footer from "../../components/Elements/Page/Footer";
 
 const Snippet = () => {
   const {
@@ -28,13 +34,31 @@ const Snippet = () => {
   }, [id]);
 
   return (
-    <div className="min-h-[70vh]">
+    <div>
       <Head>
         <title>{snippet?.title}&nbsp;- SNIPV</title>
         <meta name="description" content="Created by Peter G" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      {snippet && <ErrorSnippetPage snippet={snippet} />}
+
+      {snippet && (
+        <div className="flex flex-col gap-4">
+          <Details snippet={snippet} />
+
+          <SyntaxHandler snippet={snippet} />
+
+          {snippet.solutioncode && <SolutionSyntaxHandler snippet={snippet} />}
+
+          {snippet.output && <OutputSyntaxHandler snippet={snippet} />}
+
+          {snippet.notes && <Notes snippet={snippet} />}
+
+          {snippet.link && <ExternalLink snippet={snippet} />}
+
+          <Footer snippet={snippet} />
+        </div>
+      )}
+
       {loading && (
         <div className="flex justify-center items-center h-[20vh]">
           <Loading size="lg" />

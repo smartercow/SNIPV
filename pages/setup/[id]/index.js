@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { doc, getDoc } from "firebase/firestore";
-import { db } from "../../firebase/clientApp";
+import { db } from "../../../firebase/clientApp";
 import { Loading } from "@nextui-org/react";
 import Head from "next/head";
-import SetupPage from "../../components/SnippetPage/SetupPage";
+import Details from "../../../components/Elements/Page/Details";
+import Entries from "../../../components/Display/Setup/Entries";
+import Footer from "../../../components/Elements/Page/Footer";
 
 const Setup = () => {
   const {
@@ -34,7 +36,17 @@ const Setup = () => {
         <meta name="description" content="Created by Peter G" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      {snippet && <SetupPage snippet={snippet} />}
+
+      {snippet && (
+        <div className="flex flex-col gap-4">
+          <Details snippet={snippet} />
+
+          <Entries snippet={snippet} />
+
+          <Footer snippet={snippet} />
+        </div>
+      )}
+
       {loading && (
         <div className="flex justify-center items-center h-[20vh]">
           <Loading size="lg" />

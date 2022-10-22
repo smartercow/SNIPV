@@ -31,9 +31,10 @@ export const Text = {
     },
     title: {
       color: "BlackLight",
-      fontSize: "28px",
+      fontFamily: "Ubuntu",
+      fontSize: "26px",
       fontWeight: 600,
-      letterSpacing: "0.3px",
+      letterSpacing: "0.1px",
     },
     description: {
       color: "BlackLight",

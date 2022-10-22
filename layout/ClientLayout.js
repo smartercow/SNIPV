@@ -103,7 +103,7 @@ const ClientLayout = ({ children, user }) => {
         <Header user={user} />
       </header>
       <hr />
-      <main className="max-w-6xl mx-5 lg:mx-auto mt-3 min-h-[82vh] w-full">
+      <main className="max-w-6xl mx-5 lg:mx-auto mt-5 min-h-[80vh] w-full">
         {children}
       </main>
       <footer className="h-[10vh]">
