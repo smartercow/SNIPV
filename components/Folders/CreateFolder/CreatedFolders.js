@@ -9,11 +9,8 @@ import { mainFolderDeleteUpdateState } from "../../../atoms/mainFolderDeleteUpda
 import { mainFolderEditUpdateState } from "../../../atoms/mainFolderEditUpdateState";
 import { updateStateAtom } from "../../../atoms/updateStateAtom";
 import { auth, db } from "../../../firebase/clientApp";
-import {
-  OptionFileExt,
-  ValueFileExt,
-} from "../../CreateSnippet/Select/SelectProps";
-import { NoOptionsMessage } from "../../CreateSnippet/Select/NoOptionsMessage";
+import { OptionFileExt, ValueFileExt } from "../../Select/SelectProps";
+import { NoOptionsMessage } from "../../Select/NoOptionsMessage";
 import { AddNoteIcon } from "../../SVG/AddNoteIcon";
 import MainFolderDropdown from "../../Display/MainFolderDropdown";
 import { Button, Icon, Text } from "@chakra-ui/react";

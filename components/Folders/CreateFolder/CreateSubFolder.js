@@ -15,7 +15,7 @@ import { useRecoilState, useSetRecoilState } from "recoil";
 import { CreateFolderModalState } from "../../../atoms/CreateFolderModalAtom";
 import { subFolderEditUpdateState } from "../../../atoms/subFolderEditUpdateState";
 import { updateStateAtom } from "../../../atoms/updateStateAtom";
-import { NoOptionsMessage } from "../../CreateSnippet/Select/NoOptionsMessage";
+import { NoOptionsMessage } from "../../Select/NoOptionsMessage";
 import { TagsInput } from "react-tag-input-component";
 import { useRouter } from "next/router";
 

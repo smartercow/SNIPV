@@ -19,13 +19,19 @@ const FoldersCounter = ({ id }) => {
   const [subFolders, setSubFolders] = useState();
 
   useEffect(() => {
-    if (asPath.startsWith("/snips/codes")) {
+    if (
+      asPath.startsWith("/snips/codes") ||
+      asPath.startsWith("/upsert/code")
+    ) {
       setSubFolder("CodeSubFolders");
     }
-    if (asPath.startsWith("/snips/errors")) {
+    if (
+      asPath.startsWith("/snips/errors") ||
+      asPath.startsWith("/upsert/error")
+    ) {
       setSubFolder("ErrorSubFolders");
     }
-    if (asPath.startsWith("/setups")) {
+    if (asPath.startsWith("/setups") || asPath.startsWith("/upsert/setup")) {
       setSubFolder("SetupSubFolders");
     }
   }, [asPath]);

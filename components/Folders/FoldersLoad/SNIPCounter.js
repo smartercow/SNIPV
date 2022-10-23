@@ -15,13 +15,19 @@ const CodeSnippetsCounter = ({ id }) => {
   const [col, setCol] = useState("");
 
   useEffect(() => {
-    if (asPath.startsWith("/snips/codes")) {
+    if (
+      asPath.startsWith("/snips/codes") ||
+      asPath.startsWith("/upsert/code")
+    ) {
       setCol("CodeSnippetsData1");
     }
-    if (asPath.startsWith("/snips/errors")) {
+    if (
+      asPath.startsWith("/snips/errors") ||
+      asPath.startsWith("/upsert/error")
+    ) {
       setCol("ErrorSnippetsData1");
     }
-    if (asPath.startsWith("/setups")) {
+    if (asPath.startsWith("/setups") || asPath.startsWith("/upsert/setup")) {
       setCol("SetupData");
     }
   }, [asPath]);

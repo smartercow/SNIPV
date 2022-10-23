@@ -9,11 +9,8 @@ import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../../../firebase/clientApp";
 import { Select, CreatableSelect, AsyncSelect } from "chakra-react-select";
-import {
-  OptionFileExt,
-  ValueFileExt,
-} from "../../CreateSnippet/Select/SelectProps";
-import { NoOptionsMessage } from "../../CreateSnippet/Select/NoOptionsMessage";
+import { OptionFileExt, ValueFileExt } from "../../Select/SelectProps";
+import { NoOptionsMessage } from "../../Select/NoOptionsMessage";
 import SubFolderDropdown from "../../Display/SubFolderDropdown";
 import { useRecoilState } from "recoil";
 import { subFolderDeleteUpdateState } from "../../../atoms/subFolderDeleteUpdateState";

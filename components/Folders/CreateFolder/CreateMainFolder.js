@@ -17,7 +17,7 @@ import { auth, db } from "../../../firebase/clientApp";
 import { LanguageOptions } from "../../../utilities/Language";
 import { JavaScriptFrameworks } from "../../../utilities/Language/JavaScript/Frameworks";
 import { JavaScriptLibraries } from "../../../utilities/Language/JavaScript/Libraries";
-import { NoOptionsMessage } from "../../CreateSnippet/Select/NoOptionsMessage";
+import { NoOptionsMessage } from "../../Select/NoOptionsMessage";
 import { useRouter } from "next/router";
 
 const initialSelectedLanguage = {

@@ -5,7 +5,7 @@ import {
   AdditionalFileExtensions,
   AdditionalFileExtensions1,
 } from "../../utilities/AdditionalFileExtensions";
-import { NoOptionsMessage } from "../CreateSnippet/Select/NoOptionsMessage";
+import { NoOptionsMessage } from "../Select/NoOptionsMessage";
 
 const initialSelectedLang = {
   label: "Javascript",
@@ -62,7 +62,8 @@ const initialSelectedLang = {
       ],
     },
   ],
-  syntaxHighlight: "css", secondary: true 
+  syntaxHighlight: "css",
+  secondary: true,
 };
 
 const AdditionalFileExt = () => {

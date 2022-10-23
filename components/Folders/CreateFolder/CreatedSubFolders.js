@@ -13,11 +13,8 @@ import { useRecoilState } from "recoil";
 import { CreateFolderModalState } from "../../../atoms/CreateFolderModalAtom";
 import { updateStateAtom } from "../../../atoms/updateStateAtom";
 import { auth, db } from "../../../firebase/clientApp";
-import {
-  OptionFileExt,
-  ValueFileExt,
-} from "../../CreateSnippet/Select/SelectProps";
-import { NoOptionsMessage } from "../../CreateSnippet/Select/NoOptionsMessage";
+import { OptionFileExt, ValueFileExt } from "../../Select/SelectProps";
+import { NoOptionsMessage } from "../../Select/NoOptionsMessage";
 import SubFolderDropdown from "../../Display/SubFolderDropdown";
 import { AddNoteIcon } from "../../SVG/AddNoteIcon";
 import { subFolderDeleteUpdateState } from "../../../atoms/subFolderDeleteUpdateState";

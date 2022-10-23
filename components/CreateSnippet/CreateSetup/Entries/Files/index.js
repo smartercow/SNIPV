@@ -2,8 +2,8 @@ import { Button, Input, Text, Textarea } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { Select, CreatableSelect, AsyncSelect } from "chakra-react-select";
 import { FileExtOptions } from "../../../../../utilities/Language/FileExtensions";
-import { OptionFileExt, ValueFileExt } from "../../../Select/SelectProps";
-import { NoOptionsMessage } from "../../../Select/NoOptionsMessage";
+import { OptionFileExt, ValueFileExt } from "../Select/SelectProps";
+import { NoOptionsMessage } from "../Select/NoOptionsMessage";
 
 const Files = ({
   codeFile,

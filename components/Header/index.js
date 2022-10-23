@@ -84,18 +84,21 @@ const Header = ({ user }) => {
       )}
       <div className="flex justify-between items-center max-w-6xl mx-5 lg:mx-auto h-18">
         <div className="flex gap-4 items-center">
-          <div className="cursor-pointer">
+          <div className="flex items-center">
             <Link href="/">
-              <Text size={34} className="font-extrabold">
+              <Text size={34} className="font-extrabold cursor-pointer">
                 SNIPV
               </Text>
             </Link>
+            <div className="h-4">
+              <Text>v2 beta</Text>
+            </div>
           </div>
           <div>
             {user && (
               <Link href="/upsert/code">
                 <Edit
-                  fill="#0072F5"
+                  fill="#087ea4"
                   className="cursor-pointer"
                   width={35}
                   height={35}

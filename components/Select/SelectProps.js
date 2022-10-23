@@ -1,6 +1,6 @@
 import { components } from "react-select";
-import FoldersCounter from "../../Folders/FoldersLoad/FoldersCounter";
-import SNIPCounter from "../../Folders/FoldersLoad/SNIPCounter";
+import FoldersCounter from "../Folders/FoldersLoad/FoldersCounter";
+import SNIPCounter from "../Folders/FoldersLoad/SNIPCounter";
 
 const { Option, SingleValue } = components;
 
