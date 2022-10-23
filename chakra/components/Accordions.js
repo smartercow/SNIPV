@@ -13,7 +13,7 @@ export const Accordion = {
         mt: 2,
         button: {
           color: "Black",
-          // borderRadius: 10,
+          borderRadius: 10,
           _hover: {
             bg: "PrimaryELight",
           },

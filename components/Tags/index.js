@@ -1,4 +1,4 @@
-import { Text } from "@nextui-org/react";
+import { Text } from "@chakra-ui/react";
 import { collection, onSnapshot } from "firebase/firestore";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
@@ -90,7 +90,7 @@ const Tags = () => {
 
                 <div className="text-center">
                   <Link href="/tags/codes">
-                    <Text h5 className="cursor-pointer hover:underline">
+                    <Text className="cursor-pointer hover:underline">
                       SE ALLE
                     </Text>
                   </Link>
@@ -106,9 +106,7 @@ const Tags = () => {
               <div>
                 {!codeTags?.length > 0 && (
                   <div className="flex justify-center mt-10">
-                    <Text b size={13} transform="uppercase">
-                      Du har ingen kode tags! 😔
-                    </Text>
+                    <Text>Du har ingen kode tags! 😔</Text>
                   </div>
                 )}
               </div>
@@ -156,9 +154,7 @@ const Tags = () => {
               <div>
                 {!errorTags?.length > 0 && (
                   <div className="flex justify-center mt-10">
-                    <Text b size={13} transform="uppercase">
-                      Du har ingen kode tags! 😔
-                    </Text>
+                    <Text>Du har ingen kode tags! 😔</Text>
                   </div>
                 )}
               </div>

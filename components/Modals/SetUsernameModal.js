@@ -1,4 +1,3 @@
-import { async } from "@firebase/util";
 import {
   Button,
   Input,
@@ -89,7 +88,6 @@ const SetUsernameModal = () => {
       setLoading(false);
       setUsernameStatus("");
       setStatusColor("error");
-
     }
   };
 
@@ -110,17 +108,15 @@ const SetUsernameModal = () => {
         return null;
       }
     } else {
-      setCheck(false)
-      setConfirm(true)
+      setCheck(false);
+      setConfirm(true);
     }
   };
 
   useEffect(() => {
     if (usernameInputValue) {
       CheckUsername();
-
     }
-
   }, [usernameInputValue]);
 
   return (
@@ -134,7 +130,7 @@ const SetUsernameModal = () => {
       >
         <Modal.Header>
           <div className="flex">
-            <Text b id="modal-title" size={18}>
+            <Text id="modal-title" size={18}>
               Færdiggør registreringen
             </Text>
           </div>
@@ -193,7 +189,7 @@ const SetUsernameModal = () => {
               {charsRemaining} tegn tilbage
             </Text> */}
             <div className="h-4 flex items-center">
-              <Text b color={statusColor}>{usernameInputValue}&nbsp;</Text>
+              <Text color={statusColor}>{usernameInputValue}&nbsp;</Text>
               <Text color={statusColor}>{usernameStatus}</Text>
             </div>
           </div>

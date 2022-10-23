@@ -3,11 +3,9 @@ import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import FolderType from "../../../components/Heading/FolderType";
 import { auth, db } from "../../../firebase/clientApp";
-import CodeFolders from "../../../components/Folders/CodeFolders";
 import NoUser from "../../../components/NoPage/NoUser";
 import Head from "next/head";
 import LatestHeading from "../../../components/Heading/LatestHeading";
-import { Select, CreatableSelect, AsyncSelect } from "chakra-react-select";
 
 const MyCodesFolders = () => {
   const [user] = useAuthState(auth);

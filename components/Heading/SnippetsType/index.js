@@ -22,13 +22,7 @@ export const SnippetsTypeLinks = () => {
         if (asPath.startsWith(item.link))
           return (
             <Link key={index} href={item.link}>
-              <Text
-                size={18}
-                h5
-                transform="uppercase"
-                color="primary"
-                className="cursor-pointer"
-              >
+              <Text variant="H3" color="Primary" cursor="pointer">
                 {item.titel}
               </Text>
             </Link>
@@ -36,12 +30,7 @@ export const SnippetsTypeLinks = () => {
         else
           return (
             <Link key={index} href={item.link}>
-              <Text
-                size={18}
-                h5
-                transform="uppercase"
-                className="cursor-pointer hover:underline"
-              >
+              <Text variant="H3" cursor="pointer">
                 {item.titel}
               </Text>
             </Link>

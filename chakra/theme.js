@@ -15,7 +15,10 @@ export const theme = extendTheme({
     Primary: "#087ea4",
     PrimaryLight: "#0074a6",
     PrimaryLighter: "#E6F7FF",
-    PrimaryELight: "#E6F7FF",
+    PrimaryTLight: "#d0ebf7",
+    PrimaryELight: "#edf4f7",
+
+    DarkBlue: "#031B4E",
 
     Black: "#23272F",
     BlackLight: "#404756",

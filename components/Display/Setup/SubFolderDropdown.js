@@ -2,12 +2,12 @@ import { EditDocumentIcon } from "../../SVG/EditDocumentIcon.js";
 import { DeleteDocumentIcon } from "../../SVG/DeleteDocumentIcon.js";
 import { deleteSubFolderModalState } from "../../../atoms/deleteSubFolderModalState.js";
 import { useSetRecoilState } from "recoil";
-import { createSetupFolderModalState } from "../../../atoms/createSetupFolderModalAtom.js";
+import { CreateFolderModalState } from "../../../atoms/CreateFolderModalAtom.js";
 import { Icon, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
 import { CgChevronDown } from "react-icons/cg";
 
 export default function SubFolderDropdown({ selectedSubFolder }) {
-  const setEditOpen = useSetRecoilState(createSetupFolderModalState);
+  const setEditOpen = useSetRecoilState(CreateFolderModalState);
   const setDelOpen = useSetRecoilState(deleteSubFolderModalState);
 
   return (

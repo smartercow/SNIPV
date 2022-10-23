@@ -1,16 +1,14 @@
-import { Text } from "@nextui-org/react";
+import { Icon, Text } from "@chakra-ui/react";
 import React from "react";
 import { AiTwotoneTags } from "react-icons/ai";
 
 const TagHeading = ({ headingType, headingColor }) => {
   return (
     <div className="w-full">
-      <div className="flex gap-2">
-        <Text className="text-[#031B4E]">
-          <AiTwotoneTags />
-        </Text>
-        <Text h5 transform="uppercase" color={headingColor}>
-          {headingType} tags
+      <div className="flex gap-2 items-center">
+        <Icon as={AiTwotoneTags} color="DarkBlue" h={6} w={6} />
+        <Text variant="boxHeading" color={headingColor}>
+          {headingType}
         </Text>
       </div>
       <hr />

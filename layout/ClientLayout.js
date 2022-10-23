@@ -1,19 +1,9 @@
-import {
-  collection,
-  doc,
-  getDoc,
-  query,
-  runTransaction,
-  setDoc,
-  where,
-} from "firebase/firestore";
+import { doc, getDoc, runTransaction, setDoc } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { setUsernameModal } from "../atoms/setUsernameModal";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import CreateCodeFolderModal from "../components/Modals/CreateCodeFolderModal";
-import CreateErrorFolderModal from "../components/Modals/CreateErrorFolderModal";
 import LoginModal from "../components/Modals/LoginModal";
 import { auth, db } from "../firebase/clientApp";
 import { useRecoilState } from "recoil";
@@ -22,17 +12,7 @@ import { useRouter } from "next/router";
 import LoadingState from "../components/LoadingState";
 import DeleteMainFolderModal from "../components/Modals/DeleteMainFolderModal";
 import DeleteSubFolderModal from "../components/Modals/DeleteSubFolderModal";
-import CreateSetupFolderModal from "../components/Modals/CreateSetupFolderModal";
-
-const ProtectedRoutes = [
-  "/snips",
-  "/folders",
-  "/tags",
-  "/settings",
-  "/stats",
-  "/patchnotes",
-  "/search",
-];
+import CreateFolderModal from "../components/Modals/CreateFolderModal";
 
 const ClientLayout = ({ children, user }) => {
   const { pathname, asPath } = useRouter();
@@ -41,27 +21,6 @@ const ClientLayout = ({ children, user }) => {
 
   const [open, setOpen] = useRecoilState(setUsernameModal);
   const [update, setUpdate] = useState(true);
-
-  /*   const NoAccess = () => {
-  const findColor = Colors.filter((element) =>
-    String(element).startsWith("blue")
-  );
-
-    try {
-      if (!user && asPath.startsWith(pRoutes)) {
-        router.push("/");
-      } else {
-        setLoading(false);
-      }
-    } catch (error) {
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    NoAccess();
-  }, [user]); */
 
   const CheckUser = async () => {
     try {
@@ -98,20 +57,19 @@ const ClientLayout = ({ children, user }) => {
   }, [user, update]);
 
   return (
-    <div className="flex flex-col">
-      <header className="h-[6vh]">
+    <div className="flex flex-col h-screen">
+      <header className="flex-none">
         <Header user={user} />
       </header>
-      <hr />
-      <main className="max-w-6xl mx-5 lg:mx-auto mt-5 min-h-[80vh] w-full">
+
+      <main className="max-w-6xl mx-5 lg:mx-auto pt-3 w-full flex-grow">
         {children}
       </main>
-      <footer className="h-[10vh]">
+
+      <footer className="flex-none">
         <Footer />
       </footer>
-      <CreateCodeFolderModal />
-      <CreateErrorFolderModal />
-      <CreateSetupFolderModal />
+      <CreateFolderModal />
       <SetUsernameModal />
       <LoginModal />
       <DeleteMainFolderModal />

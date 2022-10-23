@@ -16,7 +16,6 @@ import Syntax from "./Syntax";
 import parse from "html-react-parser";
 
 const Accord = ({ allEntries }) => {
-  console.log("allEntries", allEntries);
   return (
     <div>
       {allEntries && (
@@ -40,6 +39,14 @@ const Accord = ({ allEntries }) => {
                       <Box key={index} p={2} mb={2}>
                         {entry.summary && (
                           <div className="parse">{parse(entry.summary)}</div>
+                        )}
+
+                        {entry.packages && (
+                          <div>
+                            {entry.packages.map((pack, index) => (
+                              <div key={index}>{pack}</div>
+                            ))}
+                          </div>
                         )}
 
                         {entry.codeFiles && (

@@ -114,7 +114,7 @@ const Files = ({
                 <div key={i} className="flex">
                   <Text color="Primary">
                     {c.title}
-                    {c.entryFileExt?.label}
+                    {c.entryFileExt?.H5}
                   </Text>
                   {","}
                 </div>

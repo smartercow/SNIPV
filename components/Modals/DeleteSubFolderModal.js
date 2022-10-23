@@ -102,9 +102,7 @@ export default function DeleteSubFolderModal() {
         onClose={() => setSubOpen(false)}
       >
         <Modal.Header>
-          <Text b size={18}>
-            Bekræft
-          </Text>
+          <Text>Bekræft</Text>
         </Modal.Header>
         <Modal.Body>
           <Grid.Container

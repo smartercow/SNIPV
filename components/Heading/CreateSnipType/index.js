@@ -33,7 +33,7 @@ export const CreateSnipType = () => {
             if (asPath.startsWith(item.link))
               return (
                 <Link key={index} href={item.link}>
-                  <Text color="Primary" variant="NavHeading">
+                  <Text color="Primary" variant="H3" cursor="pointer">
                     {item.titel}
                   </Text>
                 </Link>
@@ -41,7 +41,13 @@ export const CreateSnipType = () => {
             else
               return (
                 <Link key={index} href={item.link}>
-                  <Text variant="NavHeading">{item.titel}</Text>
+                  <Text
+                    variant="H3"
+                    cursor="pointer"
+                    _hover={{ color: "Primary" }}
+                  >
+                    {item.titel}
+                  </Text>
                 </Link>
               );
           })}

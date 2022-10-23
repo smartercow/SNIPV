@@ -1,7 +1,8 @@
 export const Text = {
   baseStyle: {
     borderRadius: "12px",
-    fontSize: "15px",
+    color: "Black",
+    fontSize: "16px",
     fontWeight: 500,
     fontFamily: "Anek Malayalam",
     _focus: {
@@ -10,6 +11,23 @@ export const Text = {
   },
 
   variants: {
+    H3: {
+      color: "Black",
+      fontSize: "20px",
+      textTransform: "uppercase",
+    },
+    H4: {
+      color: "Black",
+      fontSize: "18px",
+      textTransform: "uppercase",
+      letterSpacing: ".1px",
+    },
+    H5: {
+      color: "Black",
+      fontSize: "16px",
+      textTransform: "uppercase",
+      letterSpacing: ".1px",
+    },
     headUppercase: {
       color: "Black",
       fontSize: "16px",
@@ -17,8 +35,9 @@ export const Text = {
     },
     header: {
       color: "Black",
-      fontSize: "20px",
+      fontSize: "22px",
       textTransform: "uppercase",
+      fontWeight: 600,
       _hover: {
         color: "Primary",
         cursor: "pointer",
@@ -42,46 +61,42 @@ export const Text = {
       fontWeight: 500,
       letterSpacing: "0.3px",
     },
+    /* Seneste Tags/home */
+    boxHeading: {
+      fontSize: "18px",
+      textTransform: "uppercase",
+    },
     snipHeading: {
-      color: "Primary",
-      fontSize: "16px",
+      // color: "Primary",
+      fontSize: "18px",
       fontWeight: 500,
+      fontFamily: "Ubuntu",
+      letterSpacing: "0.1px",
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      whiteSpace: "nowrap",
     },
     snipDescription: {
-      color: "BlackLighter",
-      fontSize: "14px",
-      // fontWeight: "semibold",
+      // color: "PrimaryLight",
+      fontSize: "15px",
+      fontWeight: 500,
+      letterSpacing: "0.5px",
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      whiteSpace: "nowrap",
     },
     seeMore: {
-      color: "Black",
       fontSize: "16px",
       textTransform: "uppercase",
+      fontFamily: "Ubuntu",
       _hover: {
         color: "Primary",
         cursor: "pointer",
       },
-    },
-    NavHeading: {
-      color: "Black",
-      fontSize: "17px",
-      textTransform: "uppercase",
-      _hover: {
-        color: "Primary",
-        cursor: "pointer",
-      },
-    },
-    folderLabel: {
-      color: "Black",
-      fontSize: "16px",
     },
     folderHeading: {
       color: "Black",
       fontSize: "20px",
-      textTransform: "uppercase",
-    },
-    label: {
-      color: "BlackLight",
-      fontSize: "16px",
       textTransform: "uppercase",
     },
     subLabel: {

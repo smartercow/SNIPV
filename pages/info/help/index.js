@@ -19,7 +19,7 @@ const HelpPage = () => {
         <hr className="my-3" />
         <div>
           <Link href="/help/tags">
-            <Text b className="cursor-pointer underline">
+            <Text className="cursor-pointer underline">
               Hvordan man skriver søgbare tags
             </Text>
           </Link>

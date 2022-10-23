@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   addDoc,
   collection,
@@ -13,11 +13,9 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { TagsInput } from "react-tag-input-component";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneLight } from "react-syntax-highlighter/dist/cjs/styles/prism";
-import CreatedFolders from "./Folders/CreatedFolders";
 import { toast } from "react-toastify";
 import NextLink from "next/link";
-import CreatedSubFolders from "./Folders/CreatedSubFolders";
-import CreateSnippetFolderHeading from "../CreateSnippetFolderHeading";
+import FolderHeading from "../FolderHeading";
 import {
   Accordion,
   AccordionButton,
@@ -32,6 +30,8 @@ import {
   Text,
   Textarea,
 } from "@chakra-ui/react";
+import CreatedFolders from "../../Folders/CreateFolder/CreatedFolders";
+import CreatedSubFolders from "../../Folders/CreateFolder/CreatedSubFolders";
 
 const initialState = {
   title: "",
@@ -273,12 +273,10 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
             <h2>
               <AccordionButton>
                 <Box flex="1" textAlign="left">
-                  <div className="flex gap-5">
+                  <div className="flex gap-5 items-center">
                     <Text variant="folderHeading">SNIP</Text>
                     {codeExpanded && (
-                      <CreateSnippetFolderHeading
-                        selectedSubFolder={selectedSubFolder}
-                      />
+                      <FolderHeading selectedSubFolder={selectedSubFolder} />
                     )}
                   </div>
                 </Box>
@@ -291,7 +289,7 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
                   <div className="flex flex-col gap-5 mx-3">
                     <div className="w-full flex gap-4 items-center">
                       <div className="w-24">
-                        <Text variant="label">Titel</Text>
+                        <Text variant="H5">Titel</Text>
                       </div>
                       <Input
                         name="title"
@@ -306,7 +304,7 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
 
                     <div className="w-full flex gap-4 items-center">
                       <div className="w-24">
-                        <Text variant="label">Beskrivelse</Text>
+                        <Text variant="H5">Beskrivelse</Text>
                       </div>
                       <Input
                         name="description"
@@ -321,7 +319,7 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
 
                     <div>
                       <div className="flex flex-col gap-2">
-                        <Text variant="label">Fejl kode</Text>
+                        <Text variant="H5">Fejl kode</Text>
 
                         <Textarea
                           name="errorcode"
@@ -358,7 +356,7 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
 
                     <div>
                       <div className="flex flex-col gap-2">
-                        <Text variant="label">Løsning kode</Text>
+                        <Text variant="H5">Løsning kode</Text>
                         <Textarea
                           name="solutioncode"
                           size="md"
@@ -393,7 +391,7 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
 
                     <div className="">
                       <div className="flex flex-col gap-2">
-                        <Text variant="label">Output</Text>
+                        <Text variant="H5">Output</Text>
                         <Textarea
                           name="output"
                           size="md"
@@ -433,7 +431,7 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
                       <h2>
                         <AccordionButton role="heading">
                           <Box flex="1" textAlign="left">
-                            <Text variant="accLabel">Noter</Text>
+                            <Text variant="H5">Noter</Text>
                           </Box>
                           <AccordionIcon mr={2} />
                         </AccordionButton>
@@ -453,7 +451,7 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
                       <h2>
                         <AccordionButton role="heading">
                           <Box flex="1" textAlign="left">
-                            <Text variant="accLabel">Link</Text>
+                            <Text variant="H5">Link</Text>
                           </Box>
                           <AccordionIcon mr={2} />
                         </AccordionButton>
@@ -497,7 +495,7 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
                       <h2>
                         <AccordionButton role="heading">
                           <Box flex="1" textAlign="left">
-                            <Text variant="accLabel">Tags</Text>
+                            <Text variant="H5">Tags</Text>
                           </Box>
                           <AccordionIcon mr={2} />
                         </AccordionButton>
@@ -578,7 +576,7 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
             subtitle={
               <div className="flex items-center gap-7">
                 {codeExpanded && (
-                  <CreateSnippetFolderHeading
+                  <FolderHeading
                     selectedSubFolder={selectedSubFolder}
                   />
                 )}

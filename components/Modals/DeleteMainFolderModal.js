@@ -9,7 +9,7 @@ import {
   Grid,
 } from "@nextui-org/react";
 import { useRecoilState } from "recoil";
-import { deleteMainFolderModalState } from "../../atoms/deleteMainFolderModalState";
+import { DeleteMainFolderModalState } from "../../atoms/DeleteMainFolderModalState";
 import {
   collection,
   deleteDoc,
@@ -30,7 +30,7 @@ export default function DeleteMainFolderModal() {
   const [mainF, setMainF] = useState("");
   const [subF, setSubF] = useState("");
 
-  const [mainOpen, setMainOpen] = useRecoilState(deleteMainFolderModalState);
+  const [mainOpen, setMainOpen] = useRecoilState(DeleteMainFolderModalState);
   const [mainDeleted, setMainDeleted] = useRecoilState(
     mainFolderDeleteUpdateState
   );
@@ -98,10 +98,6 @@ export default function DeleteMainFolderModal() {
     }
   }, [asPath]);
 
-  console.log("asPath", asPath);
-  console.log("mainF", mainF);
-  console.log("subF", subF);
-  console.log("mainOpen.id", mainOpen.id);
   return (
     <div>
       <Modal
@@ -112,9 +108,7 @@ export default function DeleteMainFolderModal() {
         onClose={() => setMainOpen(false)}
       >
         <Modal.Header>
-          <Text b size={18}>
-            Bekræft
-          </Text>
+          <Text>Bekræft</Text>
         </Modal.Header>
         <Modal.Body>
           <Grid.Container

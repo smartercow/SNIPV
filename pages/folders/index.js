@@ -13,7 +13,7 @@ import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import FolderType from "../../components/Heading/FolderType";
 import { auth, db } from "../../firebase/clientApp";
-import CodeFolders from "../../components/Folders/CodeFolders";
+import FoldersLoad from "../../components/Folders/FoldersLoad";
 import NoUser from "../../components/NoPage/NoUser";
 import Head from "next/head";
 import { FolderIcon } from "../../components/SVG/FolderIcon";
@@ -24,7 +24,7 @@ import { DeleteErrorFolder } from "../../components/NonModal/DeleteErrorFolder";
 import { EditDocumentIcon } from "../../components/SVG/EditDocumentIcon";
 import { LoginIcon } from "../../components/SVG/LoginIcon";
 import ErrorSnippetsCounter from "../../components/Folders/ErrorFolders/ErrorSnippetsCounter";
-import CodeSnippetsCounter from "../../components/Folders/CodeFolders/CodeSnippetsCounter";
+import SNIPCounter from "../../components/Folders/FoldersLoad/SNIPCounter";
 
 const MyFolders = () => {
   const [user] = useAuthState(auth);
@@ -145,7 +145,7 @@ const MyFolders = () => {
                                     </p>
                                   </div>
                                   <div>
-                                    <CodeSnippetsCounter id={folder.id} />
+                                    <SNIPCounter id={folder.id} />
                                   </div>
                                 </div>
                                 <div className="MonoHeading">
@@ -256,9 +256,7 @@ const MyFolders = () => {
                 <div>
                   {!myCodeFolders?.length > 0 && (
                     <div className="flex justify-center mt-10">
-                      <Text b size={13} transform="uppercase">
-                        Du har ingen kode mapper! 😔
-                      </Text>
+                      <Text>Du har ingen kode mapper! 😔</Text>
                     </div>
                   )}
                 </div>
@@ -410,9 +408,7 @@ const MyFolders = () => {
                 <div>
                   {!myErrorFolders?.length > 0 && (
                     <div className="flex justify-center mt-10">
-                      <Text b size={13} transform="uppercase">
-                        Du har ingen fejl mapper! 😔
-                      </Text>
+                      <Text>Du har ingen fejl mapper! 😔</Text>
                     </div>
                   )}
                 </div>

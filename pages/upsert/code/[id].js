@@ -10,7 +10,7 @@ import { useRouter } from "next/router";
 
 const UpsertId = () => {
   const [user] = useAuthState(auth);
-  
+
   const [loading, setLoading] = useState(true);
   const [dataError, setDataError] = useState(false);
 
@@ -31,9 +31,7 @@ const UpsertId = () => {
           <div className="mt-3">
             <Card>
               <Card.Header>
-                <Text b transform="uppercase">
-                  Opdatere en kode SNIP
-                </Text>
+                <Text>Opdatere en kode SNIP</Text>
               </Card.Header>
               <Card.Divider />
               <Card.Body>
@@ -56,9 +54,7 @@ const UpsertId = () => {
 
       {dataError && (
         <div className="flex justify-center items-center h-[20vh]">
-          <Text b transform="uppercase">
-            Ingen SNIP med angivet id!
-          </Text>
+          <Text>Ingen SNIP med angivet id!</Text>
         </div>
       )}
 

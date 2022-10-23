@@ -82,7 +82,7 @@ const Header = ({ user }) => {
           )}
         </>
       )}
-      <div className="flex justify-between items-center max-w-6xl mx-5 lg:mx-auto h-16">
+      <div className="flex justify-between items-center max-w-6xl mx-5 lg:mx-auto h-18">
         <div className="flex gap-4 items-center">
           <div className="cursor-pointer">
             <Link href="/">

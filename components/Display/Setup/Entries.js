@@ -14,7 +14,16 @@ import { useRouter } from "next/router";
 
 const Entries = ({ snippet }) => {
   const { asPath } = useRouter();
+  const router = useRouter();
+  const {
+    query: { id },
+  } = useRouter();
+
   const [ents, setEnts] = useState();
+
+  const handleHref = (link) => {
+    router.push(link);
+  };
 
   useEffect(() => {
     if (snippet) {
@@ -22,21 +31,49 @@ const Entries = ({ snippet }) => {
     }
   }, [snippet]);
 
-  console.log("PATH", asPath.match("Configuration"));
+  console.log(id);
+  console.log("ents", ents);
   return (
     <div>
       {ents && (
         <div className="flex gap-2">
           <div className="w-64">
-            {ents.map((item, index) => (
-              <div className="flex flex-col" key={index}>
-                <a href={`#${String(item.section).replace(/ /g, "-")}`}>
-                  <Box className="h-8 cursor-pointer hover:bg-gray-400 transition ease-in-out duration-300">
-                    {item.section}
-                  </Box>
-                </a>
-              </div>
-            ))}
+            <div className="flex flex-col">
+              {ents.map((item, index) => {
+                if (
+                  asPath.endsWith(`#${String(item.section).replace(/ /g, "-")}`)
+                )
+                  return (
+                    <Box
+                      bg="PrimaryLighter"
+                      key={index}
+                      onClick={() =>
+                        handleHref(
+                          `#${String(item.section).replace(/ /g, "-")}`
+                        )
+                      }
+                      className="py-2 px-3 cursor-pointer transition ease-in-out duration-300"
+                    >
+                      {item.section}
+                    </Box>
+                  );
+                else
+                  return (
+                    <Box
+                      _hover={{ bg: "PrimaryLighter" }}
+                      key={index}
+                      onClick={() =>
+                        handleHref(
+                          `#${String(item.section).replace(/ /g, "-")}`
+                        )
+                      }
+                      className="py-2 px-3 cursor-pointer hover:bg-gray-400 transition ease-in-out duration-300"
+                    >
+                      {item.section}
+                    </Box>
+                  );
+              })}
+            </div>
           </div>
 
           <div>
@@ -56,6 +93,14 @@ const Entries = ({ snippet }) => {
                       <Box key={index} p={2} mb={2}>
                         {entry.summary && (
                           <div className="parse">{parse(entry.summary)}</div>
+                        )}
+
+                        {entry.packages && (
+                          <>
+                            {entry.packages.map((pack, index) => (
+                              <div key={index}>{pack}</div>
+                            ))}
+                          </>
                         )}
 
                         {entry.codeFiles && (
@@ -87,6 +132,55 @@ const Entries = ({ snippet }) => {
                 })}
               </div>
             ))}
+
+            {asPath.endsWith(id) && (
+              <>
+                {ents && (
+                  <>
+                    {ents[0].entries.map((entry, index) => (
+                      <Box key={index} p={2} mb={2}>
+                        {entry.summary && (
+                          <div className="parse">{parse(entry.summary)}</div>
+                        )}
+
+                        {entry.packages && (
+                          <>
+                            {entry.packages.map((pack, index) => (
+                              <div key={index}>{pack}</div>
+                            ))}
+                          </>
+                        )}
+
+                        {entry.codeFiles && (
+                          <Tabs variant="mainTab">
+                            <TabList>
+                              {entry.codeFiles.map((e, index) => {
+                                return (
+                                  <Tab key={index}>
+                                    {e.title}
+                                    {e.entryFileExt.label}
+                                  </Tab>
+                                );
+                              })}
+                            </TabList>
+
+                            <TabPanels>
+                              {entry.codeFiles.map((e, index) => {
+                                return (
+                                  <TabPanel key={index}>
+                                    <SyntaxPage entry={e} />
+                                  </TabPanel>
+                                );
+                              })}
+                            </TabPanels>
+                          </Tabs>
+                        )}
+                      </Box>
+                    ))}
+                  </>
+                )}
+              </>
+            )}
           </div>
         </div>
       )}

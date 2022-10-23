@@ -20,7 +20,7 @@ const SidebarInfo = () => {
       link: "/info/help",
     },
   ];
-  
+
   return (
     <aside>
       <div className="w-40 pt-1">
@@ -28,7 +28,12 @@ const SidebarInfo = () => {
           if (asPath.startsWith(item.link))
             return (
               <Link key={index} href={item.link}>
-                <Text h5 color="primary" transform="uppercase" className="cursor-pointer">
+                <Text
+                  h5
+                  color="primary"
+                  transform="uppercase"
+                  className="cursor-pointer"
+                >
                   {item.titel}
                 </Text>
               </Link>
@@ -36,7 +41,11 @@ const SidebarInfo = () => {
           else
             return (
               <Link key={index} href={item.link}>
-                <Text h5 transform="uppercase" className="cursor-pointer hover:underline">
+                <Text
+                  h5
+                  transform="uppercase"
+                  className="cursor-pointer hover:underline"
+                >
                   {item.titel}
                 </Text>
               </Link>

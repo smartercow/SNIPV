@@ -17,6 +17,7 @@ import {
 } from "@chakra-ui/react";
 import Syntax from "./Syntax";
 import Accord from "./Accord";
+import Packages from "./Packages";
 
 const Quill = dynamic(() => import("./Quill"), {
   ssr: false,
@@ -48,6 +49,7 @@ const Entries = ({
 
   const [summaryValue, setSummaryValue] = useState({});
 
+  const [packages, setPackages] = useState([]);
   const [selectedEntry, setSelectedEntry] = useState("summary");
   const [menu, setMenu] = useState("");
 
@@ -73,6 +75,13 @@ const Entries = ({
     setSelectFileExt(initialSelectedFileExt);
   };
 
+  const AddAllPackages = (e) => {
+    e.preventDefault();
+    setEntries((oldForm) => [...oldForm, { packages: packages }]);
+    setSelectedEntry("summary");
+    setPackages([]);
+  };
+
   const AddSection = (e) => {
     e.preventDefault();
     setAllEntries((oldForm) => [...oldForm, { section: menu, entries }]);
@@ -92,6 +101,8 @@ const Entries = ({
     setEntries((entSum) => [...entSum, { summary: summaryValue }]);
     setSummaryValue({});
   };
+
+  console.log("entries", entries);
 
   const renderEntry = (ent) => {
     switch (ent) {
@@ -121,6 +132,14 @@ const Entries = ({
             setSelectedFileExt={setSelectedFileExt}
           />
         );
+      case "package":
+        return (
+          <Packages
+            packages={packages}
+            setPackages={setPackages}
+            AddAllPackages={AddAllPackages}
+          />
+        );
       default:
         return (
           <Quill
@@ -141,9 +160,9 @@ const Entries = ({
         <Accord allEntries={allEntries} />
       </Box>
       <div className="border border-gray-400 rounded-md">
-        <Box p={4} className="flex flex-col gap-3 ">
+        <Box p={4} className="flex flex-col gap-3">
           <Box className="flex gap-6 items-center">
-            <Text variant="label">Menu</Text>
+            <Text variant="H5">Menu</Text>
             <Input
               placeholder="Installation"
               variant="main"
@@ -154,10 +173,12 @@ const Entries = ({
           <Box>
             {!Object.keys(entries).length > 0 && (
               <Box
-                borderColor="iGrayLight"
+                borderColor="Gray"
                 borderWidth={1}
                 borderRadius="md"
                 className=""
+                py={4}
+                px={2}
               >
                 <Text variant="heading" color="gray.400">
                   Tilføj entries...
@@ -165,52 +186,66 @@ const Entries = ({
               </Box>
             )}
 
-            {entries.map((entry, index) => {
-              return (
-                <Box
-                  borderColor="Gray"
-                  borderWidth={1}
-                  borderRadius="md"
-                  p={2}
-                  mb={2}
-                  key={index}
-                >
-                  {entry.summary && (
-                    <div className="parse">{parse(entry.summary)}</div>
-                  )}
+            {Object.keys(entries).length > 0 && (
+              <Box>
+                {entries.map((entry, index) => {
+                  return (
+                    <Box
+                      borderColor="Gray"
+                      borderWidth={1}
+                      borderRadius="md"
+                      p={2}
+                      mb={2}
+                      key={index}
+                    >
+                      {entry.summary && (
+                        <div className="parse">{parse(entry.summary)}</div>
+                      )}
 
-                  {entry.codeFiles && (
-                    <Tabs variant="mainTab">
-                      <TabList>
-                        {entry.codeFiles.map((entry, index) => {
-                          return (
-                            <Tab key={index}>
-                              {entry.title}
-                              {entry.entryFileExt.label}
-                            </Tab>
-                          );
-                        })}
-                      </TabList>
+                      {entry.packages && (
+                        <>
+                          {entry.packages.map((pack, index) => (
+                            <div key={index}>{pack}</div>
+                          ))}
+                        </>
+                      )}
 
-                      <TabPanels>
-                        {entry.codeFiles.map((entry, index) => {
-                          return (
-                            <TabPanel key={index}>
-                              <Syntax entry={entry} />
-                            </TabPanel>
-                          );
-                        })}
-                      </TabPanels>
-                    </Tabs>
-                  )}
-                </Box>
-              );
-            })}
+                      {entry.codeFiles && (
+                        <Tabs variant="mainTab">
+                          <TabList>
+                            {entry.codeFiles.map((entry, index) => {
+                              return (
+                                <Tab key={index}>
+                                  {entry.title}
+                                  {entry.entryFileExt.H5}
+                                </Tab>
+                              );
+                            })}
+                          </TabList>
+
+                          <TabPanels>
+                            {entry.codeFiles.map((entry, index) => {
+                              return (
+                                <TabPanel key={index}>
+                                  <Syntax entry={entry} />
+                                </TabPanel>
+                              );
+                            })}
+                          </TabPanels>
+                        </Tabs>
+                      )}
+                    </Box>
+                  );
+                })}
+              </Box>
+            )}
           </Box>
-          <div>{renderEntry(selectedEntry)}</div>
         </Box>
 
+        <Divider my={3} />
+
         <Box boxShadow="2xl" borderRadius="lg">
+          <Box p={4}>{renderEntry(selectedEntry)}</Box>
           <Box bg="PrimaryLighter" className="p-2">
             <div>
               <Text variant="heading">Tilføj ny entry</Text>
@@ -230,6 +265,12 @@ const Entries = ({
                   onClick={() => setSelectedEntry("code")}
                 >
                   FILER
+                </Button>
+                <Button
+                  onClick={() => setSelectedEntry("package")}
+                  variant="main"
+                >
+                  Pakker
                 </Button>
               </div>
 

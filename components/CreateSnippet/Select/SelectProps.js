@@ -1,9 +1,6 @@
 import { components } from "react-select";
-import FileExtension from "../../Display/FileExtension";
-import CodeFoldersCounter from "../../Folders/CodeFolders/CodeFoldersCounter";
-import ErrorFoldersCounter from "../../Folders/ErrorFolders/ErrorFoldersCounter";
-import CodeSnippetsCounter from "../../Folders/CodeFolders/CodeSnippetsCounter";
-import ErrorSnippetsCounter from "../../Folders/ErrorFolders/ErrorSnippetsCounter";
+import FoldersCounter from "../../Folders/FoldersLoad/FoldersCounter";
+import SNIPCounter from "../../Folders/FoldersLoad/SNIPCounter";
 
 const { Option, SingleValue } = components;
 
@@ -12,25 +9,13 @@ export const ValueFileExt = (props) => (
     <div className="flex items-center gap-2">
       {props.data?.rootDirectory == "main" && (
         <>
-          {props.data?.folderSnippetType == "code" && (
-            <CodeFoldersCounter id={props.data.mainFolderId} />
-          )}
-
-          {props.data?.folderSnippetType == "error" && (
-            <ErrorFoldersCounter id={props.data.mainFolderId} />
-          )}
+          <FoldersCounter id={props.data.mainFolderId} />
         </>
       )}
 
       {props.data?.subFolderId && (
         <>
-          {props.data?.folderSnippetType == "code" && (
-            <CodeSnippetsCounter id={props.data.subFolderId} />
-          )}
-
-          {props.data.folderSnippetType == "error" && (
-            <ErrorSnippetsCounter id={props.data.subFolderId} />
-          )}
+          <SNIPCounter id={props.data.subFolderId} />
         </>
       )}
 
@@ -72,25 +57,13 @@ export const OptionFileExt = (props) => (
     <div className="flex items-center gap-2">
       {props.data?.rootDirectory == "main" && (
         <>
-          {props.data?.folderSnippetType == "code" && (
-            <CodeFoldersCounter id={props.data.mainFolderId} />
-          )}
-
-          {props.data?.folderSnippetType == "error" && (
-            <ErrorFoldersCounter id={props.data.mainFolderId} />
-          )}
+          <FoldersCounter id={props.data.mainFolderId} />
         </>
       )}
 
       {props.data?.subFolderId && (
         <>
-          {props.data?.folderSnippetType == "code" && (
-            <CodeSnippetsCounter id={props.data.subFolderId} />
-          )}
-
-          {props.data?.folderSnippetType == "error" && (
-            <ErrorSnippetsCounter id={props.data.subFolderId} />
-          )}
+          <SNIPCounter id={props.data.subFolderId} />
         </>
       )}
 

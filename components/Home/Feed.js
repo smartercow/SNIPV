@@ -1,77 +1,75 @@
-import { Badge, Tooltip, User } from "@nextui-org/react";
 import React from "react";
 import Link from "next/link";
 import { MdFormatIndentIncrease } from "react-icons/md";
 import { LoginIcon } from "../SVG/LoginIcon";
 import LanguageBadge from "../Display/LanguageBadge";
-import { Box, Icon, Text } from "@chakra-ui/react";
+import { Avatar, Badge, Box, Icon, Text, Tooltip } from "@chakra-ui/react";
 
 const Feed = ({ snippet }) => {
   return (
-    <div>
+    <div className="">
       {snippet && (
-        <div className="max-w-[46rem]">
+        <div className="">
           {snippet.snips && (
             <div className="flex flex-col gap-4 ">
               <div>
-                <div className="flex items-center bg-[#ebecf0] gap-2 px-2 bg h-10">
+                <Box className="flex items-center bg-[#ebecf0] gap-2 px-2 h-10">
                   <Icon
                     as={MdFormatIndentIncrease}
                     w={6}
                     h={6}
                     color="BlackLighter"
                   />
-                  <div className="w-full ">
-                    <Text
-                      color="Primary"
-                      className="font-semibold"
-                      variant="headUppercase"
-                    >
-                      Seneste SNIPS
-                    </Text>
-                  </div>
-                </div>
+                  <Text variant="boxHeading">Seneste SNIPS</Text>
+                </Box>
               </div>
 
               <div>
                 <div className="flex flex-col gap-4">
                   {snippet.snips.slice(0, 10).map((snippet, index) => (
-                    <div key={index}>
+                    <div key={index} className="">
                       <Link
                         href={
                           snippet.snippetType === "code"
                             ? `/s/${snippet.id}`
-                            : `/e/${snippet.id}`
+                            : snippet.snippetType === "error"
+                            ? `/e/${snippet.id}`
+                            : `/setup/${snippet.id}`
                         }
                       >
                         <div className="hoverable-item cursor-pointer">
                           <Box
                             key={snippet.id}
-                            // borderColor="Primary"
+                            borderColor="PrimaryLighter"
                             borderWidth={1}
                             borderRadius="lg"
+                            shadow="md"
+                            userSelect="none"
                             p={2}
-                            bg="GrayLight"
-                            _hover={{ bg: "gray.200" }}
+                            bg="PrimaryELight"
+                            _hover={{ bg: "PrimaryLighter" }}
                           >
                             <div className="hoverable-item flex gap-3 items-center w-full">
                               <div className="w-full flex flex-col gap-2">
                                 <div className="flex items-center">
-                                  <div className="">
-                                    <Tooltip
-                                      content={snippet.userData.username}
-                                      color="primary"
-                                    >
-                                      <User
-                                        src={snippet.userData?.photoURL}
-                                        zoomed
-                                        squared
-                                        pointer
-                                      />
-                                    </Tooltip>
+                                  <div className="w-20 flex justify-center">
+                                    <div className="-ml-3">
+                                      <Tooltip
+                                        label={snippet.userData.username}
+                                        color="Primary"
+                                        bg="PrimaryLighter"
+                                        placement="top"
+                                      >
+                                        <Avatar
+                                          src={snippet.userData?.photoURL}
+                                          h={10}
+                                          w={10}
+                                        />
+                                      </Tooltip>
+                                    </div>
                                   </div>
 
-                                  <div className="w-full flex flex-col justify-center gap-2 MonoHeading">
+                                  <div className="flex flex-col justify-center gap-2 w-full max-w-2xl">
                                     <div className="w-full">
                                       <Text variant="snipHeading">
                                         {snippet.title}
@@ -79,45 +77,52 @@ const Feed = ({ snippet }) => {
                                     </div>
 
                                     {snippet.description && (
-                                      <div className="-mt-2 h-5">
-                                        <p
-                                          variant="snipDescription"
-                                          className="text-sm MonoHeading font-semibold whitespace-nowrap"
-                                        >
+                                      <div className="-mt-3 h-5">
+                                        <Text variant="snipDescription">
                                           {snippet.description}
-                                        </p>
+                                        </Text>
                                       </div>
                                     )}
                                   </div>
                                 </div>
-                                <div className="flex">
-                                  <div className="w-24 flex justify-center">
+                                <div className="flex gap-2">
+                                  <div className="w-20 flex justify-center">
                                     {snippet.snippetType == "code" && (
-                                      <div className="pr-[.60rem]">
+                                      <div>
                                         <Badge
-                                          isSquared
-                                          color="primary"
-                                          variant="flat"
+                                          colorScheme="blue"
+                                          variant="outline"
                                         >
                                           KODE
                                         </Badge>
                                       </div>
                                     )}
                                     {snippet.snippetType == "error" && (
-                                      <div className="pr-[.60rem]">
+                                      <div className="">
                                         <Badge
-                                          isSquared
-                                          color="error"
-                                          variant="flat"
+                                          colorScheme="red"
+                                          variant="outline"
                                         >
                                           FEJL
                                         </Badge>
                                       </div>
                                     )}
+                                    {snippet.snippetType == "setup" && (
+                                      <div>
+                                        <Badge
+                                          colorScheme="purple"
+                                          variant="outline"
+                                        >
+                                          SETUP
+                                        </Badge>
+                                      </div>
+                                    )}
                                   </div>
-                                  <div className="w-full MonoHeading">
+
+                                  <div className="w-full">
                                     <LanguageBadge snippet={snippet} />
                                   </div>
+
                                   <div className="text-[#031B4E]">
                                     <p className="text-xs font-mono">
                                       {new Date(

@@ -1,3 +1,4 @@
+import { Box } from "@chakra-ui/react";
 import { Card, Loading, Text } from "@nextui-org/react";
 import { collection, getDocs, onSnapshot, query } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
@@ -21,10 +22,13 @@ const HomePage = () => {
 
       const errorQuery = query(collection(db, "ErrorSnippetsData1"));
 
+      const setupQuery = query(collection(db, "SetupData"));
+
       const codeDocs = await getDocs(codeQuery);
       const errorDocs = await getDocs(errorQuery);
+      const setupDocs = await getDocs(setupQuery);
 
-      Promise.all([codeDocs, errorDocs])
+      Promise.all([codeDocs, errorDocs, setupDocs])
         .then((PromiseResults) => {
           const mergedSnippets = [];
 
@@ -76,40 +80,37 @@ const HomePage = () => {
   }, [user]);
 
   return (
-    <div>
-      <div>
-        {user ? (
-          <div>
-            {snippets && (
-              <div className="flex gap-6">
-                <div className="w-full flex flex-col gap-4">
-                  <div>
-                    <Post />
-                  </div>
-                  <div>
-                    <Feed
-                      user={user}
-                      loading={loading}
-                      snippet={snippets}
-                      tags={tags}
-                    />
-                  </div>
-                </div>
-                <div className="hidden md:inline">
-                  <Tags snippets={snippets} tags={tags} />
+    <div className="">
+      {user ? (
+        <>
+          {snippets.snips && (
+            <div className="flex gap-5 justify-between">
+              <div className="flex flex-col gap-4">
+                <Post />
+
+                <div className="">
+                  <Feed
+                    user={user}
+                    loading={loading}
+                    snippet={snippets}
+                    tags={tags}
+                  />
                 </div>
               </div>
-            )}
-            {loading && (
-              <div className="flex justify-center items-center h-[20vh]">
-                <Loading size="lg" />
+              <div className="hidden md:inline-flex w-72">
+                <Tags snippets={snippets} tags={tags} />
               </div>
-            )}
-          </div>
-        ) : (
-          <NoUser />
-        )}
-      </div>
+            </div>
+          )}
+          {loading && (
+            <div className="flex justify-center items-center h-[20vh]">
+              <Loading size="lg" />
+            </div>
+          )}
+        </>
+      ) : (
+        <NoUser />
+      )}
     </div>
   );
 };

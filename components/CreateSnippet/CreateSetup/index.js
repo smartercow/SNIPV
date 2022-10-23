@@ -16,12 +16,10 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { TagsInput } from "react-tag-input-component";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneLight } from "react-syntax-highlighter/dist/cjs/styles/prism";
-import CreatedFolders from "./Folders/CreatedFolders";
 import { toast } from "react-toastify";
 import NextLink from "next/link";
 import { CgExternal } from "react-icons/cg";
-import CreatedSubFolders from "./Folders/CreatedSubFolders";
-import CreateSnippetFolderHeading from "../CreateSnippetFolderHeading";
+import FolderHeading from "../FolderHeading";
 import {
   Accordion,
   AccordionButton,
@@ -37,6 +35,8 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 import Entries from "./Entries";
+import CreatedFolders from "../../Folders/CreateFolder/CreatedFolders";
+import CreatedSubFolders from "../../Folders/CreateFolder/CreatedSubFolders";
 
 const initialState = {
   title: "",
@@ -306,12 +306,7 @@ const CreateSetup = ({ id, setLoading, setDataError }) => {
               <AccordionButton>
                 <Box flex="1" textAlign="left">
                   <div className="flex gap-5">
-                    <Text variant="folderHeading">OPSÆTNING</Text>
-                    {/* {codeExpanded && (
-                      <CreateSnippetFolderHeading
-                        selectedSubFolder={selectedSubFolder}
-                      />
-                    )} */}
+                    <Text variant="folderHeading">SETUP</Text>
                   </div>
                 </Box>
                 <AccordionIcon />
@@ -323,7 +318,7 @@ const CreateSetup = ({ id, setLoading, setDataError }) => {
                   <div className="flex flex-col gap-5 h-full">
                     <div className="w-full flex gap-4 items-center">
                       <div className="w-24">
-                        <Text variant="label">Titel</Text>
+                        <Text variant="H5">Titel</Text>
                       </div>
                       <Input
                         name="title"
@@ -338,7 +333,7 @@ const CreateSetup = ({ id, setLoading, setDataError }) => {
 
                     <div className="w-full flex gap-4 items-center">
                       <div className="w-24">
-                        <Text variant="label">Beskrivelse</Text>
+                        <Text variant="H5">Beskrivelse</Text>
                       </div>
                       <Input
                         name="description"
@@ -357,7 +352,7 @@ const CreateSetup = ({ id, setLoading, setDataError }) => {
                       <h2>
                         <AccordionButton role="heading">
                           <Box flex="1" textAlign="left">
-                            <Text variant="label">Tags</Text>
+                            <Text variant="H5">Tags</Text>
                           </Box>
                           <AccordionIcon mr={2} />
                         </AccordionButton>

@@ -1,15 +1,15 @@
-import { Text } from "@nextui-org/react";
+import { Text } from "@chakra-ui/react";
 import { collection, getDocs, query } from "firebase/firestore";
 import Head from "next/head";
-import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useRecoilState } from "recoil";
 import { mainFolderDeleteUpdateState } from "../../atoms/mainFolderDeleteUpdateState";
 import { mainFolderEditUpdateState } from "../../atoms/mainFolderEditUpdateState";
-import SetupFolders from "../../components/Folders/SetupFolders";
+import FoldersLoad from "../../components/Folders/FoldersLoad";
 import { SnippetsTypeLinks } from "../../components/Heading/SnippetsType";
-import MySetups from "../../components/MySnippets/MySetups";
+import MySNIPS from "../../components/MySNIPS";
+import Tags from "../../components/MySNIPS/Tags";
 import { auth, db } from "../../firebase/clientApp";
 const Setups = () => {
   const [user] = useAuthState(auth);
@@ -52,32 +52,36 @@ const Setups = () => {
         <SnippetsTypeLinks />
       </>
 
-      <div className="flex flex-col gap-3">
-        <SetupFolders
-          folders={folders}
-          loadingMain={loadingMain}
-          setLoadingMain={setLoadingMain}
-          selectedMainFolder={selectedMainFolder}
-          setSelectedMainFolder={setSelectedMainFolder}
-          selectedSubFolder={selectedSubFolder}
-          setSelectedSubFolder={setSelectedSubFolder}
-        />
-
-        {selectedMainFolder?.mainFolderId && (
-          <MySetups
+      <div className="flex gap-6">
+        <div className="flex flex-col gap-3 w-full">
+          <FoldersLoad
+            folders={folders}
             loadingMain={loadingMain}
             setLoadingMain={setLoadingMain}
+            selectedMainFolder={selectedMainFolder}
+            setSelectedMainFolder={setSelectedMainFolder}
             selectedSubFolder={selectedSubFolder}
+            setSelectedSubFolder={setSelectedSubFolder}
           />
-        )}
 
-        {!selectedMainFolder?.mainFolderId && (
-          <div className="flex justify-center mt-10">
-            <Text b size={13} transform="uppercase">
-              Valg en rodmappe!
-            </Text>
-          </div>
-        )}
+          {selectedMainFolder?.mainFolderId && (
+            <MySNIPS
+              loadingMain={loadingMain}
+              setLoadingMain={setLoadingMain}
+              selectedSubFolder={selectedSubFolder}
+            />
+          )}
+
+          {!selectedMainFolder?.mainFolderId && (
+            <div className="flex justify-center mt-10">
+              <Text>Valg en rodmappe!</Text>
+            </div>
+          )}
+        </div>
+
+        <div>
+          <Tags />
+        </div>
       </div>
     </div>
   );

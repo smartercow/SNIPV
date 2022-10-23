@@ -1,4 +1,4 @@
-import { Badge, Button, Card, Loading, Popover, Text } from "@nextui-org/react";
+import { Badge, Button, Card, Loading, Popover } from "@nextui-org/react";
 import {
   collection,
   deleteDoc,
@@ -14,18 +14,11 @@ import Head from "next/head";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import LanguageBadge from "../../components/Display/LanguageBadge";
 import LatestHeading from "../../components/Heading/LatestHeading";
 import { SnippetsTypeLinks } from "../../components/Heading/SnippetsType";
-import { DeleteSnippet } from "../../components/NonModal/DeleteSnippet";
-import { DeleteErrorSnippet } from "../../components/NonModal/DeleteErrorSnippet";
-import { DeleteDocumentIcon } from "../../components/SVG/DeleteDocumentIcon";
-import { EditDocumentIcon } from "../../components/SVG/EditDocumentIcon";
-import { LoginIcon } from "../../components/SVG/LoginIcon";
-import { Paper } from "../../components/SVG/Paper";
-import { PaperFail } from "../../components/SVG/PaperFail";
 import { auth, db } from "../../firebase/clientApp";
 import Snippet from "../../components/Display/Snippet";
+import { Text } from "@chakra-ui/react";
 
 const MySnippets = () => {
   const [user] = useAuthState(auth);
@@ -129,11 +122,15 @@ const MySnippets = () => {
                     {myCodeSnippets?.length > 0 && (
                       <div className="flex flex-col gap-3">
                         {myCodeSnippets.map((snippet) => (
-                          <Snippet key={snippet.id} handleDelete={handleCodeSnippetDelete} snippet={snippet}/>
+                          <Snippet
+                            key={snippet.id}
+                            handleDelete={handleCodeSnippetDelete}
+                            snippet={snippet}
+                          />
                         ))}
                         <div className="text-center">
                           <Link href="/snips/codes">
-                            <Text b className="cursor-pointer hover:underline">
+                            <Text className="cursor-pointer hover:underline">
                               SE ALLE
                             </Text>
                           </Link>
@@ -150,9 +147,7 @@ const MySnippets = () => {
                     <div>
                       {!myCodeSnippets?.length > 0 && (
                         <div className="flex justify-center mt-10">
-                          <Text b size={13} transform="uppercase">
-                            Du har ingen kode SNIPS! 😔
-                          </Text>
+                          <Text size={13}>Du har ingen kode SNIPS! 😔</Text>
                         </div>
                       )}
                     </div>
@@ -168,7 +163,11 @@ const MySnippets = () => {
                     {myErrorSnippets?.length > 0 && (
                       <div className="flex flex-col gap-3">
                         {myErrorSnippets.map((snippet) => (
-                          <Snippet key={snippet.id} handleDelete={handleErrorSnippetDelete} snippet={snippet}/>
+                          <Snippet
+                            key={snippet.id}
+                            handleDelete={handleErrorSnippetDelete}
+                            snippet={snippet}
+                          />
                         ))}
                         <div className="text-center">
                           <Link href="/snips/errors">
@@ -188,9 +187,7 @@ const MySnippets = () => {
                       <div>
                         {!myErrorSnippets?.length > 0 && (
                           <div className="flex justify-center mt-10">
-                            <Text b size={13} transform="uppercase">
-                              Du har ingen fejl SNIPS! 😔
-                            </Text>
+                            <Text size={13}>Du har ingen fejl SNIPS! 😔</Text>
                           </div>
                         )}
                       </div>

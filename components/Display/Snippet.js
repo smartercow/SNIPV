@@ -9,6 +9,7 @@ import { Paper } from "../SVG/Paper";
 import { PaperFail } from "../SVG/PaperFail";
 import FileExtension from "./FileExtension";
 import LanguageBadge from "./LanguageBadge";
+import { Box } from "@chakra-ui/react";
 
 const Snippet = ({ snippet, handleDelete }) => {
   const [allOpenStates, setAllOpenStates] = useState({});
@@ -25,12 +26,7 @@ const Snippet = ({ snippet, handleDelete }) => {
         }
       >
         <div className="hoverable-item w-full">
-          <Card
-            isPressable
-            variant="flat"
-            css={{ mw: "100%", padding: "$0" }}
-            key={snippet.id}
-          >
+          <Box key={snippet.id}>
             <div className="cardHover bg-[#F1F7FF] hoverable-item flex gap-3 items-center p-2 border-b rounded-xl w-full">
               <div className="w-full flex flex-col gap-2">
                 <div className="flex gap-6 items-center">
@@ -132,7 +128,7 @@ const Snippet = ({ snippet, handleDelete }) => {
                 <LoginIcon width={30} height={30} fill="#0072F5" />
               </div>
             </div>
-          </Card>
+          </Box>
         </div>
       </Link>
 

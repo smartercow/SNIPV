@@ -14,7 +14,7 @@ const Nav = () => {
       link: "/snips",
     },
     {
-      titel: "Opsætning",
+      titel: "Setups",
       link: "/setups",
     },
     {

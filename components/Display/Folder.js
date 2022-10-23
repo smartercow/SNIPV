@@ -1,7 +1,7 @@
 import { Button, Card, Popover } from "@nextui-org/react";
 import Link from "next/link";
 import React, { useState } from "react";
-import CodeSnippetsCounter from "../Folders/CodeFolders/CodeSnippetsCounter";
+import SNIPCounter from "../Folders/FoldersLoad/SNIPCounter";
 import { DeleteFolder } from "../NonModal/DeleteFolder";
 import { DeleteDocumentIcon } from "../SVG/DeleteDocumentIcon";
 import { EditDocumentIcon } from "../SVG/EditDocumentIcon";
@@ -32,11 +32,11 @@ const Folder = ({ folder, handleDelete }) => {
                   <div className="MonoHeading flex flex-col gap-2 justify-center w-full">
                     <div>
                       <p className="text-[#031B4E] text-lg font-[500]">
-                        {excerpt(/* folder.folderName */"asddas", 60)}
+                        {excerpt(/* folder.folderName */ "asddas", 60)}
                       </p>
                     </div>
                     <div>
-                      <CodeSnippetsCounter id={folder.id} />
+                      <SNIPCounter id={folder.id} />
                     </div>
                   </div>
                   <div className="MonoHeading">

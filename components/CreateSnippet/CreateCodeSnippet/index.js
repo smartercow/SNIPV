@@ -14,12 +14,10 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { TagsInput } from "react-tag-input-component";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneLight } from "react-syntax-highlighter/dist/cjs/styles/prism";
-import CreatedFolders from "./Folders/CreatedFolders";
 import { toast } from "react-toastify";
 import NextLink from "next/link";
 import { CgExternal } from "react-icons/cg";
-import CreatedSubFolders from "./Folders/CreatedSubFolders";
-import CreateSnippetFolderHeading from "../CreateSnippetFolderHeading";
+import FolderHeading from "../FolderHeading";
 import {
   Accordion,
   AccordionButton,
@@ -34,6 +32,8 @@ import {
   Text,
   Textarea,
 } from "@chakra-ui/react";
+import CreatedFolders from "../../Folders/CreateFolder/CreatedFolders";
+import CreatedSubFolders from "../../Folders/CreateFolder/CreatedSubFolders";
 
 const initialState = {
   title: "",
@@ -268,9 +268,7 @@ const CreateCodeSnippet = ({ id, setLoading, setDataError }) => {
                   <div className="flex gap-5">
                     <Text variant="folderHeading">SNIP</Text>
                     {codeExpanded && (
-                      <CreateSnippetFolderHeading
-                        selectedSubFolder={selectedSubFolder}
-                      />
+                      <FolderHeading selectedSubFolder={selectedSubFolder} />
                     )}
                   </div>
                 </Box>
@@ -283,7 +281,7 @@ const CreateCodeSnippet = ({ id, setLoading, setDataError }) => {
                   <div className="flex flex-col gap-5 mx-3">
                     <div className="w-full flex gap-4 items-center">
                       <div className="w-24">
-                        <Text variant="label">Titel</Text>
+                        <Text variant="H5">Titel</Text>
                       </div>
                       <Input
                         name="title"
@@ -298,7 +296,7 @@ const CreateCodeSnippet = ({ id, setLoading, setDataError }) => {
 
                     <div className="w-full flex gap-4 items-center">
                       <div className="w-24">
-                        <Text variant="label">Beskrivelse</Text>
+                        <Text variant="H5">Beskrivelse</Text>
                       </div>
                       <Input
                         name="description"
@@ -313,7 +311,7 @@ const CreateCodeSnippet = ({ id, setLoading, setDataError }) => {
 
                     <div>
                       <div className="flex flex-col gap-2">
-                        <Text variant="label">Kode</Text>
+                        <Text variant="H5">Kode</Text>
 
                         <Textarea
                           name="code"
@@ -350,7 +348,7 @@ const CreateCodeSnippet = ({ id, setLoading, setDataError }) => {
 
                     <div className="">
                       <div className="flex flex-col gap-2">
-                        <Text variant="label">Output</Text>
+                        <Text variant="H5">Output</Text>
                         <Textarea
                           name="output"
                           size="md"
@@ -390,7 +388,7 @@ const CreateCodeSnippet = ({ id, setLoading, setDataError }) => {
                       <h2>
                         <AccordionButton role="heading">
                           <Box flex="1" textAlign="left">
-                            <Text variant="accLabel">Noter</Text>
+                            <Text variant="H5">Noter</Text>
                           </Box>
                           <AccordionIcon mr={2} />
                         </AccordionButton>
@@ -410,7 +408,7 @@ const CreateCodeSnippet = ({ id, setLoading, setDataError }) => {
                       <h2>
                         <AccordionButton role="heading">
                           <Box flex="1" textAlign="left">
-                            <Text variant="accLabel">Link</Text>
+                            <Text variant="H5">Link</Text>
                           </Box>
                           <AccordionIcon mr={2} />
                         </AccordionButton>
@@ -454,7 +452,7 @@ const CreateCodeSnippet = ({ id, setLoading, setDataError }) => {
                       <h2>
                         <AccordionButton role="heading">
                           <Box flex="1" textAlign="left">
-                            <Text variant="accLabel">Tags</Text>
+                            <Text variant="H5">Tags</Text>
                           </Box>
                           <AccordionIcon mr={2} />
                         </AccordionButton>

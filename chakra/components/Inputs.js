@@ -1,6 +1,6 @@
 export const Input = {
-  baseStyle: {
-    /*     borderColor: "GrayHeavy",
+  /*   baseStyle: {
+    borderColor: "GrayHeavy",
     color: "Black",
     bg: "Gray",
     outline: "none",
@@ -15,10 +15,11 @@ export const Input = {
     },
     _focus: {
       // boxShadow: "none",
-    }, */
-  },
+    },
+  }, */
   variants: {
     main: {
+      outlineColor: "Primary",
       field: {
         color: "Black",
         bg: "white",

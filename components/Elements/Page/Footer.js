@@ -15,19 +15,8 @@ const Footer = ({ snippet }) => {
         <div className="flex gap-2 md:gap-4">
           {snippet.updatedAt && (
             <div className="flex gap-1 items-center">
-              <Text
-                small
-                b
-                transform="uppercase"
-                className="font-semibold text-[#031B4E]"
-              >
-                Opdateret:
-              </Text>
-              <Text
-                small
-                transform="uppercase"
-                className="font-semibold text-[#031B4E]"
-              >
+              <Text className="font-semibold text-[#031B4E]">Opdateret:</Text>
+              <Text className="font-semibold text-[#031B4E]">
                 {new Date(snippet.updatedAt.seconds * 1000).toLocaleDateString(
                   "da-DK"
                 )}
@@ -36,10 +25,10 @@ const Footer = ({ snippet }) => {
           )}
 
           <div className="flex gap-1 items-center">
-            <Text small b transform="uppercase" className="text-[#031B4E]">
+            <Text transform="uppercase" className="text-[#031B4E]">
               Oprettet:
             </Text>
-            <Text small transform="uppercase" className="text-[#031B4E]">
+            <Text transform="uppercase" className="text-[#031B4E]">
               {new Date(snippet.postedAt.seconds * 1000).toLocaleDateString(
                 "da-DK"
               )}

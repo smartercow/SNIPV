@@ -13,9 +13,7 @@ const General = () => {
               content={
                 <Text color="white">
                   Din hosting domain uden &nbsp;
-                  <Text b color="error">
-                    https://www&nbsp;
-                  </Text>
+                  <Text color="error">https://www&nbsp;</Text>
                 </Text>
               }
               color="primary"
@@ -39,12 +37,14 @@ const General = () => {
             />
           </div>
         </div>
-        
+
         <div>
           <div className="flex gap-1">
             <Text>Github repository</Text>
             <Tooltip
-              content={<Text color="white">Link til din forked Github repository</Text>}
+              content={
+                <Text color="white">Link til din forked Github repository</Text>
+              }
               color="primary"
               keepMounted="true"
               css={{ zIndex: 999999 }}
@@ -53,7 +53,7 @@ const General = () => {
               <Text h5 color="primary">
                 <BsQuestionCircleFill />
               </Text>
-            </Tooltip>  
+            </Tooltip>
           </div>
           <div>
             <Input
@@ -67,7 +67,7 @@ const General = () => {
         </div>
 
         <div>
-            <Button disabled>Gem</Button>
+          <Button disabled>Gem</Button>
         </div>
       </div>
     </div>
