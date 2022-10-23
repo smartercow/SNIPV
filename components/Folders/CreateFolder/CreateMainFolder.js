@@ -67,21 +67,21 @@ const CreateMainFolder = ({ selectedMainFolder }) => {
   useEffect(() => {
     if (
       asPath.startsWith("/upsert/code") ||
-      selectedMainFolder.folderSnippetType === "code"
+      selectedMainFolder?.folderSnippetType === "code"
     ) {
       setMainFolder("CodeMainFolders");
       setType("code");
     }
     if (
       asPath.startsWith("/upsert/error") ||
-      selectedMainFolder.folderSnippetType === "error"
+      selectedMainFolder?.folderSnippetType === "error"
     ) {
       setMainFolder("ErrorMainFolders");
       setType("error");
     }
     if (
       asPath.startsWith("/upsert/setup") ||
-      selectedMainFolder.folderSnippetType === "setup"
+      selectedMainFolder?.folderSnippetType === "setup"
     ) {
       setMainFolder("SetupMainFolders");
       setType("setup");
