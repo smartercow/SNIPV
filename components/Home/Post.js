@@ -8,7 +8,7 @@ const Post = () => {
   const [user] = useAuthState(auth);
   return (
     <div className="w-full">
-      <Link href="/upsert">
+      <Link href="/upsert/code">
         <div>
           <div className="flex justify-between items-center gap-4 py-3 pl-2 pr-6 bg-[#ebecf0]">
             <Avatar src={user.photoURL} size="md" />
