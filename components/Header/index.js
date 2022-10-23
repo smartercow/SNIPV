@@ -90,9 +90,6 @@ const Header = ({ user }) => {
                 SNIPV
               </Text>
             </Link>
-            <div className="h-4">
-              <Text>v2 beta</Text>
-            </div>
           </div>
           <div>
             {user && (
@@ -105,6 +102,12 @@ const Header = ({ user }) => {
                 />
               </Link>
             )}
+          </div>
+
+          <div className=" select-none">
+            <Text className="bg-red-500 text-white px-2 font-semibold underline underline-offset-4">
+              Version 2 TESTING!
+            </Text>
           </div>
         </div>
 
