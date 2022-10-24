@@ -1,4 +1,4 @@
-import { Text } from "@nextui-org/react";
+import { Text } from "@chakra-ui/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
@@ -26,7 +26,7 @@ const Sidebar = () => {
         if (asPath.startsWith(item.link))
           return (
             <Link key={index} href={item.link}>
-              <Text h5 transform="uppercase" color="primary" className="cursor-pointer">
+              <Text color="Primary" className="cursor-pointer">
                 {item.titel}
               </Text>
             </Link>
@@ -34,7 +34,7 @@ const Sidebar = () => {
         else
           return (
             <Link key={index} href={item.link}>
-              <Text h5 transform="uppercase" className="cursor-pointer hover:underline">
+              <Text className="cursor-pointer hover:underline">
                 {item.titel}
               </Text>
             </Link>

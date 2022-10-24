@@ -44,13 +44,14 @@ export const theme = extendTheme({
     global: () => ({
       body: {
         bg: "PrimaryBackground",
+        fontFamily: "Inter, sans sarif",
       },
     }),
   },
-  fonts: {
+  /*   fonts: {
     heading: `'Roboto', sans-serif`,
     body: `'Ubuntu', sans-serif`,
-  },
+  }, */
   components: {
     Button,
     Input,

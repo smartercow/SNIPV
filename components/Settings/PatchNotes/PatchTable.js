@@ -1,4 +1,5 @@
-import { Table, Row, Col, Tooltip, User, Text, Badge } from "@nextui-org/react";
+import { Table, Row, Col, Tooltip, User, Badge } from "@nextui-org/react";
+import { Icon, Text } from "@chakra-ui/react";
 import { StyledBadge } from "./StyledBadge";
 import { BsQuestionCircleFill } from "react-icons/bs";
 import { CurrentVersion } from "../../../pages/api/updates/CurrentVersion";
@@ -34,21 +35,19 @@ export default function PatchTable({ updateData }) {
                     css={{ zIndex: 999999 }}
                     className="mt-1"
                   >
-                    <Text h5 color="primary">
-                      <BsQuestionCircleFill />
-                    </Text>
+                    <Icon as={BsQuestionCircleFill} w={9} h={9} />
                   </Tooltip>
                 </div>
               </Table.Cell>
               <Table.Cell>
                 <div className="flex justify-center">
-                {item.id === CurrentVersion.id ? (
-                  <Badge color="secondary">nuværende</Badge>
-                ) : item.status === "nyeste" ? (
-                  <Badge color="primary">nyeste</Badge>
-                ) : (
-                  <Badge>{item.status}</Badge>
-                )}
+                  {item.id === CurrentVersion.id ? (
+                    <Badge color="secondary">nuværende</Badge>
+                  ) : item.status === "nyeste" ? (
+                    <Badge color="primary">nyeste</Badge>
+                  ) : (
+                    <Badge>{item.status}</Badge>
+                  )}
                 </div>
               </Table.Cell>
             </Table.Row>

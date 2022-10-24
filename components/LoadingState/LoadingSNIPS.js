@@ -9,8 +9,8 @@ const LoadingSNIPS = () => {
         speed="0.75s"
         emptyColor="gray.200"
         color="Primary"
-        h={16}
-        w={16}
+        h={14}
+        w={14}
       />
     </div>
   );

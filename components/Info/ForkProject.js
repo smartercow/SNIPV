@@ -1,17 +1,17 @@
-import { Text } from "@nextui-org/react";
 import Link from "next/link";
 import React from "react";
 import { BiGitRepoForked } from "react-icons/bi";
 import { CgExternal } from "react-icons/cg";
 import { BsStarFill } from "react-icons/bs";
+import { Text } from "@chakra-ui/react";
 
 const ForkProject = () => {
   return (
     <div className="w-full">
-      <Text h4>Fork SNIPV projekt på Github</Text>
+      <Text>Fork SNIPV projekt på Github</Text>
       <hr className="my-3" />
       <div className="flex">
-        <Text h5>&#10149;</Text>
+        <Text>&#10149;</Text>
         <pre>
           <code className="p-3">
             <BiGitRepoForked />
@@ -26,10 +26,10 @@ const ForkProject = () => {
         </pre>
       </div>
       <div className="flex gap-1 items-center">
-        <Text transform="uppercase" b size={13}>
-          Glem ikke og give en
-        </Text>
-        <p className="text-yellow-400 text-md pt-1"><BsStarFill /></p>
+        <Text>Glem ikke og give en</Text>
+        <p className="text-yellow-400 text-md pt-1">
+          <BsStarFill />
+        </p>
       </div>
     </div>
   );

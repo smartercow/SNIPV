@@ -17,7 +17,7 @@ const Tags = () => {
     if (asPath.startsWith("/snips/errors")) {
       setCol("ErrorSnippetsData1");
     }
-    if (asPath.startsWith("/snips/setups")) {
+    if (asPath.startsWith("/setups")) {
       setCol("SetupData");
     }
   }, [asPath]);
@@ -46,11 +46,12 @@ const Tags = () => {
   }, [col]);
 
   console.log("SNIPPS", tags);
+  console.log("COLLECTION", col);
   return (
-    <div className="w-[300px] hidden md:inline-flex">
+    <div className="w-[300px] hidden lg:inline-flex">
       {tags && (
         <Box
-          bg="PrimaryELight"
+          bg="white"
           className="rounded-md shadow-md bg-opacity-60 flex flex-col gap-5 pt-1 pb-5 px-3 w-full"
         >
           <div className="my-2">

@@ -132,9 +132,6 @@ const CreateSetup = ({ id, setLoading, setDataError }) => {
     getUser();
   }, [user]);
 
-  console.log("allEntries", allEntries);
-  console.log("entries", entries);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (title && description) {

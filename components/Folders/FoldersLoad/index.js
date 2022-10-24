@@ -18,7 +18,7 @@ import { mainFolderDeleteUpdateState } from "../../../atoms/mainFolderDeleteUpda
 import { mainFolderEditUpdateState } from "../../../atoms/mainFolderEditUpdateState";
 import { subFolderEditUpdateState } from "../../../atoms/subFolderEditUpdateState";
 import MainFolderDropdown from "../../Display/MainFolderDropdown";
-import { Text } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 
 const FoldersLoad = ({
@@ -115,18 +115,56 @@ const FoldersLoad = ({
   }, [user, selectedMainFolder, subEdited, subDeleted, subFolder]);
 
   return (
-    <div>
-      <div className="flex flex-col gap-3">
+    <Box
+      bg="white"
+      boxShadow="md"
+      borderRadius="xl"
+      className="flex flex-col gap-3"
+      pl="4"
+      pt="2"
+      pb="4"
+      pr="6"
+    >
+      <div className="flex flex-col gap-1 flex-grow">
+        <Text>Rodmappe</Text>
+
+        <div className="flex gap-3 items-center">
+          <div className="w-full">
+            <Select
+              options={folders}
+              placeholder="Valg en rodmappe"
+              value={selectValue}
+              onChange={handleMainSelect}
+              isSearchable={true}
+              // menuPortalTarget={document.body}
+              styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
+              components={{
+                NoOptionsMessage,
+                Option: OptionFileExt,
+                SingleValue: ValueFileExt,
+              }}
+            />
+          </div>
+
+          <div className="w-10">
+            {selectedMainFolder?.mainFolderId && (
+              <MainFolderDropdown selectedMainFolder={selectedMainFolder} />
+            )}
+          </div>
+        </div>
+      </div>
+
+      {selectedMainFolder?.mainFolderId && (
         <div className="flex flex-col gap-1">
-          <Text>Rodmappe</Text>
+          <Text>Undermappe</Text>
 
           <div className="flex gap-3 items-center">
             <div className="w-full">
               <Select
-                options={folders}
-                placeholder="Valg en rodmappe"
-                value={selectValue}
-                onChange={handleMainSelect}
+                options={subFolders}
+                placeholder="Valg en undermappe"
+                value={selectSubValue}
+                onChange={handleSubSelect}
                 isSearchable={true}
                 // menuPortalTarget={document.body}
                 styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
@@ -139,45 +177,14 @@ const FoldersLoad = ({
             </div>
 
             <div className="w-10">
-              {selectedMainFolder?.mainFolderId && (
-                <MainFolderDropdown selectedMainFolder={selectedMainFolder} />
+              {selectedSubFolder.subFolderId && (
+                <SubFolderDropdown selectedSubFolder={selectedSubFolder} />
               )}
             </div>
           </div>
         </div>
-
-        {selectedMainFolder?.mainFolderId && (
-          <div className="flex flex-col gap-1">
-            <Text>Undermappe</Text>
-
-            <div className="flex gap-3 items-center">
-              <div className="w-full">
-                <Select
-                  options={subFolders}
-                  placeholder="Valg en undermappe"
-                  value={selectSubValue}
-                  onChange={handleSubSelect}
-                  isSearchable={true}
-                  // menuPortalTarget={document.body}
-                  styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
-                  components={{
-                    NoOptionsMessage,
-                    Option: OptionFileExt,
-                    SingleValue: ValueFileExt,
-                  }}
-                />
-              </div>
-
-              <div className="w-10">
-                {selectedSubFolder.subFolderId && (
-                  <SubFolderDropdown selectedSubFolder={selectedSubFolder} />
-                )}
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
-    </div>
+      )}
+    </Box>
   );
 };
 

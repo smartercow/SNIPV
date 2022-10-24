@@ -6,7 +6,7 @@ export const Accordion = {
       height: "20px",
     },
   }, */
-  variants: {
+  /*   variants: {
     main: {
       container: {
         border: "none",
@@ -67,5 +67,5 @@ export const Accordion = {
         },
       },
     },
-  },
+  }, */
 };

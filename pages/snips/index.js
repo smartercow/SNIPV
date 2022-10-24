@@ -1,4 +1,4 @@
-import { Badge, Button, Card, Loading, Popover } from "@nextui-org/react";
+import { Badge, Card, Loading, Popover } from "@nextui-org/react";
 import {
   collection,
   deleteDoc,
@@ -19,6 +19,7 @@ import { SnippetsTypeLinks } from "../../components/Heading/SnippetsType";
 import { auth, db } from "../../firebase/clientApp";
 import Snippet from "../../components/Display/Snippet";
 import { Text } from "@chakra-ui/react";
+import LoadingSNIPS from "../../components/LoadingState/LoadingSNIPS";
 
 const MySnippets = () => {
   const [user] = useAuthState(auth);
@@ -98,7 +99,7 @@ const MySnippets = () => {
   };
 
   return (
-    <div className="min-h-[70vh]">
+    <div>
       {user && (
         <>
           <Head>
@@ -120,7 +121,7 @@ const MySnippets = () => {
                 <div>
                   <div className="flex flex-col gap-2 w-full">
                     {myCodeSnippets?.length > 0 && (
-                      <div className="flex flex-col gap-3">
+                      <div className="flex flex-col gap-4">
                         {myCodeSnippets.map((snippet) => (
                           <Snippet
                             key={snippet.id}
@@ -171,7 +172,7 @@ const MySnippets = () => {
                         ))}
                         <div className="text-center">
                           <Link href="/snips/errors">
-                            <Text b className="cursor-pointer hover:underline">
+                            <Text className="cursor-pointer hover:underline">
                               SE ALLE
                             </Text>
                           </Link>
@@ -180,9 +181,7 @@ const MySnippets = () => {
                     )}
 
                     {loading ? (
-                      <div className="flex justify-center items-center h-[20vh]">
-                        <Loading size="lg" />
-                      </div>
+                      <LoadingSNIPS />
                     ) : (
                       <div>
                         {!myErrorSnippets?.length > 0 && (

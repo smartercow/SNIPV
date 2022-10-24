@@ -138,7 +138,7 @@ const Tags = () => {
 
                 <div className="text-center">
                   <Link href="/tags/errors">
-                    <Text h5 className="cursor-pointer hover:underline">
+                    <Text className="cursor-pointer hover:underline">
                       SE ALLE
                     </Text>
                   </Link>

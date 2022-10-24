@@ -1,19 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import {
-  collection,
-  getDocs,
-  orderBy,
-  query,
-  where,
-} from "firebase/firestore";
+import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../../../firebase/clientApp";
-import { Badge, Button, Card, Loading, Text } from "@nextui-org/react";
+import { Badge, Button, Card, Loading } from "@nextui-org/react";
 import Link from "next/link";
 import { LoginIcon } from "../../../components/SVG/LoginIcon";
 import { PaperFail } from "../../../components/SVG/PaperFail";
 import { MdRefresh } from "react-icons/md";
+import { Text } from "@chakra-ui/react";
 
 const ErrorTagPage = () => {
   const {
@@ -57,9 +52,7 @@ const ErrorTagPage = () => {
       {user && (
         <div>
           <div className="flex gap-2 items-center">
-            <Text transform="uppercase" h5>
-              Kode snips med tag:
-            </Text>
+            <Text>Kode snips med tag:</Text>
             <Text color="primary" transform="lowercase" h4>
               {id}
             </Text>
@@ -106,7 +99,8 @@ const ErrorTagPage = () => {
                               </div>
                               <div className="flex">
                                 <div className="w-24 flex justify-center">
-                                  {snip.folder.folderSnippetType === "error" && (
+                                  {snip.folder.folderSnippetType ===
+                                    "error" && (
                                     <div className="pr-[.60rem]">
                                       <Badge
                                         isSquared

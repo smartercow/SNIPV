@@ -1,11 +1,4 @@
-import {
-  Button,
-  Input,
-  Loading,
-  Modal,
-  Text,
-  Tooltip,
-} from "@nextui-org/react";
+import { Button, Input, Loading, Modal, Tooltip } from "@nextui-org/react";
 import {
   collection,
   doc,
@@ -26,6 +19,7 @@ import { DebounceInput } from "react-debounce-input";
 //DEBOUNCEINPUT VIST SO  IKKE BRUGT MEN BRUGES!!!
 
 import { useAuthState } from "react-firebase-hooks/auth";
+import { Text } from "@chakra-ui/react";
 
 const SetUsernameModal = () => {
   const [user] = useAuthState(auth);
@@ -162,7 +156,7 @@ const SetUsernameModal = () => {
                     keepMounted="true"
                     css={{ zIndex: 999999 }}
                   >
-                    <Text h5 color="primary">
+                    <Text color="primary">
                       <BsQuestionCircleFill />
                     </Text>
                   </Tooltip>
@@ -178,7 +172,7 @@ const SetUsernameModal = () => {
                     keepMounted="true"
                     css={{ zIndex: 999999 }}
                   >
-                    <Text h5 color="error">
+                    <Text>
                       <BsExclamationCircleFill />
                     </Text>
                   </Tooltip>

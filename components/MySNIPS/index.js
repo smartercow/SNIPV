@@ -1,4 +1,3 @@
-import { Badge, Button, Card, Loading, Popover, Text } from "@nextui-org/react";
 import {
   collection,
   deleteDoc,
@@ -19,12 +18,12 @@ import LatestHeading from "../Heading/LatestHeading";
 import Snippet from "../Display/Snippet";
 import { useRouter } from "next/router";
 import LoadingSNIPS from "../LoadingState/LoadingSNIPS";
+import { Button, Text } from "@chakra-ui/react";
 
 const MySNIPS = ({ selectedSubFolder, loadingMain, setLoadingMain }) => {
   const [user] = useAuthState(auth);
   const { asPath } = useRouter();
 
-  const [loading, setLoading] = useState(false);
   const [loadingSub, setLoadingSub] = useState(false);
   const [myCodeSnippets, setMyCodeSnippets] = useState([]);
   const [lastSnippet, setLastSnippet] = useState();
@@ -145,7 +144,7 @@ const MySNIPS = ({ selectedSubFolder, loadingMain, setLoadingMain }) => {
   };
 
   return (
-    <div className="min-h-[70vh] w-full">
+    <div className="w-full">
       {selectedSubFolder?.mainFolder?.mainFolderId && (
         <>
           <>
@@ -166,7 +165,7 @@ const MySNIPS = ({ selectedSubFolder, loadingMain, setLoadingMain }) => {
 
                   {!isEmpty && (
                     <div className="flex justify-center">
-                      <Button size="sm" onClick={fetchMore}>
+                      <Button onClick={fetchMore}>
                         <MdRefresh />
                         HENT MERE
                       </Button>

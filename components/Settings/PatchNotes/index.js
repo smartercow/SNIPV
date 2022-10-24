@@ -1,4 +1,3 @@
-import { Text } from "@nextui-org/react";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import PatchTable from "./PatchTable";
@@ -6,6 +5,7 @@ import { CgExternal } from "react-icons/cg";
 import { getUpdates } from "../../../helpers/updates";
 import { CurrentVersion } from "../../../pages/api/updates/CurrentVersion";
 import SnippetLoading from "../../LoadingState/SnippetLoading";
+import { Text } from "@chakra-ui/react";
 
 const PatchNotes = () => {
   const [updateData, setUpdateData] = useState();
@@ -43,7 +43,7 @@ const PatchNotes = () => {
             {lastUpdate?.id !== CurrentVersion.id && (
               <div>
                 <div className="flex gap-1">
-                  <Text h5>Der er en ny version</Text>
+                  <Text>Der er en ny version</Text>
                   <Link href="https://github.com/smartercow/SNIPV">
                     <a target="_blank" className="font-bold">
                       {lastUpdate.version}
@@ -54,11 +54,12 @@ const PatchNotes = () => {
                 </div>
 
                 <div className="flex gap-1">
-                  <Text h6>
-                    Opdatere ved at synkronisere de seneste commits på din Github repository.
+                  <Text>
+                    Opdatere ved at synkronisere de seneste commits på din
+                    Github repository.
                   </Text>
 
-{/*                   <Link href="">
+                  {/*                   <Link href="">
                     <a target="_blank">
                       <Text h6 color="primary" className="underline">
                         Github repository
@@ -72,13 +73,13 @@ const PatchNotes = () => {
 
             {lastUpdate?.id === CurrentVersion.id && (
               <div className="flex gap-1">
-                <Text h5>Din version </Text>
+                <Text>Din version </Text>
 
-                <Text h5 color="primary" className="underline">
+                <Text color="Primary" className="underline">
                   {lastUpdate.version}
                 </Text>
-                
-                <Text h5>er up to date! 👍</Text>
+
+                <Text>er up to date! 👍</Text>
               </div>
             )}
           </>
@@ -88,7 +89,7 @@ const PatchNotes = () => {
       </div>
 
       <div className="w-full">
-        <Text h5>Seneste versioner</Text>
+        <Text>Seneste versioner</Text>
         <hr />
 
         <div className="my-3 flex flex-col gap-3">

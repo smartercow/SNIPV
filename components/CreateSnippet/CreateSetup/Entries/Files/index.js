@@ -98,10 +98,6 @@ const Files = ({
     }
   }, [selectedFileExt]);
 
-  console.log("codeFile", codeFile);
-  console.log("codeFiles", codeFiles);
-  console.log("selectFileExt", selectFileExt);
-
   return (
     <div className=" flex flex-col gap-2">
       <div className="flex gap-2 items-center">
@@ -190,8 +186,7 @@ const Files = ({
 
       <div className="flex gap-4">
         <Button
-          style={{ color: "#087ea4" }}
-          variant="sub"
+          variant="entrySub"
           onClick={AddCodeFile}
           isDisabled={disableNew}
         >
@@ -199,8 +194,7 @@ const Files = ({
         </Button>
 
         <Button
-          style={{ color: "#087ea4" }}
-          variant="sub"
+          variant="entrySub"
           onClick={AddCodeFiles}
           isDisabled={disableSave}
         >

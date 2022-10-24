@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Files from "./Files";
 import parse from "html-react-parser";
 
@@ -50,8 +50,11 @@ const Entries = ({
   const [summaryValue, setSummaryValue] = useState({});
 
   const [packages, setPackages] = useState([]);
+
   const [selectedEntry, setSelectedEntry] = useState("summary");
   const [menu, setMenu] = useState("");
+
+  const [disableSave, setDisableSave] = useState(true);
 
   const AddCodeFile = (e) => {
     e.preventDefault();
@@ -102,7 +105,15 @@ const Entries = ({
     setSummaryValue({});
   };
 
-  console.log("entries", entries);
+  useEffect(() => {
+    if (menu && Object.keys(entries).length > 0) {
+      setDisableSave(false);
+    } else {
+      setDisableSave(true);
+    }
+  }, [menu, entries]);
+
+  console.log("summaryValue", summaryValue);
 
   const renderEntry = (ent) => {
     switch (ent) {
@@ -151,9 +162,6 @@ const Entries = ({
     }
   };
 
-  console.log("allEntries", allEntries);
-  // console.log("entries", entries[0].summary);
-  // console.log("menu", menu);
   return (
     <div className="flex flex-col gap-4">
       <Box>
@@ -162,7 +170,12 @@ const Entries = ({
       <div className="border border-gray-400 rounded-md">
         <Box p={4} className="flex flex-col gap-3">
           <Box className="flex gap-6 items-center">
-            <Text variant="H5">Menu</Text>
+            <div className="flex gap-1">
+              <Text variant="H5">Menu</Text>
+              <Text variant="H5" color="Red">
+                *
+              </Text>
+            </div>
             <Input
               placeholder="Installation"
               variant="main"
@@ -246,21 +259,21 @@ const Entries = ({
 
         <Box boxShadow="2xl" borderRadius="lg">
           <Box p={4}>{renderEntry(selectedEntry)}</Box>
+
           <Box bg="PrimaryLighter" className="p-2">
             <div>
               <Text variant="heading">Tilføj ny entry</Text>
             </div>
+
             <div className="flex gap-2 justify-between">
               <div className="flex gap-4">
                 <Button
-                  style={{ color: "white" }}
                   variant="entry"
                   onClick={() => setSelectedEntry("summary")}
                 >
                   SUM
                 </Button>
                 <Button
-                  style={{ color: "white" }}
                   variant="entry"
                   onClick={() => setSelectedEntry("code")}
                 >
@@ -268,15 +281,15 @@ const Entries = ({
                 </Button>
                 <Button
                   onClick={() => setSelectedEntry("package")}
-                  variant="main"
+                  variant="entry"
                 >
-                  Pakker
+                  PAKKER
                 </Button>
               </div>
 
               <div>
                 <Button
-                  style={{ color: "white" }}
+                  disabled={disableSave}
                   variant="entry"
                   onClick={AddSection}
                 >

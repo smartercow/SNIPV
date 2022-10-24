@@ -6,10 +6,11 @@ const LatestHeading = ({ headingIcon, headingType }) => {
   return (
     <div className="w-full mb-3">
       <div className="flex items-center gap-2">
-        <Icon as={TbSortDescending} color="DarkBlue" w={6} h={6} />
-        <Text variant="H4">{headingType}</Text>
+        <Icon as={TbSortDescending} w={6} h={6} />
+        <Text variant="H4" textTransform="uppercase">
+          {headingType}
+        </Text>
       </div>
-      <hr />
     </div>
   );
 };

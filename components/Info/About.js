@@ -1,4 +1,4 @@
-import { Text } from "@nextui-org/react";
+import { Text } from "@chakra-ui/react";
 import Link from "next/link";
 import React from "react";
 import { CgExternal } from "react-icons/cg";
@@ -18,9 +18,14 @@ const About = () => {
         </div>
         <div>
           <div className="flex gap-3 items-center">
-            <Text h5>Et projekt af PG -</Text>
-            <Text h5 className="underline text-blue-600">
-              <Link href="https://github.com/smartercow"><a target="_blank">https://github.com/smartercow<CgExternal /></a></Link>
+            <Text>Et projekt af PG -</Text>
+            <Text className="underline text-blue-600">
+              <Link href="https://github.com/smartercow">
+                <a target="_blank">
+                  https://github.com/smartercow
+                  <CgExternal />
+                </a>
+              </Link>
             </Text>
           </div>
         </div>

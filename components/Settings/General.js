@@ -1,4 +1,5 @@
-import { Button, Input, Text, Tooltip } from "@nextui-org/react";
+import { Icon, Text } from "@chakra-ui/react";
+import { Button, Input, Tooltip } from "@nextui-org/react";
 import React from "react";
 import { BsQuestionCircleFill } from "react-icons/bs";
 
@@ -21,9 +22,7 @@ const General = () => {
               css={{ zIndex: 999999 }}
               className="mt-1"
             >
-              <Text h5 color="primary">
-                <BsQuestionCircleFill />
-              </Text>
+              <Icon as={BsQuestionCircleFill} w={9} h={9} />
             </Tooltip>
           </div>
           <div>
@@ -50,9 +49,7 @@ const General = () => {
               css={{ zIndex: 999999 }}
               className="mt-1"
             >
-              <Text h5 color="primary">
-                <BsQuestionCircleFill />
-              </Text>
+              <Icon as={BsQuestionCircleFill} w={9} h={9} />
             </Tooltip>
           </div>
           <div>

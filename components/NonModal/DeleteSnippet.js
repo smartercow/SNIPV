@@ -7,17 +7,23 @@ export const DeleteSnippet = ({ id, handleDelete, setAllOpenStates }) => {
       css={{ borderRadius: "14px", padding: "0.75rem", maxWidth: "330px" }}
     >
       <Row justify="center" align="center">
-        <Text b>Bekræft</Text>
+        <Text>Bekræft</Text>
       </Row>
       <Row css={{ py: ".5rem" }}>
         <Text>
-          Er du sikker på, at du vil slette denne SNIP? Ved at gøre
-          dette, vil du ikke være i stand til at gendanne indhold.
+          Er du sikker på, at du vil slette denne SNIP? Ved at gøre dette, vil
+          du ikke være i stand til at gendanne indhold.
         </Text>
       </Row>
       <Grid.Container justify="space-between" alignContent="center">
         <Grid>
-          <Button size="sm" light onClick={() => setAllOpenStates(oldState => ({...oldState, [id]: false}))}>
+          <Button
+            size="sm"
+            light
+            onClick={() =>
+              setAllOpenStates((oldState) => ({ ...oldState, [id]: false }))
+            }
+          >
             Annullere
           </Button>
         </Grid>
@@ -27,8 +33,8 @@ export const DeleteSnippet = ({ id, handleDelete, setAllOpenStates }) => {
             shadow
             color="error"
             onClick={() => {
-              handleDelete(id) 
-              setAllOpenStates(oldState => ({...oldState, [id]: false}))
+              handleDelete(id);
+              setAllOpenStates((oldState) => ({ ...oldState, [id]: false }));
             }}
           >
             Slet
@@ -38,4 +44,3 @@ export const DeleteSnippet = ({ id, handleDelete, setAllOpenStates }) => {
     </Grid.Container>
   );
 };
-

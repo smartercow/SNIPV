@@ -30,18 +30,34 @@ const Nav = () => {
             if (asPath.startsWith(item.link))
               return (
                 <li key={index}>
-                  <Link href={item.link}>
-                    <Text color="Primary" variant="header">
-                      {item.titel}
-                    </Text>
+                  <Link href={item.link} passHref>
+                    <a>
+                      <Text
+                        color="Primary"
+                        variant="H2"
+                        textTransform="uppercase"
+                        fontWeight={700}
+                      >
+                        {item.titel}
+                      </Text>
+                    </a>
                   </Link>
                 </li>
               );
             else
               return (
                 <li key={index}>
-                  <Link href={item.link}>
-                    <Text variant="header">{item.titel}</Text>
+                  <Link href={item.link} passHref>
+                    <a>
+                      <Text
+                        variant="H2"
+                        textTransform="uppercase"
+                        fontWeight={700}
+                        _hover={{ color: "Primary" }}
+                      >
+                        {item.titel}
+                      </Text>
+                    </a>
                   </Link>
                 </li>
               );

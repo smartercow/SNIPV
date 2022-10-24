@@ -4,31 +4,49 @@ export const Text = {
     color: "Black",
     fontSize: "16px",
     fontWeight: 500,
-    fontFamily: "Anek Malayalam",
     _focus: {
       boxShadow: "none",
     },
   },
 
   variants: {
+    H1: {
+      fontSize: "32px",
+    },
+    H2: {
+      fontSize: "22px",
+    },
     H3: {
-      color: "Black",
       fontSize: "20px",
-      textTransform: "uppercase",
+      // letterSpacing: "0.01em",
     },
     H4: {
-      color: "Black",
-      fontSize: "18px",
-      textTransform: "uppercase",
-      letterSpacing: ".1px",
+      fontSize: "17px",
+      // letterSpacing: "0.01em",
     },
     H5: {
-      color: "Black",
       fontSize: "16px",
-      textTransform: "uppercase",
-      letterSpacing: ".1px",
     },
-    headUppercase: {
+    H6: {
+      fontSize: "14px",
+    },
+    snipHeading: {
+      color: "Black",
+      fontSize: "17px",
+      letterSpacing: "0.1px",
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      whiteSpace: "nowrap",
+    },
+    snipDescription: {
+      color: "BlackLight",
+      fontSize: "15px",
+      letterSpacing: "0.1px",
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      whiteSpace: "nowrap",
+    },
+    /*     headUppercase: {
       color: "Black",
       fontSize: "16px",
       textTransform: "uppercase",
@@ -61,30 +79,12 @@ export const Text = {
       fontWeight: 500,
       letterSpacing: "0.3px",
     },
-    /* Seneste Tags/home */
     boxHeading: {
       fontSize: "18px",
       textTransform: "uppercase",
     },
-    snipHeading: {
-      // color: "Primary",
-      fontSize: "18px",
-      fontWeight: 500,
-      fontFamily: "Ubuntu",
-      letterSpacing: "0.1px",
-      overflow: "hidden",
-      textOverflow: "ellipsis",
-      whiteSpace: "nowrap",
-    },
-    snipDescription: {
-      // color: "PrimaryLight",
-      fontSize: "15px",
-      fontWeight: 500,
-      letterSpacing: "0.5px",
-      overflow: "hidden",
-      textOverflow: "ellipsis",
-      whiteSpace: "nowrap",
-    },
+
+
     seeMore: {
       fontSize: "16px",
       textTransform: "uppercase",
@@ -125,6 +125,6 @@ export const Text = {
       fontSize: "12px",
       textTransform: "uppercase",
       fontWeight: 500,
-    },
+    }, */
   },
 };

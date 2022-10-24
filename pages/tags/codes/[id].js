@@ -1,15 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import {
-  collection,
-  getDocs,
-  orderBy,
-  query,
-  where,
-} from "firebase/firestore";
+import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../../../firebase/clientApp";
-import { Badge, Button, Card, Loading, Popover, Text } from "@nextui-org/react";
+import { Badge, Button, Card, Loading, Popover } from "@nextui-org/react";
 import Link from "next/link";
 import { DeleteDocumentIcon } from "../../../components/SVG/DeleteDocumentIcon";
 import { DeleteSnippet } from "../../../components/NonModal/DeleteSnippet";
@@ -17,6 +11,7 @@ import { EditDocumentIcon } from "../../../components/SVG/EditDocumentIcon";
 import { LoginIcon } from "../../../components/SVG/LoginIcon";
 import { Paper } from "../../../components/SVG/Paper";
 import { MdRefresh } from "react-icons/md";
+import { Text } from "@chakra-ui/react";
 const CodeTagPage = () => {
   const {
     query: { id },
@@ -59,9 +54,7 @@ const CodeTagPage = () => {
       {user && (
         <div>
           <div className="flex gap-2 items-center">
-            <Text transform="uppercase" h5>
-              Kode snips med tag:
-            </Text>
+            <Text transform="uppercase">Kode snips med tag:</Text>
             <Text color="primary" transform="lowercase" h4>
               {id}
             </Text>

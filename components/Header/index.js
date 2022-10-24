@@ -1,4 +1,3 @@
-import { Button, Dropdown, Input, Text, User } from "@nextui-org/react";
 import { signOut } from "firebase/auth";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
@@ -10,6 +9,16 @@ import { InfoCircle } from "../SVG/InfoCircle";
 import { getUpdates } from "../../helpers/updates";
 import { CurrentVersion } from "../../pages/api/updates/CurrentVersion";
 import Nav from "./Nav";
+import {
+  Button,
+  Menu,
+  MenuButton,
+  MenuDivider,
+  MenuGroup,
+  MenuItem,
+  MenuList,
+  Text,
+} from "@chakra-ui/react";
 
 const Header = ({ user }) => {
   const [updateData, setUpdateData] = useState();
@@ -85,10 +94,16 @@ const Header = ({ user }) => {
       <div className="flex justify-between items-center max-w-6xl mx-5 lg:mx-auto h-18">
         <div className="flex gap-4 items-center">
           <div className="flex items-center">
-            <Link href="/">
-              <Text size={34} className="font-extrabold cursor-pointer">
-                SNIPV
-              </Text>
+            <Link href="/" passHref>
+              <a>
+                <Text
+                  variant="H1"
+                  textTransform="uppercase"
+                  fontWeight="extrabold"
+                >
+                  SNIPV
+                </Text>
+              </a>
             </Link>
           </div>
           <div>
@@ -104,11 +119,15 @@ const Header = ({ user }) => {
             )}
           </div>
 
-          <div className=" select-none">
-            <Text className="bg-red-500 text-white px-2 font-semibold underline underline-offset-4">
-              Version 2 TESTING!
+          {/*           <div className=" select-none">
+            <Text
+              color="white"
+              fontSize={14}
+              className="bg-red-500 px-2 font-semibold underline underline-offset-4"
+            >
+              v2 TESTING!
             </Text>
-          </div>
+          </div> */}
         </div>
 
         {user && (
@@ -120,7 +139,28 @@ const Header = ({ user }) => {
         <div className="flex items-center gap-1">
           {user ? (
             <div className="">
-              <Dropdown placement="bottom-left">
+              <div>
+                <Menu>
+                  <MenuButton as={Button}>Profil</MenuButton>
+                  <MenuList>
+                    <MenuGroup title={`${user?.email}`}>
+                      <Link href="/settings">
+                        <MenuItem>Indstillinger</MenuItem>
+                      </Link>
+                    </MenuGroup>
+                    <MenuGroup>
+                      <Link href="/info/help">
+                        <MenuItem>Hjælp</MenuItem>
+                      </Link>
+                    </MenuGroup>
+                    <MenuDivider />
+                    <MenuGroup>
+                      <MenuItem onClick={logout}>Log ud</MenuItem>
+                    </MenuGroup>
+                  </MenuList>
+                </Menu>
+              </div>
+              {/*               <Dropdown placement="bottom-left">
                 <Dropdown.Trigger>
                   <User
                     bordered
@@ -136,9 +176,6 @@ const Header = ({ user }) => {
                 </Dropdown.Trigger>
                 <Dropdown.Menu color="primary" aria-label="Avatar Actions">
                   <Dropdown.Item key="profile" css={{ height: "$14" }}>
-                    {/*                     <Text size={14} b color="inherit" css={{ d: "flex" }}>
-                      Logget ind som
-                    </Text> */}
                     <Text size={12} b color="inherit" css={{ d: "flex" }}>
                       {user?.email}
                     </Text>
@@ -164,7 +201,7 @@ const Header = ({ user }) => {
                     </div>
                   </Dropdown.Item>
                 </Dropdown.Menu>
-              </Dropdown>
+              </Dropdown> */}
             </div>
           ) : (
             <div>

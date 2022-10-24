@@ -31,9 +31,20 @@ export const Button = {
       },
     },
     entry: {
+      color: "white",
       bg: "Primary",
       fontWeight: 500,
       minW: "100px",
+      _hover: {
+        opacity: 0.8,
+      },
+    },
+    entrySub: {
+      color: "white",
+      bg: "Primary",
+      fontWeight: 500,
+      minW: "80px",
+      height: "35px",
       _hover: {
         opacity: 0.8,
       },

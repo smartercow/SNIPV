@@ -1,21 +1,22 @@
 import React, { useState } from "react";
-import { Badge, Button, Card, Popover } from "@nextui-org/react";
+import { Popover } from "@nextui-org/react";
 import Link from "next/link";
 import { DeleteSnippet } from "../NonModal/DeleteSnippet";
 import { DeleteDocumentIcon } from "../SVG/DeleteDocumentIcon";
 import { EditDocumentIcon } from "../SVG/EditDocumentIcon";
+import { DocumentIcon } from "../SVG/DocumentIcon";
 import { LoginIcon } from "../SVG/LoginIcon";
 import { Paper } from "../SVG/Paper";
 import { PaperFail } from "../SVG/PaperFail";
 import FileExtension from "./FileExtension";
 import LanguageBadge from "./LanguageBadge";
-import { Box } from "@chakra-ui/react";
+import { Badge, Box, Button, Icon, Text } from "@chakra-ui/react";
 
 const Snippet = ({ snippet, handleDelete }) => {
   const [allOpenStates, setAllOpenStates] = useState({});
 
   return (
-    <div className="hoverable-item flex gap-2">
+    <div className="hoverable-item">
       <Link
         href={
           snippet.snippetType == "code"
@@ -26,165 +27,186 @@ const Snippet = ({ snippet, handleDelete }) => {
         }
       >
         <div className="hoverable-item w-full">
-          <Box key={snippet.id}>
-            <div className="cardHover bg-[#F1F7FF] hoverable-item flex gap-3 items-center p-2 border-b rounded-xl w-full">
-              <div className="w-full flex flex-col gap-2">
-                <div className="flex gap-6 items-center">
-                  {snippet.snippetType == "code" && (
-                    <div className="pl-3">
-                      <Paper
-                        fill="#0072F5"
-                        className="cursor-pointer"
-                        width={50}
-                        height={50}
-                      />
-                    </div>
-                  )}
-
-                  {snippet.snippetType == "error" && (
-                    <div className="pl-3">
-                      <PaperFail
-                        fill="#F31260"
-                        className="cursor-pointer"
-                        width={50}
-                        height={50}
-                      />
-                    </div>
-                  )}
-
-                  {snippet.snippetType == "setup" && (
-                    <div className="pl-3">
-                      <Paper
-                        fill="#0072F5"
-                        className="cursor-pointer"
-                        width={50}
-                        height={50}
-                      />
-                    </div>
-                  )}
-
-                  <div className="w-full flex flex-col justify-center gap-3 MonoHeading">
-                    <div className="w-full">
-                      <p className="text-[#031B4E] text-[16px] font-[500] truncateText">
-                        {snippet.title}
-                      </p>
-                    </div>
-                    {snippet.description && (
-                      <div className="-mt-2 h-5">
-                        <h6 className="text-[#031b4ed4] whitespace-nowrap MonoHeading truncateText">
-                          {snippet.description}
-                        </h6>
-                      </div>
-                    )}
-                  </div>
-                </div>
-                <div className="flex">
-                  <div className="w-24 flex justify-center">
+          <Box
+            key={snippet.id}
+            boxShadow="md"
+            borderRadius="xl"
+            cursor="pointer"
+          >
+            <div className="cardHover bg-white hoverable-item items-center p-2 rounded-xl">
+              <div className="flex items-center gap-5">
+                <div className="flex flex-col gap-4 w-full">
+                  <div className="flex gap-4 items-center pl-1">
                     {snippet.snippetType == "code" && (
-                      <div className="pr-[.60rem]">
-                        <Badge isSquared color="primary" variant="flat">
-                          KODE
-                        </Badge>
+                      <div className="w-18 flex justify-center">
+                        <Paper
+                          fill="#0072F5"
+                          className="cursor-pointer"
+                          width={45}
+                          height={45}
+                        />
                       </div>
                     )}
 
                     {snippet.snippetType == "error" && (
-                      <div className="pr-[.60rem]">
-                        <Badge isSquared color="error" variant="flat">
-                          FEJL
-                        </Badge>
+                      <div>
+                        <PaperFail
+                          fill="#F31260"
+                          className="cursor-pointer"
+                          width={45}
+                          height={45}
+                        />
                       </div>
                     )}
-                  </div>
-                  <div className="flex items-center justify-between w-full MonoHeading">
-                    <div className="flex items-center gap-2">
-                      <LanguageBadge snippet={snippet} />
-                      {snippet.folder?.language?.fileExtension?.extId && (
-                        <FileExtension snippet={snippet} />
+
+                    {snippet.snippetType == "setup" && (
+                      <div>
+                        <DocumentIcon
+                          fill="purple"
+                          className="cursor-pointer"
+                          width={45}
+                          height={45}
+                        />
+                      </div>
+                    )}
+
+                    <div className="flex flex-col justify-center gap-3 max-w-xl">
+                      <div className="h-4">
+                        <Text variant="snipHeading" letterSpacing="0.03em">
+                          {snippet.title}
+                        </Text>
+                      </div>
+
+                      {snippet.description && (
+                        <div className="h-4">
+                          <Text variant="snipDescription">
+                            {snippet.description}
+                          </Text>
+                        </div>
                       )}
                     </div>
-
-                    <div className="flex gap-3 text-[#031B4E]">
-                      {snippet.updatedAt && (
-                        <p className="text-xs font-mono">
-                          OPDATERET:&nbsp;
-                          {new Date(
-                            snippet.updatedAt.seconds * 1000
-                          ).toLocaleDateString("da-DK")}
-                        </p>
+                  </div>
+                  <div className="flex gap-4 pl-2">
+                    <div className="w-18 flex justify-center">
+                      {snippet.snippetType === "code" && (
+                        <div>
+                          <Badge colorScheme="blue" variant="outline">
+                            KODE
+                          </Badge>
+                        </div>
                       )}
 
-                      <p className="text-xs font-mono">
-                        OPRETTET:&nbsp;
-                        {new Date(
-                          snippet.postedAt.seconds * 1000
-                        ).toLocaleDateString("da-DK")}
-                      </p>
+                      {snippet.snippetType === "error" && (
+                        <div>
+                          <Badge colorScheme="red" variant="outline">
+                            FEJL
+                          </Badge>
+                        </div>
+                      )}
+
+                      {snippet.snippetType === "setup" && (
+                        <div>
+                          <Badge colorScheme="purple" variant="outline">
+                            SETUP
+                          </Badge>
+                        </div>
+                      )}
+                    </div>
+                    <div className="flex items-center justify-between w-full">
+                      <div className="flex items-center gap-2">
+                        <LanguageBadge snippet={snippet} />
+                        {snippet.folder?.language?.fileExtension?.extId && (
+                          <FileExtension snippet={snippet} />
+                        )}
+                      </div>
+
+                      <div className="flex gap-3 text-[#031B4E]">
+                        {snippet.updatedAt && (
+                          <p className="text-xs font-mono">
+                            OPDATERET:&nbsp;
+                            {new Date(
+                              snippet.updatedAt.seconds * 1000
+                            ).toLocaleDateString("da-DK")}
+                          </p>
+                        )}
+
+                        <p className="text-xs font-mono">
+                          OPRETTET:&nbsp;
+                          {new Date(
+                            snippet.postedAt.seconds * 1000
+                          ).toLocaleDateString("da-DK")}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className="hoverable-show">
-                <LoginIcon width={30} height={30} fill="#0072F5" />
+
+                <div className="hoverable-show">
+                  <Icon as={LoginIcon} width={30} height={30} fill="Primary" />
+                </div>
+
+                <div className="hoverable-show flex flex-col gap-1 justify-center rounded-xl items-center">
+                  {snippet.folder.subFolderId && (
+                    <>
+                      <div>
+                        <a
+                          href={
+                            snippet.snippetType == "code"
+                              ? `/upsert/code/${snippet.id}`
+                              : `/upsert/error/${snippet.id}`
+                          }
+                        >
+                          <Button>
+                            <Icon
+                              as={EditDocumentIcon}
+                              fill="Primary"
+                              className="cursor-pointer"
+                              width={26}
+                              height={26}
+                            />
+                          </Button>
+                        </a>
+                      </div>
+                    </>
+                  )}
+
+                  <div>
+                    <Popover
+                      placement="bottom"
+                      isOpen={allOpenStates[snippet.id]}
+                      onOpenChange={(nowOpen) =>
+                        setAllOpenStates((oldState) => ({
+                          ...oldState,
+                          [snippet.id]: nowOpen,
+                        }))
+                      }
+                    >
+                      <Popover.Trigger>
+                        <Button>
+                          <Icon
+                            as={DeleteDocumentIcon}
+                            fill="Red"
+                            className="cursor-pointer"
+                            width={26}
+                            height={26}
+                          />
+                        </Button>
+                      </Popover.Trigger>
+                      <Popover.Content>
+                        <DeleteSnippet
+                          id={snippet.id}
+                          handleDelete={handleDelete}
+                          setAllOpenStates={setAllOpenStates}
+                        />
+                      </Popover.Content>
+                    </Popover>
+                  </div>
+                </div>
               </div>
             </div>
           </Box>
         </div>
       </Link>
-
-      <div className="hoverable-show flex flex-col gap-1 justify-center items-center">
-        {snippet.folder.subFolderId && (
-          <div>
-            <a
-              href={
-                snippet.snippetType == "code"
-                  ? `/upsert/code/${snippet.id}`
-                  : `/upsert/error/${snippet.id}`
-              }
-            >
-              <Button auto light>
-                <EditDocumentIcon
-                  fill="#0072F5"
-                  className="cursor-pointer"
-                  width={26}
-                  height={26}
-                />
-              </Button>
-            </a>
-          </div>
-        )}
-
-        <div>
-          <Popover
-            placement="bottom"
-            isOpen={allOpenStates[snippet.id]}
-            onOpenChange={(nowOpen) =>
-              setAllOpenStates((oldState) => ({
-                ...oldState,
-                [snippet.id]: nowOpen,
-              }))
-            }
-          >
-            <Popover.Trigger>
-              <Button auto light>
-                <DeleteDocumentIcon
-                  fill="#F31260"
-                  className="cursor-pointer"
-                  width={26}
-                  height={26}
-                />
-              </Button>
-            </Popover.Trigger>
-            <Popover.Content>
-              <DeleteSnippet
-                id={snippet.id}
-                handleDelete={handleDelete}
-                setAllOpenStates={setAllOpenStates}
-              />
-            </Popover.Content>
-          </Popover>
-        </div>
-      </div>
     </div>
   );
 };
