@@ -8,6 +8,10 @@ export const SnippetsTypeLinks = () => {
 
   const Type = [
     {
+      titel: "Alle",
+      link: "/snips",
+    },
+    {
       titel: "Koder",
       link: "/snips/codes",
     },
@@ -21,9 +25,9 @@ export const SnippetsTypeLinks = () => {
     },
   ];
   return (
-    <div className="flex uppercase mb-3">
+    <div className="flex uppercase mb-4">
       {Type.map((item, index) => {
-        if (asPath.startsWith(item.link))
+        if (asPath === item.link)
           return (
             <Link key={index} href={item.link} passHref>
               <a>

@@ -116,17 +116,20 @@ const FoldersLoad = ({
 
   return (
     <Box
-      bg="white"
-      boxShadow="md"
-      borderRadius="xl"
-      className="flex flex-col gap-3"
-      pl="4"
-      pt="2"
-      pb="4"
-      pr="6"
+      borderWidth={1}
+      p={2}
+      borderRadius="md"
+      className="flex flex-col gap-2"
     >
-      <div className="flex flex-col gap-1 flex-grow">
-        <Text>Rodmappe</Text>
+      <div className="flex flex-col gap-2">
+        <Text
+          textDecoration="underline"
+          textDecorationThickness="2px"
+          textUnderlineOffset={3}
+          textDecorationColor="Gray"
+        >
+          Rodmappe
+        </Text>
 
         <div className="flex gap-3 items-center">
           <div className="w-full">
@@ -146,7 +149,7 @@ const FoldersLoad = ({
             />
           </div>
 
-          <div className="w-10">
+          <div className="w-12">
             {selectedMainFolder?.mainFolderId && (
               <MainFolderDropdown selectedMainFolder={selectedMainFolder} />
             )}
@@ -155,8 +158,15 @@ const FoldersLoad = ({
       </div>
 
       {selectedMainFolder?.mainFolderId && (
-        <div className="flex flex-col gap-1">
-          <Text>Undermappe</Text>
+        <div className="flex flex-col gap-2">
+          <Text
+            textDecoration="underline"
+            textDecorationThickness="2px"
+            textUnderlineOffset={3}
+            textDecorationColor="Gray"
+          >
+            Undermappe
+          </Text>
 
           <div className="flex gap-3 items-center">
             <div className="w-full">
@@ -176,7 +186,7 @@ const FoldersLoad = ({
               />
             </div>
 
-            <div className="w-10">
+            <div className="w-12">
               {selectedSubFolder.subFolderId && (
                 <SubFolderDropdown selectedSubFolder={selectedSubFolder} />
               )}

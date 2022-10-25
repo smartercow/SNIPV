@@ -33,7 +33,7 @@ export const theme = extendTheme({
     GrayHeavy: "#99A1B3",
     GrayLight: "#ebecf0",
 
-    iGray: "#F6F7F9",
+    iGray: "#EDF2F7",
     iGrayLight: "#F6F7F9",
 
     PrimaryBackground: "#fafafa",

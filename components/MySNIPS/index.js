@@ -18,183 +18,185 @@ import LatestHeading from "../Heading/LatestHeading";
 import Snippet from "../Display/Snippet";
 import { useRouter } from "next/router";
 import LoadingSNIPS from "../LoadingState/LoadingSNIPS";
-import { Button, Text } from "@chakra-ui/react";
+import { Box, Button, Icon, Text } from "@chakra-ui/react";
+import Category from "./Category";
+import AllType from "./AllType";
+import FoldersLoad from "../Folders/FoldersLoad";
+import { mainFolderEditUpdateState } from "../../atoms/mainFolderEditUpdateState";
+import { mainFolderDeleteUpdateState } from "../../atoms/mainFolderDeleteUpdateState";
+import { useRecoilState } from "recoil";
+import Search from "./Search";
+import { CategoryIcon } from "../SVG/CategoryIcon";
+import { FilterIcon } from "../SVG/FilterIcon";
+import { SwapIcon } from "../SVG/SwapIcon";
 
-const MySNIPS = ({ selectedSubFolder, loadingMain, setLoadingMain }) => {
+const MySNIPS = () => {
   const [user] = useAuthState(auth);
   const { asPath } = useRouter();
 
-  const [loadingSub, setLoadingSub] = useState(false);
-  const [myCodeSnippets, setMyCodeSnippets] = useState([]);
-  const [lastSnippet, setLastSnippet] = useState();
-  const [update, setUpdate] = useState(false);
+  const [mainFolder, setMainFolder] = useState("");
 
-  const [isEmpty, setIsEmpty] = useState(false);
+  const [types, setTypes] = useState("all");
 
   const [col, setCol] = useState("");
+
+  const [loadingMain, setLoadingMain] = useState(false);
+
+  const [folders, setFolders] = useState([]);
+  const [snipType, setSnipType] = useState("");
+  const [snip, setSnip] = useState("");
+
+  const [mainDeleted, setMainDeleted] = useRecoilState(
+    mainFolderDeleteUpdateState
+  );
+  const [mainEdited, setMainEdited] = useRecoilState(mainFolderEditUpdateState);
+
+  const [selectedMainFolder, setSelectedMainFolder] = useState();
+  const [selectedSubFolder, setSelectedSubFolder] = useState([]);
 
   useEffect(() => {
     if (asPath.startsWith("/snips/codes")) {
       setCol("CodeSnippetsData1");
+      setMainFolder("CodeMainFolders");
+      setSnipType("code");
+      setSnip("kode SNIPS");
     }
     if (asPath.startsWith("/snips/errors")) {
       setCol("ErrorSnippetsData1");
+      setMainFolder("ErrorMainFolders");
+      setSnipType("error");
+      setSnip("fejl SNIPS");
     }
     if (asPath.startsWith("/setups")) {
       setCol("SetupData");
+      setMainFolder("SetupMainFolders");
+      setSnipType("setup");
+      setSnip("Setups");
     }
   }, [asPath]);
 
-  const getMySnippets = async () => {
-    setLoadingMain(false);
-    setLoadingSub(true);
-    try {
-      if (Object.keys(selectedSubFolder).length > 0 && col) {
-        const snippetQuery = query(
-          collection(db, col),
-          where(new FieldPath("userData", "uid"), "==", user?.uid),
-          where(
-            new FieldPath("folder", "subFolderId"),
-            "==",
-            selectedSubFolder.subFolderId
-          ),
-          orderBy("postedAt", "desc"),
-          limit(10)
-        );
-        const snippetDocs = await getDocs(snippetQuery);
-
-        const colEmpty = snippetDocs.docs.length === 0;
-
-        if (snippetDocs.docs.length < 10) {
-          setIsEmpty(true);
-        }
-
-        if (!colEmpty) {
-          const lastDoc = snippetDocs.docs[snippetDocs.docs.length - 1];
-          const snippets = snippetDocs.docs.map((doc) => ({
-            id: doc.id,
-            ...doc.data(),
-          }));
-
-          setLastSnippet(lastDoc);
-          setMyCodeSnippets(snippets);
-          setLoadingSub(false);
-        } else {
-          setIsEmpty(true);
-          setLoadingSub(false);
-        }
-      }
-    } catch (error) {
-      console.log("getPosts error", error.message);
-    }
-  };
-
-  const fetchMore = async () => {
-    setLoadingSub(true);
-    try {
-      if (col) {
-        const snippetQuery = query(
-          collection(db, col),
-          where(new FieldPath("userData", "uid"), "==", user?.uid),
-          orderBy("postedAt", "desc"),
-          startAfter(lastSnippet),
-          limit(10)
-        );
-        const snippetDocs = await getDocs(snippetQuery);
-
-        const colEmpty = snippetDocs.size === 0;
-
-        if (!colEmpty) {
-          const lastDoc = snippetDocs.docs[snippetDocs.docs.length - 1];
-          const snippets = snippetDocs.docs.map((doc) => ({
-            id: doc.id,
-            ...doc.data(),
-          }));
-
-          setLastSnippet(lastDoc);
-
-          setMyCodeSnippets((prev) => [...prev, ...snippets]);
-          setLoadingSub(false);
-        } else {
-          setIsEmpty(true);
-          setLoadingSub(false);
-        }
-      }
-    } catch (error) {
-      console.log("getPosts error", error.message);
-    }
-  };
-
   useEffect(() => {
-    setMyCodeSnippets([]);
+    if (!user) return;
+    if (col) {
+      setLoadingMain(true);
+      const folderColRef = query(
+        collection(db, "UsersData1", user.uid, mainFolder)
+      );
+      const getFolders = async () => {
+        const userData = await getDocs(folderColRef);
+        setFolders(
+          userData.docs.map((doc) => ({ ...doc.data(), mainFolderId: doc.id }))
+        );
+      };
 
-    if (user && selectedSubFolder) {
-      getMySnippets();
+      getFolders();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user, selectedSubFolder]);
+  }, [user, mainDeleted, mainEdited, mainFolder, col]);
 
   const handleDelete = async (id) => {
     try {
-      await deleteDoc(doc(db, "CodeSnippetsData1", id));
-      setUpdate(!update);
+      if (col) {
+        await deleteDoc(doc(db, col, id));
+        setUpdate(!update);
+      }
     } catch (error) {
       console.log("Fejl i sletning!", error.message);
     }
   };
 
   return (
-    <div className="w-full">
-      {selectedSubFolder?.mainFolder?.mainFolderId && (
+    <div className="flex flex-col gap-3 w-full">
+      <Box
+        bg="white"
+        boxShadow="sm"
+        borderRadius="lg"
+        className="flex flex-col gap-3"
+        p={2}
+      >
+        <Box bg="iGray" borderRadius="lg" className="flex items-center">
+          <Box
+            _hover={{ bg: "gray.300", cursor: "pointer" }}
+            py={1}
+            bg={types === "all" ? "gray.300" : "#EDF2F7"}
+            borderTopLeftRadius="lg"
+            borderBottomLeftRadius="lg"
+            className="flex gap-1 items-center px-3 transition-all duration-300"
+            onClick={() => setTypes("all")}
+          >
+            <Icon as={CategoryIcon} fill="Primary" h={4} w={4} />
+            <Text textTransform="uppercase" fontSize="16px" color="gray.600">
+              Alle
+            </Text>
+          </Box>
+          <Box
+            _hover={{ bg: "gray.300", cursor: "pointer" }}
+            py={1}
+            bg={types === "category" ? "gray.300" : "#EDF2F7"}
+            className="flex gap-1 items-center px-3 transition-all duration-300"
+            onClick={() => setTypes("category")}
+          >
+            <Icon as={FilterIcon} fill="Primary" opacity={0.5} h={4} w={4} />
+            <Text textTransform="uppercase" fontSize="16px" color="gray.600">
+              Mapper
+            </Text>
+          </Box>
+        </Box>
+
+        {types === "category" && (
+          <FoldersLoad
+            folders={folders}
+            loadingMain={loadingMain}
+            setLoadingMain={setLoadingMain}
+            selectedMainFolder={selectedMainFolder}
+            setSelectedMainFolder={setSelectedMainFolder}
+            selectedSubFolder={selectedSubFolder}
+            setSelectedSubFolder={setSelectedSubFolder}
+          />
+        )}
+      </Box>
+
+      {types === "all" && (
+        <div>
+          <LatestHeading headingType={`Alle ${snip}`} />
+
+          <AllType
+            setLoadingMain={setLoadingMain}
+            selectedSubFolder={selectedSubFolder}
+            col={col}
+            handleDelete={handleDelete}
+            snip={snip}
+          />
+        </div>
+      )}
+
+      {types === "category" && (
         <>
-          <>
-            <LatestHeading headingType={`${selectedSubFolder.label}`} />
-          </>
+          {selectedSubFolder?.mainFolder?.mainFolderId && (
+            <>
+              <LatestHeading headingType={`${selectedSubFolder.label}`} />
 
-          <div className="w-full">
-            <div className="flex flex-col gap-4">
-              {Object.keys(myCodeSnippets).length > 0 && (
-                <>
-                  {myCodeSnippets?.map((snippet) => (
-                    <Snippet
-                      key={snippet.id}
-                      handleDelete={handleDelete}
-                      snippet={snippet}
-                    />
-                  ))}
+              <Category
+                mainFolder={mainFolder}
+                loadingMain={loadingMain}
+                setLoadingMain={setLoadingMain}
+                col={col}
+                selectedSubFolder={selectedSubFolder}
+                handleDelete={handleDelete}
+              />
+            </>
+          )}
 
-                  {!isEmpty && (
-                    <div className="flex justify-center">
-                      <Button onClick={fetchMore}>
-                        <MdRefresh />
-                        HENT MERE
-                      </Button>
-                    </div>
-                  )}
-                </>
-              )}
-
-              {loadingMain ? (
-                <div className="flex justify-center mt-10">
-                  <Text>Valg en undermappe!</Text>
-                </div>
-              ) : (
-                <>
-                  {loadingSub ? (
-                    <LoadingSNIPS />
-                  ) : (
-                    <>
-                      {!myCodeSnippets?.length > 0 && (
-                        <div className="flex justify-center mt-10">
-                          <Text>Du har ingen SNIPS i denne mappe! 😔</Text>
-                        </div>
-                      )}
-                    </>
-                  )}
-                </>
-              )}
+          {!selectedMainFolder?.mainFolderId && (
+            <div className="flex justify-center mt-10">
+              <Text variant="H5">Valg en rodmappe!</Text>
             </div>
-          </div>
+          )}
+        </>
+      )}
+
+      {types === "search" && (
+        <>
+          <Search />
         </>
       )}
     </div>

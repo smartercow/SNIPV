@@ -4,17 +4,12 @@ import React from "react";
 import TagHeading from "../Heading/TagType/TagHeading";
 const Tags = ({ tags, snippets }) => {
   return (
-    <div>
+    <div className="w-[300px]">
       {snippets.snips && (
         <div>
           {tags && (
-            <Box
-              bg="PrimaryELight"
-              className="rounded-md shadow-md bg-opacity-60 flex flex-col gap-5 pt-1 pb-5 px-3"
-            >
-              <div className="my-2">
-                <TagHeading headingType={"Seneste tags"} />
-              </div>
+            <Box className="rounded-md shadow-md bg-opacity-60 flex flex-col gap-5 pt-2 pb-5 px-3">
+              <TagHeading headingType={"Seneste tags"} />
 
               <div className="flex gap-2 flex-wrap -mt-4 select-none">
                 {tags

@@ -1,4 +1,4 @@
-import { Icon, Text } from "@chakra-ui/react";
+import { Divider, Icon, Text } from "@chakra-ui/react";
 import React from "react";
 import { AiTwotoneTags } from "react-icons/ai";
 
@@ -7,11 +7,11 @@ const TagHeading = ({ headingType, headingColor }) => {
     <div className="w-full">
       <div className="flex gap-2 items-center">
         <Icon as={AiTwotoneTags} color="DarkBlue" h={6} w={6} />
-        <Text variant="boxHeading" color={headingColor}>
+        <Text variant="H4" textTransform="uppercase" color={headingColor}>
           {headingType}
         </Text>
       </div>
-      <hr />
+      <Divider my={2} />
     </div>
   );
 };

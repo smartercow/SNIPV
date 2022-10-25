@@ -80,15 +80,15 @@ const HomePage = () => {
   }, [user]);
 
   return (
-    <div className="">
+    <div className="w-full">
       {user ? (
         <>
           {snippets.snips && (
-            <div className="flex gap-5 justify-between">
-              <div className="flex flex-col gap-4">
+            <div className="flex gap-6">
+              <div className="flex flex-col gap-4 w-full">
                 <Post />
 
-                <div className="">
+                <div className="w-full">
                   <Feed
                     user={user}
                     loading={loading}
@@ -97,7 +97,7 @@ const HomePage = () => {
                   />
                 </div>
               </div>
-              <div className="hidden md:inline-flex w-72">
+              <div className="hidden md:inline-flex">
                 <Tags snippets={snippets} tags={tags} />
               </div>
             </div>

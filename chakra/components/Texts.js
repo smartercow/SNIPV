@@ -17,11 +17,11 @@ export const Text = {
       fontSize: "22px",
     },
     H3: {
-      fontSize: "20px",
+      fontSize: "18px",
       // letterSpacing: "0.01em",
     },
     H4: {
-      fontSize: "17px",
+      fontSize: "16px",
       // letterSpacing: "0.01em",
     },
     H5: {

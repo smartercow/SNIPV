@@ -1,17 +1,17 @@
-import { Icon, Text } from "@chakra-ui/react";
+import { Box, Icon, Text } from "@chakra-ui/react";
 import React from "react";
 import { TbSortDescending } from "react-icons/tb";
 
 const LatestHeading = ({ headingIcon, headingType }) => {
   return (
-    <div className="w-full mb-3">
+    <Box mb={3} borderBottomWidth={1} borderColor="Gray">
       <div className="flex items-center gap-2">
-        <Icon as={TbSortDescending} w={6} h={6} />
+        <Icon as={TbSortDescending} w={5} h={5} />
         <Text variant="H4" textTransform="uppercase">
           {headingType}
         </Text>
       </div>
-    </div>
+    </Box>
   );
 };
 

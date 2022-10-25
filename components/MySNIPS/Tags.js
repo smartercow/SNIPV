@@ -8,7 +8,6 @@ import TagHeading from "../Heading/TagType/TagHeading";
 const Tags = () => {
   const { asPath } = useRouter();
   const [col, setCol] = useState("");
-  const [snippets, setSnippets] = useState([]);
   const [tags, setTags] = useState([]);
   useEffect(() => {
     if (asPath.startsWith("/snips/codes")) {
@@ -45,21 +44,17 @@ const Tags = () => {
     }
   }, [col]);
 
-  console.log("SNIPPS", tags);
-  console.log("COLLECTION", col);
   return (
     <div className="w-[300px] hidden lg:inline-flex">
       {tags && (
         <Box
           bg="white"
-          className="rounded-md shadow-md bg-opacity-60 flex flex-col gap-5 pt-1 pb-5 px-3 w-full"
+          className="rounded-md shadow-md bg-opacity-60 flex flex-col gap-5 pt-2 pb-5 px-3 w-full"
         >
-          <div className="my-2">
-            <TagHeading headingType={"Seneste tags"} />
-          </div>
+          <TagHeading headingType={"Seneste tags"} />
 
           <div className="flex gap-2 flex-wrap -mt-4 select-none">
-            {tags.slice(0, 22).map((tag, index) => (
+            {tags.slice(0, 32).map((tag, index) => (
               <Link key={index} href={`/tags/codes/${tag}`}>
                 <Box
                   bg="PrimaryTLight"
