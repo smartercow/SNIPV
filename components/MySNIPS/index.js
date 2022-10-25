@@ -115,9 +115,9 @@ const MySNIPS = () => {
       >
         <Box bg="iGray" borderRadius="lg" className="flex items-center">
           <Box
-            _hover={{ bg: "gray.300", cursor: "pointer" }}
+            _hover={{ bg: "gray.200", cursor: "pointer" }}
             py={1}
-            bg={types === "all" ? "gray.300" : "#EDF2F7"}
+            bg={types === "all" ? "gray.200" : "#EDF2F7"}
             borderTopLeftRadius="lg"
             borderBottomLeftRadius="lg"
             className="flex gap-1 items-center px-3 transition-all duration-300"
@@ -129,13 +129,13 @@ const MySNIPS = () => {
             </Text>
           </Box>
           <Box
-            _hover={{ bg: "gray.300", cursor: "pointer" }}
+            _hover={{ bg: "gray.200", cursor: "pointer" }}
             py={1}
-            bg={types === "category" ? "gray.300" : "#EDF2F7"}
+            bg={types === "category" ? "gray.200" : "#EDF2F7"}
             className="flex gap-1 items-center px-3 transition-all duration-300"
             onClick={() => setTypes("category")}
           >
-            <Icon as={FilterIcon} fill="Primary" opacity={0.5} h={4} w={4} />
+            <Icon as={FilterIcon} fill="Primary" h={4} w={4} />
             <Text textTransform="uppercase" fontSize="16px" color="gray.600">
               Mapper
             </Text>
