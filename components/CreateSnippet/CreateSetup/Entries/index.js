@@ -262,7 +262,7 @@ const Entries = ({
 
           <Box bg="PrimaryLighter" className="p-2">
             <div>
-              <Text variant="heading">Tilføj ny entry</Text>
+              <Text variant="heading">Ny entry</Text>
             </div>
 
             <div className="flex gap-2 justify-between">

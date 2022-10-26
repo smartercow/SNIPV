@@ -45,7 +45,7 @@ const Tags = () => {
   }, [col]);
 
   return (
-    <div className="min-w-[300px] hidden lg:inline-flex">
+    <div className="w-[300px] min-w-[300px] hidden lg:inline-flex">
       {tags && (
         <Box
           bg="white"

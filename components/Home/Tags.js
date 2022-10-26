@@ -4,7 +4,7 @@ import React from "react";
 import TagHeading from "../Heading/TagType/TagHeading";
 const Tags = ({ tags, snippets }) => {
   return (
-    <div className="min-w-[300px]">
+    <div className="w-[300px] min-w-[300px]">
       {snippets.snips && (
         <div>
           {tags && (
