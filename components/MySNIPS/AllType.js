@@ -1,4 +1,4 @@
-import { Button, Text } from "@chakra-ui/react";
+import { Box, Button, Text } from "@chakra-ui/react";
 import {
   collection,
   FieldPath,
@@ -107,36 +107,38 @@ const AllType = ({ setLoadingMain, col, snip, handleDelete }) => {
   }, [user, col]);
 
   return (
-    <div className="flex flex-col gap-4">
-      {Object.keys(mySNIPS).length > 0 && (
-        <>
-          {mySNIPS?.map((snippet) => (
-            <Snippet
-              key={snippet.id}
-              snippet={snippet}
-              handleDelete={handleDelete}
-            />
-          ))}
+    <Box px={4} pt={3} borderBottomRadius="md" boxShadow="md" bg="white">
+      <div className="flex flex-col gap-4">
+        {Object.keys(mySNIPS).length > 0 && (
+          <>
+            {mySNIPS?.map((snippet) => (
+              <Snippet
+                key={snippet.id}
+                snippet={snippet}
+                handleDelete={handleDelete}
+              />
+            ))}
 
-          {!isEmpty && !loadingSub && (
-            <div className="flex justify-center">
-              <Button onClick={fetchMore}>
-                <MdRefresh />
-                HENT MERE
-              </Button>
-            </div>
-          )}
-        </>
-      )}
+            {!isEmpty && !loadingSub && (
+              <div className="flex justify-center">
+                <Button onClick={fetchMore}>
+                  <MdRefresh />
+                  HENT MERE
+                </Button>
+              </div>
+            )}
+          </>
+        )}
 
-      {loadingSub && <LoadingSNIPS />}
+        {loadingSub && <LoadingSNIPS />}
 
-      {!loadingSub && !mySNIPS?.length > 0 && (
-        <div className="flex justify-center mt-10">
-          <Text>Du har ingen {snip}! 😔</Text>
-        </div>
-      )}
-    </div>
+        {!loadingSub && !mySNIPS?.length > 0 && (
+          <div className="flex justify-center mt-10">
+            <Text>Du har ingen {snip}! 😔</Text>
+          </div>
+        )}
+      </div>
+    </Box>
   );
 };
 

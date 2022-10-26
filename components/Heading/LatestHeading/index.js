@@ -7,6 +7,7 @@ const LatestHeading = ({ headingIcon, headingType }) => {
     <Box
       pt={1}
       px={2}
+      pb={1}
       borderBottomWidth={2}
       borderColor="Gray"
       bg="iGray"

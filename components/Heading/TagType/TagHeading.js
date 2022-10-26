@@ -7,7 +7,8 @@ const TagHeading = ({ headingType, headingColor }) => {
     <Box
       mb={2}
       px={2}
-      pt={1}
+      pt={2}
+      pb={1}
       borderBottomWidth={2}
       borderColor="Gray"
       bg="iGray"

@@ -21,7 +21,7 @@ export const Text = {
       // letterSpacing: "0.01em",
     },
     H4: {
-      fontSize: "18px",
+      fontSize: "17px",
       // letterSpacing: "0.01em",
     },
     H5: {
