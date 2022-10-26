@@ -55,7 +55,7 @@ const CodeTagPage = () => {
         <div>
           <div className="flex gap-2 items-center">
             <Text transform="uppercase">Kode snips med tag:</Text>
-            <Text color="primary" transform="lowercase" h4>
+            <Text color="primary" transform="lowercase">
               {id}
             </Text>
           </div>

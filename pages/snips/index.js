@@ -1,205 +1,122 @@
-import { Badge, Card, Loading, Popover } from "@nextui-org/react";
-import {
-  collection,
-  deleteDoc,
-  doc,
-  FieldPath,
-  getDocs,
-  limit,
-  orderBy,
-  query,
-  where,
-} from "firebase/firestore";
-import Head from "next/head";
-import Link from "next/link";
+import { Box, Text } from "@chakra-ui/react";
+import { collection, getDocs, onSnapshot, query } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import LatestHeading from "../../components/Heading/LatestHeading";
-import { SnippetsTypeLinks } from "../../components/Heading/SnippetsType";
-import { auth, db } from "../../firebase/clientApp";
 import Snippet from "../../components/Display/Snippet";
-import { Text } from "@chakra-ui/react";
+import { SnippetsTypeLinks } from "../../components/Heading/SnippetsType";
+import LatestHeading from "../../components/Heading/LatestHeading";
 import LoadingSNIPS from "../../components/LoadingState/LoadingSNIPS";
+import NoUser from "../../components/NoPage/NoUser";
+import { auth, db } from "../../firebase/clientApp";
+import Tags from "../../components/Home/Tags";
 
-const MySnippets = () => {
+const MySNIPS = () => {
   const [user] = useAuthState(auth);
 
-  const [myCodeSnippets, setMyCodeSnippets] = useState();
-  const [myErrorSnippets, setMyErrorSnippets] = useState();
-  const [update, setUpdate] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [snippets, setSnippets] = useState([]);
+  const [tags, setTags] = useState([]);
 
-  const getMyCodeSnippets = async () => {
+  const getSnippets = async () => {
     try {
-      const snippetQuery = query(
-        collection(db, "CodeSnippetsData1"),
-        where(new FieldPath("userData", "uid"), "==", user?.uid),
-        orderBy("postedAt", "desc"),
-        limit(4)
-      );
+      const codeQuery = query(collection(db, "CodeSnippetsData1"));
 
-      const snippetDocs = await getDocs(snippetQuery);
-      const snippets = snippetDocs.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
+      const errorQuery = query(collection(db, "ErrorSnippetsData1"));
 
-      setMyCodeSnippets(snippets);
-      setLoading(false);
-    } catch (error) {
-      console.log("getPosts error", error.message);
-    }
-  };
+      const setupQuery = query(collection(db, "SetupData"));
 
-  const getMyErrorSnippets = async () => {
-    try {
-      const snippetQuery = query(
-        collection(db, "ErrorSnippetsData1"),
-        where(new FieldPath("userData", "uid"), "==", user?.uid),
-        orderBy("postedAt", "desc"),
-        limit(4)
-      );
+      const codeDocs = await getDocs(codeQuery);
+      const errorDocs = await getDocs(errorQuery);
+      const setupDocs = await getDocs(setupQuery);
 
-      const snippetDocs = await getDocs(snippetQuery);
-      const snippets = snippetDocs.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
+      Promise.all([codeDocs, errorDocs, setupDocs])
+        .then((PromiseResults) => {
+          const mergedSnippets = [];
 
-      setMyErrorSnippets(snippets);
-      setLoading(false);
+          PromiseResults.forEach((snapshot) => {
+            snapshot.forEach((doc) => {
+              mergedSnippets.push({ ...doc.data(), id: doc.id });
+            });
+          });
+          return mergedSnippets;
+        })
+        .then((mergedData) =>
+          mergedData.sort((a, b) => a.postedAt - b.postedAt).reverse()
+        )
+        .then((sortedSnippets) => {
+          setSnippets((prev) => ({
+            ...prev,
+            snips: sortedSnippets,
+          }));
+        })
+        .catch((e) => console.log("error", e));
     } catch (error) {
       console.log("getPosts error", error.message);
     }
   };
 
   useEffect(() => {
-    if (user) {
-      getMyCodeSnippets();
-      getMyErrorSnippets();
-    }
-  }, [user, update]);
+    getSnippets();
+    setLoading(true);
+    const snapSub = onSnapshot(
+      collection(db, "CodeSnippetsData1"),
+      (snapshot) => {
+        let tags = [];
+        snapshot.docs.forEach((doc) => {
+          tags.push(...doc.get("tags"));
+        });
+        const uniqueTags = [...new Set(tags)];
+        setTags(uniqueTags);
+        setLoading(false);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
 
-  const handleCodeSnippetDelete = async (id) => {
-    try {
-      await deleteDoc(doc(db, "CodeSnippetsData1", id));
-      setUpdate(!update);
-    } catch (error) {
-      console.log("Fejl i sletning!", error.message);
-    }
-  };
-
-  const handleErrorSnippetDelete = async (id) => {
-    try {
-      await deleteDoc(doc(db, "ErrorSnippetsData1", id));
-      setUpdate(!update);
-    } catch (error) {
-      console.log("Fejl i sletning!", error.message);
-    }
-  };
+    return () => {
+      snapSub();
+      getSnippets();
+    };
+  }, [user]);
 
   return (
-    <div>
+    <div className="w-full">
       {user && (
-        <>
-          <Head>
-            <title>Mine SNIPS - SNIPV</title>
-            <meta name="description" content="Created by Peter G" />
-            <link rel="icon" href="/favicon.ico" />
-          </Head>
-          <>
-            <>
-              <SnippetsTypeLinks />
-            </>
+        <div className="w-full">
+          <SnippetsTypeLinks />
+          <div className="flex gap-6 w-full justify-between">
+            <div className="w-full">
+              <LatestHeading headingType={`ALLE SNIPS`} />
 
-            <>
-              <LatestHeading headingType={"Seneste kode SNIPS"} />
-            </>
+              {snippets.snips && (
+                <div className="flex flex-col flex-grow gap-3 w-full">
+                  {snippets.snips.map((snippet) => (
+                    <Snippet key={snippet.id} snippet={snippet} />
+                  ))}
 
-            <div>
-              <div className="flex flex-col gap-6">
-                <div>
-                  <div className="flex flex-col gap-2 w-full">
-                    {myCodeSnippets?.length > 0 && (
-                      <div className="flex flex-col gap-4">
-                        {myCodeSnippets.map((snippet) => (
-                          <Snippet
-                            key={snippet.id}
-                            handleDelete={handleCodeSnippetDelete}
-                            snippet={snippet}
-                          />
-                        ))}
-                        <div className="text-center">
-                          <Link href="/snips/codes">
-                            <Text className="cursor-pointer hover:underline">
-                              SE ALLE
-                            </Text>
-                          </Link>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-
-                  {loading ? (
-                    <div className="flex justify-center items-center h-[20vh]">
-                      <Loading size="lg" />
-                    </div>
-                  ) : (
-                    <div>
-                      {!myCodeSnippets?.length > 0 && (
-                        <div className="flex justify-center mt-10">
-                          <Text size={13}>Du har ingen kode SNIPS! 😔</Text>
-                        </div>
-                      )}
+                  {!snippets.snips && (
+                    <div className="flex justify-center mt-10 w-full">
+                      <Text>Du har ingen SNIPS i denne mappe! 😔</Text>
                     </div>
                   )}
                 </div>
+              )}
 
-                <div>
-                  <>
-                    <LatestHeading headingType={"Seneste fejl SNIPS"} />
-                  </>
-
-                  <div className="flex flex-col gap-2 w-full">
-                    {myErrorSnippets?.length > 0 && (
-                      <div className="flex flex-col gap-3">
-                        {myErrorSnippets.map((snippet) => (
-                          <Snippet
-                            key={snippet.id}
-                            handleDelete={handleErrorSnippetDelete}
-                            snippet={snippet}
-                          />
-                        ))}
-                        <div className="text-center">
-                          <Link href="/snips/errors">
-                            <Text className="cursor-pointer hover:underline">
-                              SE ALLE
-                            </Text>
-                          </Link>
-                        </div>
-                      </div>
-                    )}
-
-                    {loading ? (
-                      <LoadingSNIPS />
-                    ) : (
-                      <div>
-                        {!myErrorSnippets?.length > 0 && (
-                          <div className="flex justify-center mt-10">
-                            <Text size={13}>Du har ingen fejl SNIPS! 😔</Text>
-                          </div>
-                        )}
-                      </div>
-                    )}
-                  </div>
+              {loading && (
+                <div className="mt-10">
+                  <LoadingSNIPS />
                 </div>
-              </div>
+              )}
             </div>
-          </>
-        </>
+            <div className="h-full flex-none">
+              <Tags snippets={snippets} tags={tags} />
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );
 };
 
-export default MySnippets;
+export default MySNIPS;

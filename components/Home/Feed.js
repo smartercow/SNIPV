@@ -13,12 +13,18 @@ const Feed = ({ snippet, user }) => {
       {snippet && (
         <div className="">
           {snippet.snips && (
-            <div className="flex flex-col">
+            <Box className="flex flex-col">
               <div>
                 <LatestHeading headingType={`SENESTE SNIPS`} />
               </div>
 
-              <div>
+              <Box
+                px={4}
+                pt={3}
+                borderBottomRadius="md"
+                boxShadow="md"
+                bg="white"
+              >
                 <div className="flex flex-col gap-4">
                   {snippet.snips.slice(0, 10).map((snippet, index) => (
                     <Snippet key={snippet.id} snippet={snippet} user={user} />
@@ -32,8 +38,8 @@ const Feed = ({ snippet, user }) => {
                     </a>
                   </Link>
                 </div>
-              </div>
-            </div>
+              </Box>
+            </Box>
           )}
         </div>
       )}

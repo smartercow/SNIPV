@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../../firebase/clientApp";
-import { Text } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 
 export const CreateSnipType = () => {
   const { asPath } = useRouter();
@@ -20,7 +20,7 @@ export const CreateSnipType = () => {
       link: "/upsert/error",
     },
     {
-      titel: "Opsætning",
+      titel: "Setup",
       link: "/upsert/setup",
     },
   ];
@@ -28,26 +28,34 @@ export const CreateSnipType = () => {
   return (
     <>
       {user && (
-        <div className="flex gap-4 uppercase">
+        <div className="flex uppercase">
           {Type.map((item, index) => {
-            if (asPath.startsWith(item.link))
+            if (asPath === item.link)
               return (
-                <Link key={index} href={item.link}>
-                  <Text color="Primary" variant="H3" cursor="pointer">
-                    {item.titel}
-                  </Text>
+                <Link key={index} href={item.link} passHref>
+                  <a>
+                    <Box borderColor="Primary" className="border-b-2 px-3">
+                      <Text variant="H3" color="Primary">
+                        {item.titel}
+                      </Text>
+                    </Box>
+                  </a>
                 </Link>
               );
             else
               return (
-                <Link key={index} href={item.link}>
-                  <Text
-                    variant="H3"
-                    cursor="pointer"
-                    _hover={{ color: "Primary" }}
-                  >
-                    {item.titel}
-                  </Text>
+                <Link key={index} href={item.link} passHref>
+                  <a>
+                    <Box className="border-b-2 px-3">
+                      <Text
+                        variant="H3"
+                        textTransform="extrabold"
+                        _hover={{ color: "Primary" }}
+                      >
+                        {item.titel}
+                      </Text>
+                    </Box>
+                  </a>
                 </Link>
               );
           })}

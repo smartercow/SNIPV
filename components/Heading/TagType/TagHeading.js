@@ -1,18 +1,25 @@
-import { Divider, Icon, Text } from "@chakra-ui/react";
+import { Box, Divider, Icon, Text } from "@chakra-ui/react";
 import React from "react";
-import { AiTwotoneTags } from "react-icons/ai";
+import { TicketStar } from "../../SVG/TicketStar";
 
 const TagHeading = ({ headingType, headingColor }) => {
   return (
-    <div className="w-full">
+    <Box
+      mb={2}
+      px={2}
+      pt={1}
+      borderBottomWidth={2}
+      borderColor="Gray"
+      bg="iGray"
+      borderTopRadius="md"
+    >
       <div className="flex gap-2 items-center">
-        <Icon as={AiTwotoneTags} color="DarkBlue" h={6} w={6} />
+        <Icon as={TicketStar} fill="DarkBlue" h={7} w={7} />
         <Text variant="H4" textTransform="uppercase" color={headingColor}>
           {headingType}
         </Text>
       </div>
-      <Divider my={2} />
-    </div>
+    </Box>
   );
 };
 

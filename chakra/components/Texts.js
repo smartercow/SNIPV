@@ -21,7 +21,7 @@ export const Text = {
       // letterSpacing: "0.01em",
     },
     H4: {
-      fontSize: "16px",
+      fontSize: "18px",
       // letterSpacing: "0.01em",
     },
     H5: {
@@ -45,6 +45,16 @@ export const Text = {
       overflow: "hidden",
       textOverflow: "ellipsis",
       whiteSpace: "nowrap",
+    },
+    seeMore: {
+      fontSize: "15px",
+      textTransform: "uppercase",
+      fontFamily: "Ubuntu",
+      _hover: {
+        color: "Primary",
+        cursor: "pointer",
+      },
+      transition: "all 0.2s",
     },
     /*     headUppercase: {
       color: "Black",
@@ -85,15 +95,7 @@ export const Text = {
     },
 
 
-    seeMore: {
-      fontSize: "16px",
-      textTransform: "uppercase",
-      fontFamily: "Ubuntu",
-      _hover: {
-        color: "Primary",
-        cursor: "pointer",
-      },
-    },
+
     folderHeading: {
       color: "Black",
       fontSize: "20px",

@@ -25,7 +25,7 @@ export const SnippetsTypeLinks = () => {
     },
   ];
   return (
-    <div className="flex uppercase mb-4">
+    <div className="flex uppercase mb-3">
       {Type.map((item, index) => {
         if (asPath === item.link)
           return (
