@@ -1,12 +1,13 @@
 import { Box, Text } from "@chakra-ui/react";
+import { useAuthState } from "react-firebase-hooks/auth";
 import { collection, getDocs, query } from "firebase/firestore";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { db } from "../../firebase/clientApp";
+import { auth, db } from "../../firebase/clientApp";
 import TagHeading from "../Heading/TagType/TagHeading";
 const Tags = ({ headTitle }) => {
   const [tags, setTags] = useState([]);
-
+  const [user] = useAuthState(auth);
   useEffect(() => {
     const getAllTags = async () => {
       try {
@@ -34,13 +35,9 @@ const Tags = ({ headTitle }) => {
 
             return uniqueTags;
           })
-          /*           .then((mergedData) =>
-            mergedData.sort((a, b) => a.postedAt - b.postedAt).reverse()
-          ) */
           .then((mergedTags) => {
             setTags(mergedTags);
-          })
-          .catch((e) => console.log("error", e));
+          });
       } catch (error) {
         console.log("getPosts error", error.message);
       }
@@ -48,7 +45,7 @@ const Tags = ({ headTitle }) => {
     return () => {
       getAllTags();
     };
-  }, []);
+  }, [user]);
 
   console.log("TAGS", tags);
 
