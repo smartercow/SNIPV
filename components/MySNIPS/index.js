@@ -180,7 +180,7 @@ const MySNIPS = () => {
           <Box
             _hover={{ bg: "gray.200", cursor: "pointer" }}
             py={1}
-            bg={types === "category" ? "gray.200" : "#EDF2F7"}
+            bg={types === "search" ? "gray.200" : "#EDF2F7"}
             className="flex gap-1 items-center px-3 transition-all duration-300"
             onClick={() => setTypes("search")}
           >

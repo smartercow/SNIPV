@@ -51,11 +51,14 @@ const Tags = ({ headTitle }) => {
   }, []);
 
   return (
-    <div className="w-[300px] max-w-[300px] min-w-[300px] bg-white">
+    <div className="w-[300px] max-w-[300px] min-w-[300px]">
       <div>
         <TagHeading headingType={headTitle} />
-        <Box className="rounded-md shadow-md bg-opacity-60 flex flex-col gap-3 pb-3 px-3">
-          {tags.length > 0 && (
+        <Box
+          bg="white"
+          className="rounded-md shadow-md bg-opacity-60 flex flex-col gap-3 pb-3 px-3"
+        >
+          {Object.keys(tags).length > 0 && (
             <>
               <div className="flex gap-2 flex-wrap select-none">
                 {tags.slice(0, 30).map((tag, index) => (
@@ -84,7 +87,7 @@ const Tags = ({ headTitle }) => {
             </>
           )}
 
-          {!tags && (
+          {!Object.keys(tags).length > 0 && (
             <div className="text-center">
               <Text variant="nonLabel">Du har ingen tags!</Text>
             </div>
