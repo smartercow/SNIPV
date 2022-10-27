@@ -68,7 +68,7 @@ const MySNIPS = () => {
       setSnip("fejl SNIPS");
     }
     if (asPath.startsWith("/setups")) {
-      setCol("SetupData");
+      setCol("SetupsData");
       setMainFolder("SetupMainFolders");
       setSnipType("setup");
       setSnip("Setups");

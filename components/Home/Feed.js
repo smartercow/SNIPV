@@ -21,6 +21,7 @@ const Feed = ({ snippet, user }) => {
               <Box
                 px={4}
                 pt={3}
+                pb={4}
                 borderBottomRadius="md"
                 boxShadow="md"
                 bg="white"

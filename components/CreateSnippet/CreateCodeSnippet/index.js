@@ -303,7 +303,7 @@ const CreateCodeSnippet = ({ id, setLoading, setDataError }) => {
                         size="md"
                         required
                         variant="main"
-                        maxLength={100}
+                        maxLength={180}
                         onChange={handleChange}
                         value={description}
                       />

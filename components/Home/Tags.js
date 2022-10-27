@@ -13,7 +13,7 @@ const Tags = () => {
 
         const errorQuery = query(collection(db, "ErrorSnippetsData1"));
 
-        const setupQuery = query(collection(db, "SetupData"));
+        const setupQuery = query(collection(db, "SetupsData"));
 
         const codeDocs = await getDocs(codeQuery);
         const errorDocs = await getDocs(errorQuery);

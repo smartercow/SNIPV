@@ -17,7 +17,7 @@ const Setup = () => {
   const [loading, setLoading] = useState(true);
 
   const getSnippetData = async () => {
-    const snippetDocref = doc(db, "SetupData", `${id}`);
+    const snippetDocref = doc(db, "SetupsData", `${id}`);
     const snippetData = await getDoc(snippetDocref);
     setSnippet(snippetData.data());
     setLoading(false);

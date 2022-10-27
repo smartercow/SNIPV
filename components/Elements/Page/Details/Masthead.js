@@ -47,7 +47,7 @@ const Masthead = ({ snippet }) => {
       setType("fejl SNIP");
     }
     if (asPath.startsWith("/setup/")) {
-      setFolder("SetupData");
+      setFolder("SetupsData");
       setPushPath("/setups");
       setEdit("/upsert/setup/");
       setType("Setup");

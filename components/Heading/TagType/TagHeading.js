@@ -7,12 +7,13 @@ const TagHeading = ({ headingType, headingColor }) => {
     <Box
       mb={2}
       px={2}
-      pt={2}
+      pt={1}
       pb={1}
       borderBottomWidth={2}
       borderColor="Gray"
       bg="iGray"
       borderTopRadius="md"
+      className="min-w-[300px]"
     >
       <div className="flex gap-2 items-center">
         <Icon as={TicketStar} fill="DarkBlue" h={7} w={7} />

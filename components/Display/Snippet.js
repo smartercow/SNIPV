@@ -29,8 +29,10 @@ const Snippet = ({ snippet, user, handleDelete }) => {
   return (
     <Box
       key={snippet.id}
-      boxShadow="md"
+      boxShadow="sm"
+      borderWidth={1}
       borderRadius="xl"
+      pr={2}
       className="hoverable-item w-full cardHover bg-white hoverable-item justify-between flex gap-5 items-center"
     >
       <div className="w-full">
@@ -45,46 +47,56 @@ const Snippet = ({ snippet, user, handleDelete }) => {
           passHref
         >
           <a>
-            <div className="flex items-center gap-2">
-              <div className="pt-1">
-                <div className="flex flex-col justify-center pl-2 pb-1 max-w-xl">
-                  <div className="">
-                    <Text variant="snipHeading" letterSpacing="0.03em">
-                      {snippet.title}
-                    </Text>
+            <div className="flex items-center gap-4 w-full justify-between">
+              <div className="flex items-center gap-5 w-full">
+                <div className="flex flex-col gap-4 w-full">
+                  <div className="flex flex-col justify-center gap-3 max-w-xl pl-2">
+                    <div className="h-4">
+                      <Text variant="snipHeading" letterSpacing="0.03em">
+                        {snippet.title}
+                      </Text>
+                    </div>
+
+                    {snippet.description && (
+                      <div className="h-4">
+                        <Text variant="snipDescription">
+                          {snippet.description}
+                        </Text>
+                      </div>
+                    )}
                   </div>
 
-                  <div className="">
-                    <Text variant="snipDescription">{snippet.description}</Text>
-                  </div>
-                </div>
+                  <div className="flex w-full">
+                    <div className="flex items-center justify-between w-full">
+                      <div className="flex items-center gap-2">
+                        <SnippetBadge snippet={snippet} />
+                      </div>
 
-                <Box>
-                  <div className="flex items-center justify-between w-full">
-                    <SnippetBadge snippet={snippet} />
+                      <div className="hidden md:inline-flex">
+                        <div className="flex gap-3 text-[#031B4E]">
+                          {snippet.updatedAt && (
+                            <p className="text-xs font-mono">
+                              OPDATERET:&nbsp;
+                              {new Date(
+                                snippet.updatedAt.seconds * 1000
+                              ).toLocaleDateString("da-DK")}
+                            </p>
+                          )}
 
-                    <div className="flex gap-3 text-[#031B4E] pr-2">
-                      {snippet.updatedAt && (
-                        <p className="text-xs font-mono">
-                          OPDATERET:&nbsp;
-                          {new Date(
-                            snippet.updatedAt.seconds * 1000
-                          ).toLocaleDateString("da-DK")}
-                        </p>
-                      )}
-
-                      <p className="text-xs font-mono">
-                        OPRETTET:&nbsp;
-                        {new Date(
-                          snippet.postedAt.seconds * 1000
-                        ).toLocaleDateString("da-DK")}
-                      </p>
+                          <p className="text-xs font-mono">
+                            OPRETTET:&nbsp;
+                            {new Date(
+                              snippet.postedAt.seconds * 1000
+                            ).toLocaleDateString("da-DK")}
+                          </p>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </Box>
+                </div>
               </div>
 
-              <div className="hoverable-show w-6">
+              <div className="hoverable-show w-8">
                 <Icon as={LoginIcon} width={30} height={30} fill="Primary" />
               </div>
             </div>
@@ -92,51 +104,67 @@ const Snippet = ({ snippet, user, handleDelete }) => {
         </Link>
       </div>
 
-      <div className="hoverable-show flex flex-col gap-1 justify-center rounded-xl items-center">
-        {snippet.folder.subFolderId && (
-          <>
+      {!user && (
+        <div className="hidden md:inline-flex">
+          <div className="hoverable-show flex flex-col gap-1 justify-center rounded-xl items-center">
+            {snippet.folder.subFolderId && (
+              <>
+                <div>
+                  <a
+                    href={
+                      snippet.snippetType == "code"
+                        ? `/upsert/code/${snippet.id}`
+                        : `/upsert/error/${snippet.id}`
+                    }
+                  >
+                    <Button>
+                      <Icon
+                        as={EditDocumentIcon}
+                        fill="Primary"
+                        className="cursor-pointer"
+                        width={26}
+                        height={26}
+                      />
+                    </Button>
+                  </a>
+                </div>
+              </>
+            )}
+
             <div>
-              <a
-                href={
-                  snippet.snippetType == "code"
-                    ? `/upsert/code/${snippet.id}`
-                    : `/upsert/error/${snippet.id}`
+              <Popover
+                placement="bottom"
+                onOpen={allOpenStates[snippet.id]}
+                onClose={(nowOpen) =>
+                  setAllOpenStates((oldState) => ({
+                    ...oldState,
+                    [snippet.id]: nowOpen,
+                  }))
                 }
               >
-                <Button variant="edel">
-                  <Icon as={EditDocumentIcon} fill="Primary" w={6} h={6} />
-                </Button>
-              </a>
+                <PopoverTrigger>
+                  <Button>
+                    <Icon
+                      as={DeleteDocumentIcon}
+                      fill="Red"
+                      className="cursor-pointer"
+                      width={26}
+                      height={26}
+                    />
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent>
+                  <DeleteSnippet
+                    id={snippet.id}
+                    handleDelete={handleDelete}
+                    setAllOpenStates={setAllOpenStates}
+                  />
+                </PopoverContent>
+              </Popover>
             </div>
-          </>
-        )}
-
-        <div>
-          <Popover
-            placement="bottom"
-            onOpen={allOpenStates[snippet.id]}
-            onClose={(nowOpen) =>
-              setAllOpenStates((oldState) => ({
-                ...oldState,
-                [snippet.id]: nowOpen,
-              }))
-            }
-          >
-            <PopoverTrigger>
-              <Button variant="edel">
-                <Icon as={DeleteDocumentIcon} fill="Red" w={6} h={6} />
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent>
-              <DeleteSnippet
-                id={snippet.id}
-                handleDelete={handleDelete}
-                setAllOpenStates={setAllOpenStates}
-              />
-            </PopoverContent>
-          </Popover>
+          </div>
         </div>
-      </div>
+      )}
     </Box>
   );
 };

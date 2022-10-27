@@ -28,7 +28,7 @@ const CodeSnippetsCounter = ({ id }) => {
       setCol("ErrorSnippetsData1");
     }
     if (asPath.startsWith("/setups") || asPath.startsWith("/upsert/setup")) {
-      setCol("SetupData");
+      setCol("SetupsData");
     }
   }, [asPath]);
 

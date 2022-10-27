@@ -137,7 +137,7 @@ const CreateSetup = ({ id, setLoading, setDataError }) => {
     if (title && description) {
       if (!id) {
         try {
-          await addDoc(collection(db, "SetupData"), {
+          await addDoc(collection(db, "SetupsData"), {
             ...form,
             search: {
               title: lowercaseForm.title,
@@ -161,7 +161,7 @@ const CreateSetup = ({ id, setLoading, setDataError }) => {
         }
       } else {
         try {
-          await updateDoc(doc(db, "SetupData", id), {
+          await updateDoc(doc(db, "SetupsData", id), {
             ...form,
             search: {
               title: lowercaseForm.title ? lowercaseForm.title : form.title,
@@ -194,15 +194,15 @@ const CreateSetup = ({ id, setLoading, setDataError }) => {
 
   useEffect(() => {
     if (id) {
-      getSetupData();
+      getSetupsData();
       setDisableCode(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
-  const getSetupData = async () => {
+  const getSetupsData = async () => {
     try {
-      const docRef = doc(db, "SetupData", id);
+      const docRef = doc(db, "SetupsData", id);
       const snapshot = await getDoc(docRef);
       if (snapshot.exists()) {
         //Code SNIP data from {id}

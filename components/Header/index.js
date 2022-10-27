@@ -108,13 +108,15 @@ const Header = ({ user }) => {
           </div>
           <div>
             {user && (
-              <Link href="/upsert/code">
-                <Edit
-                  fill="#087ea4"
-                  className="cursor-pointer"
-                  width={35}
-                  height={35}
-                />
+              <Link href="/upsert/code" passHref>
+                <a>
+                  <Edit
+                    fill="#087ea4"
+                    className="cursor-pointer"
+                    width={35}
+                    height={35}
+                  />
+                </a>
               </Link>
             )}
           </div>

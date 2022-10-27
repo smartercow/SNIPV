@@ -23,7 +23,7 @@ const MySNIPS = () => {
 
       const errorQuery = query(collection(db, "ErrorSnippetsData1"));
 
-      const setupQuery = query(collection(db, "SetupData"));
+      const setupQuery = query(collection(db, "SetupsData"));
 
       const codeDocs = await getDocs(codeQuery);
       const errorDocs = await getDocs(errorQuery);
@@ -86,11 +86,11 @@ const MySNIPS = () => {
         <div className="w-full">
           <SnippetsTypeLinks />
           <div className="flex gap-6 w-full justify-between">
-            <div className="w-full">
+            <Box bg="white" boxShadow="sm" borderRadius="lg" className="w-full">
               <LatestHeading headingType={`ALLE SNIPS`} />
 
               {snippets.snips && (
-                <div className="flex flex-col flex-grow gap-3 w-full">
+                <div className="flex flex-col flex-grow gap-3 pt-3 px-4 pb-4 w-full">
                   {snippets.snips.map((snippet) => (
                     <Snippet key={snippet.id} snippet={snippet} />
                   ))}
@@ -108,7 +108,7 @@ const MySNIPS = () => {
                   <LoadingSNIPS />
                 </div>
               )}
-            </div>
+            </Box>
             <div className="h-full flex-none">
               <Tags snippets={snippets} tags={tags} />
             </div>

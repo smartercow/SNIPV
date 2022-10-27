@@ -5,10 +5,16 @@ import FileExtension from "./FileExtension";
 const SnippetBadge = ({ snippet }) => {
   return (
     <>
-      <div className="flex items-center h-5 overflow-hidden">
+      <div className="flex items-center h-5 overflow-hidden -mb-1">
         <div className="h-full">
           {snippet.snippetType === "code" && (
-            <Box px={2} h="full" bg="#0072F5" borderBottomLeftRadius="lg">
+            <Box
+              pl={3}
+              pr={2}
+              h="full"
+              bg="#0072F5"
+              borderBottomLeftRadius="lg"
+            >
               <Text fontSize={12} color="white">
                 KODE
               </Text>
@@ -16,15 +22,19 @@ const SnippetBadge = ({ snippet }) => {
           )}
 
           {snippet.snippetType === "error" && (
-            <Badge height="18px" colorScheme="red" variant="outline">
-              FEJL
-            </Badge>
+            <Box pl={3} pr={2} h="full" bg="Red" borderBottomLeftRadius="lg">
+              <Text fontSize={12} color="white">
+                FEJL
+              </Text>
+            </Box>
           )}
 
           {snippet.snippetType === "setup" && (
-            <Badge height="18px" colorScheme="purple" variant="outline">
-              SETUP
-            </Badge>
+            <Box pl={3} pr={2} h="full" bg="purple" borderBottomLeftRadius="lg">
+              <Text fontSize={12} color="white">
+                SETUP
+              </Text>
+            </Box>
           )}
         </div>
         {snippet?.folder?.mainFolder?.language?.langId && (
