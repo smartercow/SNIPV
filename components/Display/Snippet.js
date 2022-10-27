@@ -50,7 +50,7 @@ const Snippet = ({ snippet, user, handleDelete }) => {
             <div className="flex items-center gap-4 w-full justify-between">
               <div className="flex items-center gap-5 w-full">
                 <div className="flex flex-col gap-4 w-full">
-                  <div className="flex flex-col justify-center gap-3 max-w-xl pl-2">
+                  <div className="flex flex-col justify-center gap-3 max-w-xl pl-3 pt-1">
                     <div className="h-4">
                       <Text variant="snipHeading" letterSpacing="0.03em">
                         {snippet.title}
