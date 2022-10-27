@@ -100,6 +100,7 @@ const Header = ({ user }) => {
                   variant="H1"
                   textTransform="uppercase"
                   fontWeight="extrabold"
+                  color="DarkBlue"
                 >
                   SNIPV
                 </Text>

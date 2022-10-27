@@ -84,7 +84,7 @@ const HomePage = () => {
       {user ? (
         <>
           {snippets.snips && (
-            <div className="flex gap-6">
+            <div className="flex gap-6 pt-3">
               <div className="flex flex-col gap-2 w-full">
                 <Post />
 
@@ -98,7 +98,7 @@ const HomePage = () => {
                 </div>
               </div>
               <div className="hidden md:inline-flex">
-                <Tags snippets={snippets} tags={tags} />
+                <Tags snippets={snippets} headTitle={`Tags`} tags={tags} />
               </div>
             </div>
           )}

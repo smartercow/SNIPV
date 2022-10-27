@@ -1,7 +1,7 @@
 export const Text = {
   baseStyle: {
     borderRadius: "12px",
-    color: "Black",
+    color: "DarkBlue",
     fontSize: "16px",
     fontWeight: 500,
     _focus: {
@@ -50,11 +50,16 @@ export const Text = {
       fontSize: "15px",
       textTransform: "uppercase",
       fontFamily: "Ubuntu",
+      color: "DarkBlue",
       _hover: {
         color: "Primary",
         cursor: "pointer",
       },
       transition: "all 0.2s",
+    },
+    nonLabel: {
+      fontSize: "13px",
+      textTransform: "uppercase",
     },
     /*     headUppercase: {
       color: "Black",

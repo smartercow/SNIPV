@@ -10,12 +10,21 @@ const Post = () => {
     <Box bg="white" borderRadius="lg" className="w-full select-none">
       <Link href="/upsert/code" passHref>
         <a>
-          <Box p={2} boxShadow="sm" borderRadius="lg">
+          <Box
+            /*             borderColor="Gray"
+            borderWidth={2} */
+            boxShadow="sm"
+            borderRadius="lg"
+          >
             <div className="flex justify-between items-center gap-4 py-2 rounded-md px-3 bg-[#EDF2F7]">
               <Avatar src={user.photoURL} size="md" />
 
               <div className="w-full">
-                <Input backgroundColor="white" placeholder="GEM EN SNIP" />
+                <Input
+                  backgroundColor="white"
+                  fontSize={14}
+                  placeholder="GEM EN SNIP"
+                />
               </div>
             </div>
           </Box>

@@ -26,7 +26,7 @@ const Codes = () => {
         </div>
 
         <div>
-          <Tags />
+          <Tags headTitle={`Kode tags`} />
         </div>
       </div>
     </div>

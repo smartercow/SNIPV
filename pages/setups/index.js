@@ -23,7 +23,7 @@ const Setups = () => {
       <div className="flex gap-6">
         <MySNIPS />
 
-        <Tags />
+        <Tags headTitle={`Setup tags`} />
       </div>
     </div>
   );

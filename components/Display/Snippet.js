@@ -21,7 +21,6 @@ import {
   PopoverTrigger,
   Text,
 } from "@chakra-ui/react";
-import { Tooltip } from "@nextui-org/react";
 
 const Snippet = ({ snippet, user, handleDelete }) => {
   const [allOpenStates, setAllOpenStates] = useState({});
@@ -31,6 +30,7 @@ const Snippet = ({ snippet, user, handleDelete }) => {
       key={snippet.id}
       boxShadow="sm"
       borderWidth={1}
+      borderColor="PrimaryLighter"
       borderRadius="xl"
       pr={2}
       className="hoverable-item w-full cardHover bg-white hoverable-item justify-between flex gap-5 items-center"

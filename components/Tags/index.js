@@ -106,7 +106,7 @@ const Tags = () => {
               <div>
                 {!codeTags?.length > 0 && (
                   <div className="flex justify-center mt-10">
-                    <Text>Du har ingen kode tags! 😔</Text>
+                    <Text variant="nonLabel">Du har ingen kode tags! 😔</Text>
                   </div>
                 )}
               </div>

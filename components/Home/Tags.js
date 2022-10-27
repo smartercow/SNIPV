@@ -4,8 +4,9 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { db } from "../../firebase/clientApp";
 import TagHeading from "../Heading/TagType/TagHeading";
-const Tags = () => {
+const Tags = ({ headTitle }) => {
   const [tags, setTags] = useState([]);
+
   useEffect(() => {
     const getAllTags = async () => {
       try {
@@ -50,9 +51,9 @@ const Tags = () => {
   }, []);
 
   return (
-    <div className="w-[300px] max-w-[300px] min-w-[300px]">
+    <div className="w-[300px] max-w-[300px] min-w-[300px] bg-white">
       <div>
-        <TagHeading headingType={"Seneste tags"} />
+        <TagHeading headingType={headTitle} />
         <Box className="rounded-md shadow-md bg-opacity-60 flex flex-col gap-3 pb-3 px-3">
           {tags.length > 0 && (
             <>
@@ -85,7 +86,7 @@ const Tags = () => {
 
           {!tags && (
             <div className="text-center">
-              <Text>Du har ingen tags!</Text>
+              <Text variant="nonLabel">Du har ingen tags!</Text>
             </div>
           )}
         </Box>

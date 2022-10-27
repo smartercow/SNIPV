@@ -134,7 +134,7 @@ const AllType = ({ setLoadingMain, col, snip, handleDelete }) => {
 
         {!loadingSub && !mySNIPS?.length > 0 && (
           <div className="flex justify-center mt-10">
-            <Text>Du har ingen {snip}! 😔</Text>
+            <Text variant="nonLabel">Du har ingen {snip}! 😔</Text>
           </div>
         )}
       </div>

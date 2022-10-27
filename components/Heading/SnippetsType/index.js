@@ -46,7 +46,9 @@ export const SnippetsTypeLinks = () => {
                 <div className="border-b-2 px-3">
                   <Text
                     variant="H3"
+                    color="DarkBlue"
                     textTransform="extrabold"
+                    className="transition duration-300"
                     _hover={{ color: "Primary" }}
                   >
                     {item.titel}

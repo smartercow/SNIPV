@@ -5,6 +5,7 @@ import {
   FieldPath,
   getDocs,
   limit,
+  onSnapshot,
   orderBy,
   query,
   startAfter,
@@ -18,7 +19,7 @@ import LatestHeading from "../Heading/LatestHeading";
 import Snippet from "../Display/Snippet";
 import { useRouter } from "next/router";
 import LoadingSNIPS from "../LoadingState/LoadingSNIPS";
-import { Box, Button, Icon, Text } from "@chakra-ui/react";
+import { Box, Button, Icon, Input, Text } from "@chakra-ui/react";
 import Category from "./Category";
 import AllType from "./AllType";
 import FoldersLoad from "../Folders/FoldersLoad";
@@ -28,7 +29,7 @@ import { useRecoilState } from "recoil";
 import Search from "./Search";
 import { CategoryIcon } from "../SVG/CategoryIcon";
 import { FilterIcon } from "../SVG/FilterIcon";
-import { SwapIcon } from "../SVG/SwapIcon";
+import { FolderIcon } from "../SVG/FolderIcon";
 
 const MySNIPS = () => {
   const [user] = useAuthState(auth);
@@ -40,7 +41,12 @@ const MySNIPS = () => {
 
   const [col, setCol] = useState("");
 
+  const [search, setSearch] = useState("");
+
   const [loadingMain, setLoadingMain] = useState(false);
+
+  const [match, setMatch] = useState([]);
+  const [noMatch, setNoMatch] = useState(false);
 
   const [folders, setFolders] = useState([]);
   const [snipType, setSnipType] = useState("");
@@ -93,6 +99,35 @@ const MySNIPS = () => {
     }
   }, [user, mainDeleted, mainEdited, mainFolder, col]);
 
+  const SearchTag = async (e) => {
+    e.preventDefault();
+    if (search && col) {
+      setNoMatch(false);
+      try {
+        const colRef = collection(db, col);
+        const Query = query(colRef, where("tags", "array-contains", search));
+
+        onSnapshot(Query, (snapshot) => {
+          let matchedSNIPS = [];
+          snapshot.docs.forEach((doc) => {
+            matchedSNIPS.push({ ...doc.data(), id: doc.id });
+          });
+          setMatch(matchedSNIPS);
+        });
+      } catch (error) {
+        console.log("Tag search error", error.message);
+      } finally {
+        if (!Object.keys(match).length > 0) {
+          setNoMatch(true);
+        }
+      }
+    }
+  };
+
+  useEffect(() => {
+    setNoMatch(false);
+  }, [search]);
+
   const handleDelete = async (id) => {
     try {
       if (col) {
@@ -124,10 +159,11 @@ const MySNIPS = () => {
             onClick={() => setTypes("all")}
           >
             <Icon as={CategoryIcon} fill="Primary" h={4} w={4} />
-            <Text textTransform="uppercase" fontSize="16px" color="gray.600">
+            <Text textTransform="uppercase" fontSize="16px" opacity={0.9}>
               Alle
             </Text>
           </Box>
+
           <Box
             _hover={{ bg: "gray.200", cursor: "pointer" }}
             py={1}
@@ -135,9 +171,22 @@ const MySNIPS = () => {
             className="flex gap-1 items-center px-3 transition-all duration-300"
             onClick={() => setTypes("category")}
           >
-            <Icon as={FilterIcon} fill="Primary" h={4} w={4} />
-            <Text textTransform="uppercase" fontSize="16px" color="gray.600">
+            <Icon as={FolderIcon} fill="Primary" h={4} w={4} />
+            <Text textTransform="uppercase" fontSize="16px" opacity={0.9}>
               Mapper
+            </Text>
+          </Box>
+
+          <Box
+            _hover={{ bg: "gray.200", cursor: "pointer" }}
+            py={1}
+            bg={types === "category" ? "gray.200" : "#EDF2F7"}
+            className="flex gap-1 items-center px-3 transition-all duration-300"
+            onClick={() => setTypes("search")}
+          >
+            <Icon as={FilterIcon} fill="Primary" h={4} w={4} />
+            <Text textTransform="uppercase" fontSize="16px" opacity={0.9}>
+              Søg
             </Text>
           </Box>
         </Box>
@@ -152,6 +201,32 @@ const MySNIPS = () => {
             selectedSubFolder={selectedSubFolder}
             setSelectedSubFolder={setSelectedSubFolder}
           />
+        )}
+
+        {types === "search" && (
+          <form onSubmit={SearchTag}>
+            <div className="flex flex-col gap-2">
+              <Text
+                textDecoration="underline"
+                textDecorationThickness="2px"
+                textUnderlineOffset={3}
+                textDecorationColor="Gray"
+              >
+                Søg efter tags
+              </Text>
+              <div className="flex-grow flex  gap-2">
+                <Input
+                  onChange={(e) => setSearch(e.target.value.toLowerCase())}
+                  onKeyPress={(e) => {
+                    e.key === "Enter" && SearchTag;
+                  }}
+                />
+                <div>
+                  <Button type="submit">Søg</Button>
+                </div>
+              </div>
+            </div>
+          </form>
         )}
       </Box>
 
@@ -196,7 +271,23 @@ const MySNIPS = () => {
 
       {types === "search" && (
         <>
-          <Search />
+          <Search match={match} handleDelete={handleDelete} />
+          {!match.length > 0 && noMatch && (
+            <>
+              <div className="flex items-center justify-center">
+                <div>
+                  <Text color="Primary" variant="nonLabel">
+                    {search}
+                  </Text>
+                </div>
+                <div>
+                  <Text variant="nonLabel">
+                    &nbsp;matchede ikke nogen tags!
+                  </Text>
+                </div>
+              </div>
+            </>
+          )}
         </>
       )}
     </div>

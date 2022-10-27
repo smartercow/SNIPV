@@ -1,4 +1,4 @@
-import { Button, Text } from "@chakra-ui/react";
+import { Box, Button, Text } from "@chakra-ui/react";
 import {
   collection,
   FieldPath,
@@ -133,7 +133,15 @@ const Category = ({
   console.log("col", col);
 
   return (
-    <div className="flex flex-col gap-4 w-full">
+    <Box
+      px={4}
+      pt={2}
+      pb={4}
+      borderBottomRadius="md"
+      boxShadow="md"
+      bg="white"
+      className="flex flex-col gap-4 w-full"
+    >
       {Object.keys(mySNIPS).length > 0 && (
         <>
           {mySNIPS?.map((snippet) => (
@@ -167,14 +175,16 @@ const Category = ({
             <>
               {!mySNIPS?.length > 0 && (
                 <div className="flex justify-center mt-10">
-                  <Text>Du har ingen SNIPS i denne mappe! 😔</Text>
+                  <Text variant="nonLabel">
+                    Du har ingen SNIPS i denne mappe! 😔
+                  </Text>
                 </div>
               )}
             </>
           )}
         </>
       )}
-    </div>
+    </Box>
   );
 };
 

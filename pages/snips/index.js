@@ -97,7 +97,9 @@ const MySNIPS = () => {
 
                   {!snippets.snips && (
                     <div className="flex justify-center mt-10 w-full">
-                      <Text>Du har ingen SNIPS i denne mappe! 😔</Text>
+                      <Text variant="nonLabel">
+                        Du har ingen SNIPS i denne mappe! 😔
+                      </Text>
                     </div>
                   )}
                 </div>
@@ -110,7 +112,7 @@ const MySNIPS = () => {
               )}
             </Box>
             <div className="h-full flex-none">
-              <Tags snippets={snippets} tags={tags} />
+              <Tags snippets={snippets} headTitle={`Tags`} tags={tags} />
             </div>
           </div>
         </div>

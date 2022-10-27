@@ -23,7 +23,7 @@ const Errors = () => {
       <div className="flex gap-6">
         <MySNIPS />
 
-        <Tags />
+        <Tags headTitle={`Fejl tags`} />
       </div>
     </div>
   );

@@ -51,6 +51,8 @@ const Nav = () => {
                     <a>
                       <Text
                         variant="H2"
+                        color="DarkBlue"
+                        className="transition duration-300"
                         textTransform="uppercase"
                         fontWeight={700}
                         _hover={{ color: "Primary" }}

@@ -15,7 +15,7 @@ const LatestHeading = ({ headingIcon, headingType }) => {
     >
       <div className="flex items-center gap-2">
         <Icon as={TbSortDescending} w={6} h={6} color="DarkBlue" />
-        <Text variant="H4" textTransform="uppercase">
+        <Text variant="H4" textTransform="uppercase" color="DarkBlue">
           {headingType}
         </Text>
       </div>

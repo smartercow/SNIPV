@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { db } from "../../firebase/clientApp";
 import TagHeading from "../Heading/TagType/TagHeading";
-const Tags = () => {
+const Tags = ({ headTitle }) => {
   const { asPath } = useRouter();
   const [col, setCol] = useState("");
   const [tags, setTags] = useState([]);
@@ -45,9 +45,9 @@ const Tags = () => {
   }, [col]);
 
   return (
-    <div className="w-[300px] max-w-[300px] min-w-[300px] h-full hidden lg:inline-flex">
+    <div className="w-[300px] max-w-[300px] min-w-[300px] h-full hidden lg:inline-flex bg-white">
       <div>
-        <TagHeading headingType={"Seneste tags"} />
+        <TagHeading headingType={headTitle} />
         <Box
           bg="white"
           className="rounded-md shadow-md bg-opacity-60 flex flex-col gap-3 pt-2 pb-3 px-3 w-full"
@@ -83,7 +83,7 @@ const Tags = () => {
 
           {!tags.length > 0 && (
             <div className="text-center">
-              <Text>Du har ingen tags!</Text>
+              <Text variant="nonLabel">Du har ingen tags!</Text>
             </div>
           )}
         </Box>
