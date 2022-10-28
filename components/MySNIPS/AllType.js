@@ -29,10 +29,10 @@ const AllType = ({ setLoadingMain, col, snip, handleDelete }) => {
   const [isEmpty, setIsEmpty] = useState(false);
 
   const getMySnippets = async () => {
-    setLoadingMain(false);
-    setLoadingSub(true);
-    try {
-      if (col) {
+    if (col && user) {
+      setLoadingMain(false);
+      setLoadingSub(true);
+      try {
         const snippetQuery = query(
           collection(db, col),
           where(new FieldPath("userData", "uid"), "==", user?.uid),
@@ -61,16 +61,16 @@ const AllType = ({ setLoadingMain, col, snip, handleDelete }) => {
           setIsEmpty(true);
           setLoadingSub(false);
         }
+      } catch (error) {
+        console.log("Get SNIPS error!", error.message);
       }
-    } catch (error) {
-      console.log("Get SNIPS error!", error.message);
     }
   };
 
   const fetchMore = async () => {
-    setLoadingSub(true);
-    try {
-      if (col) {
+    if (col) {
+      setLoadingSub(true);
+      try {
         const snippetQuery = query(
           collection(db, col),
           where(new FieldPath("userData", "uid"), "==", user?.uid),
@@ -97,14 +97,16 @@ const AllType = ({ setLoadingMain, col, snip, handleDelete }) => {
           setIsEmpty(true);
           setLoadingSub(false);
         }
+      } catch (error) {
+        console.log("Fetch more SNIPS error!", error.message);
       }
-    } catch (error) {
-      console.log("Fetch more SNIPS error!", error.message);
     }
   };
 
   useEffect(() => {
-    getMySnippets();
+    if (col && user) {
+      getMySnippets();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, update, col]);
 

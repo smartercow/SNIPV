@@ -30,7 +30,7 @@ export const CreateSnipType = () => {
       {user && (
         <div className="flex uppercase">
           {Type.map((item, index) => {
-            if (asPath === item.link)
+            if (asPath.startsWith(item.link))
               return (
                 <Link key={index} href={item.link} passHref>
                   <a>

@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
-import {
-  Modal,
-  Button,
-  Text,
-  Input,
-  Row,
-  Checkbox,
-  Grid,
-} from "@nextui-org/react";
 import { useRecoilState } from "recoil";
 import { DeleteMainFolderModalState } from "../../atoms/DeleteMainFolderModalState";
+import {
+  Button,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Text,
+} from "@chakra-ui/react";
 import {
   collection,
   deleteDoc,
@@ -48,30 +50,32 @@ export default function DeleteMainFolderModal() {
   };
 
   const getThisFolderFolders = async () => {
-    try {
-      const foldersColRef = collection(db, "UsersData1", user?.uid, subF);
-      const foldersQuery = query(
-        foldersColRef,
-        where(new FieldPath("mainFolder", "mainFolderId"), "==", mainOpen.id)
-      );
+    if (subF && mainOpen.id) {
+      try {
+        const foldersColRef = collection(db, "UsersData1", user?.uid, subF);
+        const foldersQuery = query(
+          foldersColRef,
+          where(new FieldPath("mainFolder", "mainFolderId"), "==", mainOpen.id)
+        );
 
-      onSnapshot(foldersQuery, (snapshot) => {
-        let folders = [];
-        snapshot.docs.forEach((doc) => {
-          folders.push({ ...doc.data(), id: doc.id });
+        onSnapshot(foldersQuery, (snapshot) => {
+          let folders = [];
+          snapshot.docs.forEach((doc) => {
+            folders.push({ ...doc.data(), id: doc.id });
+          });
+          setThisFolderFolders(folders);
         });
-        setThisFolderFolders(folders);
-      });
-    } catch (error) {
-      console.log("getThisFolderFolders error!", error.message);
+      } catch (error) {
+        console.log("getThisFolderFolders error!", error.message);
+      }
     }
   };
 
   useEffect(() => {
-    if (mainOpen.id) {
+    if (subF && mainOpen.id) {
       getThisFolderFolders();
     }
-  }, [mainOpen.id]);
+  }, [subF, mainOpen.id]);
 
   useEffect(() => {
     if (thisFolderFolders?.length > 0) {
@@ -82,17 +86,23 @@ export default function DeleteMainFolderModal() {
   }, [thisFolderFolders]);
 
   useEffect(() => {
-    if (asPath === "/upsert/code") {
+    if (
+      asPath.startsWith("/upsert/code") ||
+      asPath.startsWith("/snips/codes")
+    ) {
       setMainF("CodeMainFolders");
       setSubF("CodeSubFolders");
     }
 
-    if (asPath === "/upsert/error") {
+    if (
+      asPath.startsWith("/upsert/error") ||
+      asPath.startsWith("/snips/errors")
+    ) {
       setMainF("ErrorMainFolders");
       setSubF("ErrorSubFolders");
     }
 
-    if (asPath === "/upsert/setup") {
+    if (asPath.startsWith("/upsert/setup") || asPath.startsWith("/setups")) {
       setMainF("SetupMainFolders");
       setSubF("SetupSubFolders");
     }
@@ -100,59 +110,49 @@ export default function DeleteMainFolderModal() {
 
   return (
     <div>
-      <Modal
-        closeButton
-        preventClose
-        aria-labelledby="modal-title"
-        open={mainOpen}
-        onClose={() => setMainOpen(false)}
-      >
-        <Modal.Header>
-          <Text>Bekræft</Text>
-        </Modal.Header>
-        <Modal.Body>
-          <Grid.Container
-            css={{
-              borderRadius: "14px",
-              padding: "0.75rem",
-              maxWidth: "330px",
-            }}
-          >
-            <Row css={{ py: ".5rem" }}>
-              {folderExcluded ? (
-                <Text>
-                  Denne mappe har en eller flere undermapper, for at slette skal
-                  du fjerne alle mapper i den!
-                </Text>
-              ) : (
-                <Text>Er du sikker på, at du vil slette denne mappe?</Text>
-              )}
-            </Row>
-          </Grid.Container>
-        </Modal.Body>
-        <Modal.Footer>
-          <Grid.Container justify="space-between" alignContent="center">
-            <Grid>
-              <Button size="sm" light onClick={() => setMainOpen(false)}>
-                Annullere
-              </Button>
-            </Grid>
-            <Grid>
-              <Button
-                size="sm"
-                shadow
-                color="error"
-                disabled={folderExcluded}
-                onClick={() => {
-                  handleDelete(mainOpen.id);
-                  setMainOpen(false);
-                }}
-              >
-                Slet
-              </Button>
-            </Grid>
-          </Grid.Container>
-        </Modal.Footer>
+      <Modal isOpen={mainOpen} onClose={() => setMainOpen(false)} isCentered>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>
+            <Text textAlign="center" fontSize={18}>
+              Bekræft
+            </Text>
+          </ModalHeader>
+          {/* <ModalCloseButton /> */}
+          <ModalBody>
+            {folderExcluded ? (
+              <Text>
+                Denne mappe har en eller flere undermapper, for at slette skal
+                du fjerne alle mapper i den!
+              </Text>
+            ) : (
+              <Text>Er du sikker på, at du vil slette denne mappe?</Text>
+            )}
+          </ModalBody>
+
+          <ModalFooter>
+            <Button
+              colorScheme="blue"
+              variant="ghost"
+              mr={3}
+              onClick={() => setMainOpen(false)}
+            >
+              Annullere
+            </Button>
+            <Button
+              bg="Red"
+              color="white"
+              _hover={{ bg: "Red", opacity: 0.8 }}
+              disabled={folderExcluded}
+              onClick={() => {
+                handleDelete(mainOpen.id);
+                setMainOpen(false);
+              }}
+            >
+              Slet
+            </Button>
+          </ModalFooter>
+        </ModalContent>
       </Modal>
     </div>
   );

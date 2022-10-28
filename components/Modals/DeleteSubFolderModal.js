@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import {
-  Modal,
   Button,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   Text,
-  Input,
-  Row,
-  Checkbox,
-  Grid,
-} from "@nextui-org/react";
+} from "@chakra-ui/react";
 import { useRecoilState } from "recoil";
 import { deleteSubFolderModalState } from "../../atoms/deleteSubFolderModalState";
 import {
@@ -79,74 +81,70 @@ export default function DeleteSubFolderModal() {
   }, [thisFolderSnippets]);
 
   useEffect(() => {
-    if (asPath === "/upsert/code") {
+    if (
+      asPath.startsWith("/upsert/code") ||
+      asPath.startsWith("/snips/codes")
+    ) {
       setSubF("CodeSubFolders");
     }
 
-    if (asPath === "/upsert/error") {
+    if (
+      asPath.startsWith("/upsert/error") ||
+      asPath.startsWith("/snips/errors")
+    ) {
       setSubF("ErrorSubFolders");
     }
 
-    if (asPath === "/upsert/setup") {
+    if (asPath.startsWith("/upsert/setup") || asPath.startsWith("/setups")) {
       setSubF("SetupSubFolders");
     }
   }, [asPath]);
 
   return (
     <div>
-      <Modal
-        closeButton
-        preventClose
-        aria-labelledby="modal-title"
-        open={subOpen}
-        onClose={() => setSubOpen(false)}
-      >
-        <Modal.Header>
-          <Text>Bekræft</Text>
-        </Modal.Header>
-        <Modal.Body>
-          <Grid.Container
-            css={{
-              borderRadius: "14px",
-              padding: "0.75rem",
-              maxWidth: "330px",
-            }}
-          >
-            <Row css={{ py: ".5rem" }}>
-              {folderExcluded ? (
-                <Text>
-                  Denne mappe har en eller flere SNIPS, for at slette skal du
-                  fjerne alle SNIPS i den!
-                </Text>
-              ) : (
-                <Text>Er du sikker på, at du vil slette denne mappe?</Text>
-              )}
-            </Row>
-          </Grid.Container>
-        </Modal.Body>
-        <Modal.Footer>
-          <Grid.Container justify="space-between" alignContent="center">
-            <Grid>
-              <Button size="sm" light onClick={() => setSubOpen(false)}>
-                Annullere
-              </Button>
-            </Grid>
-            <Grid>
-              <Button
-                size="sm"
-                shadow
-                color="error"
-                disabled={folderExcluded}
-                onClick={() => {
-                  handleDelete(subOpen.id);
-                  setSubOpen(false);
-                }}
-              >
-                Slet
-              </Button>
-            </Grid>
-          </Grid.Container>
-        </Modal.Footer>
+      <Modal isOpen={subOpen} onClose={() => setSubOpen(false)} isCentered>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>
+            <Text textAlign="center" fontSize={18}>
+              Bekræft
+            </Text>
+          </ModalHeader>
+          {/* <ModalCloseButton /> */}
+          <ModalBody>
+            {folderExcluded ? (
+              <Text>
+                Denne mappe har en eller flere SNIPS, for at slette skal du
+                fjerne alle SNIPS i den!
+              </Text>
+            ) : (
+              <Text>Er du sikker på, at du vil slette denne mappe?</Text>
+            )}
+          </ModalBody>
+
+          <ModalFooter>
+            <Button
+              colorScheme="blue"
+              variant="ghost"
+              mr={3}
+              onClick={() => setSubOpen(false)}
+            >
+              Annullere
+            </Button>
+            <Button
+              bg="Red"
+              color="white"
+              _hover={{ bg: "Red", opacity: 0.8 }}
+              disabled={folderExcluded}
+              onClick={() => {
+                handleDelete(subOpen.id);
+                setSubOpen(false);
+              }}
+            >
+              Slet
+            </Button>
+          </ModalFooter>
+        </ModalContent>
       </Modal>
     </div>
   );
