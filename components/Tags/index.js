@@ -1,4 +1,4 @@
-import { Text } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 import { collection, onSnapshot } from "firebase/firestore";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
@@ -63,62 +63,74 @@ const Tags = () => {
 
   return (
     <div>
-      <>
-        <TagType />
-        <TagHeading headingType={"Kode"} headingColor={"primary"} />
-      </>
+      <TagType />
+
+      <TagHeading headingType={"Kode"} headingColor={"primary"} />
 
       <div>
-        <div>
-          <div className="my-5 flex flex-col gap-4">
-            {codeTags.length > 0 && (
-              <>
-                <div className="flex gap-2 flex-wrap">
-                  {codeTags
-                    .slice(0, 40)
-                    .reverse()
-                    .map((tag, index) => (
-                      <Link key={index} href={`/tags/codes/${tag}`}>
-                        <div className="px-3 py-1 bg-[#c8dfff85] rounded-md cursor-pointer hover:opacity-70 mr-2 lowercase ease-in duration-300">
-                          <p className="font-[500] text-sm SnippetHeadingTwo tracking-wide text-[#031B4E]">
-                            {tag}
-                          </p>
-                        </div>
-                      </Link>
-                    ))}
-                </div>
-
-                <div className="text-center">
-                  <Link href="/tags/codes">
-                    <Text className="cursor-pointer hover:underline">
-                      SE ALLE
-                    </Text>
-                  </Link>
-                </div>
-              </>
-            )}
-
-            {loading ? (
-              <div className="flex justify-center items-center h-[20vh]">
-                <SnippetLoading size="lg" />
+        <Box
+          px={4}
+          pt={2}
+          pb={4}
+          borderBottomRadius="md"
+          boxShadow="md"
+          bg="white"
+          className="flex flex-col gap-4 mb-5"
+        >
+          {codeTags.length > 0 && (
+            <>
+              <div className="flex gap-2 flex-wrap">
+                {codeTags
+                  .slice(0, 40)
+                  .reverse()
+                  .map((tag, index) => (
+                    <Link key={index} href={`/tags/codes/${tag}`}>
+                      <div className="px-3 py-1 bg-[#c8dfff85] rounded-md cursor-pointer hover:opacity-70 mr-2 lowercase ease-in duration-300">
+                        <p className="font-[500] text-sm SnippetHeadingTwo tracking-wide text-[#031B4E]">
+                          {tag}
+                        </p>
+                      </div>
+                    </Link>
+                  ))}
               </div>
-            ) : (
-              <div>
-                {!codeTags?.length > 0 && (
-                  <div className="flex justify-center mt-10">
-                    <Text variant="nonLabel">Du har ingen kode tags! 😔</Text>
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
-        </div>
-        <div>
-          <>
-            <TagHeading headingType={"Fejl"} headingColor={"error"} />
-          </>
 
-          <div className="my-5 flex flex-col gap-4">
+              <div className="text-center">
+                <Link href="/tags/codes">
+                  <Text className="cursor-pointer hover:underline">
+                    SE ALLE
+                  </Text>
+                </Link>
+              </div>
+            </>
+          )}
+
+          {loading ? (
+            <div className="flex justify-center items-center h-[20vh]">
+              <SnippetLoading size="lg" />
+            </div>
+          ) : (
+            <div>
+              {!codeTags?.length > 0 && (
+                <div className="flex justify-center mt-10">
+                  <Text variant="nonLabel">Du har ingen kode tags! 😔</Text>
+                </div>
+              )}
+            </div>
+          )}
+        </Box>
+
+        <div>
+          <TagHeading headingType={"Fejl"} headingColor={"error"} />
+
+          <Box
+            px={4}
+            pt={2}
+            pb={4}
+            borderBottomRadius="md"
+            boxShadow="md"
+            bg="white"
+            className="flex flex-col gap-4"
+          >
             {errorTags?.length > 0 && (
               <>
                 <div className="flex gap-2 flex-wrap">
@@ -159,7 +171,7 @@ const Tags = () => {
                 )}
               </div>
             )}
-          </div>
+          </Box>
         </div>
       </div>
     </div>

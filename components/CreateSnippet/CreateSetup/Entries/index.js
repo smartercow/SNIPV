@@ -7,6 +7,7 @@ import {
   Box,
   Button,
   Divider,
+  Icon,
   Input,
   Tab,
   TabList,
@@ -18,6 +19,10 @@ import {
 import Syntax from "./Syntax";
 import Accord from "./Accord";
 import Packages from "./Packages";
+import { EditDocumentIcon } from "../../../SVG/EditDocumentIcon";
+import { CloseSquareIcon } from "../../../SVG/CloseSquareIcon";
+import { ArrowUpSquareIcon } from "../../../SVG/ArrowUpSquareIcon";
+import { ArrowDownSquareIcon } from "../../../SVG/ArrowDownSquareIcon";
 
 const Quill = dynamic(() => import("./Quill"), {
   ssr: false,
@@ -27,6 +32,8 @@ const initialCodeFileValue = {
   title: "",
   code: "",
 };
+
+let nextId = 0;
 
 const Entries = ({
   allEntries,
@@ -53,6 +60,8 @@ const Entries = ({
 
   const [selectedEntry, setSelectedEntry] = useState("summary");
   const [menu, setMenu] = useState("");
+
+  const [editSum, setEditSum] = useState(false);
 
   const [disableSave, setDisableSave] = useState(true);
 
@@ -101,7 +110,10 @@ const Entries = ({
 
   const addSummary = (e) => {
     e.preventDefault();
-    setEntries((entSum) => [...entSum, { summary: summaryValue }]);
+    setEntries((entSum) => [
+      ...entSum,
+      { id: nextId++, summary: summaryValue },
+    ]);
     setSummaryValue({});
   };
 
@@ -113,7 +125,31 @@ const Entries = ({
     }
   }, [menu, entries]);
 
-  console.log("summaryValue", summaryValue);
+  console.log("ENTRIES", entries);
+
+  function editSumEntry(summary) {
+    setSummaryValue({});
+    const edit = entries.map((obj) => {
+      if (entries.summary === summary) {
+        return { ...object, summary: summaryValue };
+      }
+    });
+    setEditSum(false);
+    console.log("EDITTT", edit);
+  }
+
+  const moveUp = (index) => {
+    if (index < 1 || index >= entries.length) {
+      return;
+    }
+
+    setEntries(
+      ([entries[index - 1], entries[index]] = [
+        entries[index],
+        entries[index - 1],
+      ])
+    );
+  };
 
   const renderEntry = (ent) => {
     switch (ent) {
@@ -123,6 +159,9 @@ const Entries = ({
             summaryValue={summaryValue}
             setSummaryValue={setSummaryValue}
             addSummary={addSummary}
+            editSum={editSum}
+            setEditSum={setEditSum}
+            editSumEntry={editSumEntry}
           />
         );
       case "code":
@@ -157,6 +196,9 @@ const Entries = ({
             summaryValue={summaryValue}
             setSummaryValue={setSummaryValue}
             addSummary={addSummary}
+            editSum={editSum}
+            setEditSum={setEditSum}
+            editSumEntry={editSumEntry}
           />
         );
     }
@@ -212,7 +254,51 @@ const Entries = ({
                       key={index}
                     >
                       {entry.summary && (
-                        <div className="parse">{parse(entry.summary)}</div>
+                        <div className="flex flex-col">
+                          <div className="flex">
+                            <Icon
+                              as={ArrowUpSquareIcon}
+                              h={6}
+                              w={6}
+                              fill="gray.700"
+                              cursor="pointer"
+                              onClick={() => moveUp(index)}
+                            />
+                            <Icon
+                              as={ArrowDownSquareIcon}
+                              h={6}
+                              w={6}
+                              fill="gray.700"
+                              cursor="pointer"
+                            />
+                            <Icon
+                              as={EditDocumentIcon}
+                              h={6}
+                              w={6}
+                              fill="Primary"
+                              cursor="pointer"
+                              onClick={() => {
+                                setSummaryValue(entry.summary),
+                                  setEditSum(true);
+                              }}
+                            />
+                            <Icon
+                              as={CloseSquareIcon}
+                              h={6}
+                              w={6}
+                              fill="Red"
+                              cursor="pointer"
+                              onClick={() => {
+                                setEntries(
+                                  entries.filter((ent) => ent.id !== entry.id)
+                                );
+                              }}
+                            />
+                          </div>
+                          <div className="parse flex grow">
+                            {parse(entry.summary)}
+                          </div>
+                        </div>
                       )}
 
                       {entry.packages && (

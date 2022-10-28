@@ -3,7 +3,14 @@ import ReactQuill from "react-quill";
 import EditorToolbar, { modules, formats } from "./Toolbar";
 import { Button, Text } from "@chakra-ui/react";
 
-const Quill = ({ summaryValue, setSummaryValue, addSummary }) => {
+const Quill = ({
+  summaryValue,
+  setSummaryValue,
+  addSummary,
+  editSum,
+  setEditSum,
+  editSumEntry,
+}) => {
   const [disableSave, setDisableSave] = useState(true);
 
   useEffect(() => {
@@ -14,8 +21,10 @@ const Quill = ({ summaryValue, setSummaryValue, addSummary }) => {
     }
   }, [summaryValue]);
 
-  console.log(Object.keys(summaryValue).length);
-  console.log(disableSave);
+  const Cancel = () => {
+    setSummaryValue({});
+    setEditSum(false);
+  };
   return (
     <div className="flex flex-col gap-2">
       <div>
@@ -35,9 +44,19 @@ const Quill = ({ summaryValue, setSummaryValue, addSummary }) => {
       </div>
 
       <div>
-        <Button onClick={addSummary} variant="entrySub" disabled={disableSave}>
-          Tilføj
+        <Button
+          onClick={editSum ? editSumEntry : addSummary}
+          variant="entrySub"
+          disabled={disableSave}
+        >
+          {editSum ? "Opdatare" : "Tilføj"}
         </Button>
+
+        {editSum && (
+          <Button onClick={Cancel} variant="entrySub" disabled={disableSave}>
+            Anullere
+          </Button>
+        )}
       </div>
     </div>
   );

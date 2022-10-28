@@ -5,11 +5,15 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { auth, db } from "../../firebase/clientApp";
 import TagHeading from "../Heading/TagType/TagHeading";
+import LoadingSNIPS from "../LoadingState/LoadingSNIPS";
+
 const Tags = ({ headTitle }) => {
   const [tags, setTags] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [user] = useAuthState(auth);
   useEffect(() => {
     const getAllTags = async () => {
+      setLoading(true);
       try {
         const codeQuery = query(collection(db, "CodeSnippetsData1"));
 
@@ -37,7 +41,8 @@ const Tags = ({ headTitle }) => {
           })
           .then((mergedTags) => {
             setTags(mergedTags);
-          });
+          })
+          .finally(setLoading(false));
       } catch (error) {
         console.log("getPosts error", error.message);
       }
@@ -45,7 +50,7 @@ const Tags = ({ headTitle }) => {
     return () => {
       getAllTags();
     };
-  }, [user]);
+  }, []);
 
   console.log("TAGS", tags);
 
@@ -86,7 +91,9 @@ const Tags = ({ headTitle }) => {
             </>
           )}
 
-          {!Object.keys(tags).length > 0 && (
+          {loading && <LoadingSNIPS size={10} />}
+
+          {!loading && !tags.length > 0 && (
             <div className="text-center">
               <Text variant="nonLabel">Du har ingen tags!</Text>
             </div>
