@@ -125,8 +125,6 @@ const Entries = ({
     }
   }, [menu, entries]);
 
-  console.log("ENTRIES", entries);
-
   function editSumEntry(summary) {
     setSummaryValue({});
     const edit = entries.map((obj) => {
@@ -135,7 +133,6 @@ const Entries = ({
       }
     });
     setEditSum(false);
-    console.log("EDITTT", edit);
   }
 
   const moveUp = (index) => {

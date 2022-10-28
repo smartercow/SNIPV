@@ -31,8 +31,6 @@ const Entries = ({ snippet }) => {
     }
   }, [snippet]);
 
-  console.log(id);
-  console.log("ents", ents);
   return (
     <div>
       {ents && (

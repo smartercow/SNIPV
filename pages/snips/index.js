@@ -9,6 +9,8 @@ import LoadingSNIPS from "../../components/LoadingState/LoadingSNIPS";
 import NoUser from "../../components/NoPage/NoUser";
 import { auth, db } from "../../firebase/clientApp";
 import Tags from "../../components/Home/Tags";
+import { useRecoilValue } from "recoil";
+import { updateStateAtom } from "../../atoms/updateStateAtom";
 
 const MySNIPS = () => {
   const [user] = useAuthState(auth);
@@ -16,6 +18,8 @@ const MySNIPS = () => {
   const [loading, setLoading] = useState(true);
   const [snippets, setSnippets] = useState([]);
   const [tags, setTags] = useState([]);
+
+  const update = useRecoilValue(updateStateAtom);
 
   const getSnippets = async () => {
     try {
@@ -76,9 +80,8 @@ const MySNIPS = () => {
 
     return () => {
       snapSub();
-      getSnippets();
     };
-  }, [user]);
+  }, [user, update]);
 
   return (
     <div className="w-full">

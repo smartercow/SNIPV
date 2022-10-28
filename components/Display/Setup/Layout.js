@@ -4,8 +4,6 @@ import Syntax from "../../CreateSnippet/CreateSetup/Entries/Syntax";
 import parse from "html-react-parser";
 
 const Layout = ({ snippet, children }) => {
-  //   const ets = Object.values(entries);
-  //   console.log("ets", ets);
   const [menu, setMenu] = useState();
 
   useEffect(() => {
@@ -13,9 +11,6 @@ const Layout = ({ snippet, children }) => {
       setMenu(Object.values(snippet.entries));
     }
   }, [snippet]);
-
-  /*   console.log("snippet", snippet);
-  console.log("menu", menu); */
   return (
     <div>
       {menu && (

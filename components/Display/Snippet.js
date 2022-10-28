@@ -1,29 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
-import { DeleteSnippet } from "../NonModal/DeleteSnippet";
 import { DeleteDocumentIcon } from "../SVG/DeleteDocumentIcon";
 import { EditDocumentIcon } from "../SVG/EditDocumentIcon";
-import { DocumentIcon } from "../SVG/DocumentIcon";
 import { LoginIcon } from "../SVG/LoginIcon";
-import { Paper } from "../SVG/Paper";
-import { PaperFail } from "../SVG/PaperFail";
-import FileExtension from "./FileExtension";
-import LanguageBadge from "./LanguageBadge";
 import SnippetBadge from "./Language/SnippetBadge";
-import {
-  Avatar,
-  Badge,
-  Box,
-  Button,
-  Icon,
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Button, Icon, Text } from "@chakra-ui/react";
+import { DeleteSNIPModalState } from "../../atoms/DeleteSNIPModalState";
+import { useSetRecoilState } from "recoil";
 
-const Snippet = ({ snippet, user, handleDelete, update, setUpdate }) => {
-  const [allOpenStates, setAllOpenStates] = useState({});
+const Snippet = ({ snippet, user }) => {
+  const openModal = useSetRecoilState(DeleteSNIPModalState);
 
   return (
     <Box
@@ -132,36 +118,18 @@ const Snippet = ({ snippet, user, handleDelete, update, setUpdate }) => {
             )}
 
             <div>
-              <Popover
-                placement="bottom"
-                onOpen={allOpenStates[snippet.id]}
-                onClose={(nowOpen) =>
-                  setAllOpenStates((oldState) => ({
-                    ...oldState,
-                    [snippet.id]: nowOpen,
-                  }))
-                }
-              >
-                <PopoverTrigger>
-                  <Button>
-                    <Icon
-                      as={DeleteDocumentIcon}
-                      fill="Red"
-                      className="cursor-pointer"
-                      width={26}
-                      height={26}
-                    />
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent>
-                  <DeleteSnippet
-                    snippet={snippet}
-                    setAllOpenStates={setAllOpenStates}
-                    update={update}
-                    setUpdate={setUpdate}
-                  />
-                </PopoverContent>
-              </Popover>
+              <Button>
+                <Icon
+                  as={DeleteDocumentIcon}
+                  fill="Red"
+                  className="cursor-pointer"
+                  width={26}
+                  height={26}
+                  onClick={() => {
+                    openModal({ default: true, snip: snippet });
+                  }}
+                />
+              </Button>
             </div>
           </div>
         </div>

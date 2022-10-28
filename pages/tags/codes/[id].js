@@ -3,16 +3,9 @@ import { useRouter } from "next/router";
 import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../../../firebase/clientApp";
-import Link from "next/link";
-import { DeleteDocumentIcon } from "../../../components/SVG/DeleteDocumentIcon";
-import { DeleteSnippet } from "../../../components/NonModal/DeleteSnippet";
-import { EditDocumentIcon } from "../../../components/SVG/EditDocumentIcon";
-import { LoginIcon } from "../../../components/SVG/LoginIcon";
-import { Paper } from "../../../components/SVG/Paper";
-import { MdRefresh } from "react-icons/md";
 import Snippet from "../../../components/Display/Snippet";
 import LoadingSNIPS from "../../../components/LoadingState/LoadingSNIPS";
-import { Box, Text } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import LatestHeading from "../../../components/Heading/LatestHeading";
 const CodeTagPage = () => {
   const {

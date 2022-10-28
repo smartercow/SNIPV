@@ -249,8 +249,6 @@ const CreateSetup = ({ id, setLoading, setDataError }) => {
     }
   }, [selectSubValue, selectedMainFolder]);
 
-  // console.log("entries", entries);
-
   return (
     <div className="">
       <div className="">

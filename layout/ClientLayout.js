@@ -13,6 +13,8 @@ import LoadingState from "../components/LoadingState";
 import DeleteMainFolderModal from "../components/Modals/DeleteMainFolderModal";
 import DeleteSubFolderModal from "../components/Modals/DeleteSubFolderModal";
 import CreateFolderModal from "../components/Modals/CreateFolderModal";
+import { DeleteSNIPModalState } from "../atoms/DeleteSNIPModalState";
+import DeleteSNIPModal from "../components/Modals/DeleteSNIPModal";
 
 const ClientLayout = ({ children, user }) => {
   const { pathname, asPath } = useRouter();
@@ -74,6 +76,7 @@ const ClientLayout = ({ children, user }) => {
       <LoginModal />
       <DeleteMainFolderModal />
       <DeleteSubFolderModal />
+      <DeleteSNIPModal />
     </div>
   );
 };

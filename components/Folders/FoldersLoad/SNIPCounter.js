@@ -53,8 +53,6 @@ const CodeSnippetsCounter = ({ id }) => {
     }
   };
 
-  console.log("COOL", col);
-
   useEffect(() => {
     if (id && col) {
       getThisFolderSnippets();

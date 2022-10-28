@@ -64,8 +64,6 @@ export default function CreatedSubFolders({
     }
   }, [asPath]);
 
-  console.log("SUUB", subFolder);
-
   useEffect(() => {
     if (!user) return;
     setSubLoading(true);

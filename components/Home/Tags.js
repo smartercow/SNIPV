@@ -52,8 +52,6 @@ const Tags = ({ headTitle }) => {
     };
   }, []);
 
-  console.log("TAGS", tags);
-
   return (
     <div className="w-[300px] max-w-[300px] min-w-[300px]">
       <div>

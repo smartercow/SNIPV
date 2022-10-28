@@ -130,8 +130,6 @@ const Category = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, selectedSubFolder]);
 
-  console.log("col", col);
-
   return (
     <Box
       px={4}

@@ -12,6 +12,8 @@ import {
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { MdRefresh } from "react-icons/md";
+import { useRecoilValue } from "recoil";
+import { updateStateAtom } from "../../atoms/updateStateAtom";
 import { auth, db } from "../../firebase/clientApp";
 import Snippet from "../Display/Snippet";
 import LoadingSNIPS from "../LoadingState/LoadingSNIPS";
@@ -19,11 +21,12 @@ import LoadingSNIPS from "../LoadingState/LoadingSNIPS";
 const AllType = ({ setLoadingMain, col, snip, handleDelete }) => {
   const [user] = useAuthState(auth);
 
+  const update = useRecoilValue(updateStateAtom);
+
   const [loadingSub, setLoadingSub] = useState(false);
   const [mySNIPS, setMySNIPS] = useState([]);
   const [lastSnippet, setLastSnippet] = useState();
   const [isEmpty, setIsEmpty] = useState(false);
-  const [update, setUpdate] = useState(false);
 
   const getMySnippets = async () => {
     setLoadingMain(false);
@@ -101,11 +104,9 @@ const AllType = ({ setLoadingMain, col, snip, handleDelete }) => {
   };
 
   useEffect(() => {
-    if (user) {
-      getMySnippets();
-    }
+    getMySnippets();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user, col, update]);
+  }, [user, update, col]);
 
   return (
     <Box px={4} pt={3} pb={4} borderBottomRadius="md" boxShadow="md" bg="white">
@@ -117,8 +118,7 @@ const AllType = ({ setLoadingMain, col, snip, handleDelete }) => {
                 key={snippet.id}
                 snippet={snippet}
                 handleDelete={handleDelete}
-                update={update}
-                setUpdate={setUpdate}
+                col={col}
               />
             ))}
 
