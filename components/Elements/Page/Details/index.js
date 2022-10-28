@@ -8,7 +8,7 @@ const Details = ({ snippet }) => {
       <Masthead snippet={snippet} />
 
       <div className="flex flex-col">
-        <Text variant="title">{snippet.title}</Text>
+        <Text fontSize={24}>{snippet.title}</Text>
 
         <Text px={1} variant="description">
           {snippet.description}

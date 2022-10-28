@@ -74,7 +74,7 @@ const Masthead = ({ snippet }) => {
           <div>
             <a href={`${edit}${id}`}>
               <Button>
-                <Icon w={8} h={8} as={EditDocumentIcon} fill="Primary" />
+                <Icon w={6} h={6} as={EditDocumentIcon} fill="Primary" />
               </Button>
             </a>
           </div>
@@ -83,7 +83,7 @@ const Masthead = ({ snippet }) => {
             <Popover>
               <PopoverTrigger>
                 <Button>
-                  <Icon w={8} h={8} as={DeleteDocumentIcon} fill="Red" />
+                  <Icon w={6} h={6} as={DeleteDocumentIcon} fill="Red" />
                 </Button>
               </PopoverTrigger>
               <PopoverContent>

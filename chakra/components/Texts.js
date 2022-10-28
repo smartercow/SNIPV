@@ -61,6 +61,13 @@ export const Text = {
       fontSize: "13px",
       textTransform: "uppercase",
     },
+    snipNameDeleteModal: {
+      width: "440",
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      whiteSpace: "nowrap",
+    },
+
     /*     headUppercase: {
       color: "Black",
       fontSize: "16px",
@@ -81,19 +88,7 @@ export const Text = {
       fontSize: "16px",
       fontWeight: 500,
     },
-    title: {
-      color: "BlackLight",
-      fontFamily: "Ubuntu",
-      fontSize: "26px",
-      fontWeight: 600,
-      letterSpacing: "0.1px",
-    },
-    description: {
-      color: "BlackLight",
-      fontSize: "18px",
-      fontWeight: 500,
-      letterSpacing: "0.3px",
-    },
+
     boxHeading: {
       fontSize: "18px",
       textTransform: "uppercase",

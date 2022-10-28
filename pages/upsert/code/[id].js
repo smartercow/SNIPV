@@ -7,6 +7,7 @@ import { auth } from "../../../firebase/clientApp";
 import NoUser from "../../../components/NoPage/NoUser";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import { Box } from "@chakra-ui/react";
 
 const UpsertId = () => {
   const [user] = useAuthState(auth);
@@ -27,22 +28,19 @@ const UpsertId = () => {
       </Head>
 
       {user && (
-        <div>
-          <div className="mt-3">
-            <Card>
-              <Card.Header>
-                <Text>Opdatere en kode SNIP</Text>
-              </Card.Header>
-              <Card.Divider />
-              <Card.Body>
-                <CreateCodeSnippet
-                  id={id}
-                  setLoading={setLoading}
-                  setDataError={setDataError}
-                />
-              </Card.Body>
-            </Card>
-          </div>
+        <div className="mt-5">
+          <Box
+            boxShadow="lg"
+            borderRadius="lg"
+            padding={2}
+            backgroundColor="#fff"
+          >
+            <CreateCodeSnippet
+              id={id}
+              setLoading={setLoading}
+              setDataError={setDataError}
+            />
+          </Box>
         </div>
       )}
 

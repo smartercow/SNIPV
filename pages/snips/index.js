@@ -84,7 +84,7 @@ const MySNIPS = () => {
   }, [user, update]);
 
   return (
-    <div className="w-full">
+    <div className="max-w-6xl">
       {user && (
         <div className="w-full">
           <SnippetsTypeLinks />
@@ -94,7 +94,7 @@ const MySNIPS = () => {
 
               {snippets.snips && (
                 <div className="flex flex-col flex-grow gap-3 pt-3 px-4 pb-4 w-full">
-                  {snippets.snips.map((snippet) => (
+                  {snippets.snips.slice(0, 10).map((snippet) => (
                     <Snippet key={snippet.id} snippet={snippet} />
                   ))}
 
@@ -109,7 +109,7 @@ const MySNIPS = () => {
               )}
 
               {loading && (
-                <div className="mt-10">
+                <div className="mt-10 w-full">
                   <LoadingSNIPS size={14} />
                 </div>
               )}

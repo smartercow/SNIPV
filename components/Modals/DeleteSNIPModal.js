@@ -1,13 +1,4 @@
 import React, { useEffect, useState } from "react";
-import {
-  Modal,
-  Button,
-  Text,
-  Input,
-  Row,
-  Checkbox,
-  Grid,
-} from "@nextui-org/react";
 import { useRecoilState } from "recoil";
 import { DeleteMainFolderModalState } from "../../atoms/DeleteMainFolderModalState";
 import {
@@ -24,8 +15,20 @@ import { updateStateAtom } from "../../atoms/updateStateAtom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useRouter } from "next/router";
 import { DeleteSNIPModalState } from "../../atoms/DeleteSNIPModalState";
+import {
+  Button,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Text,
+} from "@chakra-ui/react";
 export default function DeleteSNIPModal() {
   const [col, setCol] = useState("");
+  const [typey, setTypey] = useState("");
 
   const [delState, setDelState] = useRecoilState(DeleteSNIPModalState);
   const [update, setUpdate] = useRecoilState(updateStateAtom);
@@ -33,12 +36,15 @@ export default function DeleteSNIPModal() {
   useEffect(() => {
     if (delState?.snip?.snippetType === "code") {
       setCol("CodeSnippetsData1");
+      setTypey("kode SNIP");
     }
     if (delState?.snip?.snippetType === "error") {
       setCol("ErrorSnippetsData1");
+      setTypey("fejl SNIP");
     }
     if (delState?.snip?.snippetType === "setup") {
       setCol("SetupsData");
+      setTypey("Setup");
     }
   }, [delState]);
 
@@ -56,46 +62,52 @@ export default function DeleteSNIPModal() {
 
   return (
     <div>
-      <Modal
-        closeButton
-        preventClose
-        aria-labelledby="modal-title"
-        open={delState}
-        onClose={() => setDelState(false)}
-      >
-        <Modal.Header>
-          <Text>Bekræft</Text>
-        </Modal.Header>
-        <Modal.Body>
-          <Grid.Container
-            css={{
-              borderRadius: "14px",
-              padding: "0.75rem",
-              maxWidth: "330px",
-            }}
-          >
-            <Row css={{ py: ".5rem" }}>
-              <Text>
-                Er du sikker på, at du vil slette denne SNIP? Ved at gøre dette,
-                vil du ikke være i stand til at gendanne indhold.
-              </Text>
-            </Row>
-          </Grid.Container>
-        </Modal.Body>
-        <Modal.Footer>
-          <Grid.Container justify="space-between" alignContent="center">
-            <Grid>
-              <Button size="sm" light onClick={() => setDelState(false)}>
-                Annullere
-              </Button>
-            </Grid>
-            <Grid>
-              <Button size="sm" shadow color="error" onClick={handleDelete}>
-                Slet
-              </Button>
-            </Grid>
-          </Grid.Container>
-        </Modal.Footer>
+      <Modal isOpen={delState} onClose={() => setDelState(false)} isCentered>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>
+            <Text textAlign="center" fontSize={18}>
+              Bekræft
+            </Text>
+          </ModalHeader>
+          {/* <ModalCloseButton /> */}
+          <ModalBody>
+            <Text
+              textAlign="center"
+              fontSize={15}
+              fontWeight={400}
+              variant="snipNameDeleteModal"
+              bg="iGray"
+              mb={1}
+              px={2}
+            >
+              {delState?.snip?.title}
+            </Text>
+            <Text>
+              Er du sikker på, at du vil slette denne {typey}? Ved at gøre
+              dette, vil du ikke være i stand til at gendanne indhold.
+            </Text>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button
+              colorScheme="blue"
+              variant="ghost"
+              mr={3}
+              onClick={() => setDelState(false)}
+            >
+              Annullere
+            </Button>
+            <Button
+              bg="Red"
+              color="white"
+              _hover={{ bg: "Red", opacity: 0.8 }}
+              onClick={handleDelete}
+            >
+              Slet
+            </Button>
+          </ModalFooter>
+        </ModalContent>
       </Modal>
     </div>
   );

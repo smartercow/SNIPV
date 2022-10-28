@@ -5,8 +5,8 @@ const Footer = ({ snippet }) => {
   return (
     <div>
       <div className="flex justify-between">
-        <div className="text-lg flex gap-1">
-          <p>Af</p> <p>{snippet.id}</p>
+        <div className="text-lg flex">
+          <p>Af</p> <p>{snippet.id}&nbsp;</p>
           <p className="font-bold text-[#031B4E]">
             {snippet.userData.username}
           </p>
@@ -15,8 +15,18 @@ const Footer = ({ snippet }) => {
         <div className="flex gap-2 md:gap-4">
           {snippet.updatedAt && (
             <div className="flex gap-1 items-center">
-              <Text className="font-semibold text-[#031B4E]">Opdateret:</Text>
-              <Text className="font-semibold text-[#031B4E]">
+              <Text
+                fontSize={13}
+                textTransform="uppercase"
+                className="font-semibold text-[#031B4E]"
+              >
+                Opdateret:
+              </Text>
+              <Text
+                fontSize={13}
+                textTransform="uppercase"
+                className="font-semibold text-[#031B4E]"
+              >
                 {new Date(snippet.updatedAt.seconds * 1000).toLocaleDateString(
                   "da-DK"
                 )}
@@ -25,10 +35,18 @@ const Footer = ({ snippet }) => {
           )}
 
           <div className="flex gap-1 items-center">
-            <Text transform="uppercase" className="text-[#031B4E]">
+            <Text
+              fontSize={13}
+              textTransform="uppercase"
+              className="text-[#031B4E]"
+            >
               Oprettet:
             </Text>
-            <Text transform="uppercase" className="text-[#031B4E]">
+            <Text
+              fontSize={13}
+              textTransform="uppercase"
+              className="text-[#031B4E]"
+            >
               {new Date(snippet.postedAt.seconds * 1000).toLocaleDateString(
                 "da-DK"
               )}

@@ -7,6 +7,8 @@ import Header from "../components/Header";
 import LoginModal from "../components/Modals/LoginModal";
 import { auth, db } from "../firebase/clientApp";
 import { useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
+
 import SetUsernameModal from "../components/Modals/SetUsernameModal";
 import { useRouter } from "next/router";
 import LoadingState from "../components/LoadingState";
@@ -17,11 +19,7 @@ import { DeleteSNIPModalState } from "../atoms/DeleteSNIPModalState";
 import DeleteSNIPModal from "../components/Modals/DeleteSNIPModal";
 
 const ClientLayout = ({ children, user }) => {
-  const { pathname, asPath } = useRouter();
-  const router = useRouter();
-  const [loading, setLoading] = useState(true);
-
-  const [open, setOpen] = useRecoilState(setUsernameModal);
+  const setOpen = useSetRecoilState(setUsernameModal);
   const [update, setUpdate] = useState(true);
 
   const CheckUser = async () => {

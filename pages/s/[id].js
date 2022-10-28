@@ -42,17 +42,22 @@ const Snippet = () => {
 
       {snippet && (
         <div className="flex flex-col gap-4">
-          <Details snippet={snippet} />
+          <div className="flex-none">
+            <Details snippet={snippet} />
+          </div>
+          <div className="flex-grow flex flex-col gap-4 min-h-[60vh]">
+            <SyntaxCodeHandler snippet={snippet} />
 
-          <SyntaxCodeHandler snippet={snippet} />
+            {snippet.output && <OutputSyntaxHandler snippet={snippet} />}
 
-          {snippet.output && <OutputSyntaxHandler snippet={snippet} />}
+            {snippet.notes && <Notes snippet={snippet} />}
 
-          {snippet.notes && <Notes snippet={snippet} />}
+            {snippet.link && <ExternalLink snippet={snippet} />}
+          </div>
 
-          {snippet.link && <ExternalLink snippet={snippet} />}
-
-          <Footer snippet={snippet} />
+          <div className="flex-none ">
+            <Footer snippet={snippet} />
+          </div>
         </div>
       )}
 

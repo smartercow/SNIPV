@@ -23,20 +23,6 @@ const SnippetType = [
 const UpsertError = () => {
   const [user] = useAuthState(auth);
 
-  const [selectedType, setSelectedType] = useState("code");
-  const [selectedTypeTranslate, setSelectedTypeTranslate] = useState("kode");
-
-  const renderType = (type) => {
-    switch (type) {
-      case "code":
-        return <CreateCodeSnippet />;
-      case "error":
-        return <CreateErrorSnippet />;
-      default:
-        return <CreateCodeSnippet />;
-    }
-  };
-
   return (
     <div>
       <Head>
