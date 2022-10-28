@@ -5,10 +5,8 @@ import { TicketStar } from "../../SVG/TicketStar";
 const TagHeading = ({ headingType, headingColor }) => {
   return (
     <Box
-      mb={2}
       px={2}
-      pt={1}
-      pb={1}
+      py={1}
       borderBottomWidth={2}
       borderColor="Gray"
       bg="iGray"

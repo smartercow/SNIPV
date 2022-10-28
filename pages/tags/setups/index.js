@@ -1,5 +1,4 @@
-import { Box } from "@chakra-ui/react";
-import { Text } from "@nextui-org/react";
+import { Box, Text } from "@chakra-ui/react";
 import { collection, onSnapshot } from "firebase/firestore";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
@@ -9,23 +8,23 @@ import TagHeading from "../../../components/Heading/TagType/TagHeading";
 import SnippetLoading from "../../../components/LoadingState/SnippetLoading";
 import { auth, db } from "../../../firebase/clientApp";
 
-const CodeTagsPage = () => {
+const ErrorTagsPage = () => {
   const [user] = useAuthState(auth);
 
-  const [codeTags, setCodeTags] = useState([]);
+  const [setupTags, setSetupTags] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setLoading(true);
     const snapSub = onSnapshot(
-      collection(db, "CodeSnippetsData1"),
+      collection(db, "SetupsData"),
       (snapshot) => {
         let tags = [];
         snapshot.docs.forEach((doc) => {
           tags.push(...doc.get("tags"));
         });
         const uniqueTags = [...new Set(tags)];
-        setCodeTags(uniqueTags);
+        setSetupTags(uniqueTags);
         setLoading(false);
       },
       (error) => {
@@ -37,26 +36,20 @@ const CodeTagsPage = () => {
       snapSub();
     };
   }, [user]);
-
   return (
     <div>
       <TagType />
 
-      <TagHeading headingType={"Kode"} colorType={"primary"} />
-      <Box
-        p={4}
-        borderBottomRadius="md"
-        boxShadow="md"
-        bg="white"
-        className="flex flex-col gap-4"
-      >
-        {codeTags && (
+      <TagHeading headingType={"Fejl"} headingColor={"error"} />
+
+      <Box p={4} borderBottomRadius="md" boxShadow="md" bg="white">
+        {setupTags.length > 0 && (
           <div className="flex gap-2 flex-wrap">
-            {codeTags
+            {setupTags
               .slice(0, 40)
               .reverse()
               .map((tag, index) => (
-                <Link key={index} href={`/tags/codes/${tag}`}>
+                <Link key={index} href={`/tags/setups/${tag}`}>
                   <div className="px-3 py-1 bg-[#c8dfff85] rounded-md cursor-pointer hover:opacity-70 mr-2 lowercase ease-in duration-300">
                     <p className="font-[500] text-sm SnippetHeadingTwo tracking-wide text-[#031B4E]">
                       {tag}
@@ -68,14 +61,14 @@ const CodeTagsPage = () => {
         )}
 
         {loading ? (
-          <div className="flex justify-center items-center h-[20vh]">
+          <div className="flex justify-center items-center">
             <SnippetLoading size="lg" />
           </div>
         ) : (
           <div>
-            {!codeTags?.length > 0 && (
+            {!setupTags?.length > 0 && (
               <div className="flex justify-center mt-10">
-                <Text variant="nonLabel">Du har ingen kode tags! 😔</Text>
+                <Text variant="nonLabel">Du har ingen Setup tags! 😔</Text>
               </div>
             )}
           </div>
@@ -85,4 +78,4 @@ const CodeTagsPage = () => {
   );
 };
 
-export default CodeTagsPage;
+export default ErrorTagsPage;

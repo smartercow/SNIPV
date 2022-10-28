@@ -23,6 +23,7 @@ const AllType = ({ setLoadingMain, col, snip, handleDelete }) => {
   const [mySNIPS, setMySNIPS] = useState([]);
   const [lastSnippet, setLastSnippet] = useState();
   const [isEmpty, setIsEmpty] = useState(false);
+  const [update, setUpdate] = useState(false);
 
   const getMySnippets = async () => {
     setLoadingMain(false);
@@ -104,7 +105,7 @@ const AllType = ({ setLoadingMain, col, snip, handleDelete }) => {
       getMySnippets();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user, col]);
+  }, [user, col, update]);
 
   return (
     <Box px={4} pt={3} pb={4} borderBottomRadius="md" boxShadow="md" bg="white">
@@ -116,6 +117,8 @@ const AllType = ({ setLoadingMain, col, snip, handleDelete }) => {
                 key={snippet.id}
                 snippet={snippet}
                 handleDelete={handleDelete}
+                update={update}
+                setUpdate={setUpdate}
               />
             ))}
 
@@ -130,7 +133,7 @@ const AllType = ({ setLoadingMain, col, snip, handleDelete }) => {
           </>
         )}
 
-        {loadingSub && <LoadingSNIPS />}
+        {loadingSub && <LoadingSNIPS size={14} />}
 
         {!loadingSub && !mySNIPS?.length > 0 && (
           <div className="flex justify-center mt-10">

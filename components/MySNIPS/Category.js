@@ -170,7 +170,7 @@ const Category = ({
       ) : (
         <>
           {loadingSub ? (
-            <LoadingSNIPS />
+            <LoadingSNIPS size={14} />
           ) : (
             <>
               {!mySNIPS?.length > 0 && (

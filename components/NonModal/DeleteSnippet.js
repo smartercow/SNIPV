@@ -1,7 +1,41 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Text, Button, Grid, Row } from "@nextui-org/react";
+import { deleteDoc, doc } from "firebase/firestore";
+import { db } from "../../firebase/clientApp";
 
-export const DeleteSnippet = ({ id, handleDelete, setAllOpenStates }) => {
+export const DeleteSnippet = ({
+  id,
+  snippet,
+  update,
+  setUpdate,
+  setAllOpenStates,
+}) => {
+  const [delCol, setDelCol] = useState("");
+  useEffect(() => {
+    if (snippet.snippetType === "code") {
+      setDelCol("CodeSnippetsData1");
+    }
+    if (snippet.snippetType === "error") {
+      setDelCol("ErrorSnippetsData1");
+    }
+    if (snippet.snippetType === "setup") {
+      setDelCol("SetupsData");
+    }
+  }, [snippet]);
+
+  const handleDelete = async () => {
+    if (delCol) {
+      try {
+        await deleteDoc(doc(db, delCol, snippet.id));
+        setUpdate(!update);
+      } catch (error) {
+        console.log("Fejl i sletning!", error.message);
+      }
+    }
+  };
+
+  console.log("delCol", delCol);
+  console.log("snippet.snippetType", snippet.snippetType);
   return (
     <Grid.Container
       css={{ borderRadius: "14px", padding: "0.75rem", maxWidth: "330px" }}
@@ -28,15 +62,7 @@ export const DeleteSnippet = ({ id, handleDelete, setAllOpenStates }) => {
           </Button>
         </Grid>
         <Grid>
-          <Button
-            size="sm"
-            shadow
-            color="error"
-            onClick={() => {
-              handleDelete(id);
-              setAllOpenStates((oldState) => ({ ...oldState, [id]: false }));
-            }}
-          >
+          <Button size="sm" shadow color="error" onClick={handleDelete}>
             Slet
           </Button>
         </Grid>

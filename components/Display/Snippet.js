@@ -22,7 +22,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 
-const Snippet = ({ snippet, user, handleDelete }) => {
+const Snippet = ({ snippet, user, handleDelete, update, setUpdate }) => {
   const [allOpenStates, setAllOpenStates] = useState({});
 
   return (
@@ -155,9 +155,10 @@ const Snippet = ({ snippet, user, handleDelete }) => {
                 </PopoverTrigger>
                 <PopoverContent>
                   <DeleteSnippet
-                    id={snippet.id}
-                    handleDelete={handleDelete}
+                    snippet={snippet}
                     setAllOpenStates={setAllOpenStates}
+                    update={update}
+                    setUpdate={setUpdate}
                   />
                 </PopoverContent>
               </Popover>

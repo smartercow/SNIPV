@@ -38,7 +38,6 @@ const MySNIPS = () => {
   const [mainFolder, setMainFolder] = useState("");
 
   const [types, setTypes] = useState("all");
-
   const [col, setCol] = useState("");
 
   const [search, setSearch] = useState("");
@@ -204,29 +203,31 @@ const MySNIPS = () => {
         )}
 
         {types === "search" && (
-          <form onSubmit={SearchTag}>
-            <div className="flex flex-col gap-2">
-              <Text
-                textDecoration="underline"
-                textDecorationThickness="2px"
-                textUnderlineOffset={3}
-                textDecorationColor="Gray"
-              >
-                Søg efter tags
-              </Text>
-              <div className="flex-grow flex  gap-2">
-                <Input
-                  onChange={(e) => setSearch(e.target.value.toLowerCase())}
-                  onKeyPress={(e) => {
-                    e.key === "Enter" && SearchTag;
-                  }}
-                />
-                <div>
-                  <Button type="submit">Søg</Button>
+          <Box borderWidth={1} p={2} borderRadius="md">
+            <form onSubmit={SearchTag}>
+              <div className="flex flex-col gap-2">
+                <Text
+                  textDecoration="underline"
+                  textDecorationThickness="2px"
+                  textUnderlineOffset={3}
+                  textDecorationColor="Gray"
+                >
+                  Søg efter tags
+                </Text>
+                <div className="flex-grow flex  gap-2">
+                  <Input
+                    onChange={(e) => setSearch(e.target.value.toLowerCase())}
+                    onKeyPress={(e) => {
+                      e.key === "Enter" && SearchTag;
+                    }}
+                  />
+                  <div>
+                    <Button type="submit">Søg</Button>
+                  </div>
                 </div>
               </div>
-            </div>
-          </form>
+            </form>
+          </Box>
         )}
       </Box>
 

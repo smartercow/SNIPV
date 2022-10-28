@@ -60,7 +60,7 @@ const Tags = ({ headTitle }) => {
         <TagHeading headingType={headTitle} />
         <Box
           bg="white"
-          className="rounded-md shadow-md bg-opacity-60 flex flex-col gap-3 pb-3 px-3"
+          className="rounded-md shadow-md bg-opacity-60 flex flex-col gap-3 p-3"
         >
           {Object.keys(tags).length > 0 && (
             <>

@@ -107,7 +107,7 @@ const MySNIPS = () => {
 
               {loading && (
                 <div className="mt-10">
-                  <LoadingSNIPS />
+                  <LoadingSNIPS size={14} />
                 </div>
               )}
             </Box>

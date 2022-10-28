@@ -10,7 +10,7 @@ const Search = ({ match, handleDelete }) => {
     <div>
       {Object.keys(match).length > 0 && (
         <>
-          <LatestHeading headingType={`Alle søg`} />
+          <LatestHeading headingType={`Søgeresultater`} />
 
           <Box
             px={4}

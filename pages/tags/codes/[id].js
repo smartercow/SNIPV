@@ -72,7 +72,7 @@ const CodeTagPage = () => {
 
                 {loading && (
                   <div className="flex justify-center items-center h-[20vh]">
-                    <LoadingSNIPS size="lg" />
+                    <LoadingSNIPS size={12} />
                   </div>
                 )}
 
