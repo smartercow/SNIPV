@@ -66,7 +66,7 @@ export const Button = {
     noFolder: {
       bg: "Primary",
       color: "white",
-      h: "20px",
+      h: "30px",
       _hover: {
         bg: "PrimaryLight",
       },
