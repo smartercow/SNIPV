@@ -34,7 +34,7 @@ const Sidebar = () => {
         else
           return (
             <Link key={index} href={item.link}>
-              <Text className="cursor-pointer hover:underline">
+              <Text _hover={{ color: "Primary" }} className="cursor-pointer">
                 {item.titel}
               </Text>
             </Link>

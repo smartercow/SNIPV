@@ -23,7 +23,8 @@ const Post = () => {
                 <Input
                   backgroundColor="white"
                   fontSize={14}
-                  placeholder="GEM EN SNIP"
+                  fontWeight="semibold"
+                  placeholder="GEM EN SNIP!"
                 />
               </div>
             </div>

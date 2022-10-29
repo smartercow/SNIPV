@@ -1,5 +1,6 @@
-import { Text } from "@nextui-org/react";
-import Link from "next/link";
+import { ExternalLinkIcon } from "@chakra-ui/icons";
+import { Link, Text } from "@chakra-ui/react";
+import NextLink from "next/link";
 import React from "react";
 import { CgExternal } from "react-icons/cg";
 
@@ -7,23 +8,26 @@ const TagsInfo = () => {
   return (
     <div className="w-full">
       <div>
-        <Text h4>Hvordan man skriver søgbare tags</Text>
+        <Text fontSize={20} fontWeight="semibold">
+          Hvordan man skriver søgbare tags
+        </Text>
       </div>
       <hr className="my-3" />
       <div>
         <div className="bg-red-400 p-3 rounded-lg">
           <Text color="white">
             Firestore database&nbsp;
-            <span className="text-white">
-              <Link href="https://firebase.google.com/docs/firestore/solutions/search">
-                <a target="_blank" className="text-white underline">
-                  understøtter ikke
-                  <span className="text-blue-500">
-                    <CgExternal />
-                  </span>
-                </a>
+            <NextLink
+              href="https://firebase.google.com/docs/firestore/solutions/search"
+              passHref
+            >
+              <Link target="_blank" isExternal color="Primary">
+                understøtter ikke{" "}
+                <span className="text-blue-500">
+                  <ExternalLinkIcon w={3} h={3} />
+                </span>
               </Link>
-            </span>
+            </NextLink>
             &nbsp;fuldtekstsøgning og henviser til tredjeparts søgetjenester,
             der ikke har et free tier plan som Firebase har. Derfor kan du kun
             søge efter tags, så sørg for at dine

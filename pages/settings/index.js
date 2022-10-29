@@ -1,4 +1,4 @@
-import { Text } from "@nextui-org/react";
+import { Divider, Text } from "@chakra-ui/react";
 import Head from "next/head";
 import React from "react";
 import Settings from "../../components/Settings";
@@ -14,13 +14,13 @@ const SettingsPage = () => {
 
       <div>
         <div>
-          <Text h4>Generel</Text>
+          <Text fontSize={18} textTransform="uppercase">
+            Generel
+          </Text>
         </div>
-        <hr />
+        <Divider />
 
-        <div>
-          <Settings />
-        </div>
+        <Settings />
       </div>
     </div>
   );

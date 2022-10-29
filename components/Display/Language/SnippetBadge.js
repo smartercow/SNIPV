@@ -15,7 +15,7 @@ const SnippetBadge = ({ snippet }) => {
               bg="#0072F5"
               borderBottomLeftRadius="lg"
             >
-              <Text fontSize={12} color="white">
+              <Text fontSize={12} color="white" fontWeight="semibold">
                 KODE
               </Text>
             </Box>
@@ -23,7 +23,7 @@ const SnippetBadge = ({ snippet }) => {
 
           {snippet.snippetType === "error" && (
             <Box pl={3} pr={2} h="full" bg="Red" borderBottomLeftRadius="lg">
-              <Text fontSize={12} color="white">
+              <Text fontSize={12} color="white" fontWeight="semibold">
                 FEJL
               </Text>
             </Box>
@@ -31,7 +31,7 @@ const SnippetBadge = ({ snippet }) => {
 
           {snippet.snippetType === "setup" && (
             <Box pl={3} pr={2} h="full" bg="purple" borderBottomLeftRadius="lg">
-              <Text fontSize={12} color="white">
+              <Text fontSize={12} color="white" fontWeight="semibold">
                 SETUP
               </Text>
             </Box>

@@ -158,7 +158,12 @@ const MySNIPS = () => {
             onClick={() => setTypes("all")}
           >
             <Icon as={CategoryIcon} fill="Primary" h={4} w={4} />
-            <Text textTransform="uppercase" fontSize="16px" opacity={0.9}>
+            <Text
+              textTransform="uppercase"
+              fontSize="16px"
+              opacity={0.8}
+              fontWeight="semibold"
+            >
               Alle
             </Text>
           </Box>
@@ -171,7 +176,12 @@ const MySNIPS = () => {
             onClick={() => setTypes("category")}
           >
             <Icon as={FolderIcon} fill="Primary" h={4} w={4} />
-            <Text textTransform="uppercase" fontSize="16px" opacity={0.9}>
+            <Text
+              textTransform="uppercase"
+              fontSize="16px"
+              opacity={0.8}
+              fontWeight="semibold"
+            >
               Mapper
             </Text>
           </Box>
@@ -184,7 +194,12 @@ const MySNIPS = () => {
             onClick={() => setTypes("search")}
           >
             <Icon as={FilterIcon} fill="Primary" h={4} w={4} />
-            <Text textTransform="uppercase" fontSize="16px" opacity={0.9}>
+            <Text
+              textTransform="uppercase"
+              fontSize="16px"
+              opacity={0.8}
+              fontWeight="semibold"
+            >
               Søg
             </Text>
           </Box>
@@ -211,6 +226,7 @@ const MySNIPS = () => {
                   textDecorationThickness="2px"
                   textUnderlineOffset={3}
                   textDecorationColor="Gray"
+                  fontWeight="semibold"
                 >
                   Søg efter tags
                 </Text>

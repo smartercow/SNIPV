@@ -6,11 +6,16 @@ import { getUpdates } from "../../../helpers/updates";
 import { CurrentVersion } from "../../../pages/api/updates/CurrentVersion";
 import SnippetLoading from "../../LoadingState/SnippetLoading";
 import { Text } from "@chakra-ui/react";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../../../firebase/clientApp";
+import { ExternalLinkIcon } from "@chakra-ui/icons";
 
 const PatchNotes = () => {
   const [updateData, setUpdateData] = useState();
   const [lastUpdate, setLastUpdate] = useState();
   const [loading, setLoading] = useState(true);
+
+  const [form, setForm] = useState({});
 
   useEffect(() => {
     getUpdates()
@@ -35,6 +40,15 @@ const PatchNotes = () => {
     }
   }, [updateData]);
 
+  useEffect(() => {
+    const getAccess = async () => {
+      const docRef = doc(db, "Settings", "General");
+      const access = await getDoc(docRef);
+      setForm(access.data());
+    };
+    getAccess();
+  }, []);
+
   return (
     <div className="w-full">
       <div className="my-5">
@@ -46,27 +60,29 @@ const PatchNotes = () => {
                   <Text>Der er en ny version</Text>
                   <Link href="https://github.com/smartercow/SNIPV">
                     <a target="_blank" className="font-bold">
-                      {lastUpdate.version}
-
-                      <CgExternal />
+                      <Text fontSize={18} color="Primary">
+                        {lastUpdate.version} <ExternalLinkIcon h={3} w={3} />
+                      </Text>
                     </a>
                   </Link>
                 </div>
 
                 <div className="flex gap-1">
                   <Text>
-                    Opdatere ved at synkronisere de seneste commits på din
-                    Github repository.
+                    Opdatere ved at synkronisere de seneste commits på din{" "}
+                    {!form.repo && "Github repository."}
                   </Text>
-
-                  {/*                   <Link href="">
-                    <a target="_blank">
-                      <Text h6 color="primary" className="underline">
-                        Github repository
-                        <CgExternal />
-                      </Text>
-                    </a>
-                  </Link> */}
+                  {form.repo && (
+                    <>
+                      <Link href={form.repo}>
+                        <a target="_blank">
+                          <Text color="Primary">
+                            Github repository <ExternalLinkIcon h={3} w={3} />.
+                          </Text>
+                        </a>
+                      </Link>
+                    </>
+                  )}
                 </div>
               </div>
             )}
@@ -89,31 +105,13 @@ const PatchNotes = () => {
       </div>
 
       <div className="w-full">
-        <Text>Seneste versioner</Text>
+        <Text fontSize={14} textTransform="uppercase">
+          Seneste versioner
+        </Text>
         <hr />
 
         <div className="my-3 flex flex-col gap-3">
-          {lastUpdate && (
-            <>
-              <div>
-                <Text small>
-                  Kun vigtigt commits er synlige som opdateringer, for små tweak
-                  commits hold øje med den&nbsp;
-                  <span>
-                    <Link href="https://github.com/smartercow/SNIPV">
-                      <a target="_blank">
-                        original repository
-                        <CgExternal />
-                      </a>
-                    </Link>
-                  </span>
-                  .
-                </Text>
-              </div>
-
-              <PatchTable updateData={updateData} />
-            </>
-          )}
+          {lastUpdate && <PatchTable updateData={updateData} />}
 
           {loading && <SnippetLoading />}
         </div>

@@ -1,4 +1,4 @@
-import { Text } from "@nextui-org/react";
+import { Text } from "@chakra-ui/react";
 import React from "react";
 import Sidebar from "../components/Settings/Sidebar";
 
@@ -7,15 +7,10 @@ const SettingsLayout = ({ children }) => {
     <div className="min-h-[70vh]">
       <div className="">
         <div className="flex justify-center items-center h-20">
-          <div className="flex gap-2 items-center">
-            <div>
-              <Text h4 transform="uppercase">
-                Indstillinger
-              </Text>
-            </div>
-            <div className="pt-[5px]">
-              <Text h4 size={14} weight="normal">beta mode</Text>
-            </div>
+          <div>
+            <Text transform="uppercase" fontSize={24} textTransform="uppercase">
+              Indstillinger
+            </Text>
           </div>
         </div>
         <div className="flex gap-3">

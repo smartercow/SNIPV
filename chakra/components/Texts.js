@@ -3,7 +3,6 @@ export const Text = {
     borderRadius: "12px",
     color: "DarkBlue",
     fontSize: "16px",
-    fontWeight: 500,
     _focus: {
       boxShadow: "none",
     },
@@ -18,28 +17,34 @@ export const Text = {
     },
     H3: {
       fontSize: "18px",
+      fontWeight: "semibold",
       // letterSpacing: "0.01em",
     },
     H4: {
       fontSize: "17px",
+      fontWeight: "semibold",
+
       // letterSpacing: "0.01em",
     },
     H5: {
-      fontSize: "16px",
+      fontWeight: "semibold",
+      fontSize: "14px",
+      textTransform: "uppercase",
     },
     H6: {
       fontSize: "14px",
     },
     snipHeading: {
-      color: "Black",
+      color: "DarkBlue",
       fontSize: "17px",
+      fontWeight: "semibold",
       letterSpacing: "0.1px",
       overflow: "hidden",
       textOverflow: "ellipsis",
       whiteSpace: "nowrap",
     },
     snipDescription: {
-      color: "BlackLight",
+      color: "DarkBlue",
       fontSize: "15px",
       letterSpacing: "0.1px",
       overflow: "hidden",
@@ -50,6 +55,7 @@ export const Text = {
       fontSize: "15px",
       textTransform: "uppercase",
       fontFamily: "Ubuntu",
+      fontWeight: "semibold",
       color: "DarkBlue",
       _hover: {
         color: "Primary",
@@ -60,6 +66,7 @@ export const Text = {
     nonLabel: {
       fontSize: "13px",
       textTransform: "uppercase",
+      fontWeight: "semibold",
     },
     snipNameDeleteModal: {
       width: "440",
@@ -68,12 +75,13 @@ export const Text = {
       whiteSpace: "nowrap",
     },
     folderHeading: {
-      color: "Black",
+      color: "DarkBlue",
       fontSize: "20px",
+      fontWeight: "bold",
       textTransform: "uppercase",
     },
     preview: {
-      color: "Black",
+      color: "DarkBlue",
       fontSize: "11px",
       textTransform: "uppercase",
       fontWeight: 500,

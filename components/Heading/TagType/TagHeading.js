@@ -15,7 +15,12 @@ const TagHeading = ({ headingType, headingColor }) => {
     >
       <div className="flex gap-2 items-center">
         <Icon as={TicketStar} fill="DarkBlue" h={7} w={7} />
-        <Text variant="H4" textTransform="uppercase" color="DarkBlue">
+        <Text
+          variant="H4"
+          textTransform="uppercase"
+          color="DarkBlue"
+          fontWeight="semibold"
+        >
           {headingType}
         </Text>
       </div>

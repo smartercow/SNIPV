@@ -10,7 +10,9 @@ import { getUpdates } from "../../helpers/updates";
 import { CurrentVersion } from "../../pages/api/updates/CurrentVersion";
 import Nav from "./Nav";
 import {
+  Box,
   Button,
+  Icon,
   Menu,
   MenuButton,
   MenuDivider,
@@ -19,6 +21,10 @@ import {
   MenuList,
   Text,
 } from "@chakra-ui/react";
+import { UserIcon } from "../SVG/UserIcon";
+import { SettingIcon } from "../SVG/SettingIcon";
+import { QuestionIcon, QuestionOutlineIcon } from "@chakra-ui/icons";
+import { LogoutIcon } from "../SVG/LogoutIcon";
 
 const Header = ({ user }) => {
   const [updateData, setUpdateData] = useState();
@@ -60,32 +66,27 @@ const Header = ({ user }) => {
           {lastUpdate && (
             <>
               {lastUpdate?.id !== CurrentVersion?.id && (
-                <div className="flex justify-center bg-[#0072F5]">
-                  <div className="flex gap-2 items-center">
-                    <InfoCircle
-                      fill="white"
-                      className="cursor-pointer"
-                      width={35}
-                      height={35}
-                    />
+                <Box bg="PrimaryLighter" className="flex justify-center">
+                  <div className="flex gap-2 items-center my-1">
+                    <Icon as={InfoCircle} fill="Primary" width={8} height={8} />
                     <div className="flex gap-2 items-center">
-                      <Text color="white">Der er en ny version:</Text>
-                      <Text color="white" b>
+                      <Text color="DarkBlue">Der er en ny version:</Text>
+                      <Text color="Primary" b>
                         {lastUpdate.version}
                       </Text>
                       <Text>👉</Text>
                       <Link href="/settings/patchnotes">
                         <Text
-                          color="white"
-                          b
-                          className="cursor-pointer hover:underline"
+                          color="DarkBlue"
+                          _hover={{ color: "Primary" }}
+                          className="cursor-pointer uppercase"
                         >
-                          Opdatere nu
+                          Opdatere nu!
                         </Text>
                       </Link>
                     </div>
                   </div>
-                </div>
+                </Box>
               )}
             </>
           )}
@@ -143,68 +144,86 @@ const Header = ({ user }) => {
           {user ? (
             <div className="">
               <div>
-                <Menu>
-                  <MenuButton as={Button}>Profil</MenuButton>
+                <Menu pb={0}>
+                  <MenuButton as={Button}>
+                    <Icon as={UserIcon} fill="DarkBlue" height={5} width={5} />
+                  </MenuButton>
                   <MenuList>
-                    <MenuGroup title={`${user?.email}`}>
+                    <MenuGroup
+                      title={
+                        <Box
+                          bg="PrimaryLighter"
+                          px={2}
+                          borderRadius="md"
+                          color="Primary"
+                        >
+                          {user?.email}
+                        </Box>
+                      }
+                    >
                       <Link href="/settings">
-                        <MenuItem>Indstillinger</MenuItem>
+                        <MenuItem
+                          fontWeight="semibold"
+                          color="DarkBlue"
+                          icon={
+                            <Icon
+                              as={SettingIcon}
+                              fill="Primary"
+                              height={5}
+                              width={5}
+                            />
+                          }
+                        >
+                          Indstillinger
+                        </MenuItem>
                       </Link>
                     </MenuGroup>
                     <MenuGroup>
                       <Link href="/info/help">
-                        <MenuItem>Hjælp</MenuItem>
+                        <MenuItem
+                          fontWeight="semibold"
+                          color="DarkBlue"
+                          icon={
+                            <Icon
+                              as={QuestionIcon}
+                              color="Primary"
+                              height={4}
+                              width={4}
+                              ml={1}
+                            />
+                          }
+                        >
+                          Hjælp
+                        </MenuItem>
                       </Link>
                     </MenuGroup>
                     <MenuDivider />
                     <MenuGroup>
-                      <MenuItem onClick={logout}>Log ud</MenuItem>
+                      <MenuItem
+                        bg="Red"
+                        color="white"
+                        fontWeight="semibold"
+                        _hover={{
+                          bg: "Red",
+                          color: "white",
+                          opacity: 0.8,
+                        }}
+                        onClick={logout}
+                        /*                         icon={
+                          <Icon
+                            as={LogoutIcon}
+                            fill="Red"
+                            height={5}
+                            width={5}
+                          />
+                        } */
+                      >
+                        Log ud
+                      </MenuItem>
                     </MenuGroup>
                   </MenuList>
                 </Menu>
               </div>
-              {/*               <Dropdown placement="bottom-left">
-                <Dropdown.Trigger>
-                  <User
-                    bordered
-                    squared
-                    as="button"
-                    size="lg"
-                    color="primary"
-                    name="Profil"
-                    description={user?.displayName}
-                    src={user?.photoURL}
-                    pointer
-                  />
-                </Dropdown.Trigger>
-                <Dropdown.Menu color="primary" aria-label="Avatar Actions">
-                  <Dropdown.Item key="profile" css={{ height: "$14" }}>
-                    <Text size={12} b color="inherit" css={{ d: "flex" }}>
-                      {user?.email}
-                    </Text>
-                  </Dropdown.Item>
-                  <Dropdown.Item key="mysnips" withDivider>
-                    <Link href="/snips">
-                      <div className="w-full font-semibold">Snips</div>
-                    </Link>
-                  </Dropdown.Item>
-                  <Dropdown.Item key="tags">
-                    <Link href="/tags">
-                      <div className="w-full font-semibold">Tags</div>
-                    </Link>
-                  </Dropdown.Item>
-                  <Dropdown.Item key="settings" withDivider>
-                    <Link href="/settings">
-                      <div className="w-full font-semibold">Indstillinger</div>
-                    </Link>
-                  </Dropdown.Item>
-                  <Dropdown.Item key="logout" color="error" withDivider>
-                    <div className="w-full font-semibold" onClick={logout}>
-                      Log ud
-                    </div>
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown> */}
             </div>
           ) : (
             <div>

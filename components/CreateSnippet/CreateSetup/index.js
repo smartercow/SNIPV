@@ -323,7 +323,7 @@ const CreateSetup = ({ id, setLoading, setDataError }) => {
                 <AccordionIcon />
               </AccordionButton>
             </h2>
-            <AccordionPanel pb={4}>
+            <AccordionPanel py={4}>
               <form onSubmit={handleSubmit} className="mx-3">
                 <div className="flex flex-col gap-4">
                   <div className="flex flex-col gap-5 h-full">

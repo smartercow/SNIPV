@@ -1,5 +1,5 @@
-import { Text } from "@chakra-ui/react";
-import Link from "next/link";
+import { Box, Link, Text } from "@chakra-ui/react";
+import NextLink from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 
@@ -27,17 +27,21 @@ const SidebarInfo = () => {
         {Menu.map((item, index) => {
           if (asPath.startsWith(item.link))
             return (
-              <Link key={index} href={item.link}>
-                <Text className="cursor-pointer">{item.titel}</Text>
-              </Link>
+              <Box>
+                <NextLink key={index} href={item.link} passHref>
+                  <Link color="Primary" fontWeight="semibold">
+                    {item.titel}
+                  </Link>
+                </NextLink>
+              </Box>
             );
           else
             return (
-              <Link key={index} href={item.link}>
-                <Text className="cursor-pointer hover:underline">
-                  {item.titel}
-                </Text>
-              </Link>
+              <Box>
+                <NextLink key={index} href={item.link} passHref>
+                  <Link fontWeight="semibold">{item.titel}</Link>
+                </NextLink>
+              </Box>
             );
         })}
       </div>

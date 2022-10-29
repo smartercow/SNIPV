@@ -6,7 +6,9 @@ const FolderHeading = ({ selectedSubFolder }) => {
     <div className="flex items-center gap-4 pt-[-2px]">
       <div className="flex items-center gap-4">
         <div className="flex gap-2 items-center">
-          <Text>{selectedSubFolder?.mainFolder?.label}</Text>
+          <Text fontWeight="semibold">
+            {selectedSubFolder?.mainFolder?.label}
+          </Text>
 
           <div
             className={`${selectedSubFolder?.mainFolder?.language?.classTree} lBadge rounded-3xl flex justify-center items-center`}
@@ -26,7 +28,7 @@ const FolderHeading = ({ selectedSubFolder }) => {
 
       <div className="flex gap-2">
         <div>
-          <Text>{selectedSubFolder?.label}</Text>
+          <Text fontWeight="semibold">{selectedSubFolder?.label}</Text>
         </div>
 
         <div

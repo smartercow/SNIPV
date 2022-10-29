@@ -1,11 +1,11 @@
-import { Text } from "@nextui-org/react";
+import { Divider, Text } from "@chakra-ui/react";
 import Head from "next/head";
 import React from "react";
 import General from "../../components/Settings/General";
 
 const GeneralSettings = () => {
   return (
-    <div className="min-h-[70vh]">
+    <div className="">
       <Head>
         <title>Generelle indstillinger - SNIPV</title>
         <meta name="description" content="Created by Peter G" />
@@ -14,13 +14,13 @@ const GeneralSettings = () => {
 
       <div>
         <div>
-          <Text h4>Generel</Text>
+          <Text fontSize={18} textTransform="uppercase">
+            Generel
+          </Text>
         </div>
-        <hr />
+        <Divider />
 
-        <div>
-          <General />
-        </div>
+        <General />
       </div>
     </div>
   );

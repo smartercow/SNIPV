@@ -127,6 +127,7 @@ const FoldersLoad = ({
           textDecorationThickness="2px"
           textUnderlineOffset={3}
           textDecorationColor="Gray"
+          fontWeight="semibold"
         >
           Rodmappe
         </Text>
@@ -164,6 +165,7 @@ const FoldersLoad = ({
             textDecorationThickness="2px"
             textUnderlineOffset={3}
             textDecorationColor="Gray"
+            fontWeight="semibold"
           >
             Undermappe
           </Text>

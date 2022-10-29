@@ -1,4 +1,4 @@
-import { Text } from "@nextui-org/react";
+import { Divider, Text } from "@chakra-ui/react";
 import Head from "next/head";
 import React from "react";
 import PatchNotes from "../../components/Settings/PatchNotes";
@@ -14,9 +14,11 @@ const PatchnotesSettings = () => {
 
       <div>
         <div>
-          <Text h4>Opdateringer</Text>
+          <Text fontSize={18} textTransform="uppercase">
+            Opdateringer
+          </Text>
         </div>
-        <hr />
+        <Divider />
 
         <div>
           <PatchNotes />
