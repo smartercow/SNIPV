@@ -6,12 +6,15 @@ export const Accordion = {
       height: "20px",
     },
   }, */
-  /*   variants: {
+  variants: {
     main: {
       container: {
-        border: "none",
+        borderStyle: "solid",
+        borderWidth: "1px",
+        borderColor: "iGrayLight",
+        borderRadius: 10,
         mt: 2,
-        button: {
+        /*         button: {
           color: "Black",
           borderRadius: 10,
           _hover: {
@@ -21,7 +24,7 @@ export const Accordion = {
             borderBottomLeftRadius: 0,
             borderBottomRightRadius: 0,
           },
-        },
+        }, */
       },
     },
     sub: {
@@ -31,7 +34,7 @@ export const Accordion = {
         borderWidth: "1px",
         borderColor: "iGrayLight",
         borderRadius: 10,
-        button: {
+        /*         button: {
           color: "Black",
           borderRadius: 10,
           bg: "iGrayLight",
@@ -43,7 +46,7 @@ export const Accordion = {
             borderBottomLeftRadius: 0,
             borderBottomRightRadius: 0,
           },
-        },
+        }, */
       },
     },
     preview: {
@@ -53,7 +56,7 @@ export const Accordion = {
         borderColor: "PrimaryELight",
         borderRadius: 10,
         mt: 1,
-        button: {
+        /*         button: {
           color: "Black",
           borderRadius: 10,
           _hover: {
@@ -64,8 +67,8 @@ export const Accordion = {
             borderBottomLeftRadius: 0,
             borderBottomRightRadius: 0,
           },
-        },
+        }, */
       },
     },
-  }, */
+  },
 };

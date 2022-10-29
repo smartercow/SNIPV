@@ -84,7 +84,7 @@ const MySNIPS = () => {
   }, [user, update]);
 
   return (
-    <div className="max-w-6xl">
+    <div>
       {user && (
         <div className="w-full">
           <SnippetsTypeLinks />

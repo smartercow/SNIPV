@@ -100,6 +100,7 @@ const CreateSetup = ({ id, setLoading, setDataError }) => {
   const [dataFetched, setDataFetched] = useState(false);
 
   const [disableCode, setDisableCode] = useState(true);
+  const [codeExpanded, setCodeExpanded] = useState(false);
   const [accordionIndex, setAccordionIndex] = useState(0);
 
   const handleChange = (e) => {
@@ -237,15 +238,15 @@ const CreateSetup = ({ id, setLoading, setDataError }) => {
 
   useEffect(() => {
     if (selectSubValue) {
-      // setCodeExpanded(true);
+      setCodeExpanded(true);
       setAccordionIndex(1);
       setDisableCode(false);
       // setFolderExpanded(false);
     } else {
-      // setCodeExpanded(false);
+      setCodeExpanded(false);
       setAccordionIndex(0);
-      // setFolderExpanded(true);
       setDisableCode(true);
+      // setFolderExpanded(true);
     }
   }, [selectSubValue, selectedMainFolder]);
 
@@ -253,9 +254,17 @@ const CreateSetup = ({ id, setLoading, setDataError }) => {
     <div className="">
       <div className="">
         <Accordion allowToggle variant="main">
-          <AccordionItem border="none" index={accordionIndex}>
+          <AccordionItem index={accordionIndex}>
             <h2>
-              <AccordionButton>
+              <AccordionButton
+                borderRadius={10}
+                bg="iGrayLight"
+                _hover={{ bg: "PrimaryELight" }}
+                _expanded={{
+                  borderBottomLeftRadius: 0,
+                  borderBottomRightRadius: 0,
+                }}
+              >
                 <Box flex="1" textAlign="left">
                   <Text variant="folderHeading">Mappe</Text>
                 </Box>
@@ -291,17 +300,24 @@ const CreateSetup = ({ id, setLoading, setDataError }) => {
               </div>
             </AccordionPanel>
           </AccordionItem>
-          <Divider my={2} />
-          <AccordionItem
-            index={accordionIndex}
-            isDisabled={disableCode}
-            borderBottom="none"
-          >
+
+          <AccordionItem index={accordionIndex} isDisabled={disableCode}>
             <h2>
-              <AccordionButton>
+              <AccordionButton
+                borderRadius={10}
+                bg="iGrayLight"
+                _hover={{ bg: "PrimaryELight" }}
+                _expanded={{
+                  borderBottomLeftRadius: 0,
+                  borderBottomRightRadius: 0,
+                }}
+              >
                 <Box flex="1" textAlign="left">
-                  <div className="flex gap-5">
+                  <div className="flex gap-5 items-center">
                     <Text variant="folderHeading">SETUP</Text>
+                    {codeExpanded && (
+                      <FolderHeading selectedSubFolder={selectedSubFolder} />
+                    )}
                   </div>
                 </Box>
                 <AccordionIcon />
@@ -345,7 +361,16 @@ const CreateSetup = ({ id, setLoading, setDataError }) => {
                   <Accordion allowToggle variant="sub">
                     <AccordionItem>
                       <h2>
-                        <AccordionButton role="heading">
+                        <AccordionButton
+                          role="heading"
+                          borderRadius={10}
+                          bg="iGrayLight"
+                          _hover={{ bg: "PrimaryELight" }}
+                          _expanded={{
+                            borderBottomLeftRadius: 0,
+                            borderBottomRightRadius: 0,
+                          }}
+                        >
                           <Box flex="1" textAlign="left">
                             <Text variant="H5">Tags</Text>
                           </Box>

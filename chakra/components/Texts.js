@@ -67,7 +67,17 @@ export const Text = {
       textOverflow: "ellipsis",
       whiteSpace: "nowrap",
     },
-
+    folderHeading: {
+      color: "Black",
+      fontSize: "20px",
+      textTransform: "uppercase",
+    },
+    preview: {
+      color: "Black",
+      fontSize: "11px",
+      textTransform: "uppercase",
+      fontWeight: 500,
+    },
     /*     headUppercase: {
       color: "Black",
       fontSize: "16px",

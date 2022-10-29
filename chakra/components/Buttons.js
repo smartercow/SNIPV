@@ -54,6 +54,7 @@ export const Button = {
     },
     create: {
       bg: "Primary",
+      color: "white",
       minW: "130px",
       fontSize: "1.1rem",
       fontWeight: 600,

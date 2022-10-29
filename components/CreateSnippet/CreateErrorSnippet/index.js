@@ -230,9 +230,17 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
     <div className="">
       <div className="">
         <Accordion defaultIndex={[0]} allowToggle variant="main">
-          <AccordionItem border="none">
+          <AccordionItem>
             <h2>
-              <AccordionButton>
+              <AccordionButton
+                borderRadius={10}
+                bg="iGrayLight"
+                _hover={{ bg: "PrimaryELight" }}
+                _expanded={{
+                  borderBottomLeftRadius: 0,
+                  borderBottomRightRadius: 0,
+                }}
+              >
                 <Box flex="1" textAlign="left">
                   <Text variant="folderHeading">Mappe</Text>
                 </Box>
@@ -268,10 +276,17 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
               </div>
             </AccordionPanel>
           </AccordionItem>
-          <Divider my={2} />
-          <AccordionItem isDisabled={disableCode} borderBottom="none">
+          <AccordionItem isDisabled={disableCode}>
             <h2>
-              <AccordionButton>
+              <AccordionButton
+                borderRadius={10}
+                bg="iGrayLight"
+                _hover={{ bg: "PrimaryELight" }}
+                _expanded={{
+                  borderBottomLeftRadius: 0,
+                  borderBottomRightRadius: 0,
+                }}
+              >
                 <Box flex="1" textAlign="left">
                   <div className="flex gap-5 items-center">
                     <Text variant="folderHeading">SNIP</Text>
@@ -334,7 +349,16 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
                         <Accordion allowToggle variant="preview">
                           <AccordionItem>
                             <h2>
-                              <AccordionButton role="heading">
+                              <AccordionButton
+                                role="heading"
+                                borderRadius={10}
+                                bg="iGrayLight"
+                                _hover={{ bg: "PrimaryELight" }}
+                                _expanded={{
+                                  borderBottomLeftRadius: 0,
+                                  borderBottomRightRadius: 0,
+                                }}
+                              >
                                 <Box flex="1" textAlign="left">
                                   <Text variant="preview">Forhåndsvisning</Text>
                                 </Box>
@@ -366,10 +390,19 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
                       </div>
 
                       <div>
-                        <Accordion allowToggle variant="preview">
+                        <Accordion allowToggle>
                           <AccordionItem>
                             <h2>
-                              <AccordionButton role="heading">
+                              <AccordionButton
+                                role="heading"
+                                borderRadius={10}
+                                bg="iGrayLight"
+                                _hover={{ bg: "PrimaryELight" }}
+                                _expanded={{
+                                  borderBottomLeftRadius: 0,
+                                  borderBottomRightRadius: 0,
+                                }}
+                              >
                                 <Box flex="1" textAlign="left">
                                   <Text variant="preview">Forhåndsvisning</Text>
                                 </Box>
@@ -405,7 +438,16 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
                         <Accordion allowToggle variant="preview">
                           <AccordionItem>
                             <h2>
-                              <AccordionButton role="heading">
+                              <AccordionButton
+                                role="heading"
+                                borderRadius={10}
+                                bg="iGrayLight"
+                                _hover={{ bg: "PrimaryELight" }}
+                                _expanded={{
+                                  borderBottomLeftRadius: 0,
+                                  borderBottomRightRadius: 0,
+                                }}
+                              >
                                 <Box flex="1" textAlign="left">
                                   <Text variant="preview">Forhåndsvisning</Text>
                                 </Box>
@@ -426,10 +468,19 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
                     </div>
                   </div>
 
-                  <Accordion allowToggle variant="sub">
+                  <Accordion allowToggle>
                     <AccordionItem>
                       <h2>
-                        <AccordionButton role="heading">
+                        <AccordionButton
+                          role="heading"
+                          borderRadius={10}
+                          bg="iGrayLight"
+                          _hover={{ bg: "PrimaryELight" }}
+                          _expanded={{
+                            borderBottomLeftRadius: 0,
+                            borderBottomRightRadius: 0,
+                          }}
+                        >
                           <Box flex="1" textAlign="left">
                             <Text variant="H5">Noter</Text>
                           </Box>
@@ -449,7 +500,16 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
 
                     <AccordionItem>
                       <h2>
-                        <AccordionButton role="heading">
+                        <AccordionButton
+                          role="heading"
+                          borderRadius={10}
+                          bg="iGrayLight"
+                          _hover={{ bg: "PrimaryELight" }}
+                          _expanded={{
+                            borderBottomLeftRadius: 0,
+                            borderBottomRightRadius: 0,
+                          }}
+                        >
                           <Box flex="1" textAlign="left">
                             <Text variant="H5">Link</Text>
                           </Box>
@@ -493,7 +553,16 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
 
                     <AccordionItem>
                       <h2>
-                        <AccordionButton role="heading">
+                        <AccordionButton
+                          role="heading"
+                          borderRadius={10}
+                          bg="iGrayLight"
+                          _hover={{ bg: "PrimaryELight" }}
+                          _expanded={{
+                            borderBottomLeftRadius: 0,
+                            borderBottomRightRadius: 0,
+                          }}
+                        >
                           <Box flex="1" textAlign="left">
                             <Text variant="H5">Tags</Text>
                           </Box>
