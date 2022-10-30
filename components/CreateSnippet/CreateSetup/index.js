@@ -253,7 +253,7 @@ const CreateSetup = ({ id, setLoading, setDataError }) => {
   return (
     <div className="">
       <div className="">
-        <Accordion allowToggle variant="main">
+        <Accordion defaultIndex={[0]} allowToggle variant="main">
           <AccordionItem index={accordionIndex}>
             <h2>
               <AccordionButton

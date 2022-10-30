@@ -1,5 +1,5 @@
-import { Text } from "@chakra-ui/react";
-import Link from "next/link";
+import { Link, Text } from "@chakra-ui/react";
+import NextLink from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 
@@ -25,19 +25,27 @@ const Sidebar = () => {
       {Menu.map((item, index) => {
         if (asPath.startsWith(item.link))
           return (
-            <Link key={index} href={item.link}>
-              <Text color="Primary" className="cursor-pointer">
-                {item.titel}
-              </Text>
-            </Link>
+            <NextLink key={index} href={item.link} passHref>
+              <a>
+                <Text color="Primary" fontSize={18} fontWeight="semibold">
+                  {item.titel}
+                </Text>
+              </a>
+            </NextLink>
           );
         else
           return (
-            <Link key={index} href={item.link}>
-              <Text _hover={{ color: "Primary" }} className="cursor-pointer">
-                {item.titel}
-              </Text>
-            </Link>
+            <NextLink key={index} href={item.link} passHref>
+              <a>
+                <Text
+                  _hover={{ color: "Primary" }}
+                  fontSize={18}
+                  fontWeight="semibold"
+                >
+                  {item.titel}
+                </Text>
+              </a>
+            </NextLink>
           );
       })}
     </aside>

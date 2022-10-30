@@ -71,10 +71,10 @@ const General = () => {
   }, [update]);
 
   return (
-    <div className="flex flex-col gap-4 my-2">
+    <div className="flex flex-col gap-4">
       <div>
         <div className="flex gap-1 items-center">
-          <Text>Domain</Text>
+          <Text fontWeight="semibold">Domain</Text>
           {/*           <Tooltip label="Din hosting domain uden https://www">
             <Icon as={BsQuestionCircleFill} w={3} h={3} />
           </Tooltip> */}
@@ -94,7 +94,7 @@ const General = () => {
 
       <div>
         <div className="flex gap-1 items-center">
-          <Text>Github repository</Text>
+          <Text fontWeight="semibold">Github repository</Text>
           {/*           <Tooltip
             label="Link til din forked Github repository"
             aria-label="Github repo"

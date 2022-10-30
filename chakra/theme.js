@@ -39,6 +39,12 @@ export const theme = extendTheme({
     PrimaryBackground: "#fafafa",
 
     Red: "#F31260",
+
+    Blue: "#0072F5",
+
+    Green: "#17C964",
+
+    Orange: "#F5A524",
   },
   styles: {
     global: () => ({

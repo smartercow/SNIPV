@@ -14,11 +14,11 @@ const GeneralSettings = () => {
 
       <div>
         <div>
-          <Text fontSize={18} textTransform="uppercase">
+          <Text fontSize={18} textTransform="uppercase" fontWeight="semibold">
             Generel
           </Text>
         </div>
-        <Divider />
+        <Divider my={2} />
 
         <General />
       </div>

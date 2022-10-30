@@ -29,9 +29,11 @@ const SidebarInfo = () => {
             return (
               <Box>
                 <NextLink key={index} href={item.link} passHref>
-                  <Link color="Primary" fontWeight="semibold">
-                    {item.titel}
-                  </Link>
+                  <a>
+                    <Text color="Primary" fontSize={18} fontWeight="semibold">
+                      {item.titel}
+                    </Text>
+                  </a>
                 </NextLink>
               </Box>
             );
@@ -39,7 +41,15 @@ const SidebarInfo = () => {
             return (
               <Box>
                 <NextLink key={index} href={item.link} passHref>
-                  <Link fontWeight="semibold">{item.titel}</Link>
+                  <a>
+                    <Text
+                      fontSize={18}
+                      fontWeight="semibold"
+                      _hover={{ color: "Primary" }}
+                    >
+                      {item.titel}
+                    </Text>
+                  </a>
                 </NextLink>
               </Box>
             );

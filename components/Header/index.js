@@ -162,39 +162,43 @@ const Header = ({ user }) => {
                       }
                     >
                       <Link href="/settings">
-                        <MenuItem
-                          fontWeight="semibold"
-                          color="DarkBlue"
-                          icon={
-                            <Icon
-                              as={SettingIcon}
-                              fill="Primary"
-                              height={5}
-                              width={5}
-                            />
-                          }
-                        >
-                          Indstillinger
-                        </MenuItem>
+                        <a>
+                          <MenuItem
+                            fontWeight="semibold"
+                            color="DarkBlue"
+                            icon={
+                              <Icon
+                                as={SettingIcon}
+                                fill="Primary"
+                                height={5}
+                                width={5}
+                              />
+                            }
+                          >
+                            Indstillinger
+                          </MenuItem>
+                        </a>
                       </Link>
                     </MenuGroup>
                     <MenuGroup>
                       <Link href="/info/help">
-                        <MenuItem
-                          fontWeight="semibold"
-                          color="DarkBlue"
-                          icon={
-                            <Icon
-                              as={QuestionIcon}
-                              color="Primary"
-                              height={4}
-                              width={4}
-                              ml={1}
-                            />
-                          }
-                        >
-                          Hjælp
-                        </MenuItem>
+                        <a>
+                          <MenuItem
+                            fontWeight="semibold"
+                            color="DarkBlue"
+                            icon={
+                              <Icon
+                                as={QuestionIcon}
+                                color="Primary"
+                                height={4}
+                                width={4}
+                                ml={1}
+                              />
+                            }
+                          >
+                            Hjælp
+                          </MenuItem>
+                        </a>
                       </Link>
                     </MenuGroup>
                     <MenuDivider />

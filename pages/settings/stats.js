@@ -1,4 +1,4 @@
-import { Text } from "@nextui-org/react";
+import { Divider, Text } from "@chakra-ui/react";
 import Head from "next/head";
 import React from "react";
 import StatsSettings from "../../components/Settings/Stats";
@@ -14,9 +14,11 @@ const StatsPage = () => {
 
       <div>
         <div className="w-full">
-          <Text h4>Stats</Text>
+          <Text textTransform="uppercase" fontWeight="semibold" fontSize={18}>
+            Stats
+          </Text>
         </div>
-        <hr />
+        <Divider my={2} />
         <div className="w-full">
           <StatsSettings />
         </div>

@@ -8,7 +8,12 @@ const SettingsLayout = ({ children }) => {
       <div className="">
         <div className="flex justify-center items-center h-20">
           <div>
-            <Text transform="uppercase" fontSize={24} textTransform="uppercase">
+            <Text
+              transform="uppercase"
+              fontSize={24}
+              textTransform="uppercase"
+              fontWeight="semibold"
+            >
               Indstillinger
             </Text>
           </div>

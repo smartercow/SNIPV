@@ -1,6 +1,6 @@
 import { Box, Text } from "@chakra-ui/react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { collection, getDocs, query } from "firebase/firestore";
+import { collection, getDocs, onSnapshot, query } from "firebase/firestore";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { auth, db } from "../../firebase/clientApp";
@@ -11,7 +11,28 @@ const Tags = ({ headTitle }) => {
   const [tags, setTags] = useState([]);
   const [loading, setLoading] = useState(false);
   const [user] = useAuthState(auth);
+
   useEffect(() => {
+    const unsub = onSnapshot(
+      collection(db, "CodeSnippetsData1"),
+      (snapshot) => {
+        let tags = [];
+        snapshot.docs.forEach((doc) => {
+          tags.push(...doc.get("tags"));
+        });
+        const uniqueTags = [...new Set(tags)];
+        setTags(uniqueTags);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+
+    return () => {
+      unsub();
+    };
+  }, []);
+  /*   useEffect(() => {
     const getAllTags = async () => {
       setLoading(true);
       try {
@@ -50,7 +71,7 @@ const Tags = ({ headTitle }) => {
     return () => {
       getAllTags();
     };
-  }, []);
+  }, []); */
 
   return (
     <div className="w-[300px] max-w-[300px] min-w-[300px]">

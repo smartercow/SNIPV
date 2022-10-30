@@ -1,4 +1,4 @@
-import { Text } from "@nextui-org/react";
+import { Divider, Text } from "@chakra-ui/react";
 import Head from "next/head";
 import Link from "next/link";
 import React from "react";
@@ -14,9 +14,11 @@ const HelpPage = () => {
 
       <div className="w-full">
         <div>
-          <Text h4>Hjælp</Text>
+          <Text fontSize={18} fontWeight="semibold" textTransform="uppercase">
+            Hjælp
+          </Text>
         </div>
-        <hr className="my-3" />
+        <Divider my={2} />
         <div>
           <Link href="/help/tags">
             <Text className="cursor-pointer underline">

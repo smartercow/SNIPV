@@ -51,16 +51,16 @@ const PatchNotes = () => {
 
   return (
     <div className="w-full">
-      <div className="my-5">
+      <div>
         {lastUpdate && (
           <>
             {lastUpdate?.id !== CurrentVersion.id && (
               <div>
                 <div className="flex gap-1">
-                  <Text>Der er en ny version</Text>
+                  <Text fontWeight="semibold">Der er en ny version</Text>
                   <Link href="https://github.com/smartercow/SNIPV">
                     <a target="_blank" className="font-bold">
-                      <Text fontSize={18} color="Primary">
+                      <Text fontSize={18} fontWeight="semibold" color="Primary">
                         {lastUpdate.version} <ExternalLinkIcon h={3} w={3} />
                       </Text>
                     </a>
@@ -68,7 +68,7 @@ const PatchNotes = () => {
                 </div>
 
                 <div className="flex gap-1">
-                  <Text>
+                  <Text fontWeight="semibold">
                     Opdatere ved at synkronisere de seneste commits på din{" "}
                     {!form.repo && "Github repository."}
                   </Text>
@@ -76,7 +76,7 @@ const PatchNotes = () => {
                     <>
                       <Link href={form.repo}>
                         <a target="_blank">
-                          <Text color="Primary">
+                          <Text fontWeight="semibold" color="Primary">
                             Github repository <ExternalLinkIcon h={3} w={3} />.
                           </Text>
                         </a>
@@ -89,13 +89,13 @@ const PatchNotes = () => {
 
             {lastUpdate?.id === CurrentVersion.id && (
               <div className="flex gap-1">
-                <Text>Din version </Text>
+                <Text fontWeight="semibold">Din version </Text>
 
-                <Text color="Primary" className="underline">
+                <Text color="Primary" fontWeight="semibold">
                   {lastUpdate.version}
                 </Text>
 
-                <Text>er up to date! 👍</Text>
+                <Text fontWeight="semibold">er up to date! 👍</Text>
               </div>
             )}
           </>
@@ -104,8 +104,8 @@ const PatchNotes = () => {
         {loading && <SnippetLoading />}
       </div>
 
-      <div className="w-full">
-        <Text fontSize={14} textTransform="uppercase">
+      <div className="w-full mt-3">
+        <Text fontSize={14} textTransform="uppercase" fontWeight="semibold">
           Seneste versioner
         </Text>
         <hr />

@@ -14,11 +14,11 @@ const PatchnotesSettings = () => {
 
       <div>
         <div>
-          <Text fontSize={18} textTransform="uppercase">
+          <Text fontSize={18} textTransform="uppercase" fontWeight="semibold">
             Opdateringer
           </Text>
         </div>
-        <Divider />
+        <Divider my={2} />
 
         <div>
           <PatchNotes />
