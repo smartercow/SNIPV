@@ -28,7 +28,9 @@ const Quill = ({
   return (
     <div className="flex flex-col gap-2">
       <div>
-        <Text variant="heading">Opsummering</Text>
+        <Text textTransform="uppercase" variant="heading" fontWeight="semibold">
+          Opsummering
+        </Text>
       </div>
       <div className="text-editor">
         <EditorToolbar />
@@ -43,13 +45,13 @@ const Quill = ({
         />
       </div>
 
-      <div>
+      <div className="flex gap-2">
         <Button
           onClick={editSum ? editSumEntry : addSummary}
           variant="entrySub"
           disabled={disableSave}
         >
-          {editSum ? "Opdatare" : "Tilføj"}
+          {editSum ? "Opdatare" : "Færdig"}
         </Button>
 
         {editSum && (

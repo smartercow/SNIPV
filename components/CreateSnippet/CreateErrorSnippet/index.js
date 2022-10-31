@@ -76,6 +76,7 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
   const router = useRouter();
   const [dataFetched, setDataFetched] = useState(false);
 
+  const [btnLoad, setBtnLoad] = useState(false);
   const [disableCode, setDisableCode] = useState(true);
   const [codeExpanded, setCodeExpanded] = useState(false);
   const [folderExpanded, setFolderExpanded] = useState(true);
@@ -113,6 +114,7 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (title && description && errorcode) {
+      setBtnLoad(true);
       if (!id) {
         try {
           await addDoc(collection(db, "ErrorSnippetsData1"), {
@@ -611,11 +613,21 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
                   <div className="mx-3 flex flex-col gap-5">
                     <div>
                       {id ? (
-                        <Button variant="create" type="submit">
+                        <Button
+                          variant="create"
+                          type="submit"
+                          isLoading={btnLoad}
+                          loadingText="Indsender.."
+                        >
                           OPDATERE
                         </Button>
                       ) : (
-                        <Button variant="create" type="submit">
+                        <Button
+                          variant="create"
+                          type="submit"
+                          isLoading={btnLoad}
+                          loadingText="Indsender.."
+                        >
                           GEM
                         </Button>
                       )}

@@ -25,11 +25,13 @@ import {
   ModalHeader,
   ModalOverlay,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 export default function DeleteSNIPModal() {
   const [col, setCol] = useState("");
   const [typey, setTypey] = useState("");
 
+  const toast = useToast();
   const [delState, setDelState] = useRecoilState(DeleteSNIPModalState);
   const [update, setUpdate] = useRecoilState(updateStateAtom);
 
@@ -54,6 +56,13 @@ export default function DeleteSNIPModal() {
         await deleteDoc(doc(db, col, delState.snip.id));
         setDelState(false);
         setUpdate(!update);
+        toast({
+          title: "Du har slettet:",
+          description: delState?.snip?.title,
+          status: "success",
+          duration: 6000,
+          isClosable: true,
+        });
       } catch (error) {
         console.log("Fejl i sletning!", error.message);
       }

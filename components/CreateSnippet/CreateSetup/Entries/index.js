@@ -6,8 +6,10 @@ import parse from "html-react-parser";
 import {
   Box,
   Button,
+  ButtonGroup,
   Divider,
   Icon,
+  IconButton,
   Input,
   Tab,
   TabList,
@@ -23,6 +25,12 @@ import { EditDocumentIcon } from "../../../SVG/EditDocumentIcon";
 import { CloseSquareIcon } from "../../../SVG/CloseSquareIcon";
 import { ArrowUpSquareIcon } from "../../../SVG/ArrowUpSquareIcon";
 import { ArrowDownSquareIcon } from "../../../SVG/ArrowDownSquareIcon";
+import {
+  ArrowDownIcon,
+  ArrowUpIcon,
+  CloseIcon,
+  EditIcon,
+} from "@chakra-ui/icons";
 
 const Quill = dynamic(() => import("./Quill"), {
   ssr: false,
@@ -32,8 +40,6 @@ const initialCodeFileValue = {
   title: "",
   code: "",
 };
-
-let nextId = 0;
 
 const Entries = ({
   allEntries,
@@ -61,7 +67,9 @@ const Entries = ({
   const [selectedEntry, setSelectedEntry] = useState("summary");
   const [menu, setMenu] = useState("");
 
+  const [nextId, setNextId] = useState(1);
   const [editSum, setEditSum] = useState(false);
+  const [editId, setEditId] = useState(0);
 
   const [disableSave, setDisableSave] = useState(true);
 
@@ -77,7 +85,7 @@ const Entries = ({
 
   const AddCodeFiles = (e) => {
     e.preventDefault();
-    setEntries((oldForm) => [...oldForm, { codeFiles }]);
+    setEntries((oldForm) => [...oldForm, { entryId: nextId, codeFiles }]);
     setSelectedEntry("summary");
     setCodeFile(initialCodeFileValue);
     setCodeFiles([]);
@@ -89,9 +97,13 @@ const Entries = ({
 
   const AddAllPackages = (e) => {
     e.preventDefault();
-    setEntries((oldForm) => [...oldForm, { packages: packages }]);
+    setEntries((oldForm) => [
+      ...oldForm,
+      { entryId: nextId, packages: packages },
+    ]);
     setSelectedEntry("summary");
     setPackages([]);
+    setNextId(nextId + 1);
   };
 
   const AddSection = (e) => {
@@ -112,9 +124,10 @@ const Entries = ({
     e.preventDefault();
     setEntries((entSum) => [
       ...entSum,
-      { id: nextId++, summary: summaryValue },
+      { entryId: nextId, summary: summaryValue },
     ]);
     setSummaryValue({});
+    setNextId(nextId + 1);
   };
 
   useEffect(() => {
@@ -125,27 +138,51 @@ const Entries = ({
     }
   }, [menu, entries]);
 
-  function editSumEntry(summary) {
-    setSummaryValue({});
-    const edit = entries.map((obj) => {
-      if (entries.summary === summary) {
-        return { ...object, summary: summaryValue };
+  const editSumEntry = () => {
+    const editedSummary = entries.map((obj) => {
+      if (obj.entryId === editId) {
+        return { ...obj, summary: summaryValue };
       }
+
+      return obj;
     });
+    setSummaryValue({});
+    setEntries(editedSummary);
     setEditSum(false);
-  }
+    setEditId(0);
+  };
 
   const moveUp = (index) => {
-    if (index < 1 || index >= entries.length) {
-      return;
-    }
+    if (index < 1 || index >= entries.length) return;
 
-    setEntries(
-      ([entries[index - 1], entries[index]] = [
+    setEntries((entries) => {
+      entries = [...entries];
+
+      [entries[index - 1], entries[index]] = [
         entries[index],
         entries[index - 1],
-      ])
-    );
+      ];
+
+      return entries;
+    });
+  };
+
+  // console.log("ENTER", entries);
+  // console.log("nextId", nextId);
+
+  const moveDown = (index) => {
+    if (index >= entries.length - 1) return;
+
+    setEntries((entries) => {
+      entries = [...entries];
+
+      [entries[index + 1], entries[index]] = [
+        entries[index],
+        entries[index + 1],
+      ];
+
+      return entries;
+    });
   };
 
   const renderEntry = (ent) => {
@@ -159,6 +196,7 @@ const Entries = ({
             editSum={editSum}
             setEditSum={setEditSum}
             editSumEntry={editSumEntry}
+            setEditId={setEditId}
           />
         );
       case "code":
@@ -196,6 +234,7 @@ const Entries = ({
             editSum={editSum}
             setEditSum={setEditSum}
             editSumEntry={editSumEntry}
+            setEditId={setEditId}
           />
         );
     }
@@ -206,11 +245,13 @@ const Entries = ({
       <Box>
         <Accord allEntries={allEntries} />
       </Box>
-      <div className="border border-gray-400 rounded-md">
-        <Box p={4} className="flex flex-col gap-3">
-          <Box className="flex gap-6 items-center">
+      <Box borderWidth={1} borderRadius="md">
+        <Box className="flex flex-col gap-3">
+          <Box px={4} mt={4} className="flex gap-6 items-center">
             <div className="flex gap-1">
-              <Text variant="H5">Menu</Text>
+              <Text variant="H5" fontWeight="semibold">
+                Menu
+              </Text>
               <Text variant="H5" color="Red">
                 *
               </Text>
@@ -222,16 +263,12 @@ const Entries = ({
               onChange={(e) => setMenu(e.target.value)}
             />
           </Box>
-          <Box>
+
+          <Divider />
+
+          <Box p={4}>
             {!Object.keys(entries).length > 0 && (
-              <Box
-                borderColor="Gray"
-                borderWidth={1}
-                borderRadius="md"
-                className=""
-                py={4}
-                px={2}
-              >
+              <Box py={4} px={2}>
                 <Text variant="heading" color="gray.400">
                   Tilføj entries...
                 </Text>
@@ -246,13 +283,88 @@ const Entries = ({
                       borderColor="Gray"
                       borderWidth={1}
                       borderRadius="md"
-                      p={2}
                       mb={2}
+                      p={2}
                       key={index}
                     >
                       {entry.summary && (
                         <div className="flex flex-col">
-                          <div className="flex">
+                          <div>
+                            <ButtonGroup size="sm" isAttached variant="outline">
+                              <IconButton
+                                aria-label="Up"
+                                onClick={() => moveUp(index)}
+                                icon={
+                                  <ArrowUpIcon
+                                    height={5}
+                                    width={5}
+                                    color="gray.500"
+                                  />
+                                }
+                              />
+                              <IconButton
+                                aria-label="Down"
+                                onClick={() => moveDown(index)}
+                                icon={
+                                  <ArrowDownIcon
+                                    height={5}
+                                    width={5}
+                                    color="gray.500"
+                                  />
+                                }
+                              />
+                              <IconButton
+                                aria-label="Edit"
+                                onClick={() => {
+                                  setSummaryValue(entry.summary),
+                                    setEditSum(true),
+                                    setEditId(entry.entryId);
+                                }}
+                                icon={
+                                  <EditIcon
+                                    height={4}
+                                    width={4}
+                                    color="Primary"
+                                  />
+                                }
+                              />
+                              <IconButton
+                                aria-label="Down"
+                                onClick={() => {
+                                  setEntries(
+                                    entries.filter(
+                                      (ent) => ent.entryId !== entry.entryId
+                                    )
+                                  );
+                                }}
+                                icon={
+                                  <CloseIcon height={3} width={3} color="Red" />
+                                }
+                              />
+                            </ButtonGroup>
+                          </div>
+                          <Box
+                            mt={1}
+                            borderColor={
+                              editSum && editId === index
+                                ? "PrimaryLighter"
+                                : "Gray"
+                            }
+                            bg={
+                              editSum && editId === index
+                                ? "PrimaryLighter"
+                                : "white"
+                            }
+                            className="parse flex-grow"
+                          >
+                            {parse(entry.summary)}
+                          </Box>
+                        </div>
+                      )}
+
+                      {entry.packages && (
+                        <Box className="">
+                          <div>
                             <Icon
                               as={ArrowUpSquareIcon}
                               h={6}
@@ -267,6 +379,7 @@ const Entries = ({
                               w={6}
                               fill="gray.700"
                               cursor="pointer"
+                              onClick={() => moveDown(index)}
                             />
                             <Icon
                               as={EditDocumentIcon}
@@ -276,7 +389,8 @@ const Entries = ({
                               cursor="pointer"
                               onClick={() => {
                                 setSummaryValue(entry.summary),
-                                  setEditSum(true);
+                                  setEditSum(true),
+                                  setEditId(entry.id);
                               }}
                             />
                             <Icon
@@ -292,18 +406,12 @@ const Entries = ({
                               }}
                             />
                           </div>
-                          <div className="parse flex grow">
-                            {parse(entry.summary)}
+                          <div>
+                            {entry.packages.map((pack, index) => (
+                              <div key={index}>{pack}</div>
+                            ))}
                           </div>
-                        </div>
-                      )}
-
-                      {entry.packages && (
-                        <>
-                          {entry.packages.map((pack, index) => (
-                            <div key={index}>{pack}</div>
-                          ))}
-                        </>
+                        </Box>
                       )}
 
                       {entry.codeFiles && (
@@ -338,14 +446,20 @@ const Entries = ({
           </Box>
         </Box>
 
-        <Divider my={3} />
+        <Divider mt={3} />
 
-        <Box boxShadow="2xl" borderRadius="lg">
+        <Box>
           <Box p={4}>{renderEntry(selectedEntry)}</Box>
 
           <Box bg="PrimaryLighter" className="p-2">
             <div>
-              <Text variant="heading">Ny entry</Text>
+              <Text
+                textTransform="uppercase"
+                variant="heading"
+                fontWeight="semibold"
+              >
+                Ny entry
+              </Text>
             </div>
 
             <div className="flex gap-2 justify-between">
@@ -382,7 +496,7 @@ const Entries = ({
             </div>
           </Box>
         </Box>
-      </div>
+      </Box>
     </div>
   );
 };

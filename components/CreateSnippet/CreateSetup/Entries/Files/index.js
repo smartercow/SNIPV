@@ -1,4 +1,4 @@
-import { Button, Input, Text, Textarea } from "@chakra-ui/react";
+import { Button, Divider, Input, Text, Textarea } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { Select, CreatableSelect, AsyncSelect } from "chakra-react-select";
 import { FileExtOptions } from "../../../../../utilities/Language/FileExtensions";
@@ -99,15 +99,19 @@ const Files = ({
   }, [selectedFileExt]);
 
   return (
-    <div className=" flex flex-col gap-2">
+    <div>
       <div className="flex gap-2 items-center">
-        <Text>Tilføjet filer:</Text>
+        <div>
+          <Text textTransform="uppercase" fontWeight="semibold">
+            Filer:
+          </Text>
+        </div>
         <div className="flex gap-2 items-center">
           {codeFiles && (
             <>
               {codeFiles.map((c, i) => (
                 <div key={i} className="flex">
-                  <Text color="Primary">
+                  <Text color="Primary" fontWeight="semibold">
                     {c.title}
                     {c.entryFileExt?.H5}
                   </Text>
@@ -118,88 +122,91 @@ const Files = ({
           )}
         </div>
       </div>
+      <Divider mt={1} mb={3} />
+      <div className="flex flex-col gap-3">
+        <div className="flex gap-3">
+          <div className="w-full">
+            <Input
+              name="title"
+              onChange={onChange}
+              placeholder="App"
+              type="text"
+              value={title}
+              focusBorderColor="Primary"
+              // variant="main"
+            />
+          </div>
 
-      <div className="flex gap-3">
-        <div className="w-full">
-          <Input
+          <div className="w-full">
+            <Select
+              options={FileExtOptions}
+              placeholder="Valg sprog"
+              value={selectLangFileExt}
+              onChange={handleLangSelect}
+              isSearchable={true}
+              menuPortalTarget={document.body}
+              styles={{
+                menuPortal: (base) => ({ ...base, zIndex: 9999 }),
+              }}
+              components={{
+                NoOptionsMessage,
+                // Option: OptionFileExt,
+                // SingleValue: ValueFileExt,
+              }}
+            />
+          </div>
+
+          <div className="w-full">
+            <Select
+              options={fileExts}
+              placeholder="Valg en rodmappe"
+              value={selectFileExt}
+              onChange={handleFileExtSelect}
+              isSearchable={true}
+              isDisabled={disableSelect}
+              menuPortalTarget={document.body}
+              styles={{
+                menuPortal: (base) => ({ ...base, zIndex: 9999 }),
+              }}
+              components={{
+                NoOptionsMessage,
+                // Option: OptionFileExt,
+                // SingleValue: ValueFileExt,
+              }}
+            />
+          </div>
+        </div>
+
+        <div>
+          <Textarea
             className=""
-            name="title"
+            name="code"
+            cols="30"
+            rows="10"
+            value={code}
+            placeholder="Al filkode inklusive imports"
             onChange={onChange}
-            placeholder="App"
-            type="text"
-            value={title}
             focusBorderColor="Primary"
-            // variant="main"
           />
         </div>
 
-        <div className="w-full">
-          <Select
-            options={FileExtOptions}
-            placeholder="Valg sprog"
-            value={selectLangFileExt}
-            onChange={handleLangSelect}
-            isSearchable={true}
-            menuPortalTarget={document.body}
-            styles={{
-              menuPortal: (base) => ({ ...base, zIndex: 9999 }),
-            }}
-            components={{
-              NoOptionsMessage,
-              // Option: OptionFileExt,
-              // SingleValue: ValueFileExt,
-            }}
-          />
+        <div className="flex gap-4">
+          <Button
+            variant="entrySub"
+            onClick={AddCodeFile}
+            isDisabled={disableNew}
+          >
+            Tilføj
+          </Button>
+
+          <Button
+            variant="entrySub"
+            onClick={AddCodeFiles}
+            isDisabled={disableSave}
+          >
+            Færdig
+          </Button>
         </div>
-
-        <div className="w-full">
-          <Select
-            options={fileExts}
-            placeholder="Valg en rodmappe"
-            value={selectFileExt}
-            onChange={handleFileExtSelect}
-            isSearchable={true}
-            isDisabled={disableSelect}
-            menuPortalTarget={document.body}
-            styles={{
-              menuPortal: (base) => ({ ...base, zIndex: 9999 }),
-            }}
-            components={{
-              NoOptionsMessage,
-              // Option: OptionFileExt,
-              // SingleValue: ValueFileExt,
-            }}
-          />
-        </div>
-      </div>
-
-      <Textarea
-        className=""
-        name="code"
-        cols="30"
-        rows="10"
-        value={code}
-        placeholder="Al filkode inklusive imports"
-        onChange={onChange}
-        focusBorderColor="Primary"
-      />
-
-      <div className="flex gap-4">
-        <Button
-          variant="entrySub"
-          onClick={AddCodeFile}
-          isDisabled={disableNew}
-        >
-          Tilføj
-        </Button>
-
-        <Button
-          variant="entrySub"
-          onClick={AddCodeFiles}
-          isDisabled={disableSave}
-        >
-          Færdig
-        </Button>
       </div>
     </div>
   );

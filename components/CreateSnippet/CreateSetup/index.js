@@ -99,6 +99,7 @@ const CreateSetup = ({ id, setLoading, setDataError }) => {
   const router = useRouter();
   const [dataFetched, setDataFetched] = useState(false);
 
+  const [btnLoad, setBtnLoad] = useState(false);
   const [disableCode, setDisableCode] = useState(true);
   const [codeExpanded, setCodeExpanded] = useState(false);
   const [accordionIndex, setAccordionIndex] = useState(0);
@@ -136,6 +137,7 @@ const CreateSetup = ({ id, setLoading, setDataError }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (title && description) {
+      setBtnLoad(true);
       if (!id) {
         try {
           await addDoc(collection(db, "SetupsData"), {
@@ -443,6 +445,8 @@ const CreateSetup = ({ id, setLoading, setDataError }) => {
                           variant="create"
                           color="primary"
                           type="submit"
+                          isLoading={btnLoad}
+                          loadingText="Indsender.."
                         >
                           OPDATERE
                         </Button>
@@ -452,6 +456,8 @@ const CreateSetup = ({ id, setLoading, setDataError }) => {
                           variant="create"
                           color="primary"
                           type="submit"
+                          isLoading={btnLoad}
+                          loadingText="Indsender.."
                         >
                           GEM
                         </Button>
