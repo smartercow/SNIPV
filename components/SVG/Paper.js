@@ -1,5 +1,3 @@
-import { React } from "@nextui-org/react";
-
 export const Paper = ({ fill, size, height, width, ...props }) => {
   return (
     <svg

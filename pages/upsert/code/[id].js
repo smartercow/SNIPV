@@ -1,4 +1,3 @@
-import { Button, Card, Loading, Text } from "@nextui-org/react";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import CreateCodeSnippet from "../../../components/CreateSnippet/CreateCodeSnippet";
@@ -7,7 +6,8 @@ import { auth } from "../../../firebase/clientApp";
 import NoUser from "../../../components/NoPage/NoUser";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { Box } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
+import LoadingSNIPS from "../../../components/LoadingState/LoadingSNIPS";
 
 const UpsertId = () => {
   const [user] = useAuthState(auth);
@@ -46,7 +46,7 @@ const UpsertId = () => {
 
       {loading && (
         <div className="flex justify-center items-center h-[20vh]">
-          <Loading size="lg" />
+          <LoadingSNIPS size={10} />
         </div>
       )}
 

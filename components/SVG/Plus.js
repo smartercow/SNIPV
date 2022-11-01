@@ -1,5 +1,3 @@
-import { React } from "@nextui-org/react";
-
 export const PlusIcon = ({
   fill = "currentColor",
   filled,

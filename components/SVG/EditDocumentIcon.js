@@ -1,5 +1,4 @@
 import { Icon } from "@chakra-ui/react";
-import { React } from "@nextui-org/react";
 
 export const EditDocumentIcon = ({ fill, size, height, width, ...props }) => {
   return (
@@ -17,7 +16,7 @@ export const EditDocumentIcon = ({ fill, size, height, width, ...props }) => {
   );
 };
 
-/* import { React } from "@nextui-org/react";
+/* 
 
 export const EditDocumentIcon = ({ fill, size, height, width, ...props }) => {
   return (

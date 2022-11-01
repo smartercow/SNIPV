@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { auth, db } from "../../firebase/clientApp";
 import { useSignInWithGoogle } from "react-firebase-hooks/auth";
-import { Button, Input } from "@nextui-org/react";
 import { GoogleLogo } from "./GoogleLogo";
 import { doc, getDoc } from "firebase/firestore";
+import { Button, Input } from "@chakra-ui/react";
 const Auth = () => {
   const [signInWithGoogle, userCred, loading, error] =
     useSignInWithGoogle(auth);
@@ -44,9 +44,7 @@ const Auth = () => {
                 onKeyDown={(e) => e.key === "Enter" && confirmAccess}
               />
             </div>
-            <Button auto type="submit">
-              Få adgang
-            </Button>
+            <Button type="submit">Få adgang</Button>
           </div>
         </form>
       </div>
@@ -54,8 +52,7 @@ const Auth = () => {
       <div hidden={hidden}>
         <div className="flex justify-center">
           <Button
-            auto
-            color="primary"
+            color="Primary"
             icon={<GoogleLogo />}
             onClick={() => signInWithGoogle()}
           >

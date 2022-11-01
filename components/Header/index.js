@@ -60,7 +60,7 @@ const Header = ({ user }) => {
   }, [updateData]);
 
   return (
-    <div className="border-b border-gray-100 shadow-md bg-white">
+    <div className="shadow-md bg-white">
       {user && (
         <>
           {lastUpdate && (
@@ -92,15 +92,16 @@ const Header = ({ user }) => {
           )}
         </>
       )}
-      <div className="flex justify-between items-center max-w-6xl mx-5 lg:mx-auto h-18">
+      <div className="flex justify-between items-center max-w-6xl mx-5 lg:mx-auto h-14">
         <div className="flex gap-4 items-center">
-          <div className="flex items-center">
+          <div className="flex items-center select-none">
             <Link href="/" passHref>
               <a>
                 <Text
-                  variant="H1"
                   textTransform="uppercase"
+                  fontSize={32}
                   fontWeight="extrabold"
+                  letterSpacing="tighter"
                   color="DarkBlue"
                 >
                   SNIPV

@@ -1,5 +1,4 @@
-import { Box } from "@chakra-ui/react";
-import { Text } from "@nextui-org/react";
+import { Box, Text } from "@chakra-ui/react";
 import { collection, onSnapshot } from "firebase/firestore";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";

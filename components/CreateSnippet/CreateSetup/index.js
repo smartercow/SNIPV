@@ -80,16 +80,10 @@ const CreateSetup = ({ id, setLoading, setDataError }) => {
 
   const [allEntries, setAllEntries] = useState([]);
   const [entries, setEntries] = useState([]);
-  const [selectLangFileExt, setSelectLangFileExt] = useState(
-    initialSelectedLangFileExt
-  );
-  const [selectedLangFileExt, setSelectedLangFileExt] = useState(
-    initialSelectedLangFileExt
-  );
-  const [selectFileExt, setSelectFileExt] = useState(initialSelectedFileExt);
-  const [selectedFileExt, setSelectedFileExt] = useState(
-    initialSelectedFileExt
-  );
+  const [selectLangFileExt, setSelectLangFileExt] = useState({});
+  const [selectedLangFileExt, setSelectedLangFileExt] = useState({});
+  const [selectFileExt, setSelectFileExt] = useState({});
+  const [selectedFileExt, setSelectedFileExt] = useState({});
 
   const [username, setUsername] = useState("");
   const [usernameValue, setUsernameValue] = useState("");

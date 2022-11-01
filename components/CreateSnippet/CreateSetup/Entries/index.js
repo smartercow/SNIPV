@@ -21,14 +21,11 @@ import {
 import Syntax from "./Syntax";
 import Accord from "./Accord";
 import Packages from "./Packages";
-import { EditDocumentIcon } from "../../../SVG/EditDocumentIcon";
-import { CloseSquareIcon } from "../../../SVG/CloseSquareIcon";
-import { ArrowUpSquareIcon } from "../../../SVG/ArrowUpSquareIcon";
-import { ArrowDownSquareIcon } from "../../../SVG/ArrowDownSquareIcon";
 import {
   ArrowDownIcon,
   ArrowUpIcon,
   CloseIcon,
+  CopyIcon,
   EditIcon,
 } from "@chakra-ui/icons";
 
@@ -67,15 +64,27 @@ const Entries = ({
   const [selectedEntry, setSelectedEntry] = useState("summary");
   const [menu, setMenu] = useState("");
 
-  const [nextId, setNextId] = useState(1);
-  const [editSum, setEditSum] = useState(false);
-  const [editId, setEditId] = useState(0);
+  const [editState, setEditState] = useState(false);
+  const [editId, setEditId] = useState("");
 
   const [disableSave, setDisableSave] = useState(true);
+  const [disableSum, setDisableSum] = useState(false);
+  const [disableFiles, setDisableFiles] = useState(false);
+  const [disablePackages, setDisablePackages] = useState(false);
+
+  const randomValue = (Math.random() + 3).toString(36).substring(2);
 
   const AddCodeFile = (e) => {
     e.preventDefault();
-    setCodeFiles((oldForm) => [...oldForm, codeFile]);
+    setCodeFiles((oldForm) => [
+      ...oldForm,
+      {
+        fileId: randomValue,
+        file: codeFile,
+        entryFileLang: selectedLangFileExt,
+        entryFileExt: selectedFileExt,
+      },
+    ]);
     setCodeFile(initialCodeFileValue);
     setSelectLangFileExt(initialSelectedLangFileExt);
     setSelectedLangFileExt(initialSelectedLangFileExt);
@@ -85,7 +94,10 @@ const Entries = ({
 
   const AddCodeFiles = (e) => {
     e.preventDefault();
-    setEntries((oldForm) => [...oldForm, { entryId: nextId, codeFiles }]);
+    setEntries((oldForm) => [
+      ...oldForm,
+      { entryId: randomValue, files: codeFiles },
+    ]);
     setSelectedEntry("summary");
     setCodeFile(initialCodeFileValue);
     setCodeFiles([]);
@@ -99,16 +111,18 @@ const Entries = ({
     e.preventDefault();
     setEntries((oldForm) => [
       ...oldForm,
-      { entryId: nextId, packages: packages },
+      { entryId: randomValue, packages: packages },
     ]);
     setSelectedEntry("summary");
     setPackages([]);
-    setNextId(nextId + 1);
   };
 
   const AddSection = (e) => {
     e.preventDefault();
-    setAllEntries((oldForm) => [...oldForm, { section: menu, entries }]);
+    setAllEntries((oldForm) => [
+      ...oldForm,
+      { sectionId: randomValue, section: menu, entries: entries },
+    ]);
     setSelectedEntry("summary");
     setCodeFile(initialCodeFileValue);
     setCodeFiles([]);
@@ -124,10 +138,9 @@ const Entries = ({
     e.preventDefault();
     setEntries((entSum) => [
       ...entSum,
-      { entryId: nextId, summary: summaryValue },
+      { entryId: randomValue, summary: summaryValue },
     ]);
     setSummaryValue({});
-    setNextId(nextId + 1);
   };
 
   useEffect(() => {
@@ -148,8 +161,8 @@ const Entries = ({
     });
     setSummaryValue({});
     setEntries(editedSummary);
-    setEditSum(false);
-    setEditId(0);
+    setEditState(false);
+    setEditId("");
   };
 
   const moveUp = (index) => {
@@ -166,9 +179,6 @@ const Entries = ({
       return entries;
     });
   };
-
-  // console.log("ENTER", entries);
-  // console.log("nextId", nextId);
 
   const moveDown = (index) => {
     if (index >= entries.length - 1) return;
@@ -193,8 +203,8 @@ const Entries = ({
             summaryValue={summaryValue}
             setSummaryValue={setSummaryValue}
             addSummary={addSummary}
-            editSum={editSum}
-            setEditSum={setEditSum}
+            editState={editState}
+            setEditState={setEditState}
             editSumEntry={editSumEntry}
             setEditId={setEditId}
           />
@@ -202,11 +212,21 @@ const Entries = ({
       case "code":
         return (
           <Files
+            initialCodeFileValue={initialCodeFileValue}
+            initialSelectedFileExt={initialSelectedFileExt}
+            initialSelectedLangFileExt={initialSelectedLangFileExt}
             codeFile={codeFile}
             setCodeFile={setCodeFile}
             codeFiles={codeFiles}
+            setCodeFiles={setCodeFiles}
             AddCodeFiles={AddCodeFiles}
             AddCodeFile={AddCodeFile}
+            editId={editId}
+            setEditId={setEditId}
+            editState={editState}
+            entries={entries}
+            setEntries={setEntries}
+            setEditState={setEditState}
             selectLangFileExt={selectLangFileExt}
             setSelectLangFileExt={setSelectLangFileExt}
             selectFileExt={selectFileExt}
@@ -215,14 +235,21 @@ const Entries = ({
             setSelectedLangFileExt={setSelectedLangFileExt}
             selectedFileExt={selectedFileExt}
             setSelectedFileExt={setSelectedFileExt}
+            setSelectedEntry={setSelectedEntry}
           />
         );
-      case "package":
+      case "packages":
         return (
           <Packages
             packages={packages}
             setPackages={setPackages}
             AddAllPackages={AddAllPackages}
+            editState={editState}
+            setEditState={setEditState}
+            editId={editId}
+            setEditId={setEditId}
+            entries={entries}
+            setEntries={setEntries}
           />
         );
       default:
@@ -231,14 +258,39 @@ const Entries = ({
             summaryValue={summaryValue}
             setSummaryValue={setSummaryValue}
             addSummary={addSummary}
-            editSum={editSum}
-            setEditSum={setEditSum}
+            editState={editState}
+            setEditState={setEditState}
             editSumEntry={editSumEntry}
             setEditId={setEditId}
           />
         );
     }
   };
+
+  console.log("ENTERIES", entries);
+  useEffect(() => {
+    if (editState) {
+      if (selectedEntry === "summary") {
+        setDisableSum(false);
+        setDisableFiles(true);
+        setDisablePackages(true);
+      }
+      if (selectedEntry === "code") {
+        setDisableSum(true);
+        setDisableFiles(false);
+        setDisablePackages(true);
+      }
+      if (selectedEntry === "packages") {
+        setDisableSum(true);
+        setDisableFiles(true);
+        setDisablePackages(false);
+      }
+    } else {
+      setDisableSum(false);
+      setDisableFiles(false);
+      setDisablePackages(false);
+    }
+  }, [editState, selectedEntry]);
 
   return (
     <div className="flex flex-col gap-4">
@@ -276,172 +328,380 @@ const Entries = ({
             )}
 
             {Object.keys(entries).length > 0 && (
-              <Box>
+              <div className="flex flex-col gap-4">
                 {entries.map((entry, index) => {
                   return (
-                    <Box
-                      borderColor="Gray"
-                      borderWidth={1}
-                      borderRadius="md"
-                      mb={2}
-                      p={2}
-                      key={index}
-                    >
+                    <Box key={index}>
                       {entry.summary && (
-                        <div className="flex flex-col">
-                          <div>
-                            <ButtonGroup size="sm" isAttached variant="outline">
-                              <IconButton
-                                aria-label="Up"
-                                onClick={() => moveUp(index)}
-                                icon={
-                                  <ArrowUpIcon
-                                    height={5}
-                                    width={5}
-                                    color="gray.500"
-                                  />
-                                }
-                              />
-                              <IconButton
-                                aria-label="Down"
-                                onClick={() => moveDown(index)}
-                                icon={
-                                  <ArrowDownIcon
-                                    height={5}
-                                    width={5}
-                                    color="gray.500"
-                                  />
-                                }
-                              />
-                              <IconButton
-                                aria-label="Edit"
-                                onClick={() => {
-                                  setSummaryValue(entry.summary),
-                                    setEditSum(true),
-                                    setEditId(entry.entryId);
-                                }}
-                                icon={
-                                  <EditIcon
-                                    height={4}
-                                    width={4}
-                                    color="Primary"
-                                  />
-                                }
-                              />
-                              <IconButton
-                                aria-label="Down"
-                                onClick={() => {
-                                  setEntries(
-                                    entries.filter(
-                                      (ent) => ent.entryId !== entry.entryId
-                                    )
-                                  );
-                                }}
-                                icon={
-                                  <CloseIcon height={3} width={3} color="Red" />
-                                }
-                              />
-                            </ButtonGroup>
+                        <Box>
+                          <div className="flex gap-2 items-center">
+                            <div className="flex-none">
+                              <ButtonGroup
+                                size="sm"
+                                isAttached
+                                variant="outline"
+                              >
+                                <IconButton
+                                  aria-label="Up"
+                                  borderBottomRadius="none"
+                                  borderBottom="none"
+                                  onClick={() => moveUp(index)}
+                                  icon={
+                                    <ArrowUpIcon
+                                      height={5}
+                                      width={5}
+                                      color="gray.500"
+                                    />
+                                  }
+                                />
+                                <IconButton
+                                  aria-label="Down"
+                                  borderBottom="none"
+                                  onClick={() => moveDown(index)}
+                                  icon={
+                                    <ArrowDownIcon
+                                      height={5}
+                                      width={5}
+                                      color="gray.500"
+                                    />
+                                  }
+                                />
+                                <IconButton
+                                  aria-label="Edit"
+                                  borderBottom="none"
+                                  onClick={() => {
+                                    setSummaryValue(entry.summary),
+                                      setEditState(true),
+                                      setSelectedEntry("summary"),
+                                      setEditId(entry.entryId);
+                                  }}
+                                  icon={
+                                    <EditIcon
+                                      height={4}
+                                      width={4}
+                                      color="Primary"
+                                    />
+                                  }
+                                />
+                                <IconButton
+                                  aria-label="Delete"
+                                  borderBottomRadius="none"
+                                  borderBottom="none"
+                                  disabled={
+                                    editState && editId === entry.entryId
+                                      ? true
+                                      : false
+                                  }
+                                  onClick={() => {
+                                    setEntries(
+                                      entries.filter(
+                                        (ent) => ent.entryId !== entry.entryId
+                                      )
+                                    );
+                                  }}
+                                  icon={
+                                    <CloseIcon
+                                      height={3}
+                                      width={3}
+                                      color="Red"
+                                    />
+                                  }
+                                />
+                              </ButtonGroup>
+                            </div>
+                            <Box className="flex-grow">
+                              <Text
+                                fontSize={14}
+                                fontWeight="semibold"
+                                textTransform="uppercase"
+                              >
+                                1.{index + 1}&nbsp;- Opsummering
+                              </Text>
+                            </Box>
                           </div>
                           <Box
-                            mt={1}
                             borderColor={
-                              editSum && editId === index
+                              editState && editId === entry.entryId
                                 ? "PrimaryLighter"
                                 : "Gray"
                             }
                             bg={
-                              editSum && editId === index
+                              editState && editId === entry.entryId
                                 ? "PrimaryLighter"
                                 : "white"
                             }
+                            p={4}
+                            borderWidth={1}
+                            borderRadius="md"
+                            borderTopLeftRadius="none"
                             className="parse flex-grow"
                           >
                             {parse(entry.summary)}
                           </Box>
-                        </div>
-                      )}
-
-                      {entry.packages && (
-                        <Box className="">
-                          <div>
-                            <Icon
-                              as={ArrowUpSquareIcon}
-                              h={6}
-                              w={6}
-                              fill="gray.700"
-                              cursor="pointer"
-                              onClick={() => moveUp(index)}
-                            />
-                            <Icon
-                              as={ArrowDownSquareIcon}
-                              h={6}
-                              w={6}
-                              fill="gray.700"
-                              cursor="pointer"
-                              onClick={() => moveDown(index)}
-                            />
-                            <Icon
-                              as={EditDocumentIcon}
-                              h={6}
-                              w={6}
-                              fill="Primary"
-                              cursor="pointer"
-                              onClick={() => {
-                                setSummaryValue(entry.summary),
-                                  setEditSum(true),
-                                  setEditId(entry.id);
-                              }}
-                            />
-                            <Icon
-                              as={CloseSquareIcon}
-                              h={6}
-                              w={6}
-                              fill="Red"
-                              cursor="pointer"
-                              onClick={() => {
-                                setEntries(
-                                  entries.filter((ent) => ent.id !== entry.id)
-                                );
-                              }}
-                            />
-                          </div>
-                          <div>
-                            {entry.packages.map((pack, index) => (
-                              <div key={index}>{pack}</div>
-                            ))}
-                          </div>
                         </Box>
                       )}
 
-                      {entry.codeFiles && (
-                        <Tabs variant="mainTab">
-                          <TabList>
-                            {entry.codeFiles.map((entry, index) => {
-                              return (
-                                <Tab key={index}>
-                                  {entry.title}
-                                  {entry.entryFileExt.H5}
-                                </Tab>
-                              );
-                            })}
-                          </TabList>
+                      {entry.packages && (
+                        <Box>
+                          <div className="flex gap-2 items-center">
+                            <div>
+                              <ButtonGroup
+                                size="sm"
+                                isAttached
+                                variant="outline"
+                              >
+                                <IconButton
+                                  aria-label="Up"
+                                  borderBottomRadius="none"
+                                  borderBottom="none"
+                                  onClick={() => moveUp(index)}
+                                  icon={
+                                    <ArrowUpIcon
+                                      height={5}
+                                      width={5}
+                                      color="gray.500"
+                                    />
+                                  }
+                                />
+                                <IconButton
+                                  aria-label="Down"
+                                  borderBottom="none"
+                                  onClick={() => moveDown(index)}
+                                  icon={
+                                    <ArrowDownIcon
+                                      height={5}
+                                      width={5}
+                                      color="gray.500"
+                                    />
+                                  }
+                                />
+                                <IconButton
+                                  aria-label="Edit"
+                                  borderBottom="none"
+                                  onClick={() => {
+                                    setPackages(entry.packages),
+                                      setEditState(true),
+                                      setSelectedEntry("packages"),
+                                      setEditId(entry.entryId);
+                                  }}
+                                  icon={
+                                    <EditIcon
+                                      height={4}
+                                      width={4}
+                                      color="Primary"
+                                    />
+                                  }
+                                />
+                                <IconButton
+                                  aria-label="Delete"
+                                  borderBottomRadius="none"
+                                  borderBottom="none"
+                                  disabled={
+                                    editState && editId === entry.entryId
+                                      ? true
+                                      : false
+                                  }
+                                  onClick={() => {
+                                    setEntries(
+                                      entries.filter(
+                                        (ent) => ent.entryId !== entry.entryId
+                                      )
+                                    );
+                                  }}
+                                  icon={
+                                    <CloseIcon
+                                      height={3}
+                                      width={3}
+                                      color="Red"
+                                    />
+                                  }
+                                />
+                              </ButtonGroup>
+                            </div>
+                            <Box className="flex-grow">
+                              <Text
+                                fontSize={14}
+                                fontWeight="semibold"
+                                textTransform="uppercase"
+                              >
+                                1.{index + 1}&nbsp;- Pakker
+                              </Text>
+                            </Box>
+                          </div>
+                          <Box
+                            borderColor={
+                              editState && editId === entry.entryId
+                                ? "Primary"
+                                : "Gray"
+                            }
+                            p={4}
+                            borderWidth={1}
+                            zIndex={4}
+                            borderRadius="md"
+                            borderTopLeftRadius="none"
+                            className="flex flex-col gap-2"
+                          >
+                            {entry.packages.map((pack, index) => (
+                              <Box
+                                borderWidth={1}
+                                borderRadius="md"
+                                key={index}
+                                className="flex items-center gap-1"
+                              >
+                                <div className="w-4 select-none">
+                                  <Text
+                                    fontWeight="semibold"
+                                    className="text-center"
+                                  >
+                                    &nbsp;$
+                                  </Text>
+                                </div>
+                                <div className="flex-grow">{pack.package}</div>
+                                <div className="flex-none">
+                                  <IconButton
+                                    aria-label="Up"
+                                    onClick={() => {}}
+                                    icon={
+                                      <CopyIcon
+                                        height={4}
+                                        width={4}
+                                        color="gray.500"
+                                      />
+                                    }
+                                  />
+                                </div>
+                              </Box>
+                            ))}
+                          </Box>
+                        </Box>
+                      )}
 
-                          <TabPanels>
-                            {entry.codeFiles.map((entry, index) => {
-                              return (
-                                <TabPanel key={index}>
-                                  <Syntax entry={entry} />
-                                </TabPanel>
-                              );
-                            })}
-                          </TabPanels>
-                        </Tabs>
+                      {entry.files && (
+                        <>
+                          <div className="flex items-center gap-2">
+                            <div>
+                              <ButtonGroup
+                                size="sm"
+                                isAttached
+                                variant="outline"
+                              >
+                                <IconButton
+                                  aria-label="Up"
+                                  onClick={() => moveUp(index)}
+                                  borderBottomRadius="none"
+                                  borderBottom="none"
+                                  icon={
+                                    <ArrowUpIcon
+                                      height={5}
+                                      width={5}
+                                      color="gray.500"
+                                    />
+                                  }
+                                />
+                                <IconButton
+                                  aria-label="Down"
+                                  borderBottom="none"
+                                  onClick={() => moveDown(index)}
+                                  icon={
+                                    <ArrowDownIcon
+                                      height={5}
+                                      width={5}
+                                      color="gray.500"
+                                    />
+                                  }
+                                />
+                                <IconButton
+                                  aria-label="Edit"
+                                  borderBottom="none"
+                                  onClick={() => {
+                                    setEditState(true),
+                                      setEditId(entry.entryId),
+                                      setSelectedEntry("code"),
+                                      setCodeFiles(entry.files);
+                                  }}
+                                  icon={
+                                    <EditIcon
+                                      height={4}
+                                      width={4}
+                                      color="Primary"
+                                    />
+                                  }
+                                />
+                                <IconButton
+                                  aria-label="Delete"
+                                  borderBottomRadius="none"
+                                  borderBottom="none"
+                                  disabled={
+                                    editState && editId === entry.entryId
+                                      ? true
+                                      : false
+                                  }
+                                  onClick={() => {
+                                    setEntries(
+                                      entries.filter(
+                                        (ent) => ent.entryId !== entry.entryId
+                                      )
+                                    );
+                                  }}
+                                  icon={
+                                    <CloseIcon
+                                      height={3}
+                                      width={3}
+                                      color="Red"
+                                    />
+                                  }
+                                />
+                              </ButtonGroup>
+                            </div>
+                            <Box className="flex-grow">
+                              <Text
+                                fontSize={14}
+                                fontWeight="semibold"
+                                textTransform="uppercase"
+                              >
+                                1.{index + 1}&nbsp;- Filer
+                              </Text>
+                            </Box>
+                          </div>
+                          <Box
+                            borderColor={
+                              editState && editId === entry.entryId
+                                ? "Primary"
+                                : "Gray"
+                            }
+                            borderWidth={1}
+                            borderRadius="md"
+                            borderTopLeftRadius="none"
+                          >
+                            <Tabs variant="mainTab">
+                              <TabList>
+                                {entry.files.map((entry, index) => {
+                                  return (
+                                    <Tab key={index}>
+                                      {entry.file.title}
+                                      {entry.entryFileExt.label}
+                                    </Tab>
+                                  );
+                                })}
+                              </TabList>
+
+                              <TabPanels>
+                                {entry.files.map((entry, index) => {
+                                  return (
+                                    <TabPanel key={index}>
+                                      <Syntax entry={entry} />
+                                    </TabPanel>
+                                  );
+                                })}
+                              </TabPanels>
+                            </Tabs>
+                          </Box>
+                        </>
                       )}
                     </Box>
                   );
                 })}
-              </Box>
+              </div>
             )}
           </Box>
         </Box>
@@ -466,18 +726,21 @@ const Entries = ({
               <div className="flex gap-4">
                 <Button
                   variant="entry"
+                  disabled={disableSum}
                   onClick={() => setSelectedEntry("summary")}
                 >
                   SUM
                 </Button>
                 <Button
                   variant="entry"
+                  disabled={disableFiles}
                   onClick={() => setSelectedEntry("code")}
                 >
                   FILER
                 </Button>
                 <Button
-                  onClick={() => setSelectedEntry("package")}
+                  disabled={disablePackages}
+                  onClick={() => setSelectedEntry("packages")}
                   variant="entry"
                 >
                   PAKKER

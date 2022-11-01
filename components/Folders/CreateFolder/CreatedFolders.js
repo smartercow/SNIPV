@@ -1,4 +1,3 @@
-import { Loading } from "@nextui-org/react";
 import { collection, getDoc, getDocs, query, where } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -15,6 +14,7 @@ import { AddNoteIcon } from "../../SVG/AddNoteIcon";
 import MainFolderDropdown from "../../Display/MainFolderDropdown";
 import { Button, Icon, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
+import LoadingSNIPS from "../../LoadingState/LoadingSNIPS";
 
 export default function CreatedFolders({
   setSelectedMainFolder,
@@ -177,11 +177,7 @@ export default function CreatedFolders({
         </>
       )}
 
-      {mainLoading && (
-        <div className="flex justify-center items-center h-20">
-          <Loading size="md" />
-        </div>
-      )}
+      {mainLoading && <LoadingSNIPS size={10} />}
     </div>
   );
 }

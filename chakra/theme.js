@@ -36,6 +36,8 @@ export const theme = extendTheme({
     iGray: "#EDF2F7",
     iGrayLight: "#F6F7F9",
 
+    BorderGray: "#E2E8F0",
+
     PrimaryBackground: "#fafafa",
 
     Red: "#F31260",

@@ -2,6 +2,7 @@ export const Text = {
   baseStyle: {
     borderRadius: "12px",
     color: "DarkBlue",
+    fontFamily: `'Inter', sans-serif`,
     fontSize: "16px",
     _focus: {
       boxShadow: "none",

@@ -1,15 +1,40 @@
-import { Button, Divider, Input, Text, Textarea } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  ButtonGroup,
+  Divider,
+  IconButton,
+  Input,
+  Text,
+  Textarea,
+} from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { Select, CreatableSelect, AsyncSelect } from "chakra-react-select";
 import { FileExtOptions } from "../../../../../utilities/Language/FileExtensions";
 import { NoOptionsMessage } from "../../../../Select/NoOptionsMessage";
+import {
+  ArrowDownIcon,
+  ArrowUpIcon,
+  CloseIcon,
+  EditIcon,
+} from "@chakra-ui/icons";
 
 const Files = ({
+  initialCodeFileValue,
+  initialSelectedFileExt,
+  initialSelectedLangFileExt,
   codeFile,
   setCodeFile,
   codeFiles,
+  setCodeFiles,
   AddCodeFile,
   AddCodeFiles,
+  editId,
+  setEditId,
+  editState,
+  setEditState,
+  entries,
+  setEntries,
   selectedLangFileExt, //Selected File lang
   setSelectedLangFileExt,
   selectLangFileExt, //Value Lang
@@ -18,6 +43,7 @@ const Files = ({
   setSelectedFileExt,
   selectFileExt, //Value file ext
   setSelectFileExt,
+  setSelectedEntry,
 }) => {
   const { title, code } = codeFile;
 
@@ -27,34 +53,23 @@ const Files = ({
   const [disableSave, setDisableSave] = useState(true);
   const [disableSelect, setDisableSelect] = useState(true);
 
+  const [editFilesState, setEditFilesState] = useState(false);
+  const [editFilesId, setEditFilesId] = useState("");
+
   function handleLangSelect(data) {
     setSelectedLangFileExt(data);
     setSelectLangFileExt(data);
-    // setSelectSubValue(null);
+    setFileExts(data.fileExtensions);
+    setSelectFileExt(data.fileExtensions[0]);
+    setSelectedFileExt(data.fileExtensions[0]);
   }
 
   function handleFileExtSelect(data) {
     setSelectedFileExt(data);
     setSelectFileExt(data);
-    // setSelectSubValue(null);
+    setSelectFileExt(data);
+    setSelectedFileExt(data);
   }
-
-  useEffect(() => {
-    if (Object.keys(selectLangFileExt).length > 0) {
-      setFileExts(selectLangFileExt.fileExtensions);
-      setDisableSelect(false);
-    } else {
-      setSelectFileExt({});
-      setDisableSelect(true);
-    }
-  }, [selectLangFileExt]);
-
-  useEffect(() => {
-    if (Object.keys(fileExts).length > 0) {
-      setSelectedFileExt(fileExts[0]);
-      setSelectFileExt(fileExts[0]);
-    }
-  }, [fileExts]);
 
   const onChange = (e) => {
     e.preventDefault();
@@ -81,49 +96,200 @@ const Files = ({
   }, [codeFiles]);
 
   useEffect(() => {
-    if (Object.keys(selectedLangFileExt).length > 0) {
-      setCodeFile({
-        ...codeFile,
-        entryFileLang: selectedLangFileExt,
-      });
+    if (!editFilesState && FileExtOptions) {
+      setEditFilesId("");
+      setCodeFile(initialCodeFileValue);
+      setFileExts(FileExtOptions[0].fileExtensions);
+      setSelectLangFileExt(FileExtOptions[0]);
+      setSelectedLangFileExt(FileExtOptions[0]);
+      setSelectFileExt(FileExtOptions[0].fileExtensions[0]);
+      setSelectedFileExt(FileExtOptions[0].fileExtensions[0]);
     }
-  }, [selectedLangFileExt]);
+  }, [editFilesState]);
 
-  useEffect(() => {
-    if (Object.keys(selectedFileExt).length > 0) {
-      setCodeFile({
-        ...codeFile,
-        entryFileExt: selectFileExt,
-      });
-    }
-  }, [selectedFileExt]);
+  const editCodeFiles = () => {
+    const editedCodeFiles = codeFiles.map((obj) => {
+      if (obj.fileId === editFilesId) {
+        return {
+          ...obj,
+          file: codeFile,
+          entryFileLang: selectedLangFileExt,
+          entryFileExt: selectedFileExt,
+        };
+      }
+
+      return obj;
+    });
+    setCodeFiles(editedCodeFiles);
+    setEditFilesState(false);
+  };
+
+  const editCodeFilesEntry = () => {
+    const editedCodeFilesEntry = entries.map((obj) => {
+      if (obj.entryId === editId) {
+        return {
+          ...obj,
+          files: codeFiles,
+        };
+      }
+
+      return obj;
+    });
+    setEntries(editedCodeFilesEntry);
+    setCodeFiles([]);
+    setEditState(false);
+    setEditId("");
+  };
+
+  const Cancel = () => {
+    setEditFilesState(false);
+  };
+
+  const CancelEntry = () => {
+    setEditState(false);
+    setCodeFiles([]);
+  };
+
+  const moveUp = (index) => {
+    if (index < 1 || index >= codeFiles.length) return;
+
+    setCodeFiles((codeFiles) => {
+      codeFiles = [...codeFiles];
+
+      [codeFiles[index - 1], codeFiles[index]] = [
+        codeFiles[index],
+        codeFiles[index - 1],
+      ];
+
+      return codeFiles;
+    });
+  };
+
+  const moveDown = (index) => {
+    if (index >= codeFiles.length - 1) return;
+
+    setCodeFiles((codeFiles) => {
+      codeFiles = [...codeFiles];
+
+      [codeFiles[index + 1], codeFiles[index]] = [
+        codeFiles[index],
+        codeFiles[index + 1],
+      ];
+
+      return codeFiles;
+    });
+  };
 
   return (
     <div>
-      <div className="flex gap-2 items-center">
+      <div className="">
         <div>
-          <Text textTransform="uppercase" fontWeight="semibold">
-            Filer:
+          <Text textTransform="uppercase" fontSize={14} fontWeight="semibold">
+            Tilføjet filer:
           </Text>
         </div>
-        <div className="flex gap-2 items-center">
-          {codeFiles && (
+        <div className=" flex flex-col gap-3 mt-2">
+          {!codeFiles.length > 0 && (
+            <Box borderWidth={1} borderRadius="md" p={2}>
+              <Text color="gray.400">her...</Text>
+            </Box>
+          )}
+          {codeFiles.length > 0 && (
             <>
-              {codeFiles.map((c, i) => (
-                <div key={i} className="flex">
-                  <Text color="Primary" fontWeight="semibold">
-                    {c.title}
-                    {c.entryFileExt?.H5}
-                  </Text>
-                  {","}
-                </div>
+              {codeFiles.map((c, index) => (
+                <Box key={index}>
+                  <div>
+                    <ButtonGroup size="sm" isAttached variant="outline">
+                      <IconButton
+                        aria-label="Up"
+                        borderBottomRadius="none"
+                        borderBottom="none"
+                        onClick={() => moveUp(index)}
+                        icon={
+                          <ArrowUpIcon height={5} width={5} color="gray.500" />
+                        }
+                      />
+                      <IconButton
+                        aria-label="Down"
+                        borderBottom="none"
+                        onClick={() => moveDown(index)}
+                        icon={
+                          <ArrowDownIcon
+                            height={5}
+                            width={5}
+                            color="gray.500"
+                          />
+                        }
+                      />
+                      <IconButton
+                        aria-label="Edit"
+                        borderBottom="none"
+                        onClick={() => {
+                          setSelectLangFileExt(c.entryFileLang);
+                          setSelectedLangFileExt(c.entryFileLang);
+                          setSelectFileExt(c.entryFileExt);
+                          setSelectedFileExt(c.entryFileExt);
+                          setCodeFile({
+                            code: c.file.code,
+                            title: c.file.title,
+                          });
+                          setEditFilesState(true);
+                          setEditFilesId(c.fileId);
+                        }}
+                        icon={<EditIcon height={4} width={4} color="Primary" />}
+                      />
+                      <IconButton
+                        aria-label="Delete"
+                        borderBottomRadius="none"
+                        borderBottom="none"
+                        disabled={
+                          editFilesState && editFilesId === c.fileId
+                            ? true
+                            : false
+                        }
+                        onClick={() => {
+                          setCodeFiles(
+                            codeFiles.filter((cf) => cf.fileId !== c.fileId)
+                          );
+                        }}
+                        icon={<CloseIcon height={3} width={3} color="Red" />}
+                      />
+                    </ButtonGroup>
+                  </div>
+                  <Box
+                    borderColor={
+                      editFilesState && editFilesId === c.fileId
+                        ? "Primary"
+                        : "BorderGray"
+                    }
+                    borderWidth={1}
+                    borderRadius="md"
+                    borderTopLeftRadius="none"
+                    p={2}
+                  >
+                    <Text color="Primary" fontSize={16} fontWeight="semibold">
+                      {c.file.title}
+                      {c.entryFileExt?.label}
+                    </Text>
+                  </Box>
+                </Box>
               ))}
             </>
           )}
         </div>
       </div>
-      <Divider mt={1} mb={3} />
+      <Divider my={3} />
       <div className="flex flex-col gap-3">
+        <div>
+          <Text
+            textTransform="uppercase"
+            variant="heading"
+            fontWeight="semibold"
+            fontSize={14}
+          >
+            Tilføj filer
+          </Text>
+        </div>
         <div className="flex gap-3">
           <div className="w-full">
             <Input
@@ -163,7 +329,7 @@ const Files = ({
               value={selectFileExt}
               onChange={handleFileExtSelect}
               isSearchable={true}
-              isDisabled={disableSelect}
+              // isDisabled={disableSelect}
               menuPortalTarget={document.body}
               styles={{
                 menuPortal: (base) => ({ ...base, zIndex: 9999 }),
@@ -193,19 +359,38 @@ const Files = ({
         <div className="flex gap-4">
           <Button
             variant="entrySub"
-            onClick={AddCodeFile}
+            onClick={editFilesState ? editCodeFiles : AddCodeFile}
             isDisabled={disableNew}
           >
-            Tilføj
+            {editFilesState ? "Opdatere fil" : "Tilføj fil"}
           </Button>
 
           <Button
             variant="entrySub"
-            onClick={AddCodeFiles}
-            isDisabled={disableSave}
+            onClick={
+              editFilesState
+                ? Cancel
+                : editState
+                ? editCodeFilesEntry
+                : AddCodeFiles
+            }
+            isDisabled={editFilesState && editState ? true : disableSave}
           >
-            Færdig
+            {editFilesState && !editState
+              ? "Annullere"
+              : editState
+              ? "Opdatere filer"
+              : "Tilføj filer"}
           </Button>
+
+          {editState && (
+            <Button
+              variant="entrySub"
+              onClick={editFilesState ? Cancel : CancelEntry}
+            >
+              Annullere
+            </Button>
+          )}
         </div>
       </div>
     </div>

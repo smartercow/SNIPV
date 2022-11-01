@@ -1,4 +1,4 @@
-import { Text } from "@nextui-org/react";
+import { Text } from "@chakra-ui/react";
 import Head from "next/head";
 import React from "react";
 
@@ -12,7 +12,7 @@ const NoUser = () => {
       </Head>
 
       <div className="flex justify-center items-center min-h-[70vh]">
-        <Text>
+        <Text fontWeight="semibold">
           <Text b>Log ind</Text> for at gemme eller se indhold
         </Text>
       </div>

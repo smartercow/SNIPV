@@ -1,4 +1,3 @@
-import { Loading } from "@nextui-org/react";
 import {
   collection,
   FieldPath,
@@ -21,6 +20,7 @@ import { subFolderDeleteUpdateState } from "../../../atoms/subFolderDeleteUpdate
 import { subFolderEditUpdateState } from "../../../atoms/subFolderEditUpdateState";
 import { Button, Icon, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
+import LoadingSNIPS from "../../LoadingState/LoadingSNIPS";
 
 export default function CreatedSubFolders({
   setSelectedSubFolder,
@@ -192,11 +192,7 @@ export default function CreatedSubFolders({
         </>
       )}
 
-      {subLoading && (
-        <div className="flex justify-center items-center h-20">
-          <Loading size="md" />
-        </div>
-      )}
+      {subLoading && <LoadingSNIPS size={10} />}
     </div>
   );
 }

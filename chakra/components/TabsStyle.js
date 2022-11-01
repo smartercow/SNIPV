@@ -9,23 +9,26 @@ export const Tabs = {
     mainTab: {
       tab: {
         color: "Black",
-        borderBottomWidth: "2px",
-        borderBottomColor: "Gray",
+        borderBottomWidth: "1px",
         borderBottomStyle: "solid",
         _selected: {
+          fontWeight: "semibold",
           borderBottomWidth: "2px",
-          borderBottomColor: "Gray",
+          borderBottomColor: "Primary",
           borderBottomStyle: "solid",
         },
         _hover: {
-          bg: "red",
+          // bg: "red",
         },
       },
-      tablist: {
-        // color: "Black",
-        /*         borderBottomWidth: "2px",
-        borderBottomColor: "Primary", */
+      tabpanel: {
+        p: 4,
       },
+      /*       tablist: {
+        color: "Black",
+        borderBottomWidth: "2px",
+        borderBottomColor: "Primary",
+      }, */
     },
   },
 };

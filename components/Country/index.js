@@ -1,7 +1,7 @@
 import React from "react";
-import { Dropdown } from "@nextui-org/react";
 
-export default function Country() {
+//NextUI removed
+/* export default function Country() {
   const [selected, setSelected] = React.useState(new Set(["🇩🇰da"]));
 
   const selectedValue = React.useMemo(
@@ -11,7 +11,7 @@ export default function Country() {
 
   return (
     <Dropdown>
-      <Dropdown.Button auto light color="primary" /* css={{ tt: "capitalize" }} */>
+      <Dropdown.Button auto light color="primary">
         {selectedValue}
       </Dropdown.Button>
       <Dropdown.Menu
@@ -28,4 +28,4 @@ export default function Country() {
       </Dropdown.Menu>
     </Dropdown>
   );
-}
+} */

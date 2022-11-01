@@ -1,4 +1,3 @@
-// import { Text } from "@nextui-org/react";
 import { Text } from "@chakra-ui/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -25,11 +24,11 @@ const Nav = () => {
   return (
     <div className="flex md:gap-5 items-center">
       <div>
-        <ul className="flex md:gap-4 items-center pt-3">
+        <div className="flex md:gap-4 items-center pt-3">
           {Menu.map((item, index) => {
             if (asPath.startsWith(item.link))
               return (
-                <li key={index}>
+                <div key={index}>
                   <Link href={item.link} passHref>
                     <a>
                       <Text
@@ -42,11 +41,11 @@ const Nav = () => {
                       </Text>
                     </a>
                   </Link>
-                </li>
+                </div>
               );
             else
               return (
-                <li key={index}>
+                <div key={index}>
                   <Link href={item.link} passHref>
                     <a>
                       <Text
@@ -61,10 +60,10 @@ const Nav = () => {
                       </Text>
                     </a>
                   </Link>
-                </li>
+                </div>
               );
           })}
-        </ul>
+        </div>
       </div>
       {/*       <div>
         <Link href="/search">

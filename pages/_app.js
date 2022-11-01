@@ -26,7 +26,6 @@ import "@fontsource/ubuntu/300.css";
 import "@fontsource/ubuntu/400.css";
 import "@fontsource/ubuntu/500.css";
 import "@fontsource/ubuntu/700.css";
-import { NextUIProvider } from "@nextui-org/react";
 import ClientLayout from "../layout/ClientLayout";
 import { RecoilRoot } from "recoil";
 import "react-toastify/dist/ReactToastify.css";
@@ -49,14 +48,12 @@ function MyApp({ Component, pageProps }) {
     return (
       <RecoilRoot>
         <ChakraProvider theme={theme}>
-          <NextUIProvider>
-            <ToastContainer position="top-center" className="z-[999999]" />
-            <ClientLayout user={user}>
-              <SettingsLayout>
-                <Component {...pageProps} />
-              </SettingsLayout>
-            </ClientLayout>
-          </NextUIProvider>
+          <ToastContainer position="top-center" className="z-[999999]" />
+          <ClientLayout user={user}>
+            <SettingsLayout>
+              <Component {...pageProps} />
+            </SettingsLayout>
+          </ClientLayout>
         </ChakraProvider>
       </RecoilRoot>
     );
@@ -66,14 +63,12 @@ function MyApp({ Component, pageProps }) {
     return (
       <RecoilRoot>
         <ChakraProvider theme={theme}>
-          <NextUIProvider>
-            <ToastContainer position="top-center" className="z-[999999]" />
-            <ClientLayout user={user}>
-              <InfoLayout>
-                <Component {...pageProps} />
-              </InfoLayout>
-            </ClientLayout>
-          </NextUIProvider>
+          <ToastContainer position="top-center" className="z-[999999]" />
+          <ClientLayout user={user}>
+            <InfoLayout>
+              <Component {...pageProps} />
+            </InfoLayout>
+          </ClientLayout>
         </ChakraProvider>
       </RecoilRoot>
     );
@@ -83,14 +78,12 @@ function MyApp({ Component, pageProps }) {
     return (
       <RecoilRoot>
         <ChakraProvider theme={theme}>
-          <NextUIProvider>
-            <ToastContainer position="top-center" className="z-[999999]" />
-            <ClientLayout user={user}>
-              <UpsertLayout>
-                <Component {...pageProps} />
-              </UpsertLayout>
-            </ClientLayout>
-          </NextUIProvider>
+          <ToastContainer position="top-center" className="z-[999999]" />
+          <ClientLayout user={user}>
+            <UpsertLayout>
+              <Component {...pageProps} />
+            </UpsertLayout>
+          </ClientLayout>
         </ChakraProvider>
       </RecoilRoot>
     );
@@ -98,12 +91,10 @@ function MyApp({ Component, pageProps }) {
   return (
     <RecoilRoot>
       <ChakraProvider theme={theme}>
-        <NextUIProvider>
-          <ToastContainer position="top-center" className="z-[999999]" />
-          <ClientLayout user={user}>
-            <Component {...pageProps} />
-          </ClientLayout>
-        </NextUIProvider>
+        <ToastContainer position="top-center" className="z-[999999]" />
+        <ClientLayout user={user}>
+          <Component {...pageProps} />
+        </ClientLayout>
       </ChakraProvider>
     </RecoilRoot>
   );

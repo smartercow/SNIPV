@@ -1,4 +1,3 @@
-import { Button, Checkbox, Input, Text } from "@nextui-org/react";
 import {
   addDoc,
   collection,
@@ -18,6 +17,7 @@ import { updateStateAtom } from "../../../atoms/updateStateAtom";
 import { NoOptionsMessage } from "../../Select/NoOptionsMessage";
 import { TagsInput } from "react-tag-input-component";
 import { useRouter } from "next/router";
+import { Button, Checkbox, Input, Text } from "@chakra-ui/react";
 
 export default function CreateMainFolder() {
   const [user] = useAuthState(auth);
@@ -239,13 +239,9 @@ export default function CreateMainFolder() {
       <form onSubmit={createFolder}>
         <div className="flex flex-col gap-2">
           <div className="flex gap-2 items-center">
-            <Text h6 size={13} transform="uppercase">
-              Rodmappe:
-            </Text>
+            <Text variant="H5">Rodmappe:</Text>
             <div>
-              <Text h6 transform="uppercase">
-                {selectedMainFolder?.label}
-              </Text>
+              <Text variant="H5">{selectedMainFolder?.label}</Text>
             </div>
           </div>
 
@@ -253,7 +249,7 @@ export default function CreateMainFolder() {
             <div className="flex flex-col gap-4">
               <div className="flex gap-4">
                 <div>
-                  <Text>Sprog</Text>
+                  <Text variant="H5">Sprog</Text>
                 </div>
                 <div>
                   <div className="flex pt-1">
@@ -285,20 +281,16 @@ export default function CreateMainFolder() {
               </div>
 
               <div>
-                <div>
-                  <Text>
-                    Navn&nbsp;
-                    <Text color="error" b>
-                      *
-                    </Text>
+                <div className="flex">
+                  <Text variant="H5">Navn&nbsp;</Text>
+                  <Text color="Red" variant="H5">
+                    *
                   </Text>
                 </div>
                 <Input
-                  underlined
                   placeholder="Mappe navn"
                   onChange={(e) => setFolderName(e.target.value)}
                   value={folderName}
-                  width="100%"
                   size="lg"
                   aria-label="Folder name"
                 />
@@ -306,12 +298,10 @@ export default function CreateMainFolder() {
 
               <div className="flex gap-4">
                 <div className="w-52 flex flex-col gap-1">
-                  <div>
-                    <Text>
-                      Filtypenavn&nbsp;
-                      <Text color="error" b>
-                        *
-                      </Text>
+                  <div className="flex">
+                    <Text variant="H5">Filtypenavn&nbsp;</Text>
+                    <Text color="error" variant="H5">
+                      *
                     </Text>
                   </div>
                   <div className="w-full">
@@ -337,7 +327,7 @@ export default function CreateMainFolder() {
                       <Checkbox
                         size="sm"
                         onChange={() => setAddAccessory(!addAccessory)}
-                        isSelected={addAccessory}
+                        isChecked={addAccessory}
                       >
                         <p>Tilbehør for {language.label}</p>
                       </Checkbox>
@@ -365,7 +355,7 @@ export default function CreateMainFolder() {
 
               <div className="flex flex-col gap-1">
                 <div>
-                  <Text>Mappe tags</Text>
+                  <Text variant="H5">Mappe tags</Text>
                 </div>
                 <div>
                   {!open.folder?.subFolderId && (
@@ -392,16 +382,16 @@ export default function CreateMainFolder() {
         </div>
 
         <div className="flex gap-2 w-full justify-end my-3">
-          <Button auto light color="error" onClick={() => setOpen(false)}>
+          <Button color="Red" onClick={() => setOpen(false)}>
             Luk
           </Button>
 
           {open.folder?.subFolderId ? (
-            <Button disabled={disableBtn} color="primary" auto type="submit">
+            <Button disabled={disableBtn} color="Primary" type="submit">
               Opdatere mappe
             </Button>
           ) : (
-            <Button disabled={disableBtn} color="primary" auto type="submit">
+            <Button disabled={disableBtn} color="primary" type="submit">
               Opret mappe
             </Button>
           )}

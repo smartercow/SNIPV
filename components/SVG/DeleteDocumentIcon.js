@@ -1,5 +1,3 @@
-import { React } from "@nextui-org/react";
-
 export const DeleteDocumentIcon = ({ fill, size, height, width, ...props }) => {
   return (
     <svg

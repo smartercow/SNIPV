@@ -1,9 +1,9 @@
 import { Box } from "@chakra-ui/react";
-import { Card, Loading, Text } from "@nextui-org/react";
 import { collection, getDocs, onSnapshot, query } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../../firebase/clientApp";
+import LoadingSNIPS from "../LoadingState/LoadingSNIPS";
 import NoUser from "../NoPage/NoUser";
 import Feed from "./Feed";
 import Post from "./Post";
@@ -102,11 +102,7 @@ const HomePage = () => {
               </div>
             </div>
           )}
-          {loading && (
-            <div className="flex justify-center items-center h-[20vh]">
-              <Loading size="lg" />
-            </div>
-          )}
+          {loading && <LoadingSNIPS size={10} />}
         </>
       ) : (
         <NoUser />

@@ -1,10 +1,9 @@
-import { Loading } from "@nextui-org/react";
 import React from "react";
-
+import LoadingSNIPS from "./LoadingSNIPS";
 const LoadingState = () => {
   return (
     <div className="flex justify-center items-center min-h-[70vh]">
-      <Loading size="lg" />
+      <LoadingSNIPS size={10} />
     </div>
   );
 };

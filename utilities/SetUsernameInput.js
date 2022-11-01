@@ -1,8 +1,8 @@
-import { Input } from "@nextui-org/react";
+import { Input } from "@chakra-ui/react";
 import React from "react";
 
 const SetUsernameInput = () => {
-  return <Input width="100%" aria-label="Username" maxLength={16} />;
+  return <Input aria-label="Username" maxLength={16} />;
 };
 
 export default SetUsernameInput;

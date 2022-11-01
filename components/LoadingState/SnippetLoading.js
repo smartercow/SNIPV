@@ -1,12 +1,8 @@
-import { Loading } from "@nextui-org/react";
 import React from "react";
+import LoadingSNIPS from "./LoadingSNIPS";
 
 const SnippetLoading = () => {
-  return (
-    <div className="flex justify-center items-center h-20">
-      <Loading size="lg" />
-    </div>
-  );
+  return <LoadingSNIPS size={10} />;
 };
 
 export default SnippetLoading;

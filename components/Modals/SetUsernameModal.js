@@ -1,4 +1,3 @@
-import { Button, Input, Loading, Modal, Tooltip } from "@nextui-org/react";
 import {
   collection,
   doc,
@@ -19,7 +18,19 @@ import { DebounceInput } from "react-debounce-input";
 //DEBOUNCEINPUT VIST SO  IKKE BRUGT MEN BRUGES!!!
 
 import { useAuthState } from "react-firebase-hooks/auth";
-import { Text } from "@chakra-ui/react";
+import {
+  Button,
+  Text,
+  Input,
+  Tooltip,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+} from "@chakra-ui/react";
+import LoadingSNIPS from "../LoadingState/LoadingSNIPS";
 
 const SetUsernameModal = () => {
   const [user] = useAuthState(auth);
@@ -114,22 +125,21 @@ const SetUsernameModal = () => {
   }, [usernameInputValue]);
 
   return (
-    <div>
-      <Modal
-        preventClose
-        aria-labelledby="modal-title"
-        open={open}
-        onClose={() => setOpen(false)}
-        width="360px"
-      >
-        <Modal.Header>
-          <div className="flex">
-            <Text id="modal-title" size={18}>
-              Færdiggør registreringen
-            </Text>
-          </div>
-        </Modal.Header>
-        <Modal.Body>
+    <Modal
+      isOpen={open}
+      onClose={() => setOpen(false)}
+      closeOnOverlayClick="false"
+      isCentered
+    >
+      <ModalOverlay />
+      <ModalContent>
+        <ModalHeader>
+          {" "}
+          <Text fontSize={18} textAlign="center">
+            Færdiggør registreringen
+          </Text>
+        </ModalHeader>
+        <ModalBody>
           <div className="flex flex-col gap-2">
             <Text>Brugernavn</Text>
             <div className="flex gap-2 items-center">
@@ -141,7 +151,7 @@ const SetUsernameModal = () => {
                   aria-label="Username"
                   placeholder="brugernavn"
                   width="100%"
-                  contentRight={loading && <Loading size="xs" />}
+                  contentRight={loading && <LoadingSNIPS size={7} />}
                   onChange={handleChange}
                   element={Input}
                 />
@@ -149,14 +159,12 @@ const SetUsernameModal = () => {
               {check === true && (
                 <div>
                   <Tooltip
-                    content={
+                    label={
                       "Brugernavn skal være mellem 3-16 tegn og må kun indeholde bogstaver eller tal uden MELLEMRUM og ÆØÅ."
                     }
-                    color="primary"
-                    keepMounted="true"
-                    css={{ zIndex: 999999 }}
+                    color="DarkBlue"
                   >
-                    <Text color="primary">
+                    <Text color="Primary">
                       <BsQuestionCircleFill />
                     </Text>
                   </Tooltip>
@@ -165,12 +173,10 @@ const SetUsernameModal = () => {
               {check === false && (
                 <div>
                   <Tooltip
-                    content={
+                    label={
                       "Brugernavn skal være mellem 3-16 tegn og må kun indeholde bogstaver eller tal uden MELLEMRUM og ÆØÅ."
                     }
-                    color="error"
-                    keepMounted="true"
-                    css={{ zIndex: 999999 }}
+                    color="Red"
                   >
                     <Text>
                       <BsExclamationCircleFill />
@@ -187,20 +193,15 @@ const SetUsernameModal = () => {
               <Text color={statusColor}>{usernameStatus}</Text>
             </div>
           </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button
-            auto
-            flat
-            color="primary"
-            disabled={confirm}
-            onClick={SetUsername}
-          >
+        </ModalBody>
+
+        <ModalFooter>
+          <Button disabled={confirm} onClick={SetUsername}>
             Færdiggør
           </Button>
-        </Modal.Footer>
-      </Modal>
-    </div>
+        </ModalFooter>
+      </ModalContent>
+    </Modal>
   );
 };
 

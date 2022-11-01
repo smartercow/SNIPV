@@ -5,22 +5,32 @@ import {
   AccordionItem,
   AccordionPanel,
   Box,
+  IconButton,
   Tab,
   TabList,
   TabPanel,
   TabPanels,
   Tabs,
+  Text,
+  useClipboard,
+  useToast,
 } from "@chakra-ui/react";
 import React from "react";
 import Syntax from "./Syntax";
 import parse from "html-react-parser";
+import { CopyIcon } from "@chakra-ui/icons";
 
 const Accord = ({ allEntries }) => {
+  const { onCopy, hasCopied } = useClipboard("");
+  const toast = useToast();
+
+  console.log("allEntries", allEntries);
+
   return (
     <div>
       {allEntries && (
         <Accordion allowToggle>
-          {allEntries.map((item, index) => {
+          {allEntries.map((entries, index) => {
             return (
               <AccordionItem key={index}>
                 <h2>
@@ -28,34 +38,81 @@ const Accord = ({ allEntries }) => {
                     <Box flex="1" textAlign="left">
                       {index + 1}
                       {". "}
-                      {item.section}
+                      {entries.section}
                     </Box>
                     <AccordionIcon />
                   </AccordionButton>
                 </h2>
-                {item.entries && (
+                {entries.entries && (
                   <AccordionPanel>
-                    {item.entries.map((entry, index) => (
+                    {entries.entries.map((entry, index) => (
                       <Box key={index} p={2} mb={2}>
                         {entry.summary && (
                           <div className="parse">{parse(entry.summary)}</div>
                         )}
 
                         {entry.packages && (
-                          <div>
+                          <div className="flex flex-col gap-2">
                             {entry.packages.map((pack, index) => (
-                              <div key={index}>{pack}</div>
+                              <Box
+                                key={index}
+                                borderWidth={1}
+                                borderRadius="md"
+                                height={10}
+                                className="flex items-center gap-2"
+                              >
+                                <Box
+                                  bg="BorderGray"
+                                  borderLeftRadius="md"
+                                  height={10}
+                                  className="w-6 select-none flex items-center justify-center"
+                                >
+                                  <Text
+                                    fontWeight="semibold"
+                                    className="text-center"
+                                    color="Primary"
+                                    fontSize={17}
+                                  >
+                                    $
+                                  </Text>
+                                </Box>
+                                <Box className="flex-grow">
+                                  <Text>{pack.package}</Text>
+                                </Box>
+                                <div className="flex-none">
+                                  <IconButton
+                                    aria-label="Up"
+                                    onClick={() => {
+                                      onCopy,
+                                        toast({
+                                          title: "Kopieret",
+                                          description: pack.package,
+                                          status: "success",
+                                          duration: 3000,
+                                          isClosable: true,
+                                        });
+                                    }}
+                                    icon={
+                                      <CopyIcon
+                                        height={4}
+                                        width={4}
+                                        color="Primary"
+                                      />
+                                    }
+                                  />
+                                </div>
+                              </Box>
                             ))}
                           </div>
                         )}
 
-                        {entry.codeFiles && (
+                        {entry.files && (
                           <Tabs variant="mainTab">
                             <TabList>
-                              {entry.codeFiles.map((e, index) => {
+                              {entry.files.map((e, index) => {
                                 return (
                                   <Tab key={index}>
-                                    {e.title}
+                                    {e.file.title}
                                     {e.entryFileExt.label}
                                   </Tab>
                                 );
@@ -63,7 +120,7 @@ const Accord = ({ allEntries }) => {
                             </TabList>
 
                             <TabPanels>
-                              {entry.codeFiles.map((e, index) => {
+                              {entry.files.map((e, index) => {
                                 return (
                                   <TabPanel key={index}>
                                     <Syntax entry={e} />

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../firebase/clientApp";
-import { Loading } from "@nextui-org/react";
 import Head from "next/head";
 import Details from "../../components/Elements/Page/Details";
 import SyntaxHandler from "../../components/Syntax/Error/SyntaxHandler";
@@ -11,6 +10,7 @@ import OutputSyntaxHandler from "../../components/Syntax/OutputSyntaxHandler";
 import Notes from "../../components/Elements/Page/Notes";
 import ExternalLink from "../../components/Elements/Page/ExternalLink";
 import Footer from "../../components/Elements/Page/Footer";
+import LoadingSNIPS from "../../components/LoadingState/LoadingSNIPS";
 
 const Snippet = () => {
   const {
@@ -59,11 +59,7 @@ const Snippet = () => {
         </div>
       )}
 
-      {loading && (
-        <div className="flex justify-center items-center h-[20vh]">
-          <Loading size="lg" />
-        </div>
-      )}
+      {loading && <LoadingSNIPS size={10} />}
     </div>
   );
 };

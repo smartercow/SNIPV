@@ -1,4 +1,4 @@
-import { Text } from "@nextui-org/react";
+import { Text } from "@chakra-ui/react";
 import React from "react";
 
 const StatsSettings = () => {

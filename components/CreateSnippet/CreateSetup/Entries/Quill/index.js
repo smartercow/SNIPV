@@ -7,8 +7,8 @@ const Quill = ({
   summaryValue,
   setSummaryValue,
   addSummary,
-  editSum,
-  setEditSum,
+  editState,
+  setEditState,
   editSumEntry,
 }) => {
   const [disableSave, setDisableSave] = useState(true);
@@ -23,7 +23,7 @@ const Quill = ({
 
   const Cancel = () => {
     setSummaryValue({});
-    setEditSum(false);
+    setEditState(false);
   };
   return (
     <div className="flex flex-col gap-2">
@@ -47,14 +47,14 @@ const Quill = ({
 
       <div className="flex gap-2">
         <Button
-          onClick={editSum ? editSumEntry : addSummary}
+          onClick={editState ? editSumEntry : addSummary}
           variant="entrySub"
           disabled={disableSave}
         >
-          {editSum ? "Opdatare" : "Færdig"}
+          {editState ? "Opdatare" : "Færdig"}
         </Button>
 
-        {editSum && (
+        {editState && (
           <Button onClick={Cancel} variant="entrySub" disabled={disableSave}>
             Anullere
           </Button>

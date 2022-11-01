@@ -1,4 +1,3 @@
-import { Button, Input, Text } from "@nextui-org/react";
 import {
   addDoc,
   collection,
@@ -19,6 +18,7 @@ import { JavaScriptFrameworks } from "../../../utilities/Language/JavaScript/Fra
 import { JavaScriptLibraries } from "../../../utilities/Language/JavaScript/Libraries";
 import { NoOptionsMessage } from "../../Select/NoOptionsMessage";
 import { useRouter } from "next/router";
+import { Button, Input, Text } from "@chakra-ui/react";
 
 const initialSelectedLanguage = {
   label: "JavaScript",
@@ -176,20 +176,15 @@ const CreateMainFolder = ({ selectedMainFolder }) => {
       <form onSubmit={createFolder}>
         <div className="flex flex-col gap-3">
           <div>
-            <div>
-              <Text>
-                Navn&nbsp;
-                <Text color="error" b>
-                  *
-                </Text>
+            <div className="flex">
+              <Text variant="H5">Navn&nbsp;</Text>
+              <Text color="Red" variant="H5">
+                *
               </Text>
             </div>
             <Input
-              underlined
               placeholder="Mappe navn"
               onChange={(e) => setFolderName(e.target.value)}
-              width="100%"
-              size="lg"
               value={folderName}
               aria-label="Folder name"
             />
@@ -197,7 +192,7 @@ const CreateMainFolder = ({ selectedMainFolder }) => {
 
           <div className="flex flex-col gap-1 w-full">
             <div>
-              <Text>Sprog</Text>
+              <Text variant="H5">Sprog</Text>
             </div>
             <div className="w-full">
               <Select
@@ -219,15 +214,15 @@ const CreateMainFolder = ({ selectedMainFolder }) => {
           </div>
 
           <div className="flex gap-2 w-full justify-end my-1">
-            <Button auto light color="error" onClick={() => setOpen(false)}>
+            <Button color="Red" onClick={() => setOpen(false)}>
               Luk
             </Button>
             {selectedMainFolder?.mainFolderId ? (
-              <Button disabled={disableBtn} color="primary" auto type="submit">
+              <Button disabled={disableBtn} color="Primary" type="submit">
                 Opdatere
               </Button>
             ) : (
-              <Button disabled={disableBtn} color="primary" auto type="submit">
+              <Button disabled={disableBtn} color="Primary" type="submit">
                 Opret
               </Button>
             )}
