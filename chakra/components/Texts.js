@@ -1,9 +1,10 @@
 export const Text = {
   baseStyle: {
     borderRadius: "12px",
-    color: "DarkBlue",
+    color: "Black",
     fontFamily: `'Inter', sans-serif`,
     fontSize: "16px",
+    // wordSpacing: ".5px",
     _focus: {
       boxShadow: "none",
     },
@@ -19,17 +20,14 @@ export const Text = {
     H3: {
       fontSize: "18px",
       fontWeight: "semibold",
-      // letterSpacing: "0.01em",
     },
     H4: {
       fontSize: "17px",
       fontWeight: "semibold",
-
-      // letterSpacing: "0.01em",
     },
     H5: {
       fontWeight: "semibold",
-      fontSize: "14px",
+      fontSize: "13px",
       textTransform: "uppercase",
     },
     H6: {
@@ -37,6 +35,7 @@ export const Text = {
     },
     snipHeading: {
       color: "DarkBlue",
+      fontFamily: "Opstimistic",
       fontSize: "17px",
       fontWeight: "semibold",
       letterSpacing: "0.1px",
@@ -45,7 +44,7 @@ export const Text = {
       whiteSpace: "nowrap",
     },
     snipDescription: {
-      color: "DarkBlue",
+      color: "Black",
       fontSize: "15px",
       letterSpacing: "0.1px",
       overflow: "hidden",
@@ -63,6 +62,11 @@ export const Text = {
         cursor: "pointer",
       },
       transition: "all 0.2s",
+    },
+    maxLabel: {
+      fontSize: "16px",
+      textTransform: "uppercase",
+      fontWeight: "semibold",
     },
     nonLabel: {
       fontSize: "13px",
@@ -87,6 +91,27 @@ export const Text = {
       textTransform: "uppercase",
       fontWeight: 500,
     },
+    heading: {
+      fontSize: "15px",
+      fontWeight: "semibold",
+      textTransform: "uppercase",
+    },
+    pageTitle: {
+      fontFamily: "Opstimistic",
+    },
+    pageDescription: {
+      fontFamily: "Opstimistic",
+      fontSize: "17px",
+    },
+    breadcrumb: {
+      fontSize: 15,
+      textTransform: "uppercase",
+      fontWeight: "semibold",
+      color: "Primary",
+    },
+    package: {
+      fontFamily: "Source Code Pro",
+    },
     /*     headUppercase: {
       color: "Black",
       fontSize: "16px",
@@ -102,11 +127,7 @@ export const Text = {
         cursor: "pointer",
       },
     },
-    heading: {
-      color: "BlackLight",
-      fontSize: "16px",
-      fontWeight: 500,
-    },
+
 
     boxHeading: {
       fontSize: "18px",
@@ -141,11 +162,6 @@ export const Text = {
       fontSize: "20px",
       textTransform: "uppercase",
     },
-    preview: {
-      color: "Black",
-      fontSize: "12px",
-      textTransform: "uppercase",
-      fontWeight: 500,
-    }, */
+ */
   },
 };

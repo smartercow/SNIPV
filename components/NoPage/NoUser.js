@@ -12,9 +12,7 @@ const NoUser = () => {
       </Head>
 
       <div className="flex justify-center items-center min-h-[70vh]">
-        <Text fontWeight="semibold">
-          <Text b>Log ind</Text> for at gemme eller se indhold
-        </Text>
+        <Text>Log ind for at gemme eller se indhold</Text>
       </div>
     </div>
   );

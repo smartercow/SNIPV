@@ -14,6 +14,7 @@ export const Tabs = {
         _selected: {
           fontWeight: "semibold",
           borderBottomWidth: "2px",
+          color: "Primary",
           borderBottomColor: "Primary",
           borderBottomStyle: "solid",
         },
@@ -22,7 +23,7 @@ export const Tabs = {
         },
       },
       tabpanel: {
-        p: 4,
+        p: 0,
       },
       /*       tablist: {
         color: "Black",

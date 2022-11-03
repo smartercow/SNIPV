@@ -57,12 +57,12 @@ const ClientLayout = ({ children, user }) => {
   }, [user, update]);
 
   return (
-    <div className="flex flex-col h-screen px-2">
+    <div className="flex flex-col min-h-screen px-2 h-full">
       <header className="flex-none">
         <Header user={user} />
       </header>
 
-      <main className="max-w-6xl px-5 lg:px-0 lg:mx-auto pt-2 w-full flex-grow">
+      <main className="max-w-6xl px-5 lg:px-0 lg:mx-auto h-full pt-2 w-full flex-grow">
         {children}
       </main>
 

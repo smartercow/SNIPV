@@ -12,17 +12,11 @@ import {
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { MdRefresh } from "react-icons/md";
-import { useRecoilState } from "recoil";
-import { mainFolderDeleteUpdateState } from "../../atoms/mainFolderDeleteUpdateState";
-import { mainFolderEditUpdateState } from "../../atoms/mainFolderEditUpdateState";
 import { auth, db } from "../../firebase/clientApp";
 import Snippet from "../Display/Snippet";
-import FoldersLoad from "../Folders/FoldersLoad";
-import LatestHeading from "../Heading/LatestHeading";
 import LoadingSNIPS from "../LoadingState/LoadingSNIPS";
 
 const Category = ({
-  mainFolder,
   loadingMain,
   setLoadingMain,
   col,
@@ -132,9 +126,7 @@ const Category = ({
 
   return (
     <Box
-      px={4}
-      pt={2}
-      pb={4}
+      p={4}
       borderBottomRadius="md"
       boxShadow="md"
       bg="white"

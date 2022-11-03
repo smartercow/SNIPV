@@ -175,12 +175,9 @@ const CreateMainFolder = ({ selectedMainFolder }) => {
     <div>
       <form onSubmit={createFolder}>
         <div className="flex flex-col gap-3">
-          <div>
+          <div className="flex flex-col gap-1">
             <div className="flex">
               <Text variant="H5">Navn&nbsp;</Text>
-              <Text color="Red" variant="H5">
-                *
-              </Text>
             </div>
             <Input
               placeholder="Mappe navn"
@@ -190,7 +187,7 @@ const CreateMainFolder = ({ selectedMainFolder }) => {
             />
           </div>
 
-          <div className="flex flex-col gap-1 w-full">
+          <div className="flex flex-col gap-1">
             <div>
               <Text variant="H5">Sprog</Text>
             </div>
@@ -213,8 +210,12 @@ const CreateMainFolder = ({ selectedMainFolder }) => {
             </div>
           </div>
 
-          <div className="flex gap-2 w-full justify-end my-1">
-            <Button color="Red" onClick={() => setOpen(false)}>
+          <div className="flex gap-2 w-full justify-end my-2">
+            <Button
+              color="Red"
+              onClick={() => setOpen(false)}
+              variant="btnCloseGhost"
+            >
               Luk
             </Button>
             {selectedMainFolder?.mainFolderId ? (
@@ -222,7 +223,7 @@ const CreateMainFolder = ({ selectedMainFolder }) => {
                 Opdatere
               </Button>
             ) : (
-              <Button disabled={disableBtn} color="Primary" type="submit">
+              <Button disabled={disableBtn} type="submit" variant="btnMain">
                 Opret
               </Button>
             )}

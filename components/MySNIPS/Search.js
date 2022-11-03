@@ -1,7 +1,5 @@
 import { Box } from "@chakra-ui/react";
-import { collection, query, where } from "firebase/firestore";
-import React, { useState } from "react";
-import { db } from "../../firebase/clientApp";
+import React from "react";
 import Snippet from "../Display/Snippet";
 import LatestHeading from "../Heading/LatestHeading";
 

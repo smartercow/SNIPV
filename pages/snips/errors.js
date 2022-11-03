@@ -9,7 +9,7 @@ const Errors = () => {
   const [user] = useAuthState(auth);
 
   return (
-    <div className="min-h-[70vh] w-full">
+    <div className="w-full">
       <Head>
         <title>Mine fejl SNIPS - SNIPV</title>
         <meta name="description" content="Created by Peter G" />
@@ -22,7 +22,6 @@ const Errors = () => {
 
       <div className="flex gap-6">
         <MySNIPS />
-
         <Tags headTitle={`Fejl tags`} />
       </div>
     </div>

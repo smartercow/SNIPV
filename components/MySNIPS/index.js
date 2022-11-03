@@ -2,44 +2,38 @@ import {
   collection,
   deleteDoc,
   doc,
-  FieldPath,
   getDocs,
-  limit,
   onSnapshot,
-  orderBy,
   query,
-  startAfter,
   where,
 } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../../firebase/clientApp";
-import { MdRefresh } from "react-icons/md";
-import LatestHeading from "../Heading/LatestHeading";
-import Snippet from "../Display/Snippet";
 import { useRouter } from "next/router";
-import LoadingSNIPS from "../LoadingState/LoadingSNIPS";
 import { Box, Button, Icon, Input, Text } from "@chakra-ui/react";
-import Category from "./Category";
-import AllType from "./AllType";
-import FoldersLoad from "../Folders/FoldersLoad";
 import { mainFolderEditUpdateState } from "../../atoms/mainFolderEditUpdateState";
 import { mainFolderDeleteUpdateState } from "../../atoms/mainFolderDeleteUpdateState";
-import { useRecoilState } from "recoil";
-import Search from "./Search";
+import { useRecoilValue } from "recoil";
 import { CategoryIcon } from "../SVG/CategoryIcon";
 import { FilterIcon } from "../SVG/FilterIcon";
 import { FolderIcon } from "../SVG/FolderIcon";
+import LatestHeading from "../Heading/LatestHeading";
+import Category from "./Category";
+import AllType from "./AllType";
+import FoldersLoad from "../Folders/FoldersLoad";
+import Search from "./Search";
 
 const MySNIPS = () => {
   const [user] = useAuthState(auth);
   const { asPath } = useRouter();
 
   const [mainFolder, setMainFolder] = useState("");
+  const [selectedMainFolder, setSelectedMainFolder] = useState();
+  const [selectedSubFolder, setSelectedSubFolder] = useState([]);
 
   const [types, setTypes] = useState("all");
   const [col, setCol] = useState("");
-
   const [search, setSearch] = useState("");
 
   const [loadingMain, setLoadingMain] = useState(false);
@@ -48,34 +42,25 @@ const MySNIPS = () => {
   const [noMatch, setNoMatch] = useState(false);
 
   const [folders, setFolders] = useState([]);
-  const [snipType, setSnipType] = useState("");
   const [snip, setSnip] = useState("");
 
-  const [mainDeleted, setMainDeleted] = useRecoilState(
-    mainFolderDeleteUpdateState
-  );
-  const [mainEdited, setMainEdited] = useRecoilState(mainFolderEditUpdateState);
-
-  const [selectedMainFolder, setSelectedMainFolder] = useState();
-  const [selectedSubFolder, setSelectedSubFolder] = useState([]);
+  const mainDeleted = useRecoilValue(mainFolderDeleteUpdateState);
+  const mainEdited = useRecoilValue(mainFolderEditUpdateState);
 
   useEffect(() => {
     if (asPath.startsWith("/snips/codes")) {
       setCol("CodeSnippetsData1");
       setMainFolder("CodeMainFolders");
-      setSnipType("code");
       setSnip("kode SNIPS");
     }
     if (asPath.startsWith("/snips/errors")) {
       setCol("ErrorSnippetsData1");
       setMainFolder("ErrorMainFolders");
-      setSnipType("error");
       setSnip("fejl SNIPS");
     }
     if (asPath.startsWith("/setups")) {
       setCol("SetupsData");
       setMainFolder("SetupMainFolders");
-      setSnipType("setup");
       setSnip("Setups");
     }
   }, [asPath]);
@@ -268,7 +253,6 @@ const MySNIPS = () => {
               <LatestHeading headingType={`${selectedSubFolder.label}`} />
 
               <Category
-                mainFolder={mainFolder}
                 loadingMain={loadingMain}
                 setLoadingMain={setLoadingMain}
                 col={col}

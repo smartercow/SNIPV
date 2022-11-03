@@ -1,10 +1,11 @@
 import React from "react";
 import { CreateFolderModalState } from "../../atoms/CreateFolderModalAtom";
 import { useRecoilState } from "recoil";
-import CreateFolder from "../Folders/CreateFolder/CreateFolder";
+import CreateFolder from "../Folders/CreateFolder";
 import {
   Modal,
   ModalBody,
+  ModalCloseButton,
   ModalContent,
   ModalHeader,
   ModalOverlay,
@@ -16,14 +17,17 @@ const CreateFolderModal = () => {
 
   return (
     <Modal isOpen={open} onClose={() => setOpen(false)} isCentered>
-      {/* width="500px" */}
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>
-          {open.view == 0 && <Text>Opret en kode rodmappe</Text>}
-          {open.view == 1 && <Text>Opret en kode undermappe</Text>}
+        <ModalHeader textAlign="center">
+          {open.view == 0 && (
+            <Text variant="maxLabel">Opret en kode rodmappe</Text>
+          )}
+          {open.view == 1 && (
+            <Text variant="maxLabel">Opret en kode undermappe</Text>
+          )}
         </ModalHeader>
-        {/* <ModalCloseButton /> */}
+        <ModalCloseButton />
         <ModalBody>
           <CreateFolder />
         </ModalBody>

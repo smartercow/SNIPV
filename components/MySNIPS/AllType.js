@@ -111,7 +111,7 @@ const AllType = ({ setLoadingMain, col, snip, handleDelete }) => {
   }, [user, update, col]);
 
   return (
-    <Box px={4} pt={3} pb={4} borderBottomRadius="md" boxShadow="md" bg="white">
+    <Box p={4} borderBottomRadius="md" boxShadow="md" bg="white">
       <div className="flex flex-col gap-4">
         {Object.keys(mySNIPS).length > 0 && (
           <>

@@ -6,6 +6,11 @@ import { oneLight } from "react-syntax-highlighter/dist/cjs/styles/prism";
 const Syntax = ({ entry }) => {
   const [show, setShow] = useState(false);
   const [view, setView] = useState("5rem");
+  const [codeLang, setCodeLang] = useState("");
+
+  useEffect(() => {
+    setCodeLang(entry.file.entryFileExt.syntaxHighlight);
+  }, [entry]);
 
   useEffect(() => {
     if (show) {
@@ -18,11 +23,10 @@ const Syntax = ({ entry }) => {
   return (
     <Box borderWidth={1} borderRadius="md">
       <SyntaxHighlighter
-        language="javascript"
+        language={codeLang}
         customStyle={{ height: "auto", maxHeight: view, margin: 0 }}
         style={oneLight}
         showLineNumbers={true}
-        // wraplonglineslines={true}
         lineProps={{
           style: { wordBreak: "break-all", whiteSpace: "pre-wrap" },
         }}
@@ -30,7 +34,7 @@ const Syntax = ({ entry }) => {
         {entry.file.code}
       </SyntaxHighlighter>
       <Box borderTopWidth={1} className="flex justify-center">
-        <Button onClick={() => setShow(!show)} variant="ghost">
+        <Button onClick={() => setShow(!show)} fontSize={12} variant="ghost">
           {show ? "Vis mindre" : "Vis mere"}
         </Button>
       </Box>

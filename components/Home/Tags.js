@@ -74,7 +74,7 @@ const Tags = ({ headTitle }) => {
   }, []); */
 
   return (
-    <div className="w-[300px] max-w-[300px] min-w-[300px]">
+    <div className="w-full max-w-[300px] min-w-[300px]">
       <div>
         <TagHeading headingType={headTitle} />
         <Box

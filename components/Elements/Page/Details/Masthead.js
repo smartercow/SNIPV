@@ -64,7 +64,7 @@ const Masthead = ({ snippet }) => {
   };
 
   return (
-    <div className="flex gap-2 justify-between items-center mt-2">
+    <div className="flex gap-2 justify-between items-center">
       <>
         <LanguageBadge snippet={snippet} />
       </>

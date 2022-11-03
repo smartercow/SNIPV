@@ -9,7 +9,7 @@ const Codes = () => {
   const [user] = useAuthState(auth);
 
   return (
-    <div>
+    <div className="w-full">
       <Head>
         <title>Mine kode SNIPS - SNIPV</title>
         <meta name="description" content="Created by Peter G" />
@@ -20,14 +20,9 @@ const Codes = () => {
         <SnippetsTypeLinks />
       </>
 
-      <div className="flex gap-6 w-full">
-        <div className="w-full">
-          <MySNIPS />
-        </div>
-
-        <div>
-          <Tags headTitle={`Kode tags`} />
-        </div>
+      <div className="flex gap-6">
+        <MySNIPS />
+        <Tags headTitle={`Kode tags`} />
       </div>
     </div>
   );

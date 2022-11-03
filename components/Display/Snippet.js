@@ -4,13 +4,14 @@ import { DeleteDocumentIcon } from "../SVG/DeleteDocumentIcon";
 import { EditDocumentIcon } from "../SVG/EditDocumentIcon";
 import { LoginIcon } from "../SVG/LoginIcon";
 import SnippetBadge from "./Language/SnippetBadge";
-import { Box, Button, Icon, Text } from "@chakra-ui/react";
+import { Box, Icon, IconButton, Text } from "@chakra-ui/react";
 import { DeleteSNIPModalState } from "../../atoms/DeleteSNIPModalState";
 import { useSetRecoilState } from "recoil";
 
 const Snippet = ({ snippet, user }) => {
   const openModal = useSetRecoilState(DeleteSNIPModalState);
 
+  const IconSize = 6;
   return (
     <Box
       key={snippet.id}
@@ -35,21 +36,40 @@ const Snippet = ({ snippet, user }) => {
           <a>
             <div className="flex items-center gap-4 w-full justify-between">
               <div className="flex items-center gap-5 w-full">
-                <div className="flex flex-col gap-4 w-full">
-                  <div className="flex flex-col justify-center gap-3 max-w-xl pl-3 pt-1">
-                    <div className="h-4">
-                      <Text variant="snipHeading" letterSpacing="0.03em">
-                        {snippet.title}
-                      </Text>
-                    </div>
+                <div className="flex flex-col gap-1 w-full">
+                  <div>
+                    {/*                     <div>
+                    {snippet.snippetType === "code" && (
+        <Box>
+          
+        </Box>
+      )}
 
-                    {snippet.description && (
-                      <div className="h-4">
-                        <Text variant="snipDescription">
-                          {snippet.description}
-                        </Text>
+      {snippet.snippetType === "error" && (
+        <Box>
+          
+        </Box>
+      )}
+
+      {snippet.snippetType === "setup" && (
+        <Box>
+          
+        </Box>
+      )}
+                    </div> */}
+                    <div className="flex flex-col justify-center max-w-xl pl-2 w-full">
+                      <div className="">
+                        <Text variant="snipHeading">{snippet.title}</Text>
                       </div>
-                    )}
+
+                      {snippet.description && (
+                        <div className="">
+                          <Text variant="snipDescription">
+                            {snippet.description}
+                          </Text>
+                        </div>
+                      )}
+                    </div>
                   </div>
 
                   <div className="flex w-full">
@@ -94,42 +114,47 @@ const Snippet = ({ snippet, user }) => {
         <div className="hidden md:inline-flex">
           <div className="hoverable-show flex flex-col gap-1 justify-center rounded-xl items-center">
             {snippet.folder.subFolderId && (
-              <>
-                <div>
-                  <a
-                    href={
-                      snippet.snippetType == "code"
-                        ? `/upsert/code/${snippet.id}`
-                        : `/upsert/error/${snippet.id}`
-                    }
-                  >
-                    <Button>
-                      <Icon
-                        as={EditDocumentIcon}
-                        fill="Primary"
-                        className="cursor-pointer"
-                        width={26}
-                        height={26}
-                      />
-                    </Button>
+              <div>
+                <Link
+                  href={
+                    snippet.snippetType == "code"
+                      ? `/upsert/code/${snippet.id}`
+                      : `/upsert/error/${snippet.id}`
+                  }
+                  passHref
+                >
+                  <a>
+                    <IconButton
+                      icon={
+                        <Icon
+                          as={EditDocumentIcon}
+                          fill="Primary"
+                          width={IconSize}
+                          height={IconSize}
+                        />
+                      }
+                      cursor="pointer"
+                    />
                   </a>
-                </div>
-              </>
+                </Link>
+              </div>
             )}
 
             <div>
-              <Button>
-                <Icon
-                  as={DeleteDocumentIcon}
-                  fill="Red"
-                  className="cursor-pointer"
-                  width={26}
-                  height={26}
-                  onClick={() => {
-                    openModal({ default: true, snip: snippet });
-                  }}
-                />
-              </Button>
+              <IconButton
+                icon={
+                  <Icon
+                    as={DeleteDocumentIcon}
+                    fill="Red"
+                    width={IconSize}
+                    height={IconSize}
+                  />
+                }
+                cursor="pointer"
+                onClick={() => {
+                  openModal({ default: true, snip: snippet });
+                }}
+              />
             </div>
           </div>
         </div>

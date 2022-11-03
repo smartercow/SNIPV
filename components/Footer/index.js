@@ -1,11 +1,11 @@
 import React from "react";
 import Link from "next/link";
 import { BiGitRepoForked } from "react-icons/bi";
-import { Box, Text } from "@chakra-ui/react";
+import { Text } from "@chakra-ui/react";
 
 const Footer = () => {
   return (
-    <div className="flex justify-between items-center max-w-6xl mx-5 lg:mx-auto py-2 mt-4 border-t-2">
+    <div className="flex justify-between items-center max-w-6xl w-full mx-5 lg:mx-auto py-3 mt-4 border-t-2">
       <div className="flex flex-col sm:flex-row gap-4">
         <div className="cursor-pointer">
           <Link href="/info/about" passHref>

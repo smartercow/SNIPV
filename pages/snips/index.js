@@ -86,14 +86,14 @@ const MySNIPS = () => {
   return (
     <div>
       {user && (
-        <div className="w-full">
+        <div>
           <SnippetsTypeLinks />
-          <div className="flex gap-6 w-full justify-between">
+          <div className="flex gap-6 justify-between mt-3">
             <Box bg="white" boxShadow="sm" borderRadius="lg" className="w-full">
               <LatestHeading headingType={`ALLE SNIPS`} />
 
               {snippets.snips && (
-                <div className="flex flex-col flex-grow gap-3 pt-3 px-4 pb-4 w-full">
+                <div className="flex flex-col flex-grow gap-3 p-4 w-full">
                   {snippets.snips.slice(0, 10).map((snippet) => (
                     <Snippet key={snippet.id} snippet={snippet} />
                   ))}
@@ -114,7 +114,7 @@ const MySNIPS = () => {
                 </div>
               )}
             </Box>
-            <div className="h-full flex-none">
+            <div className="flex-none">
               <Tags snippets={snippets} headTitle={`Tags`} tags={tags} />
             </div>
           </div>

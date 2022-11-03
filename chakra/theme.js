@@ -9,11 +9,12 @@ import { Avatar } from "./components/Avatars";
 import { Link } from "./components/Links";
 import { Textarea } from "./components/Textareas";
 import { Tabs } from "./components/TabsStyle";
+import { menuTheme } from "./components/menuTheme";
 
 export const theme = extendTheme({
   colors: {
     Primary: "#087ea4",
-    PrimaryLight: "#0074a6",
+    PrimaryLight: "#087ea499",
     PrimaryLighter: "#E6F7FF",
     PrimaryTLight: "#d0ebf7",
     PrimaryELight: "#edf4f7",
@@ -41,6 +42,7 @@ export const theme = extendTheme({
     PrimaryBackground: "#fafafa",
 
     Red: "#F31260",
+    RedLight: "#FDD8E5",
 
     Blue: "#0072F5",
 
@@ -53,6 +55,7 @@ export const theme = extendTheme({
       body: {
         bg: "PrimaryBackground",
         fontFamily: "Inter, sans sarif",
+        overflowY: "overlay",
       },
     }),
   },
@@ -71,5 +74,6 @@ export const theme = extendTheme({
     Link,
     Textarea,
     Tabs,
+    Menu: menuTheme,
   },
 });

@@ -93,9 +93,7 @@ const Tags = () => {
           <TagHeading headingType={"Kode tags"} headingColor={"primary"} />
 
           <Box
-            px={4}
-            pt={2}
-            pb={4}
+            p={4}
             borderBottomRadius="md"
             boxShadow="md"
             bg="white"
@@ -135,7 +133,7 @@ const Tags = () => {
             ) : (
               <div>
                 {!codeTags?.length > 0 && (
-                  <div className="flex justify-center mt-10">
+                  <div className="flex justify-center my-4">
                     <Text variant="nonLabel">Du har ingen kode tags! 😔</Text>
                   </div>
                 )}
@@ -190,7 +188,7 @@ const Tags = () => {
             ) : (
               <div>
                 {!errorTags?.length > 0 && (
-                  <div className="flex justify-center mt-10">
+                  <div className="flex justify-center my-4">
                     <Text variant="nonLabel">Du har ingen kode tags! 😔</Text>
                   </div>
                 )}
@@ -245,7 +243,7 @@ const Tags = () => {
             ) : (
               <div>
                 {!setupTags?.length > 0 && (
-                  <div className="flex justify-center mt-10">
+                  <div className="flex justify-center my-4">
                     <Text variant="nonLabel">Du har ingen Setup tags! 😔</Text>
                   </div>
                 )}

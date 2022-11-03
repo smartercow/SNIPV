@@ -15,7 +15,8 @@ import {
   Input,
   Text,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import PackageBox from "./PackageBox";
 
 const Packages = ({
   packages,
@@ -32,6 +33,8 @@ const Packages = ({
 
   const [editPack, setEditPack] = useState(false);
   const [editPackId, setEditPackId] = useState("");
+
+  const [disableSave, setDisableSave] = useState(true);
 
   const randomValue = (Math.random() + 3).toString(36).substring(2);
 
@@ -108,8 +111,13 @@ const Packages = ({
     setEditPackId("");
   };
 
-  console.log("packages", packages);
-  console.log("editPackId", editPackId);
+  useEffect(() => {
+    if (packages.length > 0) {
+      setDisableSave(false);
+    } else {
+      setDisableSave(true);
+    }
+  }, [packages]);
   return (
     <Box p={4} borderWidth={1} borderRadius="md">
       <div>
@@ -124,12 +132,12 @@ const Packages = ({
                 Tilføjet pakker
               </Text>
             </div>
-            <Divider mb={2} />
+            <Divider my={2} />
             {packages.map((pack, index) => {
               return (
                 <Box key={index} mb={3}>
-                  <div>
-                    <ButtonGroup size="sm" isAttached variant="outline">
+                  <Box className="-mb-[5px]">
+                    <ButtonGroup size="sm" isAttached variant="custom">
                       <IconButton
                         aria-label="Up"
                         onClick={() => moveUp(index)}
@@ -143,6 +151,7 @@ const Packages = ({
                         aria-label="Down"
                         onClick={() => moveDown(index)}
                         borderBottom="none"
+                        ml="-1px"
                         icon={
                           <ArrowDownIcon
                             height={5}
@@ -154,6 +163,7 @@ const Packages = ({
                       <IconButton
                         aria-label="Edit"
                         borderBottom="none"
+                        ml="-1px"
                         onClick={() => {
                           setPackageValue(pack.package),
                             setEditPack(true),
@@ -165,6 +175,7 @@ const Packages = ({
                         aria-label="Down"
                         borderBottomRadius="none"
                         borderBottom="none"
+                        ml="-1px"
                         disabled={
                           editPack && editPackId === pack.packageId
                             ? true
@@ -180,7 +191,7 @@ const Packages = ({
                         icon={<CloseIcon height={3} width={3} color="Red" />}
                       />
                     </ButtonGroup>
-                  </div>
+                  </Box>
                   <Box
                     borderColor={
                       editPack && editPackId === pack.packageId
@@ -190,18 +201,9 @@ const Packages = ({
                     borderWidth={1}
                     borderRadius="md"
                     borderTopLeftRadius="none"
-                    py={1}
                     key={index}
-                    className="flex items-center gap-1"
                   >
-                    <div className="w-4 select-none">
-                      <Text fontWeight="semibold" className="text-center">
-                        &nbsp;$
-                      </Text>
-                    </div>
-                    <Box className="flex-grow">
-                      <Text>{pack.package}</Text>
-                    </Box>
+                    <PackageBox pack={pack} />
                   </Box>
                 </Box>
               );
@@ -229,15 +231,25 @@ const Packages = ({
           />
         </div>
         <div className="flex gap-3">
-          <Button onClick={editPack ? editPackage : AddPackage}>
-            {editPack ? "Opdatere" : "Tilføj"}
+          <Button
+            variant="btnSub"
+            disabled={packageValue ? false : true}
+            onClick={editPack ? editPackage : AddPackage}
+          >
+            {editPack ? "Opdatere pakke" : "Tilføj pakke"}
           </Button>
           <Button
+            variant="btnSub"
+            disabled={disableSave}
             onClick={
               editPack ? Cancel : editState ? UpdatePackages : AddAllPackages
             }
           >
-            {editPack ? "Annullere" : editState ? "Opdatere" : "Færdig"}
+            {editPack
+              ? "Annullere"
+              : editState
+              ? "Opdatere pakker"
+              : "Tilføj pakker"}
           </Button>
         </div>
       </div>

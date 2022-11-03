@@ -45,7 +45,7 @@ const Files = ({
   setSelectFileExt,
   setSelectedEntry,
 }) => {
-  const { title, code } = codeFile;
+  const { name, code } = codeFile;
 
   const [fileExts, setFileExts] = useState({});
 
@@ -61,14 +61,19 @@ const Files = ({
     setSelectLangFileExt(data);
     setFileExts(data.fileExtensions);
     setSelectFileExt(data.fileExtensions[0]);
-    setSelectedFileExt(data.fileExtensions[0]);
+    setCodeFile({
+      ...codeFile,
+      entryFileLang: data,
+      entryFileExt: data.fileExtensions[0],
+    });
   }
 
   function handleFileExtSelect(data) {
-    setSelectedFileExt(data);
     setSelectFileExt(data);
-    setSelectFileExt(data);
-    setSelectedFileExt(data);
+    setCodeFile({
+      ...codeFile,
+      entryFileExt: data,
+    });
   }
 
   const onChange = (e) => {
@@ -79,42 +84,16 @@ const Files = ({
     });
   };
 
-  useEffect(() => {
-    if (title && code) {
-      setDisableNew(false);
-    } else {
-      setDisableNew(true);
-    }
-  }, [title, code]);
-
-  useEffect(() => {
-    if (Object.keys(codeFiles).length > 0) {
-      setDisableSave(false);
-    } else {
-      setDisableSave(true);
-    }
-  }, [codeFiles]);
-
-  useEffect(() => {
-    if (!editFilesState && FileExtOptions) {
-      setEditFilesId("");
-      setCodeFile(initialCodeFileValue);
-      setFileExts(FileExtOptions[0].fileExtensions);
-      setSelectLangFileExt(FileExtOptions[0]);
-      setSelectedLangFileExt(FileExtOptions[0]);
-      setSelectFileExt(FileExtOptions[0].fileExtensions[0]);
-      setSelectedFileExt(FileExtOptions[0].fileExtensions[0]);
-    }
-  }, [editFilesState]);
-
   const editCodeFiles = () => {
     const editedCodeFiles = codeFiles.map((obj) => {
       if (obj.fileId === editFilesId) {
         return {
           ...obj,
-          file: codeFile,
-          entryFileLang: selectedLangFileExt,
-          entryFileExt: selectedFileExt,
+          file: {
+            ...codeFile,
+            entryFileLang: selectLangFileExt,
+            entryFileExt: selectFileExt,
+          },
         };
       }
 
@@ -180,6 +159,37 @@ const Files = ({
     });
   };
 
+  useEffect(() => {
+    if (name && code) {
+      setDisableNew(false);
+    } else {
+      setDisableNew(true);
+    }
+  }, [name, code]);
+
+  useEffect(() => {
+    if (Object.keys(codeFiles).length > 0) {
+      setDisableSave(false);
+    } else {
+      setDisableSave(true);
+    }
+  }, [codeFiles]);
+
+  useEffect(() => {
+    if (!editFilesState && FileExtOptions) {
+      setEditFilesId("");
+      setCodeFile(initialCodeFileValue);
+      setFileExts(FileExtOptions[0].fileExtensions);
+      setSelectLangFileExt(FileExtOptions[0]);
+      setSelectedLangFileExt(FileExtOptions[0]);
+      setSelectFileExt(FileExtOptions[0].fileExtensions[0]);
+    }
+  }, [editFilesState]);
+
+  console.log("codeFile", codeFile);
+  console.log("codeFiles", codeFiles);
+  console.log("selectLang", selectLangFileExt);
+  console.log("selectFileExt", selectFileExt);
   return (
     <div>
       <div className="">
@@ -225,13 +235,12 @@ const Files = ({
                         aria-label="Edit"
                         borderBottom="none"
                         onClick={() => {
-                          setSelectLangFileExt(c.entryFileLang);
-                          setSelectedLangFileExt(c.entryFileLang);
-                          setSelectFileExt(c.entryFileExt);
-                          setSelectedFileExt(c.entryFileExt);
+                          setSelectLangFileExt(c.file.entryFileLang);
+                          setSelectedLangFileExt(c.file.entryFileLang);
+                          setSelectFileExt(c.file.entryFileExt);
                           setCodeFile({
                             code: c.file.code,
-                            title: c.file.title,
+                            name: c.file.name,
                           });
                           setEditFilesState(true);
                           setEditFilesId(c.fileId);
@@ -268,8 +277,8 @@ const Files = ({
                     p={2}
                   >
                     <Text color="Primary" fontSize={16} fontWeight="semibold">
-                      {c.file.title}
-                      {c.entryFileExt?.label}
+                      {c.file.name}
+                      {c.file.entryFileExt.label}
                     </Text>
                   </Box>
                 </Box>
@@ -293,18 +302,18 @@ const Files = ({
         <div className="flex gap-3">
           <div className="w-full">
             <Input
-              name="title"
+              name="name"
               onChange={onChange}
               placeholder="App"
               type="text"
-              value={title}
+              value={name}
               focusBorderColor="Primary"
-              // variant="main"
             />
           </div>
 
           <div className="w-full">
             <Select
+              name="entryFileLang"
               options={FileExtOptions}
               placeholder="Valg sprog"
               value={selectLangFileExt}
@@ -324,6 +333,7 @@ const Files = ({
 
           <div className="w-full">
             <Select
+              name="entryFileExt"
               options={fileExts}
               placeholder="Valg en rodmappe"
               value={selectFileExt}
@@ -358,7 +368,7 @@ const Files = ({
 
         <div className="flex gap-4">
           <Button
-            variant="entrySub"
+            variant="btnSub"
             onClick={editFilesState ? editCodeFiles : AddCodeFile}
             isDisabled={disableNew}
           >
@@ -366,7 +376,7 @@ const Files = ({
           </Button>
 
           <Button
-            variant="entrySub"
+            variant="btnSub"
             onClick={
               editFilesState
                 ? Cancel
@@ -385,7 +395,7 @@ const Files = ({
 
           {editState && (
             <Button
-              variant="entrySub"
+              variant="btnSub"
               onClick={editFilesState ? Cancel : CancelEntry}
             >
               Annullere

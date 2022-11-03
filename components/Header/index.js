@@ -92,9 +92,9 @@ const Header = ({ user }) => {
           )}
         </>
       )}
-      <div className="flex justify-between items-center max-w-6xl mx-5 lg:mx-auto h-14">
+      <div className="flex justify-between items-center max-w-6xl w-full mx-5 lg:mx-auto h-14">
         <div className="flex gap-4 items-center">
-          <div className="flex items-center select-none">
+          <div className="select-none">
             <Link href="/" passHref>
               <a>
                 <Text
@@ -143,78 +143,66 @@ const Header = ({ user }) => {
 
         <div className="flex items-center gap-1">
           {user ? (
-            <div className="">
-              <div>
-                <Menu pb={0}>
-                  <MenuButton as={Button}>
-                    <Icon as={UserIcon} fill="DarkBlue" height={5} width={5} />
-                  </MenuButton>
-                  <MenuList>
-                    <MenuGroup
-                      title={
-                        <Box
-                          bg="PrimaryLighter"
-                          px={2}
-                          borderRadius="md"
-                          color="Primary"
+            <>
+              <Menu pb={0}>
+                <MenuButton as={Button}>
+                  <Icon as={UserIcon} fill="DarkBlue" height={5} width={5} />
+                </MenuButton>
+                <MenuList>
+                  <MenuGroup title={user?.email}>
+                    <Link href="/settings">
+                      <a>
+                        <MenuItem
+                          fontWeight="semibold"
+                          color="DarkBlue"
+                          icon={
+                            <Icon
+                              as={SettingIcon}
+                              fill="Primary"
+                              height={5}
+                              width={5}
+                            />
+                          }
                         >
-                          {user?.email}
-                        </Box>
-                      }
-                    >
-                      <Link href="/settings">
-                        <a>
-                          <MenuItem
-                            fontWeight="semibold"
-                            color="DarkBlue"
-                            icon={
-                              <Icon
-                                as={SettingIcon}
-                                fill="Primary"
-                                height={5}
-                                width={5}
-                              />
-                            }
-                          >
-                            Indstillinger
-                          </MenuItem>
-                        </a>
-                      </Link>
-                    </MenuGroup>
-                    <MenuGroup>
-                      <Link href="/info/help">
-                        <a>
-                          <MenuItem
-                            fontWeight="semibold"
-                            color="DarkBlue"
-                            icon={
-                              <Icon
-                                as={QuestionIcon}
-                                color="Primary"
-                                height={4}
-                                width={4}
-                                ml={1}
-                              />
-                            }
-                          >
-                            Hjælp
-                          </MenuItem>
-                        </a>
-                      </Link>
-                    </MenuGroup>
-                    <MenuDivider />
-                    <MenuGroup>
-                      <MenuItem
-                        bg="Red"
-                        color="white"
-                        fontWeight="semibold"
-                        _hover={{
-                          bg: "Red",
-                          color: "white",
-                          opacity: 0.8,
-                        }}
-                        onClick={logout}
-                        /*                         icon={
+                          Indstillinger
+                        </MenuItem>
+                      </a>
+                    </Link>
+                  </MenuGroup>
+                  <MenuGroup>
+                    <Link href="/info/help">
+                      <a>
+                        <MenuItem
+                          fontWeight="semibold"
+                          color="DarkBlue"
+                          icon={
+                            <Icon
+                              as={QuestionIcon}
+                              color="Primary"
+                              height={4}
+                              width={4}
+                              ml={1}
+                            />
+                          }
+                        >
+                          Hjælp
+                        </MenuItem>
+                      </a>
+                    </Link>
+                  </MenuGroup>
+                  <MenuDivider />
+                  <MenuGroup>
+                    <MenuItem
+                      bg="Red"
+                      color="white"
+                      fontWeight="semibold"
+                      _hover={{
+                        bg: "Red",
+                        color: "white",
+                        opacity: 0.8,
+                      }}
+                      onClick={logout}
+                      /*                         icon={
                           <Icon
                             as={LogoutIcon}
                             fill="Red"
@@ -222,14 +210,13 @@ const Header = ({ user }) => {
                             width={5}
                           />
                         } */
-                      >
-                        Log ud
-                      </MenuItem>
-                    </MenuGroup>
-                  </MenuList>
-                </Menu>
-              </div>
-            </div>
+                    >
+                      Log ud
+                    </MenuItem>
+                  </MenuGroup>
+                </MenuList>
+              </Menu>
+            </>
           ) : (
             <div>
               <Button

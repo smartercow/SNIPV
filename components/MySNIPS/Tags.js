@@ -1,10 +1,11 @@
-import { Box, Text } from "@chakra-ui/react";
-import { collection, getDocs, onSnapshot } from "firebase/firestore";
-import Link from "next/link";
-import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
+import Link from "next/link";
+import { collection, onSnapshot } from "firebase/firestore";
 import { db } from "../../firebase/clientApp";
+import { Box, Text } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 import TagHeading from "../Heading/TagType/TagHeading";
+
 const Tags = ({ headTitle }) => {
   const { asPath } = useRouter();
   const [col, setCol] = useState("");
@@ -45,7 +46,7 @@ const Tags = ({ headTitle }) => {
   }, [col]);
 
   return (
-    <div className="w-[300px] max-w-[300px] min-w-[300px] h-full hidden lg:inline-flex bg-white">
+    <div className="w-full max-w-[300px] min-w-[300px] h-full hidden lg:inline-flex bg-white">
       <div>
         <TagHeading headingType={headTitle} />
         <Box

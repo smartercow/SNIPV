@@ -119,7 +119,7 @@ const FoldersLoad = ({
       borderWidth={1}
       p={2}
       borderRadius="md"
-      className="flex flex-col gap-2 max-2-xl"
+      className="flex flex-col gap-2 max-2-xl w-full"
     >
       <div className="flex flex-col gap-2">
         <Text

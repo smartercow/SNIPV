@@ -48,14 +48,14 @@ const Quill = ({
       <div className="flex gap-2">
         <Button
           onClick={editState ? editSumEntry : addSummary}
-          variant="entrySub"
+          variant="btnSub"
           disabled={disableSave}
         >
           {editState ? "Opdatare" : "Færdig"}
         </Button>
 
         {editState && (
-          <Button onClick={Cancel} variant="entrySub" disabled={disableSave}>
+          <Button onClick={Cancel} variant="btnSub" disabled={disableSave}>
             Anullere
           </Button>
         )}

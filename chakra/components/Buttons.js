@@ -1,31 +1,89 @@
+import { defineStyle, defineStyleConfig } from "@chakra-ui/styled-system";
+const customVariant = defineStyle((props) => {
+  return {
+    transition: "transform 0.15s ease-out, background 0.15s ease-out",
+    borderColor: "BorderGray",
+    borderWidth: 1,
+    _hover: {
+      bg: "gray.100",
+    },
+  };
+});
+const colorPrimaryStyles = {
+  backgroundColor: "Primary",
+  // border: "1px solid",
+  borderColor: "Primary",
+  color: "white",
+};
+
+const disabledStyles = {
+  opacity: 1,
+  backgroundColor: "Primary",
+};
+
+const hoverStyles = {
+  backgroundColor: "PrimaryLight",
+};
+
 export const Button = {
-  baseStyle: {},
-  sizes: {
-    sm: {
-      fontSize: "8pt",
-    },
-    md: {
-      fontSize: "10pt",
-      // height: "28px",
-    },
-    lg: {
-      fontSize: "10pt",
-      height: "28px",
-    },
+  baseStyle: {
+    transition: "transform 0.15s ease-out, background 0.15s ease-out",
+    textTransform: "uppercase",
   },
   variants: {
-    main: {
-      color: "red.400",
-      bg: "Primary",
-      minW: "130px",
+    custom: customVariant,
+    /*     solid: {
+      ...colorPrimaryStyles,
+      fontSize: "sm",
+      height: "2.3rem",
+      textTransform: "uppercase",
+      fontWeight: 500,
       _hover: {
-        bg: "PrimaryLight",
+        ...hoverStyles,
+      },
+      _disabled: {
+        ...disabledStyles,
+        _hover: {
+          ...hoverStyles,
+        },
+      },
+    }, */
+    iconBtn: {
+      border: "red",
+    },
+    /*     outline: {
+      color: "Primary",
+      borderColor: "Primary",
+      fontSize: "sm",
+      height: "2rem",
+    }, */
+    btnSub: {
+      color: "white",
+      bg: "Primary",
+      fontWeight: 500,
+      fontSize: "xs",
+      height: "2rem",
+      minW: "80px",
+      _hover: {
+        opacity: 0.8,
       },
     },
-    sub: {
-      bg: "PrimaryLighter",
-      fontWeight: 500,
-      minW: "100px",
+    btnCloseGhost: {
+      color: "Red",
+      fontSize: "sm",
+      height: "2.3rem",
+      textTransform: "uppercase",
+      fontWeight: "bold",
+      _hover: {
+        bg: "RedLight",
+      },
+    },
+    btnCloseFlat: {
+      bg: "RedLight",
+      color: "Red",
+      fontSize: "sm",
+      height: "2.3rem",
+      fontWeight: "bold",
       _hover: {
         opacity: 0.8,
       },
@@ -34,21 +92,15 @@ export const Button = {
       color: "white",
       bg: "Primary",
       fontWeight: 500,
-      minW: "100px",
+      fontSize: "sm",
+      height: "2.3rem",
+      minW: "90px",
       _hover: {
         opacity: 0.8,
       },
     },
-    entrySub: {
-      color: "white",
-      bg: "Primary",
-      fontWeight: 500,
-      minW: "80px",
-      height: "35px",
-      _hover: {
-        opacity: 0.8,
-      },
-    },
+    /* 
+
     dropdown: {
       width: "50px",
     },
@@ -70,6 +122,6 @@ export const Button = {
       _hover: {
         bg: "PrimaryLight",
       },
-    },
+    }, */
   },
 };
