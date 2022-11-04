@@ -73,6 +73,11 @@ export const Text = {
       textTransform: "uppercase",
       fontWeight: "semibold",
     },
+    labelHeading: {
+      fontSize: "14px",
+      fontWeight: "semibold",
+      textTransform: "uppercase",
+    },
     snipNameDeleteModal: {
       width: "440",
       overflow: "hidden",

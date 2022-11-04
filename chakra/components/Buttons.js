@@ -9,20 +9,12 @@ const customVariant = defineStyle((props) => {
     },
   };
 });
-const colorPrimaryStyles = {
-  backgroundColor: "Primary",
-  // border: "1px solid",
-  borderColor: "Primary",
-  color: "white",
-};
 
 const disabledStyles = {
-  opacity: 1,
-  backgroundColor: "Primary",
-};
-
-const hoverStyles = {
-  backgroundColor: "PrimaryLight",
+  _hover: {
+    bg: "Primary",
+    opacity: 0.5,
+  },
 };
 
 export const Button = {
@@ -32,31 +24,6 @@ export const Button = {
   },
   variants: {
     custom: customVariant,
-    /*     solid: {
-      ...colorPrimaryStyles,
-      fontSize: "sm",
-      height: "2.3rem",
-      textTransform: "uppercase",
-      fontWeight: 500,
-      _hover: {
-        ...hoverStyles,
-      },
-      _disabled: {
-        ...disabledStyles,
-        _hover: {
-          ...hoverStyles,
-        },
-      },
-    }, */
-    iconBtn: {
-      border: "red",
-    },
-    /*     outline: {
-      color: "Primary",
-      borderColor: "Primary",
-      fontSize: "sm",
-      height: "2rem",
-    }, */
     btnSub: {
       color: "white",
       bg: "Primary",
@@ -66,6 +33,12 @@ export const Button = {
       minW: "80px",
       _hover: {
         opacity: 0.8,
+      },
+      _disabled: {
+        ...disabledStyles,
+        _hover: {
+          ...disabledStyles,
+        },
       },
     },
     btnCloseGhost: {
@@ -98,11 +71,12 @@ export const Button = {
       _hover: {
         opacity: 0.8,
       },
-    },
-    /* 
-
-    dropdown: {
-      width: "50px",
+      _disabled: {
+        ...disabledStyles,
+        _hover: {
+          ...disabledStyles,
+        },
+      },
     },
     create: {
       bg: "Primary",
@@ -114,6 +88,11 @@ export const Button = {
       _hover: {
         bg: "PrimaryLight",
       },
+    },
+    /* 
+
+    dropdown: {
+      width: "50px",
     },
     noFolder: {
       bg: "Primary",

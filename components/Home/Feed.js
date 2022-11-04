@@ -1,9 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { MdFormatIndentIncrease } from "react-icons/md";
-import { LoginIcon } from "../SVG/LoginIcon";
-import LanguageBadge from "../Display/LanguageBadge";
-import { Avatar, Badge, Box, Icon, Text, Tooltip } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 import LatestHeading from "../Heading/LatestHeading";
 import Snippet from "../Display/Snippet";
 

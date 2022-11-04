@@ -1,6 +1,9 @@
 import {
+  Box,
   Button,
+  ButtonGroup,
   Icon,
+  IconButton,
   Popover,
   PopoverArrow,
   PopoverBody,
@@ -70,21 +73,25 @@ const Masthead = ({ snippet }) => {
       </>
 
       {user.uid === snippet.userData.uid && (
-        <div className="flex items-center">
-          <div>
+        <Box>
+          <ButtonGroup size="sm" isAttached variant="ghost">
             <a href={`${edit}${id}`}>
-              <Button>
-                <Icon w={6} h={6} as={EditDocumentIcon} fill="Primary" />
-              </Button>
+              <IconButton
+                icon={
+                  <Icon
+                    as={EditDocumentIcon}
+                    height={6}
+                    width={6}
+                    fill="Primary"
+                  />
+                }
+              />
             </a>
-          </div>
-
-          <div>
             <Popover>
               <PopoverTrigger>
-                <Button>
-                  <Icon w={6} h={6} as={DeleteDocumentIcon} fill="Red" />
-                </Button>
+                <IconButton
+                  icon={<Icon w={6} h={6} as={DeleteDocumentIcon} fill="Red" />}
+                />
               </PopoverTrigger>
               <PopoverContent>
                 <PopoverArrow />
@@ -98,8 +105,8 @@ const Masthead = ({ snippet }) => {
                 </PopoverBody>
               </PopoverContent>
             </Popover>
-          </div>
-        </div>
+          </ButtonGroup>
+        </Box>
       )}
     </div>
   );

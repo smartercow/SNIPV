@@ -23,7 +23,7 @@ body {
 
 @layer components {
   .tagHover {
-    @apply bg-[#0072F5] text-white ease-in duration-300 cursor-pointer;
+    @apply bg-[#087ea4] text-white ease-in duration-300 cursor-pointer;
   }
 
   .langHover {

@@ -51,7 +51,7 @@ const Quill = ({
           variant="btnSub"
           disabled={disableSave}
         >
-          {editState ? "Opdatare" : "Færdig"}
+          {editState ? "Opdatare" : "Tilføj"}
         </Button>
 
         {editState && (

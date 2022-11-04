@@ -1,12 +1,15 @@
 import React from "react";
 import Link from "next/link";
-import { DeleteDocumentIcon } from "../SVG/DeleteDocumentIcon";
-import { EditDocumentIcon } from "../SVG/EditDocumentIcon";
-import { LoginIcon } from "../SVG/LoginIcon";
-import SnippetBadge from "./Language/SnippetBadge";
+import { DeleteDocumentIcon } from "../../SVG/DeleteDocumentIcon";
+import { EditDocumentIcon } from "../../SVG/EditDocumentIcon";
+import { DocumentIcon } from "../../SVG/DocumentIcon";
+import { Paper } from "../../SVG/Paper";
+import { LoginIcon } from "../../SVG/LoginIcon";
+import SnippetBadge from "../Language/SnippetBadge";
 import { Box, Icon, IconButton, Text } from "@chakra-ui/react";
-import { DeleteSNIPModalState } from "../../atoms/DeleteSNIPModalState";
+import { DeleteSNIPModalState } from "../../../atoms/DeleteSNIPModalState";
 import { useSetRecoilState } from "recoil";
+import ModelIcon from "./ModelIcon";
 
 const Snippet = ({ snippet, user }) => {
   const openModal = useSetRecoilState(DeleteSNIPModalState);
@@ -37,26 +40,9 @@ const Snippet = ({ snippet, user }) => {
             <div className="flex items-center gap-4 w-full justify-between">
               <div className="flex items-center gap-5 w-full">
                 <div className="flex flex-col gap-1 w-full">
-                  <div>
-                    {/*                     <div>
-                    {snippet.snippetType === "code" && (
-        <Box>
-          
-        </Box>
-      )}
+                  <div className="flex">
+                    <ModelIcon snippet={snippet} />
 
-      {snippet.snippetType === "error" && (
-        <Box>
-          
-        </Box>
-      )}
-
-      {snippet.snippetType === "setup" && (
-        <Box>
-          
-        </Box>
-      )}
-                    </div> */}
                     <div className="flex flex-col justify-center max-w-xl pl-2 w-full">
                       <div className="">
                         <Text variant="snipHeading">{snippet.title}</Text>

@@ -1,6 +1,5 @@
 import { Icon } from "@chakra-ui/react";
 
-//Test -NextUI
 export const CopyIcon = ({ fill, size, height, width, ...props }) => {
   return (
     <Icon viewBox="0 0 24 24" {...props}>

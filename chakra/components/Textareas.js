@@ -1,8 +1,10 @@
 export const Textarea = {
-  baseStyle: {
+  /*   baseStyle: {
+    focusBorderColor: "Primary",
+  }, */
+  defaultProps: {
     focusBorderColor: "Primary",
   },
-
   variants: {
     main: {
       color: "Black",

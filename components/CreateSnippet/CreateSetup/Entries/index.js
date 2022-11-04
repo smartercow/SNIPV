@@ -341,8 +341,8 @@ const Entries = ({
             </div>
             <Input
               placeholder="Installation"
-              variant="main"
               value={menu}
+              maxLength={20}
               onChange={(e) => setMenu(e.target.value)}
             />
           </Box>

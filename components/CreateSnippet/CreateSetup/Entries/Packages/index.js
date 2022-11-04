@@ -129,7 +129,7 @@ const Packages = ({
                 textTransform="uppercase"
                 fontSize={14}
               >
-                Tilføjet pakker
+                Pakker
               </Text>
             </div>
             <Divider my={2} />
@@ -220,7 +220,7 @@ const Packages = ({
             fontWeight="semibold"
             fontSize={14}
           >
-            Tilføj pakker
+            Pakke
           </Text>
         </div>
         <div>

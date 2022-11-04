@@ -24,13 +24,13 @@ const Details = ({ snippet }) => {
               key={index}
               className="bg-[#EFF2FB] text-[#4D5B7C] px-2 rounded-lg hover:tagHover flex items-center tagFont"
             >
-              <h5 className="mb-[3px]">{tag}</h5>
+              <h5>{tag}</h5>
             </div>
           ))}
         </div>
       )}
 
-      <Divider mt={2} h={0.8} />
+      <Divider my={2} h={0.8} />
     </div>
   );
 };

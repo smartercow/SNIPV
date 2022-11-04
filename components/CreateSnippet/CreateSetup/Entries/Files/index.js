@@ -7,6 +7,7 @@ import {
   Input,
   Text,
   Textarea,
+  useToast,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { Select, CreatableSelect, AsyncSelect } from "chakra-react-select";
@@ -45,8 +46,9 @@ const Files = ({
   setSelectFileExt,
   setSelectedEntry,
 }) => {
-  const { name, code } = codeFile;
+  const toast = useToast();
 
+  const { name, code } = codeFile;
   const [fileExts, setFileExts] = useState({});
 
   const [disableNew, setDisableNew] = useState(true);
@@ -186,17 +188,15 @@ const Files = ({
     }
   }, [editFilesState]);
 
-  console.log("codeFile", codeFile);
+  /*   console.log("codeFile", codeFile);
   console.log("codeFiles", codeFiles);
   console.log("selectLang", selectLangFileExt);
-  console.log("selectFileExt", selectFileExt);
+  console.log("selectFileExt", selectFileExt); */
   return (
     <div>
       <div className="">
         <div>
-          <Text textTransform="uppercase" fontSize={14} fontWeight="semibold">
-            Tilføjet filer:
-          </Text>
+          <Text variant="labelHeading">Filer:</Text>
         </div>
         <div className=" flex flex-col gap-3 mt-2">
           {!codeFiles.length > 0 && (
@@ -290,14 +290,7 @@ const Files = ({
       <Divider my={3} />
       <div className="flex flex-col gap-3">
         <div>
-          <Text
-            textTransform="uppercase"
-            variant="heading"
-            fontWeight="semibold"
-            fontSize={14}
-          >
-            Tilføj filer
-          </Text>
+          <Text variant="labelHeading">Fil</Text>
         </div>
         <div className="flex gap-3">
           <div className="w-full">
@@ -307,6 +300,15 @@ const Files = ({
               placeholder="App"
               type="text"
               value={name}
+              onKeyDown={(e) => {
+                if (e.which === 32)
+                  return toast({
+                    title: "Ingen mellemrum i filnavn!",
+                    status: "error",
+                    duration: 2000,
+                    isClosable: true,
+                  });
+              }}
               focusBorderColor="Primary"
             />
           </div>
@@ -362,7 +364,6 @@ const Files = ({
             value={code}
             placeholder="Al filkode inklusive imports"
             onChange={onChange}
-            focusBorderColor="Primary"
           />
         </div>
 

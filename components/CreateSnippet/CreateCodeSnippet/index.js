@@ -1,5 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
-
+import React, { useEffect, useState } from "react";
 import {
   addDoc,
   collection,
@@ -11,12 +10,9 @@ import {
 import { auth, db } from "../../../firebase/clientApp";
 import { useRouter } from "next/router";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { TagsInput } from "react-tag-input-component";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneLight } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import { toast } from "react-toastify";
-import NextLink from "next/link";
-import { CgExternal } from "react-icons/cg";
 import FolderHeading from "../FolderHeading";
 import {
   Accordion,
@@ -26,14 +22,15 @@ import {
   AccordionPanel,
   Box,
   Button,
-  Divider,
   Input,
-  Link,
   Text,
   Textarea,
 } from "@chakra-ui/react";
 import CreatedFolders from "../../Folders/CreateFolder/CreatedFolders";
 import CreatedSubFolders from "../../Folders/CreateFolder/CreatedSubFolders";
+import Tags from "../Elements/Tags";
+import SnipLink from "../Elements/SnipLink";
+import ButtonCheckBox from "../Elements/ButtonCheckBox";
 
 const initialState = {
   title: "",
@@ -57,6 +54,7 @@ const CreateCodeSnippet = ({ id, setLoading, setDataError }) => {
   const [notes, setNotes] = useState("");
   const [tags, setTags] = useState([]);
   const [tagInputValues, setTagInputValues] = useState([]);
+  const [snipMenu, setSnipMenu] = useState("snippet");
 
   const [selectValue, setSelectValue] = useState([]);
   const [selectSubValue, setSelectSubValue] = useState();
@@ -117,6 +115,7 @@ const CreateCodeSnippet = ({ id, setLoading, setDataError }) => {
               description: lowercaseForm.description,
             },
             snippetType: "code",
+            model: snipMenu,
             postedAt: serverTimestamp(),
             userData: {
               username: username,
@@ -142,7 +141,7 @@ const CreateCodeSnippet = ({ id, setLoading, setDataError }) => {
                 ? lowercaseForm.description
                 : form.description,
             },
-            snippetType: "code",
+            model: snipMenu,
             updatedAt: serverTimestamp(),
             userData: {
               username: username,
@@ -164,6 +163,8 @@ const CreateCodeSnippet = ({ id, setLoading, setDataError }) => {
       return toast.error("FEJL!");
     }
   };
+
+  console.log("SNIPMODEL", snipMenu);
 
   useEffect(() => {
     if (id) {
@@ -221,372 +222,318 @@ const CreateCodeSnippet = ({ id, setLoading, setDataError }) => {
   }, [selectSubValue, selectedMainFolder]);
 
   return (
-    <div className="">
-      <div className="">
-        <Accordion defaultIndex={[0]} allowToggle variant="main">
-          <AccordionItem>
-            <h2>
-              <AccordionButton
-                borderRadius={10}
-                bg="iGrayLight"
-                _hover={{ bg: "PrimaryELight" }}
-                _expanded={{
-                  borderBottomLeftRadius: 0,
-                  borderBottomRightRadius: 0,
-                }}
-              >
-                <Box flex="1" textAlign="left">
-                  <Text variant="folderHeading">Mappe</Text>
-                </Box>
-                <AccordionIcon />
-              </AccordionButton>
-            </h2>
-            <AccordionPanel pb={4}>
-              <div className="flex flex-col gap-4 mx-1 h-40">
-                <CreatedFolders
-                  selectedMainFolder={selectedMainFolder}
-                  setSelectedMainFolder={setSelectedMainFolder}
-                  selectedSubFolder={selectedSubFolder}
-                  setSelectedSubFolder={setSelectedSubFolder}
-                  id={id}
-                  selectValue={selectValue}
-                  setSelectValue={setSelectValue}
-                  setSelectSubValue={setSelectSubValue}
-                />
+    <div className="p-4">
+      <Accordion defaultIndex={[0]} allowToggle variant="main">
+        <AccordionItem>
+          <h2>
+            <AccordionButton
+              borderRadius={10}
+              bg="iGrayLight"
+              _hover={{ bg: "PrimaryELight" }}
+              _expanded={{
+                borderBottomLeftRadius: 0,
+                borderBottomRightRadius: 0,
+              }}
+            >
+              <Box flex="1" textAlign="left">
+                <Text variant="folderHeading">Mappe</Text>
+              </Box>
+              <AccordionIcon />
+            </AccordionButton>
+          </h2>
+          <AccordionPanel pb={4}>
+            <div className="flex flex-col gap-4 mx-1 h-40">
+              <CreatedFolders
+                selectedMainFolder={selectedMainFolder}
+                setSelectedMainFolder={setSelectedMainFolder}
+                selectedSubFolder={selectedSubFolder}
+                setSelectedSubFolder={setSelectedSubFolder}
+                id={id}
+                selectValue={selectValue}
+                setSelectValue={setSelectValue}
+                setSelectSubValue={setSelectSubValue}
+              />
 
-                {selectedMainFolder?.language?.langId && (
-                  <div>
-                    <CreatedSubFolders
-                      selectedMainFolder={selectedMainFolder}
-                      selectedSubFolder={selectedSubFolder}
-                      setSelectedSubFolder={setSelectedSubFolder}
-                      setSubFolders={setSubFolders}
-                      subFolders={subFolders}
-                      selectSubValue={selectSubValue}
-                      setSelectSubValue={setSelectSubValue}
+              {selectedMainFolder?.language?.langId && (
+                <div>
+                  <CreatedSubFolders
+                    selectedMainFolder={selectedMainFolder}
+                    selectedSubFolder={selectedSubFolder}
+                    setSelectedSubFolder={setSelectedSubFolder}
+                    setSubFolders={setSubFolders}
+                    subFolders={subFolders}
+                    selectSubValue={selectSubValue}
+                    setSelectSubValue={setSelectSubValue}
+                  />
+                </div>
+              )}
+            </div>
+          </AccordionPanel>
+        </AccordionItem>
+        <AccordionItem mt={3} isDisabled={disableCode}>
+          <h2>
+            <AccordionButton
+              borderRadius={10}
+              bg="iGrayLight"
+              _hover={{ bg: "PrimaryELight" }}
+              _expanded={{
+                borderBottomLeftRadius: 0,
+                borderBottomRightRadius: 0,
+              }}
+            >
+              <Box flex="1" textAlign="left">
+                <div className="flex gap-5 items-center">
+                  <Text variant="folderHeading">SNIP</Text>
+                  {codeExpanded && (
+                    <FolderHeading selectedSubFolder={selectedSubFolder} />
+                  )}
+                </div>
+              </Box>
+              <AccordionIcon />
+            </AccordionButton>
+          </h2>
+          <AccordionPanel py={4}>
+            <form onSubmit={handleSubmit}>
+              <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-5 mx-3">
+                  <div className="w-full flex gap-4 items-center">
+                    <div className="w-24">
+                      <Text variant="H5">Titel</Text>
+                    </div>
+                    <Input
+                      name="title"
+                      size="md"
+                      required
+                      maxLength={100}
+                      onChange={handleChange}
+                      value={title}
                     />
                   </div>
-                )}
-              </div>
-            </AccordionPanel>
-          </AccordionItem>
-          <AccordionItem isDisabled={disableCode}>
-            <h2>
-              <AccordionButton
-                borderRadius={10}
-                bg="iGrayLight"
-                _hover={{ bg: "PrimaryELight" }}
-                _expanded={{
-                  borderBottomLeftRadius: 0,
-                  borderBottomRightRadius: 0,
-                }}
-              >
-                <Box flex="1" textAlign="left">
-                  <div className="flex gap-5 items-center">
-                    <Text variant="folderHeading">SNIP</Text>
-                    {codeExpanded && (
-                      <FolderHeading selectedSubFolder={selectedSubFolder} />
-                    )}
-                  </div>
-                </Box>
-                <AccordionIcon />
-              </AccordionButton>
-            </h2>
-            <AccordionPanel py={4}>
-              <form onSubmit={handleSubmit}>
-                <div className="flex flex-col gap-4">
-                  <div className="flex flex-col gap-5 mx-3">
-                    <div className="w-full flex gap-4 items-center">
-                      <div className="w-24">
-                        <Text variant="H5">Titel</Text>
-                      </div>
-                      <Input
-                        name="title"
-                        size="md"
-                        required
-                        variant="main"
-                        maxLength={100}
-                        onChange={handleChange}
-                        value={title}
-                      />
-                    </div>
 
-                    <div className="w-full flex gap-4 items-center">
-                      <div className="w-24">
-                        <Text variant="H5">Beskrivelse</Text>
-                      </div>
-                      <Input
-                        name="description"
+                  <div className="w-full flex gap-4 items-center">
+                    <div className="w-24">
+                      <Text variant="H5">Beskrivelse</Text>
+                    </div>
+                    <Input
+                      name="description"
+                      size="md"
+                      required
+                      maxLength={180}
+                      onChange={handleChange}
+                      value={description}
+                    />
+                  </div>
+
+                  <ButtonCheckBox
+                    snipMenu={snipMenu}
+                    setSnipMenu={setSnipMenu}
+                  />
+
+                  <div>
+                    <div className="flex flex-col gap-2">
+                      <Text variant="H5">Kode</Text>
+
+                      <Textarea
+                        name="code"
                         size="md"
                         required
-                        variant="main"
-                        maxLength={180}
                         onChange={handleChange}
-                        value={description}
+                        value={code}
                       />
                     </div>
 
                     <div>
-                      <div className="flex flex-col gap-2">
-                        <Text variant="H5">Kode</Text>
-
-                        <Textarea
-                          name="code"
-                          size="md"
-                          required
-                          onChange={handleChange}
-                          value={code}
-                        />
-                      </div>
-
-                      <div>
-                        <Accordion allowToggle variant="preview">
-                          <AccordionItem>
-                            <h2>
-                              <AccordionButton
-                                role="heading"
-                                borderRadius={10}
-                                bg="iGrayLight"
-                                _hover={{ bg: "PrimaryELight" }}
-                                _expanded={{
-                                  borderBottomLeftRadius: 0,
-                                  borderBottomRightRadius: 0,
-                                }}
-                              >
-                                <Box flex="1" textAlign="left">
-                                  <Text variant="preview">Forhåndsvisning</Text>
-                                </Box>
-                                <AccordionIcon />
-                              </AccordionButton>
-                            </h2>
-                            <AccordionPanel>
-                              <SyntaxHighlighter
-                                language="javascript"
-                                style={oneLight}
-                              >
-                                {form.code}
-                              </SyntaxHighlighter>
-                            </AccordionPanel>
-                          </AccordionItem>
-                        </Accordion>
-                      </div>
-                    </div>
-
-                    <div className="">
-                      <div className="flex flex-col gap-2">
-                        <Text variant="H5">Output</Text>
-                        <Textarea
-                          name="output"
-                          size="md"
-                          variant="main"
-                          value={output}
-                          onChange={handleChange}
-                        />
-                      </div>
-
-                      <div>
-                        <Accordion allowToggle variant="preview">
-                          <AccordionItem>
-                            <h2>
-                              <AccordionButton
-                                role="heading"
-                                borderRadius={10}
-                                bg="iGrayLight"
-                                _hover={{ bg: "PrimaryELight" }}
-                                _expanded={{
-                                  borderBottomLeftRadius: 0,
-                                  borderBottomRightRadius: 0,
-                                }}
-                              >
-                                <Box flex="1" textAlign="left">
-                                  <Text variant="preview">Forhåndsvisning</Text>
-                                </Box>
-                                <AccordionIcon />
-                              </AccordionButton>
-                            </h2>
-                            <AccordionPanel>
-                              <SyntaxHighlighter
-                                language="javascript"
-                                style={oneLight}
-                              >
-                                {form.output}
-                              </SyntaxHighlighter>
-                            </AccordionPanel>
-                          </AccordionItem>
-                        </Accordion>
-                      </div>
+                      <Accordion allowToggle variant="preview">
+                        <AccordionItem>
+                          <h2>
+                            <AccordionButton
+                              role="heading"
+                              borderRadius={10}
+                              bg="iGrayLight"
+                              _hover={{ bg: "PrimaryELight" }}
+                              _expanded={{
+                                borderBottomLeftRadius: 0,
+                                borderBottomRightRadius: 0,
+                              }}
+                            >
+                              <Box flex="1" textAlign="left">
+                                <Text variant="preview">Forhåndsvisning</Text>
+                              </Box>
+                              <AccordionIcon />
+                            </AccordionButton>
+                          </h2>
+                          <AccordionPanel>
+                            <SyntaxHighlighter
+                              language="javascript"
+                              style={oneLight}
+                            >
+                              {form.code}
+                            </SyntaxHighlighter>
+                          </AccordionPanel>
+                        </AccordionItem>
+                      </Accordion>
                     </div>
                   </div>
 
-                  <Accordion allowToggle variant="sub">
-                    <AccordionItem>
-                      <h2>
-                        <AccordionButton
-                          role="heading"
-                          borderRadius={10}
-                          bg="iGrayLight"
-                          _hover={{ bg: "PrimaryELight" }}
-                          _expanded={{
-                            borderBottomLeftRadius: 0,
-                            borderBottomRightRadius: 0,
-                          }}
-                        >
-                          <Box flex="1" textAlign="left">
-                            <Text variant="H5">Noter</Text>
-                          </Box>
-                          <AccordionIcon mr={2} />
-                        </AccordionButton>
-                      </h2>
-                      <AccordionPanel pb={4}>
-                        <Textarea
-                          name="notes"
-                          size="md"
-                          maxLength={400}
-                          onChange={(e) => setNotes(e.target.value)}
-                          value={notes}
-                        />
-                      </AccordionPanel>
-                    </AccordionItem>
+                  <div className="">
+                    <div className="flex flex-col gap-2">
+                      <Text variant="H5">Output</Text>
+                      <Textarea
+                        name="output"
+                        size="md"
+                        value={output}
+                        onChange={handleChange}
+                      />
+                    </div>
 
-                    <AccordionItem>
-                      <h2>
-                        <AccordionButton
-                          role="heading"
-                          borderRadius={10}
-                          bg="iGrayLight"
-                          _hover={{ bg: "PrimaryELight" }}
-                          _expanded={{
-                            borderBottomLeftRadius: 0,
-                            borderBottomRightRadius: 0,
-                          }}
-                        >
-                          <Box flex="1" textAlign="left">
-                            <Text variant="H5">Link</Text>
-                          </Box>
-                          <AccordionIcon mr={2} />
-                        </AccordionButton>
-                      </h2>
-                      <AccordionPanel pb={4}>
-                        <div className="flex flex-col gap-5 mb-5">
-                          <div className="w-full flex gap-4 items-center">
-                            <div className="w-20">
-                              <Text variant="subLabel">Heading</Text>
-                            </div>
-
-                            <div className="w-full">
-                              <Input
-                                name="linkHeading"
-                                size="md"
-                                onChange={handleChange}
-                                value={linkHeading}
-                              />
-                            </div>
-                          </div>
-
-                          <div className="w-full flex gap-4 items-center">
-                            <div className="w-20">
-                              <Text variant="subLabel">Link</Text>
-                            </div>
-
-                            <div className="w-full">
-                              <Input
-                                name="link"
-                                size="md"
-                                onChange={handleChange}
-                                value={link}
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      </AccordionPanel>
-                    </AccordionItem>
-
-                    <AccordionItem>
-                      <h2>
-                        <AccordionButton
-                          role="heading"
-                          borderRadius={10}
-                          bg="iGrayLight"
-                          _hover={{ bg: "PrimaryELight" }}
-                          _expanded={{
-                            borderBottomLeftRadius: 0,
-                            borderBottomRightRadius: 0,
-                          }}
-                        >
-                          <Box flex="1" textAlign="left">
-                            <Text variant="H5">Tags</Text>
-                          </Box>
-                          <AccordionIcon mr={2} />
-                        </AccordionButton>
-                      </h2>
-                      <AccordionPanel pb={4}>
-                        <div className="flex flex-col gap-2">
-                          <div className="w-full flex gap-2 items-center">
-                            <div className="w-full">
-                              {!id && (
-                                <TagsInput
-                                  value={tags}
-                                  onChange={setTagInputValues}
-                                  name="tags"
-                                  placeHolder="Skriv og tryk ENTER"
-                                />
-                              )}
-
-                              {dataFetched && (
-                                <TagsInput
-                                  value={tags}
-                                  onChange={setTagInputValues}
-                                  name="tags"
-                                  placeHolder="Skriv og tryk ENTER"
-                                />
-                              )}
-                            </div>
-                          </div>
-                          <div className="mt-2">
-                            <NextLink href="/info/help/tags" passHref>
-                              <Link
-                                target="_blank"
-                                colorScheme="Primary"
-                                variant="info"
-                              >
-                                Læs hvordan man skriver søgbare tags.
-                              </Link>
-                            </NextLink>
-                          </div>
-                        </div>
-                      </AccordionPanel>
-                    </AccordionItem>
-                  </Accordion>
-
-                  <div className="mx-3 flex flex-col gap-5">
                     <div>
-                      {id ? (
-                        <Button
-                          variant="create"
-                          type="submit"
-                          isLoading={btnLoad}
-                          loadingText="Indsender.."
-                        >
-                          OPDATERE
-                        </Button>
-                      ) : (
-                        <Button
-                          variant="create"
-                          type="submit"
-                          isLoading={btnLoad}
-                          loadingText="Indsender.."
-                        >
-                          GEM
-                        </Button>
-                      )}
+                      <Accordion allowToggle variant="preview">
+                        <AccordionItem>
+                          <h2>
+                            <AccordionButton
+                              role="heading"
+                              borderRadius={10}
+                              bg="iGrayLight"
+                              _hover={{ bg: "PrimaryELight" }}
+                              _expanded={{
+                                borderBottomLeftRadius: 0,
+                                borderBottomRightRadius: 0,
+                              }}
+                            >
+                              <Box flex="1" textAlign="left">
+                                <Text variant="preview">Forhåndsvisning</Text>
+                              </Box>
+                              <AccordionIcon />
+                            </AccordionButton>
+                          </h2>
+                          <AccordionPanel>
+                            <SyntaxHighlighter
+                              language="javascript"
+                              style={oneLight}
+                            >
+                              {form.output}
+                            </SyntaxHighlighter>
+                          </AccordionPanel>
+                        </AccordionItem>
+                      </Accordion>
                     </div>
                   </div>
                 </div>
-              </form>
-            </AccordionPanel>
-          </AccordionItem>
-        </Accordion>
-      </div>
+
+                <Accordion allowToggle variant="sub">
+                  <AccordionItem>
+                    <h2>
+                      <AccordionButton
+                        role="heading"
+                        borderRadius={10}
+                        bg="iGrayLight"
+                        _hover={{ bg: "PrimaryELight" }}
+                        _expanded={{
+                          borderBottomLeftRadius: 0,
+                          borderBottomRightRadius: 0,
+                        }}
+                      >
+                        <Box flex="1" textAlign="left">
+                          <Text variant="H5">Noter</Text>
+                        </Box>
+                        <AccordionIcon mr={2} />
+                      </AccordionButton>
+                    </h2>
+                    <AccordionPanel pb={4}>
+                      <Textarea
+                        name="notes"
+                        size="md"
+                        maxLength={400}
+                        onChange={(e) => setNotes(e.target.value)}
+                        value={notes}
+                      />
+                    </AccordionPanel>
+                  </AccordionItem>
+
+                  <AccordionItem>
+                    <h2>
+                      <AccordionButton
+                        role="heading"
+                        borderRadius={10}
+                        bg="iGrayLight"
+                        _hover={{ bg: "PrimaryELight" }}
+                        _expanded={{
+                          borderBottomLeftRadius: 0,
+                          borderBottomRightRadius: 0,
+                        }}
+                      >
+                        <Box flex="1" textAlign="left">
+                          <Text variant="H5">Link</Text>
+                        </Box>
+                        <AccordionIcon mr={2} />
+                      </AccordionButton>
+                    </h2>
+                    <AccordionPanel pb={4}>
+                      <SnipLink
+                        handleChange={handleChange}
+                        linkHeading={linkHeading}
+                        link={link}
+                      />
+                    </AccordionPanel>
+                  </AccordionItem>
+
+                  <AccordionItem>
+                    <h2>
+                      <AccordionButton
+                        role="heading"
+                        borderRadius={10}
+                        bg="iGrayLight"
+                        _hover={{ bg: "PrimaryELight" }}
+                        _expanded={{
+                          borderBottomLeftRadius: 0,
+                          borderBottomRightRadius: 0,
+                        }}
+                      >
+                        <Box flex="1" textAlign="left">
+                          <Text variant="H5">Tags</Text>
+                        </Box>
+                        <AccordionIcon mr={2} />
+                      </AccordionButton>
+                    </h2>
+                    <AccordionPanel pb={4}>
+                      <Tags
+                        id={id}
+                        dataFetched={dataFetched}
+                        tags={tags}
+                        setTagInputValues={setTagInputValues}
+                      />
+                    </AccordionPanel>
+                  </AccordionItem>
+                </Accordion>
+
+                <div className="mx-3 flex flex-col gap-5">
+                  <div>
+                    {id ? (
+                      <Button
+                        variant="create"
+                        type="submit"
+                        isLoading={btnLoad}
+                        loadingText="Indsender.."
+                      >
+                        OPDATERE
+                      </Button>
+                    ) : (
+                      <Button
+                        variant="create"
+                        type="submit"
+                        isLoading={btnLoad}
+                        loadingText="Indsender.."
+                      >
+                        GEM
+                      </Button>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </form>
+          </AccordionPanel>
+        </AccordionItem>
+      </Accordion>
     </div>
   );
 };

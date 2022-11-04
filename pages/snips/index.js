@@ -6,7 +6,6 @@ import Snippet from "../../components/Display/Snippet";
 import { SnippetsTypeLinks } from "../../components/Heading/SnippetsType";
 import LatestHeading from "../../components/Heading/LatestHeading";
 import LoadingSNIPS from "../../components/LoadingState/LoadingSNIPS";
-import NoUser from "../../components/NoPage/NoUser";
 import { auth, db } from "../../firebase/clientApp";
 import Tags from "../../components/Home/Tags";
 import { useRecoilValue } from "recoil";

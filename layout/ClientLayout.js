@@ -62,7 +62,7 @@ const ClientLayout = ({ children, user }) => {
         <Header user={user} />
       </header>
 
-      <main className="max-w-6xl px-5 lg:px-0 lg:mx-auto h-full pt-2 w-full flex-grow">
+      <main className="max-w-6xl px-5 lg:px-0 lg:mx-auto pt-2 h-full w-full flex-grow">
         {children}
       </main>
 
