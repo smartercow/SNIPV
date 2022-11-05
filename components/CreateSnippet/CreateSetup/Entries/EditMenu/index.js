@@ -46,7 +46,7 @@ const EditMenu = ({
             borderBottomRadius="none"
             borderBottom="none"
             disabled={editState && editId === entry.entryId ? true : false}
-            onClick={DeleteEntry}
+            onClick={() => DeleteEntry(entry)}
             icon={<CloseIcon height={3} width={3} color="Red" />}
           />
         </ButtonGroup>
@@ -54,7 +54,7 @@ const EditMenu = ({
       {entryType && (
         <Box className="flex-grow">
           <Text fontSize={14} fontWeight="semibold" textTransform="uppercase">
-            1.{index + 1}&nbsp;- {entryType}
+            {entryType}
           </Text>
         </Box>
       )}

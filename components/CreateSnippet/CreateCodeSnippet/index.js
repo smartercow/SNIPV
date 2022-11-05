@@ -41,6 +41,11 @@ const initialState = {
   link: "",
 };
 
+const SnipMenu = [
+  { type: "snippet", text: "Snippet", icon: "paper" },
+  { type: "file", text: "Fil", icon: "document" },
+];
+
 const CreateCodeSnippet = ({ id, setLoading, setDataError }) => {
   const [user] = useAuthState(auth);
 
@@ -325,6 +330,7 @@ const CreateCodeSnippet = ({ id, setLoading, setDataError }) => {
                   </div>
 
                   <ButtonCheckBox
+                    SnipMenu={SnipMenu}
                     snipMenu={snipMenu}
                     setSnipMenu={setSnipMenu}
                   />

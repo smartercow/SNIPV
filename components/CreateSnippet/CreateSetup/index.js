@@ -22,35 +22,23 @@ import {
   Input,
   Text,
 } from "@chakra-ui/react";
-import Entries from "./Entries";
 import CreatedFolders from "../../Folders/CreateFolder/CreatedFolders";
 import CreatedSubFolders from "../../Folders/CreateFolder/CreatedSubFolders";
 import Tags from "../Elements/Tags";
 import { useAuthState } from "react-firebase-hooks/auth";
-import GroupedCheckBox from "../Elements/ButtonCheckBox";
+import Modules from "./Modules";
+import ButtonCheckBox from "./ButtonCheckBox";
+import FolderStructure from "./Entries/FolderStructure";
 
 const initialState = {
   title: "",
   description: "",
 };
 
-const initialSelectedLangFileExt = {
-  label: "JavaScript",
-  value: "javascript",
-  langId: "1",
-  fileExtensions: [
-    { label: ".js", value: "js", extId: "1", syntaxHighlight: "javascript" },
-    { label: ".jsx", value: "jsx", extId: "2", syntaxHighlight: "jsx" },
-    { label: ".glFT", value: "glft", extId: "3", syntaxHighlight: "json" },
-  ],
-};
-
-const initialSelectedFileExt = {
-  label: ".js",
-  value: "js",
-  extId: "1",
-  syntaxHighlight: "javascript",
-};
+const SnipMenu = [
+  { type: "folder", text: "Mappestruktur for denne Setup", size: 7 },
+  { type: "numeric", text: "Numeriske titler for alle moduler", size: 6 },
+];
 
 const CreateSetup = ({ id, setLoading, setDataError }) => {
   const [user] = useAuthState(auth);
@@ -66,15 +54,14 @@ const CreateSetup = ({ id, setLoading, setDataError }) => {
   const [tags, setTags] = useState([]);
   const [tagInputValues, setTagInputValues] = useState([]);
 
+  const [modulesFolderStructure, setModulesFolderStructure] = useState("");
+  const [allHasFolderStructure, setAllHasFolderStructure] = useState(false);
+  const [allHasNumericTitles, setAllHasNumericTitles] = useState(false);
+
   const [selectValue, setSelectValue] = useState([]);
   const [selectSubValue, setSelectSubValue] = useState();
 
-  const [allEntries, setAllEntries] = useState([]);
-  const [entries, setEntries] = useState([]);
-  const [selectLangFileExt, setSelectLangFileExt] = useState({});
-  const [selectedLangFileExt, setSelectedLangFileExt] = useState({});
-  const [selectFileExt, setSelectFileExt] = useState({});
-  const [selectedFileExt, setSelectedFileExt] = useState({});
+  const [modules, setModules] = useState([]);
 
   const [username, setUsername] = useState("");
   const [usernameValue, setUsernameValue] = useState("");
@@ -131,7 +118,10 @@ const CreateSetup = ({ id, setLoading, setDataError }) => {
               title: lowercaseForm.title,
               description: lowercaseForm.description,
             },
-            entries: { ...allEntries },
+            setupHasFolderStructure: allHasFolderStructure,
+            setupFolderStructure: modulesFolderStructure,
+            allHasNumericTitles: allHasNumericTitles,
+            modules: { ...modules },
             snippetType: "setup",
             postedAt: serverTimestamp(),
             userData: {
@@ -370,25 +360,31 @@ const CreateSetup = ({ id, setLoading, setDataError }) => {
                     </AccordionPanel>
                   </AccordionItem>
                 </Accordion>
-                <Box></Box>
-                <div className="">
-                  <Entries
-                    allEntries={allEntries}
-                    setAllEntries={setAllEntries}
-                    entries={entries}
-                    setEntries={setEntries}
-                    selectLangFileExt={selectLangFileExt}
-                    setSelectLangFileExt={setSelectLangFileExt}
-                    selectFileExt={selectFileExt}
-                    setSelectFileExt={setSelectFileExt}
-                    selectedLangFileExt={selectedLangFileExt}
-                    setSelectedLangFileExt={setSelectedLangFileExt}
-                    selectedFileExt={selectedFileExt}
-                    setSelectedFileExt={setSelectedFileExt}
-                    initialSelectedLangFileExt={initialSelectedLangFileExt}
-                    initialSelectedFileExt={initialSelectedFileExt}
+
+                <Box>
+                  <Box>
+                    <ButtonCheckBox
+                      SnipMenu={SnipMenu}
+                      hasFolderStructure={allHasFolderStructure}
+                      setHasFolderStructure={setAllHasFolderStructure}
+                      hasNumericTitles={allHasNumericTitles}
+                      setHasNumericTitles={setAllHasNumericTitles}
+                    />
+                  </Box>
+                  {allHasFolderStructure && (
+                    <FolderStructure
+                      folderStructure={modulesFolderStructure}
+                      setFolderStructure={setModulesFolderStructure}
+                    />
+                  )}
+                </Box>
+                <Box>
+                  <Modules
+                    modules={modules}
+                    setModules={setModules}
+                    allHasNumericTitles={allHasNumericTitles}
                   />
-                </div>
+                </Box>
 
                 <div className="flex flex-col gap-5">
                   <div>

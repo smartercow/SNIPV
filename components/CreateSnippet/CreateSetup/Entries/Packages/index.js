@@ -111,6 +111,12 @@ const Packages = ({
     setEditPackId("");
   };
 
+  const CancelSection = () => {
+    setPackageValue("");
+    setPackages([]);
+    setEditState(false);
+  };
+
   useEffect(() => {
     if (packages.length > 0) {
       setDisableSave(false);
@@ -136,13 +142,11 @@ const Packages = ({
             {packages.map((pack, index) => {
               return (
                 <Box key={index} mb={3}>
-                  <Box className="-mb-[5px]">
+                  <Box className="">
                     <ButtonGroup size="sm" isAttached variant="custom">
                       <IconButton
                         aria-label="Up"
                         onClick={() => moveUp(index)}
-                        borderBottomRadius="none"
-                        borderBottom="none"
                         icon={
                           <ArrowUpIcon height={5} width={5} color="gray.500" />
                         }
@@ -198,8 +202,6 @@ const Packages = ({
                         ? "Primary"
                         : "BorderGray"
                     }
-                    borderWidth={1}
-                    borderRadius="md"
                     borderTopLeftRadius="none"
                     key={index}
                   >
@@ -251,6 +253,11 @@ const Packages = ({
               ? "Opdatere pakker"
               : "Tilføj pakker"}
           </Button>
+          {editState && !editPack && (
+            <Button variant="btnSub" onClick={CancelSection}>
+              Annullere
+            </Button>
+          )}
         </div>
       </div>
     </Box>

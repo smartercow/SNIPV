@@ -10,11 +10,9 @@ import {
 import { auth, db } from "../../../firebase/clientApp";
 import { useRouter } from "next/router";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { TagsInput } from "react-tag-input-component";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneLight } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import { toast } from "react-toastify";
-import NextLink from "next/link";
 import FolderHeading from "../FolderHeading";
 import {
   Accordion,
@@ -24,25 +22,17 @@ import {
   AccordionPanel,
   Box,
   Button,
-  Divider,
-  Icon,
-  IconButton,
   Input,
-  Link,
-  Popover,
-  PopoverArrow,
-  PopoverBody,
-  PopoverContent,
-  PopoverTrigger,
   Text,
   Textarea,
 } from "@chakra-ui/react";
 import CreatedFolders from "../../Folders/CreateFolder/CreatedFolders";
 import CreatedSubFolders from "../../Folders/CreateFolder/CreatedSubFolders";
-import { ExternalLinkIcon } from "@chakra-ui/icons";
 import Tags from "../Elements/Tags";
 import SnipLink from "../Elements/SnipLink";
 import ButtonCheckBox from "../Elements/ButtonCheckBox";
+import { Paper } from "../../SVG/Paper";
+import { DocumentIcon } from "../../SVG/DocumentIcon";
 
 const initialState = {
   title: "",
@@ -53,6 +43,11 @@ const initialState = {
   linkHeading: "",
   link: "",
 };
+
+const SnipMenu = [
+  { type: "snippet", text: "Snippet", icon: "paper" },
+  { type: "file", text: "Fil", icon: "document" },
+];
 
 const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
   const [user] = useAuthState(auth);
@@ -344,6 +339,7 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
                     />
                   </div>
                   <ButtonCheckBox
+                    SnipMenu={SnipMenu}
                     snipMenu={snipMenu}
                     setSnipMenu={setSnipMenu}
                   />

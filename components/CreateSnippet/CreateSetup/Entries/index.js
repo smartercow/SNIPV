@@ -11,6 +11,12 @@ const Quill = dynamic(() => import("./Quill"), {
 });
 
 const Entries = ({
+  allHasNumericTitles,
+  setAllHasNumericTitles,
+  hasFolderStructure,
+  setHasFolderStructure,
+  hasNumericTitles,
+  setHasNumericTitles,
   allEntries,
   setAllEntries,
   entries,
@@ -39,9 +45,10 @@ const Entries = ({
 
   const [packages, setPackages] = useState([]);
 
-  const [selectedEntry, setSelectedEntry] = useState("summary");
   const [menu, setMenu] = useState("");
+  const [selectedEntry, setSelectedEntry] = useState("summary");
 
+  const showEditMenu = true;
   const [editSectionState, setEditSectionState] = useState(false);
   const [editSectionId, setEditSectionId] = useState("");
   const [editState, setEditState] = useState(false);
@@ -95,6 +102,15 @@ const Entries = ({
     setPackages([]);
   };
 
+  const addSummary = (e) => {
+    e.preventDefault();
+    setEntries((entSum) => [
+      ...entSum,
+      { entryId: randomValue, summary: summaryValue },
+    ]);
+    setSummaryValue({});
+  };
+
   const AddSection = (e) => {
     e.preventDefault();
     setAllEntries((oldForm) => [
@@ -109,15 +125,6 @@ const Entries = ({
     ResetFiles();
   };
 
-  const addSummary = (e) => {
-    e.preventDefault();
-    setEntries((entSum) => [
-      ...entSum,
-      { entryId: randomValue, summary: summaryValue },
-    ]);
-    setSummaryValue({});
-  };
-
   useEffect(() => {
     if (menu && Object.keys(entries).length > 0) {
       setDisableSave(false);
@@ -129,7 +136,14 @@ const Entries = ({
   const editSection = () => {
     const editedSection = allEntries.map((obj) => {
       if (obj.sectionId === editSectionId) {
-        return { ...obj, section: menu, entries: entries };
+        return {
+          ...obj,
+          section: menu,
+          allHasNumericTitles: allHasNumericTitles,
+          hasFolderStructure: hasFolderStructure,
+          hasNumericTitles: hasNumericTitles,
+          entries: entries,
+        };
       }
 
       return obj;
@@ -143,6 +157,9 @@ const Entries = ({
 
   const CancelSectionEdit = () => {
     setEntries([]);
+    setSummaryValue("");
+    setPackages([]);
+    setCodeFiles([]);
     setEditSectionState(false);
     setEditSectionId("");
     setMenu("");
@@ -314,124 +331,133 @@ const Entries = ({
   }, [editState, selectedEntry]);
 
   return (
-    <div className="flex flex-col gap-4">
+    <Box className="flex flex-col gap-2">
       <Box>
+        {!Object.keys(allEntries).length > 0 && (
+          <Box py={2} px={4}>
+            <Text fontWeight="semibold" color="gray.400">
+              Tilføj sektion...
+            </Text>
+          </Box>
+        )}
+
         <Accord
+          showEditMenu={showEditMenu}
           entries={entries}
           setEntries={setEntries}
           allEntries={allEntries}
           setAllEntries={setAllEntries}
           editSectionState={editSectionState}
           setEditSectionState={setEditSectionState}
+          editState={editState}
           editSectionId={editSectionId}
           setEditSectionId={setEditSectionId}
           setMenu={setMenu}
         />
       </Box>
-      <Box borderWidth={1} borderRadius="md">
-        <Box className="flex flex-col gap-3">
-          <Box px={4} mt={4} className="flex gap-6 items-center">
-            <div className="flex gap-1">
-              <Text variant="H5" fontWeight="semibold">
-                Menu
-              </Text>
-              <Text variant="H5" color="Red">
-                *
-              </Text>
-            </div>
-            <Input
-              placeholder="Installation"
-              value={menu}
-              maxLength={20}
-              onChange={(e) => setMenu(e.target.value)}
-            />
-          </Box>
-
-          <Divider />
-
-          <Box p={4}>
-            {!Object.keys(entries).length > 0 && (
-              <Box py={2} px={2}>
-                <Text fontWeight="semibold" color="gray.400">
-                  Tilføj entries...
+      <Box p={4}>
+        <Box borderWidth={1} borderRadius="md">
+          <Box className="flex flex-col gap-3">
+            <Box px={4} mt={4} className="flex gap-6 items-center">
+              <div>
+                <Text variant="H5" fontWeight="semibold" whiteSpace="nowrap">
+                  Sektion Titel
                 </Text>
-              </Box>
-            )}
-
-            {Object.keys(entries).length > 0 && (
-              <div className="flex flex-col gap-4">
-                <Entry
-                  editState={editState}
-                  editId={editId}
-                  moveUp={moveUp}
-                  moveDown={moveDown}
-                  EditSummary={EditSummary}
-                  EditPackages={EditPackages}
-                  EditFiles={EditFiles}
-                  DeleteEntry={DeleteEntry}
-                  entries={entries}
-                  setEntries={setEntries}
-                />
               </div>
-            )}
+              <Input
+                placeholder="Installation"
+                value={menu}
+                maxLength={20}
+                onChange={(e) => setMenu(e.target.value)}
+              />
+            </Box>
+
+            <Divider />
+
+            <Box p={4}>
+              {!Object.keys(entries).length > 0 && (
+                <Box py={2} px={2}>
+                  <Text fontWeight="semibold" color="gray.400">
+                    Tilføj afsnit...
+                  </Text>
+                </Box>
+              )}
+
+              {Object.keys(entries).length > 0 && (
+                <div className="flex flex-col gap-4">
+                  <Entry
+                    editState={editState}
+                    editId={editId}
+                    moveUp={moveUp}
+                    moveDown={moveDown}
+                    EditSummary={EditSummary}
+                    EditPackages={EditPackages}
+                    EditFiles={EditFiles}
+                    DeleteEntry={DeleteEntry}
+                    entries={entries}
+                    setEntries={setEntries}
+                  />
+                </div>
+              )}
+            </Box>
           </Box>
-        </Box>
 
-        <Divider mt={3} />
+          <Divider mt={3} />
 
-        <Box>
-          <Box p={4}>{renderEntry(selectedEntry)}</Box>
+          <Box>
+            <Box p={4}>{renderEntry(selectedEntry)}</Box>
 
-          <Box bg="PrimaryLighter" p={4}>
-            <div>
-              <Text variant="heading">Ny entry</Text>
-            </div>
-
-            <div className="flex gap-2 justify-between mt-1">
-              <div className="flex gap-4">
-                <Button
-                  variant="entry"
-                  disabled={disableSum}
-                  onClick={() => setSelectedEntry("summary")}
-                >
-                  SUM
-                </Button>
-                <Button
-                  variant="entry"
-                  disabled={disableFiles}
-                  onClick={() => setSelectedEntry("code")}
-                >
-                  FILER
-                </Button>
-                <Button
-                  variant="entry"
-                  disabled={disablePackages}
-                  onClick={() => setSelectedEntry("packages")}
-                >
-                  PAKKER
-                </Button>
+            <Box bg="PrimaryLighter" p={4}>
+              <div>
+                <Text variant="heading">Ny afsnit</Text>
               </div>
 
-              <div className="flex gap-2">
-                <Button
-                  variant="entry"
-                  disabled={disableSave}
-                  onClick={editSectionState ? editSection : AddSection}
-                >
-                  {editSectionState ? "Opdatere" : "Tilføj afsnit"}
-                </Button>
-
-                {editSectionState && (
-                  <Button variant="entry" onClick={CancelSectionEdit}>
-                    Annullere
+              <div className="flex gap-2 justify-between mt-1">
+                <div className="flex gap-4">
+                  <Button
+                    variant="entry"
+                    disabled={disableSum}
+                    onClick={() => setSelectedEntry("summary")}
+                  >
+                    SUM
                   </Button>
-                )}
+                  <Button
+                    variant="entry"
+                    disabled={disableFiles}
+                    onClick={() => setSelectedEntry("code")}
+                  >
+                    FILER
+                  </Button>
+                  <Button
+                    variant="entry"
+                    disabled={disablePackages}
+                    onClick={() => setSelectedEntry("packages")}
+                  >
+                    PAKKER
+                  </Button>
+                </div>
+
+                <div className="flex gap-4">
+                  <Button
+                    variant="entry"
+                    disabled={disableSave}
+                    onClick={editSectionState ? editSection : AddSection}
+                  >
+                    {editSectionState ? "Opdatere" : "Tilføj sektion"}
+                  </Button>
+
+                  {editSectionState && (
+                    <Button variant="entry" onClick={CancelSectionEdit}>
+                      Annullere
+                    </Button>
+                  )}
+                </div>
               </div>
-            </div>
+            </Box>
           </Box>
         </Box>
       </Box>
-    </div>
+    </Box>
   );
 };
 

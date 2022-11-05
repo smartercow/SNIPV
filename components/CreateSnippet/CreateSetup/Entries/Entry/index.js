@@ -18,7 +18,6 @@ const Entry = ({
   setEntries,
   editState,
   editId,
-  entry,
   moveUp,
   moveDown,
   EditSummary,
@@ -26,7 +25,6 @@ const Entry = ({
   EditFiles,
   DeleteEntry,
 }) => {
-  console.log("ENTRZZZ", entry);
   return (
     <Box>
       {Object.keys(entries).length > 0 && (

@@ -3,7 +3,6 @@ import {
   Box,
   Button,
   IconButton,
-  Text,
   useClipboard,
   useToast,
 } from "@chakra-ui/react";
