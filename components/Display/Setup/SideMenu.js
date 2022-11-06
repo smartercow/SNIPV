@@ -47,6 +47,9 @@ const SideMenu = ({ modules }) => {
                           `/setup/${id}/${String(item.moduleTitle).replace(
                             / /g,
                             "-"
+                          )}#${String(item.sections[0].sectionTitle).replace(
+                            / /g,
+                            "-"
                           )}`
                         )
                       }
@@ -65,9 +68,6 @@ const SideMenu = ({ modules }) => {
                   </h2>
                   <AccordionPanel p={0}>
                     {item.sections.map((sect, index) => {
-                      {
-                        console.log("SECTMENU", sect);
-                      }
                       if (
                         asPath.endsWith(
                           `#${String(sect.sectionTitle).replace(/ /g, "-")}`
@@ -133,6 +133,9 @@ const SideMenu = ({ modules }) => {
                       onClick={() =>
                         handleHref(
                           `/setup/${id}/${String(item.moduleTitle).replace(
+                            / /g,
+                            "-"
+                          )}#${String(item.sections[0].sectionTitle).replace(
                             / /g,
                             "-"
                           )}`

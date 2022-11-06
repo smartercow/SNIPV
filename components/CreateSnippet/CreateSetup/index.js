@@ -147,7 +147,10 @@ const CreateSetup = ({ id, setLoading, setDataError }) => {
                 ? lowercaseForm.description
                 : form.description,
             },
-            snippetType: "setup",
+            setupHasFolderStructure: allHasFolderStructure,
+            setupFolderStructure: modulesFolderStructure,
+            allHasNumericTitles: allHasNumericTitles,
+            modules: { ...modules },
             updatedAt: serverTimestamp(),
             userData: {
               username: username,
@@ -159,7 +162,7 @@ const CreateSetup = ({ id, setLoading, setDataError }) => {
             tags: tags,
             notes: notes,
           });
-          router.push(`/s/${id}`);
+          router.push(`/setup/${id}`);
         } catch (error) {
           console.log("Fejl i opdatering af SNIP!", error);
         }
@@ -170,20 +173,12 @@ const CreateSetup = ({ id, setLoading, setDataError }) => {
     }
   };
 
-  useEffect(() => {
-    if (id) {
-      getSetupsData();
-      setDisableCode(false);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
-
   const getSetupsData = async () => {
     try {
       const docRef = doc(db, "SetupsData", id);
       const snapshot = await getDoc(docRef);
       if (snapshot.exists()) {
-        //Code SNIP data from {id}
+        //Code Setup data from {id}
         setSelectedMainFolder(snapshot.data().folder.mainFolder);
         setSelectValue(snapshot.data().folder.mainFolder);
         setSelectedSubFolder(snapshot.data().folder);
@@ -191,18 +186,16 @@ const CreateSetup = ({ id, setLoading, setDataError }) => {
         setForm({
           title: snapshot.data().title,
           description: snapshot.data().description,
-          code: snapshot.data().code,
-          output: snapshot.data().output,
-          linkHeading: snapshot.data().linkHeading,
-          link: snapshot.data().link,
         });
+        setAllHasFolderStructure(snapshot.data().setHasFolderStructure);
+        setModulesFolderStructure(snapshot.data().setupFolderStructure);
+        setAllHasNumericTitles(snapshot.data().allHasNumericTitles);
+        setModules(Object.values(snapshot.data().modules));
         setTags(snapshot.data().tags);
-        setNotes(snapshot.data().notes);
-
         setLoading(false);
       }
     } catch (error) {
-      console.log("Kan ikke hente kode SNIP til at opdatere!", error);
+      console.log("Kan ikke hente Setup til at opdatere!", error);
       setDataError(true);
       setLoading(false);
     } finally {
@@ -212,6 +205,14 @@ const CreateSetup = ({ id, setLoading, setDataError }) => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (id) {
+      getSetupsData();
+      setDisableCode(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
 
   useEffect(() => {
     if (selectSubValue) {

@@ -31,8 +31,6 @@ import CreatedSubFolders from "../../Folders/CreateFolder/CreatedSubFolders";
 import Tags from "../Elements/Tags";
 import SnipLink from "../Elements/SnipLink";
 import ButtonCheckBox from "../Elements/ButtonCheckBox";
-import { Paper } from "../../SVG/Paper";
-import { DocumentIcon } from "../../SVG/DocumentIcon";
 
 const initialState = {
   title: "",
