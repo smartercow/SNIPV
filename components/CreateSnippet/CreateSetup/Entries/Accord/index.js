@@ -166,7 +166,7 @@ const Accord = ({
                               {". "}
                             </>
                           )}
-                          {entry.section}
+                          {entry.sectionTitle}
                         </Box>
                         {isExpanded ? (
                           <MinusIcon fontSize="12px" />

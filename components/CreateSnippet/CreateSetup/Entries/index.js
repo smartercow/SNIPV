@@ -115,7 +115,7 @@ const Entries = ({
     e.preventDefault();
     setAllEntries((oldForm) => [
       ...oldForm,
-      { sectionId: randomValue, section: menu, entries: entries },
+      { sectionId: randomValue, sectionTitle: menu, entries: entries },
     ]);
     setSelectedEntry("summary");
     setCodeFile(initialCodeFileValue);
@@ -138,7 +138,7 @@ const Entries = ({
       if (obj.sectionId === editSectionId) {
         return {
           ...obj,
-          section: menu,
+          sectionTitle: menu,
           allHasNumericTitles: allHasNumericTitles,
           hasFolderStructure: hasFolderStructure,
           hasNumericTitles: hasNumericTitles,

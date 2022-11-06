@@ -21,7 +21,7 @@ const Layout = ({ snippet, children }) => {
                 <div>
                   {index + 1}
                   {". "}
-                  {item.section}
+                  {item.sectionTitle}
                 </div>
               </div>
             ))}
