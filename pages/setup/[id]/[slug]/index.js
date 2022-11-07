@@ -38,14 +38,18 @@ const Setup = () => {
       </Head>
 
       {snippet && (
-        <div className="flex flex-col gap-4 min-h-[80vh]">
-          <Details snippet={snippet} />
+        <div className=" relative min-h-[80vh]">
+          <div className="">
+            <Details snippet={snippet} />
+          </div>
 
-          <div className="flex-grow">
+          <div className="mb-10">
             <Entries snippet={snippet} />
           </div>
 
-          <Footer snippet={snippet} />
+          <div className="absolute bottom-0 left-0 right-0 h-5">
+            <Footer snippet={snippet} />
+          </div>
         </div>
       )}
 

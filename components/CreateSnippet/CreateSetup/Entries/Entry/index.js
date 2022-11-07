@@ -1,12 +1,4 @@
-import {
-  Box,
-  Tab,
-  TabList,
-  TabPanel,
-  TabPanels,
-  Tabs,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
 import React from "react";
 import PackageBox from "../Packages/PackageBox";
 import Syntax from "../Syntax";
@@ -14,6 +6,8 @@ import parse from "html-react-parser";
 import EditMenu from "../EditMenu";
 
 const Entry = ({
+  menu,
+  setMenu,
   entries,
   setEntries,
   editState,
@@ -39,35 +33,18 @@ const Entry = ({
                   entry={entry}
                   moveUp={moveUp}
                   moveDown={moveDown}
-                  EditEntry={
-                    entry.summary
-                      ? EditSummary
-                      : entry.packages
-                      ? EditPackages
-                      : EditFiles
-                  }
+                  EditEntry={entry.summary ? EditSummary : entry.packages ? EditPackages : EditFiles}
                   DeleteEntry={DeleteEntry}
                   entries={entries}
                   setEntries={setEntries}
-                  entryType={
-                    entry.summary
-                      ? `Opsummering`
-                      : entry.packages
-                      ? `Pakker`
-                      : `Filer`
-                  }
+                  entryType={entry.summary ? `Opsummering` : entry.packages ? `Pakker` : `Filer`}
                 />
                 <Box
-                  borderColor={
-                    editState && editId === entry?.entryId
-                      ? "Primary"
-                      : "BorderGray"
-                  }
+                  borderColor={editState && editId === entry?.entryId ? "Primary" : "BorderGray"}
                   borderWidth={1}
                   borderRadius="md"
                   borderTopLeftRadius="none"
-                  className="parse flex-grow"
-                >
+                  className="parse flex-grow">
                   {entry.summary && (
                     <>
                       <Box p={4} className="parse">

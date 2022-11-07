@@ -18,12 +18,7 @@ import Entries from "../Entries";
 import Accord from "../Entries/Accord";
 import FolderStructure from "../Entries/FolderStructure";
 import MarkdownSyntax from "../../../Display/Setup/MarkdownSyntax";
-import {
-  ArrowDownIcon,
-  ArrowUpIcon,
-  CloseIcon,
-  EditIcon,
-} from "@chakra-ui/icons";
+import { ArrowDownIcon, ArrowUpIcon, CloseIcon, EditIcon } from "@chakra-ui/icons";
 
 const initialSelectedLangFileExt = {
   label: "JavaScript",
@@ -98,10 +93,7 @@ const Modules = ({ modules, setModules, allHasNumericTitles }) => {
     setModules((modules) => {
       modules = [...modules];
 
-      [modules[index - 1], modules[index]] = [
-        modules[index],
-        modules[index - 1],
-      ];
+      [modules[index - 1], modules[index]] = [modules[index], modules[index - 1]];
 
       return modules;
     });
@@ -113,10 +105,7 @@ const Modules = ({ modules, setModules, allHasNumericTitles }) => {
     setModules((modules) => {
       modules = [...modules];
 
-      [modules[index + 1], modules[index]] = [
-        modules[index],
-        modules[index + 1],
-      ];
+      [modules[index + 1], modules[index]] = [modules[index], modules[index + 1]];
 
       return modules;
     });
@@ -151,10 +140,6 @@ const Modules = ({ modules, setModules, allHasNumericTitles }) => {
     setHasNumericTitles(false);
   };
 
-  console.log("MODULES", modules);
-  // console.log("hasFolderStructure", hasFolderStructure);
-  console.log("ALLhasFolderStructure", allHasNumericTitles);
-  console.log("hasNumericTitles", hasNumericTitles);
   return (
     <Box>
       {!Object.keys(modules).length > 0 && (
@@ -167,11 +152,12 @@ const Modules = ({ modules, setModules, allHasNumericTitles }) => {
       {modules && (
         <Accordion mt={4} mb={8} allowToggle>
           {modules.map((modul, index) => (
-            <AccordionItem key={modul.moduleId}>
+            <AccordionItem key={modul.moduleId} mt={3} border="none">
               <ButtonGroup size="sm" isAttached variant="outline">
                 <IconButton
                   aria-label="Up"
                   borderBottomRadius="outline"
+                  borderBottomLeftRadius="none"
                   borderBottom="none"
                   onClick={() => moveUp(index)}
                   icon={<ArrowUpIcon height={5} width={5} color="gray.500" />}
@@ -200,21 +186,20 @@ const Modules = ({ modules, setModules, allHasNumericTitles }) => {
                   aria-label="Delete"
                   borderBottomRadius="none"
                   borderBottom="none"
-                  disabled={
-                    editModuleState && editModuleId === modul.moduleId
-                      ? true
-                      : false
-                  }
-                  onClick={() =>
-                    setModules(
-                      modules.filter((ent) => ent.moduleId !== modul.moduleId)
-                    )
-                  }
+                  disabled={editModuleState && editModuleId === modul.moduleId ? true : false}
+                  onClick={() => setModules(modules.filter((ent) => ent.moduleId !== modul.moduleId))}
                   icon={<CloseIcon height={3} width={3} color="Red" />}
                 />
               </ButtonGroup>
               <h2>
-                <AccordionButton>
+                <AccordionButton
+                  borderRadius={10}
+                  bg="iGrayLight"
+                  borderTopLeftRadius="none"
+                  _hover={{ bg: "PrimaryELight" }}
+                  _expanded={{
+                    borderBottomRadius: "none",
+                  }}>
                   <Box flex="1" textAlign="left">
                     {allHasNumericTitles ? (
                       <>
@@ -229,7 +214,7 @@ const Modules = ({ modules, setModules, allHasNumericTitles }) => {
                   <AccordionIcon />
                 </AccordionButton>
               </h2>
-              <AccordionPanel pb={4}>
+              <AccordionPanel pb={4} borderWidth={1} borderColor="iGrayLight">
                 {modul.hasFolderStructure && (
                   <Accordion allowToggle>
                     <AccordionItem>
@@ -242,9 +227,7 @@ const Modules = ({ modules, setModules, allHasNumericTitles }) => {
                         </AccordionButton>
                       </h2>
                       <AccordionPanel pb={4}>
-                        <MarkdownSyntax
-                          folderStructure={modul.folderStructure}
-                        />
+                        <MarkdownSyntax folderStructure={modul.folderStructure} />
                       </AccordionPanel>
                     </AccordionItem>
                   </Accordion>
@@ -252,7 +235,10 @@ const Modules = ({ modules, setModules, allHasNumericTitles }) => {
 
                 <Accord
                   allHasNumericTitles={allHasNumericTitles}
+                  hasFolderStructure={hasFolderStructure}
+                  setHasFolderStructure={setHasFolderStructure}
                   hasNumericTitles={hasNumericTitles}
+                  setHasNumericTitles={setHasNumericTitles}
                   currIndex={index + 1}
                   showEditMenu={showEditMenu}
                   allEntries={modul.sections}
@@ -263,22 +249,20 @@ const Modules = ({ modules, setModules, allHasNumericTitles }) => {
         </Accordion>
       )}
 
-      <Box borderWidth={1} borderRadius="md">
+      <Box borderWidth={1} borderColor="iGrayLight" borderRadius="md">
         <ButtonCheckBox
           SnipMenu={SnipMenu}
           hasFolderStructure={hasFolderStructure}
           setHasFolderStructure={setHasFolderStructure}
           hasNumericTitles={hasNumericTitles}
           setHasNumericTitles={setHasNumericTitles}
+          setFolderStructure={setFolderStructure}
         />
         {hasFolderStructure && (
-          <FolderStructure
-            folderStructure={folderStructure}
-            setFolderStructure={setFolderStructure}
-          />
+          <FolderStructure folderStructure={folderStructure} setFolderStructure={setFolderStructure} />
         )}
 
-        <Box px={4} mt={4} className="flex gap-6 items-center">
+        <Box px={4} my={2} className="flex gap-6 items-center">
           <Text variant="H5" fontWeight="semibold" whiteSpace="nowrap">
             Modul titel
           </Text>
@@ -294,6 +278,10 @@ const Modules = ({ modules, setModules, allHasNumericTitles }) => {
 
         <Entries
           allHasNumericTitles={allHasNumericTitles}
+          hasFolderStructure={hasFolderStructure}
+          setHasFolderStructure={setHasFolderStructure}
+          hasNumericTitles={hasNumericTitles}
+          setHasNumericTitles={setHasNumericTitles}
           allEntries={allEntries}
           setAllEntries={setAllEntries}
           entries={entries}
@@ -310,30 +298,18 @@ const Modules = ({ modules, setModules, allHasNumericTitles }) => {
           initialSelectedFileExt={initialSelectedFileExt}
         />
 
-        <Box
-          bg="Primary"
-          borderBottomRadius="md"
-          px={4}
-          py={3}
-          className="flex gap-4 justify-end"
-        >
+        <Box bg="Primary" borderBottomRadius="md" px={4} py={3} className="flex gap-4 justify-end">
           <Button
             disabled={disableModuleBtn}
             onClick={editModuleState ? updateModule : AddModule}
             variant="entry"
             bg="white"
-            color="Primary"
-          >
+            color="Primary">
             {editModuleState ? "Opdatere modul" : "Tilføj modul"}
           </Button>
 
           {editModuleState && (
-            <Button
-              onClick={resetModule}
-              variant="entry"
-              bg="white"
-              color="Primary"
-            >
+            <Button onClick={resetModule} variant="entry" bg="white" color="Primary">
               Anullere
             </Button>
           )}

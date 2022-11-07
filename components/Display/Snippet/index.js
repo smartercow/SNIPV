@@ -13,22 +13,37 @@ import ModelIcon from "./ModelIcon";
 
 const Snippet = ({ snippet, user }) => {
   const openModal = useSetRecoilState(DeleteSNIPModalState);
-  const [modulesArr, setModulesArr] = useState("");
+  const [sRdy, setSRdy] = useState(false);
+  const [linky, setLinky] = useState("");
+  const [modulesArr, setModulesArr] = useState([]);
   const IconSize = 6;
 
   useEffect(() => {
-    setModulesArr(snippet.modules);
+    if (snippet && snippet.snippetType === "setup" && snippet.modules) {
+      setModulesArr(Object.values(snippet.modules));
+    }
+    if (snippet.snippetType === "code") {
+      setLinky(`/s/${snippet.id}`);
+    }
+    if (snippet.snippetType === "error") {
+      setLinky(`/e/${snippet.id}`);
+    }
   }, [snippet]);
 
-  console.log("SNIPPET", snippet);
+  useEffect(() => {
+    if (modulesArr.length > 0) {
+      setLinky(
+        `/setup/${snippet.id}/${String(modulesArr[0].moduleTitle).replace(
+          / /g,
+          "-"
+        )}#${String(modulesArr[0].sections[0].sectionTitle).replace(/ /g, "-")}`
+      );
+    }
+  }, [snippet, modulesArr]);
 
-  /*   : snippet.snippetType == "error" && Array.isArray()
-  `/setup/${snippet.id}/${String(
-      snippet.modules[0]?.moduleTitle
-    ).replace(/ /g, "-")}` */
   return (
     <>
-      {modulesArr && (
+      {linky && (
         <Box
           key={snippet.id}
           boxShadow="sm"
@@ -39,20 +54,7 @@ const Snippet = ({ snippet, user }) => {
           className="hoverable-item w-full cardHover bg-white hoverable-item justify-between flex gap-5 items-center"
         >
           <div className="w-full">
-            <Link
-              href={
-                snippet.snippetType == "code"
-                  ? `/s/${snippet.id}`
-                  : snippet.snippetType == "error"
-                  ? `/e/${snippet.id}`
-                  : `/setup/${snippet.id}/${String(
-                      modulesArr[0].moduleTitle
-                    ).replace(/ /g, "-")}#${String(
-                      modulesArr[0].sections[0].sectionTitle
-                    ).replace(/ /g, "-")}`
-              }
-              passHref
-            >
+            <Link href={linky} passHref>
               <a>
                 <div className="flex items-center gap-4 w-full justify-between">
                   <div className="flex items-center gap-5 w-full">

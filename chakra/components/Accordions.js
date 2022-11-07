@@ -33,6 +33,13 @@ export const Accordion = {
         mt: 1,
       },
     },
+    createEntries: {
+      container: {
+        borderStyle: "solid",
+        borderWidth: "1px",
+        borderRadius: 10,
+      },
+    },
     menu: {
       container: {
         borderStyle: "solid",

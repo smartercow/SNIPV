@@ -1,12 +1,4 @@
-import {
-  collection,
-  deleteDoc,
-  doc,
-  getDocs,
-  onSnapshot,
-  query,
-  where,
-} from "firebase/firestore";
+import { collection, deleteDoc, doc, getDocs, onSnapshot, query, where } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../../firebase/clientApp";
@@ -69,14 +61,10 @@ const MySNIPS = () => {
     if (!user) return;
     if (col) {
       setLoadingMain(true);
-      const folderColRef = query(
-        collection(db, "UsersData1", user.uid, mainFolder)
-      );
+      const folderColRef = query(collection(db, "UsersData1", user.uid, mainFolder));
       const getFolders = async () => {
         const userData = await getDocs(folderColRef);
-        setFolders(
-          userData.docs.map((doc) => ({ ...doc.data(), mainFolderId: doc.id }))
-        );
+        setFolders(userData.docs.map((doc) => ({ ...doc.data(), mainFolderId: doc.id })));
       };
 
       getFolders();
@@ -125,13 +113,7 @@ const MySNIPS = () => {
 
   return (
     <div className="flex flex-col gap-3 w-full">
-      <Box
-        bg="white"
-        boxShadow="sm"
-        borderRadius="lg"
-        className="flex flex-col gap-3"
-        p={2}
-      >
+      <Box bg="white" boxShadow="sm" borderRadius="lg" className="flex flex-col gap-3" p={2}>
         <Box bg="iGray" borderRadius="lg" className="flex items-center">
           <Box
             _hover={{ bg: "gray.200", cursor: "pointer" }}
@@ -143,12 +125,8 @@ const MySNIPS = () => {
             onClick={() => setTypes("all")}
           >
             <Icon as={CategoryIcon} fill="Primary" h={4} w={4} />
-            <Text
-              textTransform="uppercase"
-              fontSize="16px"
-              opacity={0.8}
-              fontWeight="semibold"
-            >
+
+            <Text textTransform="uppercase" fontSize="16px" opacity={0.8} fontWeight="semibold">
               Alle
             </Text>
           </Box>
@@ -161,12 +139,7 @@ const MySNIPS = () => {
             onClick={() => setTypes("category")}
           >
             <Icon as={FolderIcon} fill="Primary" h={4} w={4} />
-            <Text
-              textTransform="uppercase"
-              fontSize="16px"
-              opacity={0.8}
-              fontWeight="semibold"
-            >
+            <Text textTransform="uppercase" fontSize="16px" opacity={0.8} fontWeight="semibold">
               Mapper
             </Text>
           </Box>
@@ -179,12 +152,7 @@ const MySNIPS = () => {
             onClick={() => setTypes("search")}
           >
             <Icon as={FilterIcon} fill="Primary" h={4} w={4} />
-            <Text
-              textTransform="uppercase"
-              fontSize="16px"
-              opacity={0.8}
-              fontWeight="semibold"
-            >
+            <Text textTransform="uppercase" fontSize="16px" opacity={0.8} fontWeight="semibold">
               Søg
             </Text>
           </Box>
@@ -282,9 +250,7 @@ const MySNIPS = () => {
                   </Text>
                 </div>
                 <div>
-                  <Text variant="nonLabel">
-                    &nbsp;matchede ikke nogen tags!
-                  </Text>
+                  <Text variant="nonLabel">&nbsp;matchede ikke nogen tags!</Text>
                 </div>
               </div>
             </>

@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  addDoc,
-  collection,
-  doc,
-  getDoc,
-  serverTimestamp,
-  updateDoc,
-} from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, serverTimestamp, updateDoc } from "firebase/firestore";
 import { auth, db } from "../../../firebase/clientApp";
 import { useRouter } from "next/router";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -55,15 +48,7 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
   const [subFolders, setSubFolders] = useState([]);
 
   const [form, setForm] = useState(initialState);
-  const {
-    title,
-    description,
-    errorcode,
-    solutioncode,
-    output,
-    linkHeading,
-    link,
-  } = form;
+  const { title, description, errorcode, solutioncode, output, linkHeading, link } = form;
   const [lowercaseForm, setLowercaseForm] = useState([]); //Search
   const [notes, setNotes] = useState("");
   const [tags, setTags] = useState([]);
@@ -151,9 +136,7 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
             ...form,
             search: {
               title: lowercaseForm.title ? lowercaseForm.title : form.title,
-              description: lowercaseForm.description
-                ? lowercaseForm.description
-                : form.description,
+              description: lowercaseForm.description ? lowercaseForm.description : form.description,
             },
             model: snipMenu,
             updatedAt: serverTimestamp(),
@@ -246,8 +229,7 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
               _expanded={{
                 borderBottomLeftRadius: 0,
                 borderBottomRightRadius: 0,
-              }}
-            >
+              }}>
               <Box flex="1" textAlign="left">
                 <Text variant="folderHeading">Mappe</Text>
               </Box>
@@ -292,14 +274,11 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
               _expanded={{
                 borderBottomLeftRadius: 0,
                 borderBottomRightRadius: 0,
-              }}
-            >
+              }}>
               <Box flex="1" textAlign="left">
                 <div className="flex gap-5 items-center">
                   <Text variant="folderHeading">SNIP</Text>
-                  {codeExpanded && (
-                    <FolderHeading selectedSubFolder={selectedSubFolder} />
-                  )}
+                  {codeExpanded && <FolderHeading selectedSubFolder={selectedSubFolder} />}
                 </div>
               </Box>
               <AccordionIcon />
@@ -313,14 +292,7 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
                     <div className="w-24">
                       <Text variant="H5">Titel</Text>
                     </div>
-                    <Input
-                      name="title"
-                      size="md"
-                      required
-                      maxLength={100}
-                      onChange={handleChange}
-                      value={title}
-                    />
+                    <Input name="title" size="md" required maxLength={100} onChange={handleChange} value={title} />
                   </div>
 
                   <div className="w-full flex gap-4 items-center">
@@ -336,22 +308,12 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
                       value={description}
                     />
                   </div>
-                  <ButtonCheckBox
-                    SnipMenu={SnipMenu}
-                    snipMenu={snipMenu}
-                    setSnipMenu={setSnipMenu}
-                  />
+                  <ButtonCheckBox SnipMenu={SnipMenu} snipMenu={snipMenu} setSnipMenu={setSnipMenu} />
                   <div>
                     <div className="flex flex-col gap-2">
                       <Text variant="H5">Fejl kode</Text>
 
-                      <Textarea
-                        name="errorcode"
-                        size="md"
-                        required
-                        onChange={handleChange}
-                        value={errorcode}
-                      />
+                      <Textarea name="errorcode" size="md" required onChange={handleChange} value={errorcode} />
                     </div>
 
                     <div>
@@ -366,8 +328,7 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
                               _expanded={{
                                 borderBottomLeftRadius: 0,
                                 borderBottomRightRadius: 0,
-                              }}
-                            >
+                              }}>
                               <Box flex="1" textAlign="left">
                                 <Text variant="preview">Forhåndsvisning</Text>
                               </Box>
@@ -375,10 +336,7 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
                             </AccordionButton>
                           </h2>
                           <AccordionPanel>
-                            <SyntaxHighlighter
-                              language="javascript"
-                              style={oneLight}
-                            >
+                            <SyntaxHighlighter language="javascript" style={oneLight}>
                               {form.errorcode}
                             </SyntaxHighlighter>
                           </AccordionPanel>
@@ -390,12 +348,7 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
                   <div>
                     <div className="flex flex-col gap-2">
                       <Text variant="H5">Løsning kode</Text>
-                      <Textarea
-                        name="solutioncode"
-                        size="md"
-                        value={solutioncode}
-                        onChange={handleChange}
-                      />
+                      <Textarea name="solutioncode" size="md" value={solutioncode} onChange={handleChange} />
                     </div>
 
                     <div>
@@ -410,8 +363,7 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
                               _expanded={{
                                 borderBottomLeftRadius: 0,
                                 borderBottomRightRadius: 0,
-                              }}
-                            >
+                              }}>
                               <Box flex="1" textAlign="left">
                                 <Text variant="preview">Forhåndsvisning</Text>
                               </Box>
@@ -419,10 +371,7 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
                             </AccordionButton>
                           </h2>
                           <AccordionPanel>
-                            <SyntaxHighlighter
-                              language="javascript"
-                              style={oneLight}
-                            >
+                            <SyntaxHighlighter language="javascript" style={oneLight}>
                               {form.solutioncode}
                             </SyntaxHighlighter>
                           </AccordionPanel>
@@ -434,12 +383,7 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
                   <div className="">
                     <div className="flex flex-col gap-2">
                       <Text variant="H5">Output</Text>
-                      <Textarea
-                        name="output"
-                        size="md"
-                        value={output}
-                        onChange={handleChange}
-                      />
+                      <Textarea name="output" size="md" value={output} onChange={handleChange} />
                     </div>
 
                     <div>
@@ -454,8 +398,7 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
                               _expanded={{
                                 borderBottomLeftRadius: 0,
                                 borderBottomRightRadius: 0,
-                              }}
-                            >
+                              }}>
                               <Box flex="1" textAlign="left">
                                 <Text variant="preview">Forhåndsvisning</Text>
                               </Box>
@@ -463,10 +406,7 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
                             </AccordionButton>
                           </h2>
                           <AccordionPanel>
-                            <SyntaxHighlighter
-                              language="javascript"
-                              style={oneLight}
-                            >
+                            <SyntaxHighlighter language="javascript" style={oneLight}>
                               {form.output}
                             </SyntaxHighlighter>
                           </AccordionPanel>
@@ -487,8 +427,7 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
                         _expanded={{
                           borderBottomLeftRadius: 0,
                           borderBottomRightRadius: 0,
-                        }}
-                      >
+                        }}>
                         <Box flex="1" textAlign="left">
                           <Text variant="H5">Noter</Text>
                         </Box>
@@ -516,8 +455,7 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
                         _expanded={{
                           borderBottomLeftRadius: 0,
                           borderBottomRightRadius: 0,
-                        }}
-                      >
+                        }}>
                         <Box flex="1" textAlign="left">
                           <Text variant="H5">Link</Text>
                         </Box>
@@ -525,11 +463,7 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
                       </AccordionButton>
                     </h2>
                     <AccordionPanel pb={4}>
-                      <SnipLink
-                        handleChange={handleChange}
-                        linkHeading={linkHeading}
-                        link={link}
-                      />
+                      <SnipLink handleChange={handleChange} linkHeading={linkHeading} link={link} />
                     </AccordionPanel>
                   </AccordionItem>
 
@@ -543,8 +477,7 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
                         _expanded={{
                           borderBottomLeftRadius: 0,
                           borderBottomRightRadius: 0,
-                        }}
-                      >
+                        }}>
                         <Box flex="1" textAlign="left">
                           <Text variant="H5">Tags</Text>
                         </Box>
@@ -552,12 +485,7 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
                       </AccordionButton>
                     </h2>
                     <AccordionPanel pb={4}>
-                      <Tags
-                        id={id}
-                        dataFetched={dataFetched}
-                        tags={tags}
-                        setTagInputValues={setTagInputValues}
-                      />
+                      <Tags id={id} dataFetched={dataFetched} tags={tags} setTagInputValues={setTagInputValues} />
                     </AccordionPanel>
                   </AccordionItem>
                 </Accordion>
@@ -565,21 +493,11 @@ const CreateErrorSnippet = ({ id, setLoading, setDataError }) => {
                 <div className="mx-3 flex flex-col gap-5">
                   <div>
                     {id ? (
-                      <Button
-                        variant="create"
-                        type="submit"
-                        isLoading={btnLoad}
-                        loadingText="Indsender.."
-                      >
+                      <Button variant="create" type="submit" isLoading={btnLoad} loadingText="Indsender..">
                         OPDATERE
                       </Button>
                     ) : (
-                      <Button
-                        variant="create"
-                        type="submit"
-                        isLoading={btnLoad}
-                        loadingText="Indsender.."
-                      >
+                      <Button variant="create" type="submit" isLoading={btnLoad} loadingText="Indsender..">
                         GEM
                       </Button>
                     )}

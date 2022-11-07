@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  addDoc,
-  collection,
-  doc,
-  getDoc,
-  serverTimestamp,
-  updateDoc,
-} from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, serverTimestamp, updateDoc } from "firebase/firestore";
 import { auth, db } from "../../../firebase/clientApp";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
@@ -143,9 +136,7 @@ const CreateSetup = ({ id, setLoading, setDataError }) => {
             ...form,
             search: {
               title: lowercaseForm.title ? lowercaseForm.title : form.title,
-              description: lowercaseForm.description
-                ? lowercaseForm.description
-                : form.description,
+              description: lowercaseForm.description ? lowercaseForm.description : form.description,
             },
             setupHasFolderStructure: allHasFolderStructure,
             setupFolderStructure: modulesFolderStructure,
@@ -173,6 +164,8 @@ const CreateSetup = ({ id, setLoading, setDataError }) => {
     }
   };
 
+  console.log("modules", modules);
+
   const getSetupsData = async () => {
     try {
       const docRef = doc(db, "SetupsData", id);
@@ -187,7 +180,7 @@ const CreateSetup = ({ id, setLoading, setDataError }) => {
           title: snapshot.data().title,
           description: snapshot.data().description,
         });
-        setAllHasFolderStructure(snapshot.data().setHasFolderStructure);
+        setAllHasFolderStructure(snapshot.data().setupHasFolderStructure);
         setModulesFolderStructure(snapshot.data().setupFolderStructure);
         setAllHasNumericTitles(snapshot.data().allHasNumericTitles);
         setModules(Object.values(snapshot.data().modules));
@@ -240,8 +233,7 @@ const CreateSetup = ({ id, setLoading, setDataError }) => {
               _expanded={{
                 borderBottomLeftRadius: 0,
                 borderBottomRightRadius: 0,
-              }}
-            >
+              }}>
               <Box flex="1" textAlign="left">
                 <Text variant="folderHeading">Mappe</Text>
               </Box>
@@ -287,14 +279,11 @@ const CreateSetup = ({ id, setLoading, setDataError }) => {
               _expanded={{
                 borderBottomLeftRadius: 0,
                 borderBottomRightRadius: 0,
-              }}
-            >
+              }}>
               <Box flex="1" textAlign="left">
                 <div className="flex gap-5 items-center">
                   <Text variant="folderHeading">SETUP</Text>
-                  {codeExpanded && (
-                    <FolderHeading selectedSubFolder={selectedSubFolder} />
-                  )}
+                  {codeExpanded && <FolderHeading selectedSubFolder={selectedSubFolder} />}
                 </div>
               </Box>
               <AccordionIcon />
@@ -308,14 +297,7 @@ const CreateSetup = ({ id, setLoading, setDataError }) => {
                     <div className="w-24">
                       <Text variant="H5">Titel</Text>
                     </div>
-                    <Input
-                      name="title"
-                      size="md"
-                      required
-                      maxLength={130}
-                      onChange={handleChange}
-                      value={title}
-                    />
+                    <Input name="title" size="md" required maxLength={130} onChange={handleChange} value={title} />
                   </div>
 
                   <div className="w-full flex gap-4 items-center">
@@ -343,8 +325,7 @@ const CreateSetup = ({ id, setLoading, setDataError }) => {
                         _expanded={{
                           borderBottomLeftRadius: 0,
                           borderBottomRightRadius: 0,
-                        }}
-                      >
+                        }}>
                         <Box flex="1" textAlign="left">
                           <Text variant="H5">Tags</Text>
                         </Box>
@@ -352,26 +333,21 @@ const CreateSetup = ({ id, setLoading, setDataError }) => {
                       </AccordionButton>
                     </h2>
                     <AccordionPanel pb={4}>
-                      <Tags
-                        id={id}
-                        dataFetched={dataFetched}
-                        tags={tags}
-                        setTagInputValues={setTagInputValues}
-                      />
+                      <Tags id={id} dataFetched={dataFetched} tags={tags} setTagInputValues={setTagInputValues} />
                     </AccordionPanel>
                   </AccordionItem>
                 </Accordion>
 
                 <Box>
-                  <Box>
-                    <ButtonCheckBox
-                      SnipMenu={SnipMenu}
-                      hasFolderStructure={allHasFolderStructure}
-                      setHasFolderStructure={setAllHasFolderStructure}
-                      hasNumericTitles={allHasNumericTitles}
-                      setHasNumericTitles={setAllHasNumericTitles}
-                    />
-                  </Box>
+                  <ButtonCheckBox
+                    SnipMenu={SnipMenu}
+                    hasFolderStructure={allHasFolderStructure}
+                    setHasFolderStructure={setAllHasFolderStructure}
+                    hasNumericTitles={allHasNumericTitles}
+                    setHasNumericTitles={setAllHasNumericTitles}
+                    setFolderStructure={setModulesFolderStructure}
+                  />
+
                   {allHasFolderStructure && (
                     <FolderStructure
                       folderStructure={modulesFolderStructure}
@@ -379,13 +355,8 @@ const CreateSetup = ({ id, setLoading, setDataError }) => {
                     />
                   )}
                 </Box>
-                <Box>
-                  <Modules
-                    modules={modules}
-                    setModules={setModules}
-                    allHasNumericTitles={allHasNumericTitles}
-                  />
-                </Box>
+
+                <Modules modules={modules} setModules={setModules} allHasNumericTitles={allHasNumericTitles} />
 
                 <div className="flex flex-col gap-5">
                   <div>
@@ -396,8 +367,7 @@ const CreateSetup = ({ id, setLoading, setDataError }) => {
                         color="primary"
                         type="submit"
                         isLoading={btnLoad}
-                        loadingText="Indsender.."
-                      >
+                        loadingText="Indsender..">
                         OPDATERE
                       </Button>
                     ) : (
@@ -407,8 +377,7 @@ const CreateSetup = ({ id, setLoading, setDataError }) => {
                         color="primary"
                         type="submit"
                         isLoading={btnLoad}
-                        loadingText="Indsender.."
-                      >
+                        loadingText="Indsender..">
                         GEM
                       </Button>
                     )}

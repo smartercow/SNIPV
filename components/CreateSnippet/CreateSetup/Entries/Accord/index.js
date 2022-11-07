@@ -17,20 +17,15 @@ import React from "react";
 import Syntax from "../Syntax";
 import parse from "html-react-parser";
 import PackageBox from "../Packages/PackageBox";
-import {
-  AddIcon,
-  ArrowDownIcon,
-  ArrowUpIcon,
-  CloseIcon,
-  EditIcon,
-  MinusIcon,
-} from "@chakra-ui/icons";
+import { AddIcon, ArrowDownIcon, ArrowUpIcon, CloseIcon, EditIcon, MinusIcon } from "@chakra-ui/icons";
 
 const Accord = ({
   allHasNumericTitles,
   showEditMenu,
   currIndex,
+  setHasFolderStructure,
   hasNumericTitles,
+  setHasNumericTitles,
   entries,
   setEntries,
   allEntries,
@@ -49,10 +44,7 @@ const Accord = ({
     setAllEntries((allEntries) => {
       allEntries = [...allEntries];
 
-      [allEntries[index - 1], allEntries[index]] = [
-        allEntries[index],
-        allEntries[index - 1],
-      ];
+      [allEntries[index - 1], allEntries[index]] = [allEntries[index], allEntries[index - 1]];
 
       return allEntries;
     });
@@ -64,10 +56,7 @@ const Accord = ({
     setAllEntries((allEntries) => {
       allEntries = [...allEntries];
 
-      [allEntries[index + 1], allEntries[index]] = [
-        allEntries[index],
-        allEntries[index + 1],
-      ];
+      [allEntries[index + 1], allEntries[index]] = [allEntries[index], allEntries[index + 1]];
 
       return allEntries;
     });
@@ -77,17 +66,13 @@ const Accord = ({
     setAllEntries(entries.filter((ent) => ent.entryId !== entry.entryId));
   };
 
-  console.log("allEntries", allEntries);
-  console.log("entries", entries);
-  console.log("editSectionId", editSectionId);
-
   return (
     <div>
       {allEntries && (
         <Accordion allowToggle>
           {allEntries.map((entry, index) => {
             return (
-              <AccordionItem key={index}>
+              <AccordionItem key={index} mb={2} border="none">
                 {({ isExpanded }) => (
                   <>
                     <div className="flex-none">
@@ -97,26 +82,15 @@ const Accord = ({
                             aria-label="Up"
                             borderBottomRadius="outline"
                             borderBottom="none"
+                            borderBottomLeftRadius="none"
                             onClick={() => moveUp(index)}
-                            icon={
-                              <ArrowUpIcon
-                                height={5}
-                                width={5}
-                                color="gray.500"
-                              />
-                            }
+                            icon={<ArrowUpIcon height={5} width={5} color="gray.500" />}
                           />
                           <IconButton
                             aria-label="Down"
                             borderBottom="none"
                             onClick={() => moveDown(index)}
-                            icon={
-                              <ArrowDownIcon
-                                height={5}
-                                width={5}
-                                color="gray.500"
-                              />
-                            }
+                            icon={<ArrowDownIcon height={5} width={5} color="gray.500" />}
                           />
                           <IconButton
                             aria-label="Edit"
@@ -124,35 +98,40 @@ const Accord = ({
                             onClick={() => {
                               setEntries(entry.entries),
                                 setEditSectionState(true),
-                                setEditSectionId(entry.sectionId);
-                              setMenu(entry.section);
+                                setEditSectionId(entry.sectionId),
+                                setMenu(entry.sectionTitle),
+                                setHasFolderStructure(entry.hasFolderStructure),
+                                setHasNumericTitles(entry.numericTitles);
                             }}
-                            icon={
-                              <EditIcon height={4} width={4} color="Primary" />
-                            }
+                            icon={<EditIcon height={4} width={4} color="Primary" />}
                           />
                           <IconButton
                             aria-label="Delete"
                             borderBottomRadius="none"
                             borderBottom="none"
                             disabled={
-                              editSectionState &&
-                              editSectionId === entry.entryId
+                              editSectionState && editSectionId === entry.entryId
                                 ? true
                                 : editState && editId === entry.entryId
                                 ? true
                                 : false
                             }
                             onClick={() => DeleteEntry(entry)}
-                            icon={
-                              <CloseIcon height={3} width={3} color="Red" />
-                            }
+                            icon={<CloseIcon height={3} width={3} color="Red" />}
                           />
                         </ButtonGroup>
                       )}
                     </div>
                     <h2>
-                      <AccordionButton>
+                      <AccordionButton
+                        borderRadius={10}
+                        bg="iGrayLight"
+                        borderTopLeftRadius="none"
+                        _hover={{ bg: "PrimaryELight" }}
+                        _expanded={{
+                          borderBottomLeftRadius: 0,
+                          borderBottomRightRadius: 0,
+                        }}>
                         <Box flex="1" textAlign="left">
                           {allHasNumericTitles && (
                             <>
@@ -168,22 +147,14 @@ const Accord = ({
                           )}
                           {entry.sectionTitle}
                         </Box>
-                        {isExpanded ? (
-                          <MinusIcon fontSize="12px" />
-                        ) : (
-                          <AddIcon fontSize="12px" />
-                        )}
+                        {isExpanded ? <MinusIcon fontSize="12px" /> : <AddIcon fontSize="12px" />}
                       </AccordionButton>
                     </h2>
                     {entry.entries && (
-                      <AccordionPanel>
+                      <AccordionPanel borderWidth={1} borderColor="iGrayLight">
                         {entry.entries.map((entry, index) => (
                           <Box key={index} p={2} mb={1}>
-                            {entry.summary && (
-                              <Box className="parse">
-                                {parse(entry.summary)}
-                              </Box>
-                            )}
+                            {entry.summary && <Box className="parse">{parse(entry.summary)}</Box>}
 
                             {entry.packages && (
                               <div className="flex flex-col gap-2">

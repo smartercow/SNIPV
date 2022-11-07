@@ -12,7 +12,6 @@ const Quill = dynamic(() => import("./Quill"), {
 
 const Entries = ({
   allHasNumericTitles,
-  setAllHasNumericTitles,
   hasFolderStructure,
   setHasFolderStructure,
   hasNumericTitles,
@@ -82,10 +81,7 @@ const Entries = ({
 
   const AddCodeFiles = (e) => {
     e.preventDefault();
-    setEntries((oldForm) => [
-      ...oldForm,
-      { entryId: randomValue, files: codeFiles },
-    ]);
+    setEntries((oldForm) => [...oldForm, { entryId: randomValue, files: codeFiles }]);
     setSelectedEntry("summary");
     setCodeFile(initialCodeFileValue);
     setCodeFiles([]);
@@ -94,20 +90,14 @@ const Entries = ({
 
   const AddAllPackages = (e) => {
     e.preventDefault();
-    setEntries((oldForm) => [
-      ...oldForm,
-      { entryId: randomValue, packages: packages },
-    ]);
+    setEntries((oldForm) => [...oldForm, { entryId: randomValue, packages: packages }]);
     setSelectedEntry("summary");
     setPackages([]);
   };
 
   const addSummary = (e) => {
     e.preventDefault();
-    setEntries((entSum) => [
-      ...entSum,
-      { entryId: randomValue, summary: summaryValue },
-    ]);
+    setEntries((entSum) => [...entSum, { entryId: randomValue, summary: summaryValue }]);
     setSummaryValue({});
   };
 
@@ -115,7 +105,13 @@ const Entries = ({
     e.preventDefault();
     setAllEntries((oldForm) => [
       ...oldForm,
-      { sectionId: randomValue, sectionTitle: menu, entries: entries },
+      {
+        sectionId: randomValue,
+        sectionTitle: menu,
+        hasFolderStructure: hasFolderStructure,
+        numericTitles: hasNumericTitles,
+        entries: entries,
+      },
     ]);
     setSelectedEntry("summary");
     setCodeFile(initialCodeFileValue);
@@ -139,9 +135,8 @@ const Entries = ({
         return {
           ...obj,
           sectionTitle: menu,
-          allHasNumericTitles: allHasNumericTitles,
           hasFolderStructure: hasFolderStructure,
-          hasNumericTitles: hasNumericTitles,
+          numericTitles: hasNumericTitles,
           entries: entries,
         };
       }
@@ -185,10 +180,7 @@ const Entries = ({
     setEntries((entries) => {
       entries = [...entries];
 
-      [entries[index - 1], entries[index]] = [
-        entries[index],
-        entries[index - 1],
-      ];
+      [entries[index - 1], entries[index]] = [entries[index], entries[index - 1]];
 
       return entries;
     });
@@ -200,10 +192,7 @@ const Entries = ({
     setEntries((entries) => {
       entries = [...entries];
 
-      [entries[index + 1], entries[index]] = [
-        entries[index],
-        entries[index + 1],
-      ];
+      [entries[index + 1], entries[index]] = [entries[index], entries[index + 1]];
 
       return entries;
     });
@@ -286,24 +275,15 @@ const Entries = ({
   };
 
   const EditSummary = (entry) => {
-    setSummaryValue(entry.summary),
-      setEditState(true),
-      setSelectedEntry("summary"),
-      setEditId(entry.entryId);
+    setSummaryValue(entry.summary), setEditState(true), setSelectedEntry("summary"), setEditId(entry.entryId);
   };
 
   const EditPackages = (entry) => {
-    setPackages(entry.packages),
-      setEditState(true),
-      setSelectedEntry("packages"),
-      setEditId(entry.entryId);
+    setPackages(entry.packages), setEditState(true), setSelectedEntry("packages"), setEditId(entry.entryId);
   };
 
   const EditFiles = (entry) => {
-    setEditState(true),
-      setEditId(entry.entryId),
-      setSelectedEntry("code"),
-      setCodeFiles(entry.files);
+    setEditState(true), setEditId(entry.entryId), setSelectedEntry("code"), setCodeFiles(entry.files);
   };
 
   useEffect(() => {
@@ -331,7 +311,7 @@ const Entries = ({
   }, [editState, selectedEntry]);
 
   return (
-    <Box className="flex flex-col gap-2">
+    <Box className="flex flex-col">
       <Box>
         {!Object.keys(allEntries).length > 0 && (
           <Box py={2} px={4}>
@@ -341,35 +321,35 @@ const Entries = ({
           </Box>
         )}
 
-        <Accord
-          showEditMenu={showEditMenu}
-          entries={entries}
-          setEntries={setEntries}
-          allEntries={allEntries}
-          setAllEntries={setAllEntries}
-          editSectionState={editSectionState}
-          setEditSectionState={setEditSectionState}
-          editState={editState}
-          editSectionId={editSectionId}
-          setEditSectionId={setEditSectionId}
-          setMenu={setMenu}
-        />
+        <Box px={4} pt={2}>
+          <Accord
+            setMenu={setMenu}
+            showEditMenu={showEditMenu}
+            entries={entries}
+            setEntries={setEntries}
+            allEntries={allEntries}
+            setAllEntries={setAllEntries}
+            editSectionState={editSectionState}
+            setEditSectionState={setEditSectionState}
+            setHasNumericTitles={setHasNumericTitles}
+            setHasFolderStructure={setHasFolderStructure}
+            setFolde
+            editState={editState}
+            editSectionId={editSectionId}
+            setEditSectionId={setEditSectionId}
+          />
+        </Box>
       </Box>
       <Box p={4}>
         <Box borderWidth={1} borderRadius="md">
-          <Box className="flex flex-col gap-3">
-            <Box px={4} mt={4} className="flex gap-6 items-center">
+          <Box className="flex flex-col">
+            <Box px={4} my={2} className="flex gap-6 items-center">
               <div>
                 <Text variant="H5" fontWeight="semibold" whiteSpace="nowrap">
                   Sektion Titel
                 </Text>
               </div>
-              <Input
-                placeholder="Installation"
-                value={menu}
-                maxLength={25}
-                onChange={(e) => setMenu(e.target.value)}
-              />
+              <Input placeholder="Installation" value={menu} maxLength={25} onChange={(e) => setMenu(e.target.value)} />
             </Box>
 
             <Divider />
@@ -402,7 +382,7 @@ const Entries = ({
             </Box>
           </Box>
 
-          <Divider mt={3} />
+          <Divider mt={2} />
 
           <Box>
             <Box p={4}>{renderEntry(selectedEntry)}</Box>
@@ -414,35 +394,19 @@ const Entries = ({
 
               <div className="flex gap-2 justify-between mt-1">
                 <div className="flex gap-4">
-                  <Button
-                    variant="entry"
-                    disabled={disableSum}
-                    onClick={() => setSelectedEntry("summary")}
-                  >
+                  <Button variant="entry" disabled={disableSum} onClick={() => setSelectedEntry("summary")}>
                     SUM
                   </Button>
-                  <Button
-                    variant="entry"
-                    disabled={disableFiles}
-                    onClick={() => setSelectedEntry("code")}
-                  >
+                  <Button variant="entry" disabled={disableFiles} onClick={() => setSelectedEntry("code")}>
                     FILER
                   </Button>
-                  <Button
-                    variant="entry"
-                    disabled={disablePackages}
-                    onClick={() => setSelectedEntry("packages")}
-                  >
+                  <Button variant="entry" disabled={disablePackages} onClick={() => setSelectedEntry("packages")}>
                     PAKKER
                   </Button>
                 </div>
 
                 <div className="flex gap-4">
-                  <Button
-                    variant="entry"
-                    disabled={disableSave}
-                    onClick={editSectionState ? editSection : AddSection}
-                  >
+                  <Button variant="entry" disabled={disableSave} onClick={editSectionState ? editSection : AddSection}>
                     {editSectionState ? "Opdatere" : "Tilføj sektion"}
                   </Button>
 
