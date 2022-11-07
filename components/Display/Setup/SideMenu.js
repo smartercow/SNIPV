@@ -15,7 +15,6 @@ const SideMenu = ({ modules, snippet }) => {
     });
   };
 
-  console.log("MODS", modules);
   return (
     <div className="flex flex-col">
       {snippet?.setupHasFolderStructure && (
@@ -36,7 +35,7 @@ const SideMenu = ({ modules, snippet }) => {
         </Box>
       )}
       <Accordion defaultIndex={[0]} allowMultiple variant="menu">
-        {modules.map((item, index) => {
+        {modules.map((item) => {
           if (asPath.startsWith(`/setup/${id}/${String(item.moduleTitle).replace(/ /g, "-")}`))
             return (
               <Box key={item.moduleId} className="cursor-pointer transition ease-in-out duration-300 w-[16rem]">
@@ -54,13 +53,7 @@ const SideMenu = ({ modules, snippet }) => {
                       }}>
                       <Box flex="1" textAlign="left">
                         <Text fontSize={15} color="Primary" fontWeight="semibold">
-                          {modules.numericTitles && (
-                            <>
-                              {index + 1}
-                              {". "}
-                            </>
-                          )}{" "}
-                          {item.moduleTitle}
+                          {} {item.moduleTitle}
                         </Text>
                       </Box>
                       <AccordionIcon color="Primary" />

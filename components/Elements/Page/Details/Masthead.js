@@ -72,36 +72,21 @@ const Masthead = ({ snippet }) => {
         <LanguageBadge snippet={snippet} />
       </>
 
-      {user.uid === snippet.userData.uid && (
+      {user?.uid === snippet.userData?.uid && (
         <Box>
           <ButtonGroup size="sm" isAttached variant="ghost">
             <a href={`${edit}${id}`}>
-              <IconButton
-                icon={
-                  <Icon
-                    as={EditDocumentIcon}
-                    height={6}
-                    width={6}
-                    fill="Primary"
-                  />
-                }
-              />
+              <IconButton icon={<Icon as={EditDocumentIcon} height={6} width={6} fill="Primary" />} />
             </a>
             <Popover>
               <PopoverTrigger>
-                <IconButton
-                  icon={<Icon w={6} h={6} as={DeleteDocumentIcon} fill="Red" />}
-                />
+                <IconButton icon={<Icon w={6} h={6} as={DeleteDocumentIcon} fill="Red" />} />
               </PopoverTrigger>
               <PopoverContent>
                 <PopoverArrow />
                 <PopoverCloseButton />
                 <PopoverBody>
-                  <DeleteSNIPNoMap
-                    handleDelete={handleDelete}
-                    id={id}
-                    type={type}
-                  />
+                  <DeleteSNIPNoMap handleDelete={handleDelete} id={id} type={type} />
                 </PopoverBody>
               </PopoverContent>
             </Popover>
