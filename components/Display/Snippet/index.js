@@ -22,10 +22,10 @@ const Snippet = ({ snippet, user }) => {
     if (snippet && snippet.snippetType === "setup" && snippet.modules) {
       setModulesArr(Object.values(snippet.modules));
     }
-    if (snippet.snippetType === "code") {
+    if (snippet.snippetType === "code" || snippet.folder.folderSnippetType === "code") {
       setLinky(`/s/${snippet.id}`);
     }
-    if (snippet.snippetType === "error") {
+    if (snippet.snippetType === "error" || snippet.folder.folderSnippetType === "error") {
       setLinky(`/e/${snippet.id}`);
     }
   }, [snippet]);
@@ -33,13 +33,14 @@ const Snippet = ({ snippet, user }) => {
   useEffect(() => {
     if (modulesArr.length > 0) {
       setLinky(
-        `/setup/${snippet.id}/${String(modulesArr[0].moduleTitle).replace(
-          / /g,
-          "-"
-        )}#${String(modulesArr[0].sections[0].sectionTitle).replace(/ /g, "-")}`
+        `/setup/${snippet.id}/${String(modulesArr[0].moduleTitle).replace(/ /g, "-")}#${String(
+          modulesArr[0].sections[0].sectionTitle
+        ).replace(/ /g, "-")}`
       );
     }
   }, [snippet, modulesArr]);
+
+  console.log("SNIPS", snippet);
 
   return (
     <>
@@ -51,8 +52,7 @@ const Snippet = ({ snippet, user }) => {
           borderColor="PrimaryLighter"
           borderRadius="xl"
           pr={2}
-          className="hoverable-item w-full cardHover bg-white hoverable-item justify-between flex gap-5 items-center"
-        >
+          className="hoverable-item w-full cardHover bg-white hoverable-item justify-between flex gap-5 items-center">
           <div className="w-full">
             <Link href={linky} passHref>
               <a>
@@ -69,9 +69,7 @@ const Snippet = ({ snippet, user }) => {
 
                           {snippet.description && (
                             <div className="">
-                              <Text variant="snipDescription">
-                                {snippet.description}
-                              </Text>
+                              <Text variant="snipDescription">{snippet.description}</Text>
                             </div>
                           )}
                         </div>
@@ -88,17 +86,13 @@ const Snippet = ({ snippet, user }) => {
                               {snippet.updatedAt && (
                                 <p className="text-xs font-mono">
                                   OPDATERET:&nbsp;
-                                  {new Date(
-                                    snippet.updatedAt.seconds * 1000
-                                  ).toLocaleDateString("da-DK")}
+                                  {new Date(snippet.updatedAt.seconds * 1000).toLocaleDateString("da-DK")}
                                 </p>
                               )}
 
                               <p className="text-xs font-mono">
                                 OPRETTET:&nbsp;
-                                {new Date(
-                                  snippet.postedAt.seconds * 1000
-                                ).toLocaleDateString("da-DK")}
+                                {new Date(snippet.postedAt.seconds * 1000).toLocaleDateString("da-DK")}
                               </p>
                             </div>
                           </div>
@@ -108,12 +102,7 @@ const Snippet = ({ snippet, user }) => {
                   </div>
 
                   <div className="hoverable-show w-8">
-                    <Icon
-                      as={LoginIcon}
-                      width={30}
-                      height={30}
-                      fill="Primary"
-                    />
+                    <Icon as={LoginIcon} width={30} height={30} fill="Primary" />
                   </div>
                 </div>
               </a>
@@ -133,18 +122,10 @@ const Snippet = ({ snippet, user }) => {
                           ? `/upsert/error/${snippet.id}`
                           : `/upsert/setup/${snippet.id}/`
                       }
-                      passHref
-                    >
+                      passHref>
                       <a>
                         <IconButton
-                          icon={
-                            <Icon
-                              as={EditDocumentIcon}
-                              fill="Primary"
-                              width={IconSize}
-                              height={IconSize}
-                            />
-                          }
+                          icon={<Icon as={EditDocumentIcon} fill="Primary" width={IconSize} height={IconSize} />}
                           cursor="pointer"
                         />
                       </a>
@@ -154,14 +135,7 @@ const Snippet = ({ snippet, user }) => {
 
                 <div>
                   <IconButton
-                    icon={
-                      <Icon
-                        as={DeleteDocumentIcon}
-                        fill="Red"
-                        width={IconSize}
-                        height={IconSize}
-                      />
-                    }
+                    icon={<Icon as={DeleteDocumentIcon} fill="Red" width={IconSize} height={IconSize} />}
                     cursor="pointer"
                     onClick={() => {
                       openModal({ default: true, snip: snippet });
