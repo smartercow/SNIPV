@@ -38,12 +38,12 @@ const Setup = () => {
       </Head>
 
       {snippet && (
-        <div className=" relative min-h-[80vh]">
+        <div className=" relative min-h-[85vh]">
           <div className="">
             <Details snippet={snippet} />
           </div>
 
-          <div className="mb-10">
+          <div className="pb-10">
             <Entries snippet={snippet} />
           </div>
 
