@@ -80,8 +80,6 @@ const MySNIPS = () => {
     };
   }, [user, update]);
 
-  console.log("SNIPPET", snippets);
-
   return (
     <div>
       {user && (

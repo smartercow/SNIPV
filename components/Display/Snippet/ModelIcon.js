@@ -11,12 +11,7 @@ const ModelIcon = ({ snippet }) => {
       {snippet.snippetType === "code" && (
         <>
           {snippet.model === "file" ? (
-            <Icon
-              as={DocumentIcon}
-              fill="Blue"
-              height={iconSize}
-              width={iconSize}
-            />
+            <Icon as={DocumentIcon} fill="Blue" height={iconSize} width={iconSize} />
           ) : (
             <Icon as={Paper} fill="Blue" height={iconSize} width={iconSize} />
           )}
@@ -26,21 +21,14 @@ const ModelIcon = ({ snippet }) => {
       {snippet.snippetType === "error" && (
         <>
           {snippet.model === "file" ? (
-            <Icon
-              as={DocumentIcon}
-              fill="Red"
-              height={iconSize}
-              width={iconSize}
-            />
+            <Icon as={DocumentIcon} fill="Red" height={iconSize} width={iconSize} />
           ) : (
             <Icon as={Paper} fill="Red" height={iconSize} width={iconSize} />
           )}
         </>
       )}
 
-      {snippet.snippetType === "setup" && (
-        <Icon as={WorkIcon} fill="purple" height={iconSize} width={iconSize} />
-      )}
+      {snippet.snippetType === "setup" && <Icon as={WorkIcon} fill="purple" height={iconSize} width={iconSize} />}
     </div>
   );
 };

@@ -19,7 +19,15 @@ const LanguageBadge = ({ snippet }) => {
           </div>
         )}
 
-        {snippet?.folder?.language?.fileExtension && (
+        {snippet?.snippetType === "code" && (
+          <Box bg="Primary" color="white" className={` lBadge rounded-3xl flex justify-center items-center`}>
+            <p className="text-xs MonoHeading font-semibold lowercase">
+              {snippet.folder.language.fileExtension?.label}
+            </p>
+          </Box>
+        )}
+
+        {snippet?.snippetType === "error" && (
           <Box bg="Primary" color="white" className={` lBadge rounded-3xl flex justify-center items-center`}>
             <p className="text-xs MonoHeading font-semibold lowercase">
               {snippet.folder.language.fileExtension?.label}

@@ -10,4 +10,56 @@
   p {
     font-size: 17px;
   }
+  a {
+    color: #ed8142;
+  }
+  ol {
+    margin: 10px auto;
+    max-width: 700px;
+    list-style-type: decimal;
+    padding: 0 30px;
+    li {
+      a {
+        color: #ed8142;
+      }
+    }
+  }
+  ul {
+    margin: 10px auto;
+    max-width: 700px;
+    list-style-type: disc;
+    padding: 0 32px;
+    li {
+      a {
+        color: #087ea4;
+      }
+    }
+  }
+  blockquote {
+    margin: 10px auto;
+    max-width: 700px;
+    text-align: center;
+    padding: 5px 20px;
+    border-radius: 10px;
+    background-color: #e6f7ff;
+    color: #087ea4;
+  }
+  blockquote::before {
+    content: "\201C \0020";
+    font-size: 27px;
+    font-weight: bold;
+  }
+  blockquote::after {
+    content: "\0020 \201D";
+    font-size: 27px;
+    font-weight: bold;
+  }
+  pre {
+    background-color: #23241f;
+    color: white;
+    margin: 10px auto;
+    max-width: 600px;
+    border-radius: 5px;
+    padding: 5px 15px;
+  }
 }

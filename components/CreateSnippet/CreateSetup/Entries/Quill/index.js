@@ -3,14 +3,7 @@ import ReactQuill from "react-quill";
 import EditorToolbar, { modules, formats } from "./Toolbar";
 import { Button, Text } from "@chakra-ui/react";
 
-const Quill = ({
-  summaryValue,
-  setSummaryValue,
-  addSummary,
-  editState,
-  setEditState,
-  editSumEntry,
-}) => {
+const Quill = ({ summaryValue, setSummaryValue, addSummary, editState, setEditState, editSumEntry }) => {
   const [disableSave, setDisableSave] = useState(true);
 
   useEffect(() => {
@@ -41,16 +34,13 @@ const Quill = ({
           placeholder={"Skriv her... min. 5 tegn"}
           modules={modules}
           formats={formats}
+          className="parse"
           style={{ height: "15rem", borderLeftWidth: 0 }}
         />
       </div>
 
       <div className="flex gap-2">
-        <Button
-          onClick={editState ? editSumEntry : addSummary}
-          variant="btnSub"
-          disabled={disableSave}
-        >
+        <Button onClick={editState ? editSumEntry : addSummary} variant="btnSub" disabled={disableSave}>
           {editState ? "Opdatare" : "Tilføj"}
         </Button>
 
