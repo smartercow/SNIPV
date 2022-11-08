@@ -3,13 +3,12 @@ import React from "react";
 
 const Notes = ({ snippet }) => {
   return (
-    <div className="bg-[#D4EFEE] p-4 rounded-lg">
-      <Text color="#005955">
-        <Text color="#005955" b>
-          NOTER:&nbsp;
+    <div className="flex justify-center">
+      <div className="bg-[#D4EFEE] p-4 rounded-lg w-[40rem]">
+        <Text color="#005955" className="inline-block">
+          <span className="font-bold">NOTER:</span>&nbsp;{snippet?.notes}
         </Text>
-        {snippet?.notes}
-      </Text>
+      </div>
     </div>
   );
 };

@@ -1,11 +1,5 @@
 import { CopyIcon } from "@chakra-ui/icons";
-import {
-  Box,
-  Button,
-  IconButton,
-  useClipboard,
-  useToast,
-} from "@chakra-ui/react";
+import { Box, Button, IconButton, useClipboard, useToast } from "@chakra-ui/react";
 import React, { useEffect, useRef, useState } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneLight } from "react-syntax-highlighter/dist/cjs/styles/prism";
@@ -65,19 +59,13 @@ const SyntaxPage = ({ entry, tabUpdate }) => {
             showLineNumbers={true}
             lineProps={{
               style: { wordBreak: "break-all", whiteSpace: "pre-wrap" },
-            }}
-          >
+            }}>
             {entry.file.code}
           </SyntaxHighlighter>
         </div>
         {showBtn && (
           <Box borderTopWidth={1} py={1} className="flex justify-center">
-            <Button
-              onClick={() => setShow(!show)}
-              fontSize={12}
-              height={6}
-              variant="ghost"
-            >
+            <Button onClick={() => setShow(!show)} fontSize={12} height={6} variant="ghost">
               {show ? "Vis mindre" : "Vis mere"}
             </Button>
           </Box>

@@ -40,8 +40,6 @@ const Snippet = ({ snippet, user }) => {
     }
   }, [snippet, modulesArr]);
 
-  console.log("SNIPS", snippet);
-
   return (
     <>
       {linky && (

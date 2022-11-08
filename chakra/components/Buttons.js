@@ -24,6 +24,20 @@ export const Button = {
   },
   variants: {
     custom: customVariant,
+    btnMain: {
+      bg: "Primary",
+      color: "white",
+      height: "2.4rem",
+      _hover: {
+        opacity: 0.8,
+      },
+      _disabled: {
+        ...disabledStyles,
+        _hover: {
+          ...disabledStyles,
+        },
+      },
+    },
     btnSub: {
       color: "white",
       bg: "Primary",
@@ -44,7 +58,7 @@ export const Button = {
     btnCloseGhost: {
       color: "Red",
       fontSize: "sm",
-      height: "2.3rem",
+      height: "2.4rem",
       textTransform: "uppercase",
       fontWeight: "bold",
       _hover: {
@@ -55,7 +69,7 @@ export const Button = {
       bg: "RedLight",
       color: "Red",
       fontSize: "sm",
-      height: "2.3rem",
+      height: "2.4rem",
       fontWeight: "bold",
       _hover: {
         opacity: 0.8,

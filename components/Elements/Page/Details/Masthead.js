@@ -18,7 +18,7 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../../../../firebase/clientApp";
-import LanguageBadge from "../../../Display/LanguageBadge";
+import LanguageBadge from "../../../Display/Language/LanguageBadge";
 import { DeleteSNIPNoMap } from "../../../NonModal/DeleteSNIPNoMap";
 import { DeleteDocumentIcon } from "../../../SVG/DeleteDocumentIcon";
 import { EditDocumentIcon } from "../../../SVG/EditDocumentIcon";

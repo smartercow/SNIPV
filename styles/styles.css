@@ -29,9 +29,9 @@
   max-width: 100%;
 }
 
-.syntaxStyle {
+/* .syntaxStyle {
   border: 1px solid #0072f523;
-}
+} */
 
 .errorCodeSyntaxStyle {
   border: 1px solid #f3126023;

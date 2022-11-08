@@ -1,10 +1,4 @@
-import {
-  addDoc,
-  collection,
-  doc,
-  serverTimestamp,
-  updateDoc,
-} from "firebase/firestore";
+import { addDoc, collection, doc, serverTimestamp, updateDoc } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Select, CreatableSelect, AsyncSelect } from "chakra-react-select";
@@ -17,7 +11,7 @@ import { updateStateAtom } from "../../../atoms/updateStateAtom";
 import { NoOptionsMessage } from "../../Select/NoOptionsMessage";
 import { TagsInput } from "react-tag-input-component";
 import { useRouter } from "next/router";
-import { Button, Checkbox, Input, Text } from "@chakra-ui/react";
+import { Box, Button, Checkbox, Input, Text } from "@chakra-ui/react";
 
 export default function CreateMainFolder() {
   const [user] = useAuthState(auth);
@@ -199,27 +193,24 @@ export default function CreateMainFolder() {
       }
     } else {
       try {
-        await updateDoc(
-          doc(db, "UsersData1", user?.uid, subFolder, open.folder?.subFolderId),
-          {
-            updatedAt: serverTimestamp(),
-            label: folderName,
-            language: {
-              fileExtension: fileExtension,
-              acc:
-                Object.keys(accessory).length > 0
-                  ? {
-                      accId: accessory.accId,
-                      accsId: accessory.accsId,
-                      accsType: accessory.accsType,
-                      label: accessory.label,
-                      classTree: `lang${language.langId}__accs${accessory.accsId}-acc${accessory.accId}`,
-                    }
-                  : {},
-            },
-            tags: tags,
-          }
-        );
+        await updateDoc(doc(db, "UsersData1", user?.uid, subFolder, open.folder?.subFolderId), {
+          updatedAt: serverTimestamp(),
+          label: folderName,
+          language: {
+            fileExtension: fileExtension,
+            acc:
+              Object.keys(accessory).length > 0
+                ? {
+                    accId: accessory.accId,
+                    accsId: accessory.accsId,
+                    accsType: accessory.accsType,
+                    label: accessory.label,
+                    classTree: `lang${language.langId}__accs${accessory.accsId}-acc${accessory.accId}`,
+                  }
+                : {},
+          },
+          tags: tags,
+        });
         setSubEdited(true);
       } catch (error) {
         setDisableBtn(false);
@@ -239,49 +230,44 @@ export default function CreateMainFolder() {
       <form onSubmit={createFolder}>
         <div className="flex flex-col gap-2">
           <div className="flex gap-2 items-center">
-            <Text variant="H5">Rodmappe:</Text>
+            <div className="w-20">
+              <Text variant="H5">Rodmappe</Text>
+            </div>
             <div>
-              <Text variant="H5">{selectedMainFolder?.label}</Text>
+              <Text fontSize="15px" className="truncate">
+                {selectedMainFolder?.label}
+              </Text>
             </div>
           </div>
 
           {Object.keys(selectedMainFolder).length > 0 && (
-            <div className="flex flex-col gap-4">
-              <div className="flex gap-4">
-                <div>
+            <div className="flex flex-col gap-4 mt-2">
+              <div className="flex gap-2 items-center">
+                <div className="w-20">
                   <Text variant="H5">Sprog</Text>
                 </div>
                 <div>
-                  <div className="flex pt-1">
-                    <div className="fileExtension extensionBadge rounded-lg flex justify-center items-center">
-                      <p className="text-xs MonoHeading font-semibold lowercase">
-                        {fileExtension?.label}
-                      </p>
-                    </div>
-
-                    <div
-                      className={`languageId${language.langId} lBadge rounded-3xl flex justify-center items-center`}
-                    >
-                      <p className="text-xs MonoHeading font-semibold lowercase">
-                        {language?.label}
-                      </p>
+                  <div className="flex">
+                    <div className={`lang${language.langId} lBadge rounded-3xl flex justify-center items-center`}>
+                      <p className={`text-xs MonoHeading font-semibold lowercase`}>{language?.label}</p>
                     </div>
 
                     {accessory && (
                       <div
-                        className={`accessoryId${accessory.langId} lBadge rounded-3xl flex justify-center items-center`}
-                      >
-                        <p className="text-xs MonoHeading font-semibold lowercase">
-                          {accessory?.label}
-                        </p>
+                        className={`lang${language.langId}__accs${accessory.accsId}-acc${accessory.accId} lBadge rounded-3xl flex justify-center items-center`}>
+                        <p className="text-xs MonoHeading font-semibold lowercase">{accessory?.label}</p>
                       </div>
                     )}
+
+                    <Box color="white" bg="Primary" className="lBadge rounded-3xl flex justify-center items-center">
+                      <p className="text-xs MonoHeading font-semibold lowercase">{fileExtension?.label}</p>
+                    </Box>
                   </div>
                 </div>
               </div>
 
               <div>
-                <div className="flex">
+                <div className="flex mb-2">
                   <Text variant="H5">Navn&nbsp;</Text>
                   <Text color="Red" variant="H5">
                     *
@@ -291,16 +277,19 @@ export default function CreateMainFolder() {
                   placeholder="Mappe navn"
                   onChange={(e) => setFolderName(e.target.value)}
                   value={folderName}
-                  size="lg"
+                  size="md"
                   aria-label="Folder name"
                 />
               </div>
 
-              <div className="flex gap-4">
-                <div className="w-52 flex flex-col gap-1">
-                  <div className="flex">
+              <Box
+                pointerEvents={open.folder?.subFolderId && "none"}
+                opacity={open.folder?.subFolderId && 0.4}
+                className="flex gap-4">
+                <div className="w-52 flex flex-col gap-2">
+                  <div className="flex pt-1">
                     <Text variant="H5">Filtypenavn&nbsp;</Text>
-                    <Text color="error" variant="H5">
+                    <Text color="Red" variant="H5">
                       *
                     </Text>
                   </div>
@@ -322,13 +311,9 @@ export default function CreateMainFolder() {
                 </div>
 
                 {language.accessory && (
-                  <div className="flex flex-col gap-1 w-full">
+                  <div className="flex flex-col gap-2 w-full">
                     <div>
-                      <Checkbox
-                        size="sm"
-                        onChange={() => setAddAccessory(!addAccessory)}
-                        isChecked={addAccessory}
-                      >
+                      <Checkbox size="md" onChange={() => setAddAccessory(!addAccessory)} isChecked={addAccessory}>
                         <p>Tilbehør for {language.label}</p>
                       </Checkbox>
                     </div>
@@ -346,12 +331,11 @@ export default function CreateMainFolder() {
                           menuPortal: (base) => ({ ...base, zIndex: 9999 }),
                         }}
                         components={{ NoOptionsMessage }}
-                        // defaultValue={ext[0]}
                       />
                     </div>
                   </div>
                 )}
-              </div>
+              </Box>
 
               <div className="flex flex-col gap-1">
                 <div>
@@ -381,17 +365,17 @@ export default function CreateMainFolder() {
           )}
         </div>
 
-        <div className="flex gap-2 w-full justify-end my-3">
-          <Button color="Red" onClick={() => setOpen(false)}>
+        <div className="flex gap-4 w-full justify-end my-3">
+          <Button color="Red" onClick={() => setOpen(false)} variant="btnCloseGhost">
             Luk
           </Button>
 
           {open.folder?.subFolderId ? (
-            <Button disabled={disableBtn} color="Primary" type="submit">
+            <Button disabled={disableBtn} type="submit" variant="btnMain">
               Opdatere mappe
             </Button>
           ) : (
-            <Button disabled={disableBtn} color="primary" type="submit">
+            <Button disabled={disableBtn} type="submit" variant="btnMain">
               Opret mappe
             </Button>
           )}
