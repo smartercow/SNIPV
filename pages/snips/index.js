@@ -43,9 +43,7 @@ const MySNIPS = () => {
           });
           return mergedSnippets;
         })
-        .then((mergedData) =>
-          mergedData.sort((a, b) => a.postedAt - b.postedAt).reverse()
-        )
+        .then((mergedData) => mergedData.sort((a, b) => a.postedAt - b.postedAt).reverse())
         .then((sortedSnippets) => {
           setSnippets((prev) => ({
             ...prev,
@@ -101,9 +99,7 @@ const MySNIPS = () => {
 
                   {!snippets.snips && (
                     <div className="flex justify-center mt-10 w-full">
-                      <Text variant="nonLabel">
-                        Du har ingen SNIPS i denne mappe! 😔
-                      </Text>
+                      <Text variant="nonLabel">Du har ingen SNIPS i denne mappe! 😔</Text>
                     </div>
                   )}
                 </div>

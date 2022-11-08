@@ -1,14 +1,5 @@
 import { Box, Button, Text } from "@chakra-ui/react";
-import {
-  collection,
-  FieldPath,
-  getDocs,
-  limit,
-  orderBy,
-  query,
-  startAfter,
-  where,
-} from "firebase/firestore";
+import { collection, FieldPath, getDocs, limit, orderBy, query, startAfter, where } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { MdRefresh } from "react-icons/md";
@@ -116,12 +107,7 @@ const AllType = ({ setLoadingMain, col, snip, handleDelete }) => {
         {Object.keys(mySNIPS).length > 0 && (
           <>
             {mySNIPS?.map((snippet) => (
-              <Snippet
-                key={snippet.id}
-                snippet={snippet}
-                handleDelete={handleDelete}
-                col={col}
-              />
+              <Snippet key={snippet.id} snippet={snippet} handleDelete={handleDelete} col={col} />
             ))}
 
             {!isEmpty && !loadingSub && (

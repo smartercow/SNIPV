@@ -122,8 +122,7 @@ const MySNIPS = () => {
             borderTopLeftRadius="lg"
             borderBottomLeftRadius="lg"
             className="flex gap-1 items-center px-3 transition-all duration-300"
-            onClick={() => setTypes("all")}
-          >
+            onClick={() => setTypes("all")}>
             <Icon as={CategoryIcon} fill="Primary" h={4} w={4} />
 
             <Text textTransform="uppercase" fontSize="16px" opacity={0.8} fontWeight="semibold">
@@ -136,8 +135,7 @@ const MySNIPS = () => {
             py={1}
             bg={types === "category" ? "gray.200" : "#EDF2F7"}
             className="flex gap-1 items-center px-3 transition-all duration-300"
-            onClick={() => setTypes("category")}
-          >
+            onClick={() => setTypes("category")}>
             <Icon as={FolderIcon} fill="Primary" h={4} w={4} />
             <Text textTransform="uppercase" fontSize="16px" opacity={0.8} fontWeight="semibold">
               Mapper
@@ -149,8 +147,7 @@ const MySNIPS = () => {
             py={1}
             bg={types === "search" ? "gray.200" : "#EDF2F7"}
             className="flex gap-1 items-center px-3 transition-all duration-300"
-            onClick={() => setTypes("search")}
-          >
+            onClick={() => setTypes("search")}>
             <Icon as={FilterIcon} fill="Primary" h={4} w={4} />
             <Text textTransform="uppercase" fontSize="16px" opacity={0.8} fontWeight="semibold">
               Søg
@@ -179,8 +176,7 @@ const MySNIPS = () => {
                   textDecorationThickness="2px"
                   textUnderlineOffset={3}
                   textDecorationColor="Gray"
-                  fontWeight="semibold"
-                >
+                  fontWeight="semibold">
                   Søg efter tags
                 </Text>
                 <div className="flex-grow flex  gap-2">
