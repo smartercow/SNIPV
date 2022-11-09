@@ -153,7 +153,11 @@ const CreateSetup = ({ id, setLoading, setDataError }) => {
             tags: tags,
             notes: notes,
           });
-          router.push(`/setup/${id}`);
+          router.push(
+            `/setup/${id}/${String(modules[0].moduleTitle).replace(/ /g, "-")}#${String(
+              modules[0].sections[0].sectionTitle
+            ).replace(/ /g, "-")}`
+          );
         } catch (error) {
           console.log("Fejl i opdatering af SNIP!", error);
         }
@@ -220,6 +224,8 @@ const CreateSetup = ({ id, setLoading, setDataError }) => {
       // setFolderExpanded(true);
     }
   }, [selectSubValue, selectedMainFolder]);
+
+  console.log("MODULZZ", modules);
 
   return (
     <div className="p-4">

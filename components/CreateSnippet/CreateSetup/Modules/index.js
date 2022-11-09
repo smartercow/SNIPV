@@ -140,6 +140,9 @@ const Modules = ({ modules, setModules, allHasNumericTitles }) => {
     setHasNumericTitles(false);
   };
 
+  console.log("modules", modules);
+  console.log("allEntries", allEntries);
+
   return (
     <Box>
       {!Object.keys(modules).length > 0 && (
@@ -269,7 +272,7 @@ const Modules = ({ modules, setModules, allHasNumericTitles }) => {
           <Input
             placeholder="Next.js setup"
             value={moduleTitle}
-            maxLength={25}
+            maxLength={22}
             onChange={(e) => setModuleTitle(e.target.value)}
           />
         </Box>

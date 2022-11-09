@@ -25,7 +25,7 @@ const SideMenu = ({ modules, snippet }) => {
           borderRadius={10}
           bg={asPath.endsWith("/folderstructure") ? "PrimaryLighter" : "none"}
           onClick={() => handleHref(`/setup/${id}/folderstructure`)}
-          className="w-[16rem] cursor-pointer transition ease-in-out duration-300"
+          className="w-[17rem] cursor-pointer transition ease-in-out duration-300"
           _hover={{
             bg: "PrimaryLighter",
           }}>
@@ -34,11 +34,11 @@ const SideMenu = ({ modules, snippet }) => {
           </Text>
         </Box>
       )}
-      <Accordion defaultIndex={[0]} allowMultiple variant="menu">
-        {modules.map((item) => {
+      <Accordion defaultIndex={[0]} allowMultiple variant="menu" className="w-[17rem]">
+        {modules.map((item, index) => {
           if (asPath.startsWith(`/setup/${id}/${String(item.moduleTitle).replace(/ /g, "-")}`))
             return (
-              <Box key={item.moduleId} className="cursor-pointer transition ease-in-out duration-300 w-[16rem]">
+              <Box key={item.moduleId} className="cursor-pointer transition ease-in-out duration-300 w-[17rem]">
                 <AccordionItem mt={1}>
                   <h2>
                     <AccordionButton
@@ -52,21 +52,55 @@ const SideMenu = ({ modules, snippet }) => {
                         borderBottomRadius: "none",
                       }}>
                       <Box flex="1" textAlign="left">
-                        <Text fontSize={15} color="Primary" fontWeight="semibold">
-                          {} {item.moduleTitle}
+                        <Text fontSize={15} color="Primary" fontWeight="semibold" className="max-w-[220px] truncate">
+                          {snippet.allHasNumericTitles && (
+                            <>
+                              {index + 1}
+                              {". "}
+                            </>
+                          )}
+                          {item.moduleTitle}
                         </Text>
                       </Box>
                       <AccordionIcon color="Primary" />
                     </AccordionButton>
                   </h2>
                   <AccordionPanel p={0}>
+                    {item.hasFolderStructure && (
+                      <Box
+                        py={2}
+                        px={5}
+                        _hover={{
+                          bg: "PrimaryLighter",
+                        }}
+                        bg={
+                          asPath.endsWith(`/${String(item.moduleTitle).replace(/ /g, "-")}#folderstructure`)
+                            ? "PrimaryLighter"
+                            : "none"
+                        }
+                        onClick={() =>
+                          handleHref(`/setup/${id}/${String(item.moduleTitle).replace(/ /g, "-")}#folderstructure`)
+                        }>
+                        <Text
+                          fontSize={15}
+                          color={
+                            asPath.endsWith(`/${String(item.moduleTitle).replace(/ /g, "-")}#folderstructure`)
+                              ? "Primary"
+                              : "Black"
+                          }
+                          fontWeight="semibold">
+                          Mappestruktur
+                        </Text>
+                      </Box>
+                    )}
+
                     {item.sections.map((sect, index) => {
                       if (asPath.endsWith(`#${String(sect.sectionTitle).replace(/ /g, "-")}`))
                         return (
                           <Box
                             key={sect.sectionId}
                             py={2}
-                            px={4}
+                            px={5}
                             bg="PrimaryLighter"
                             onClick={() =>
                               handleHref(
@@ -74,8 +108,17 @@ const SideMenu = ({ modules, snippet }) => {
                                   sect.sectionTitle
                                 ).replace(/ /g, "-")}`
                               )
-                            }>
-                            <Text fontSize={15} color="Primary" fontWeight="semibold">
+                            }
+                            className="flex">
+                            <Text fontSize={15} fontWeight="semibold">
+                              {item.numericTitles && (
+                                <Box w={4}>
+                                  {index + 1}
+                                  {"."}
+                                </Box>
+                              )}
+                            </Text>
+                            <Text fontSize={15} fontWeight="semibold" className="max-w-[210px] truncate">
                               {sect.sectionTitle}
                             </Text>
                           </Box>
@@ -85,10 +128,19 @@ const SideMenu = ({ modules, snippet }) => {
                           <Box
                             key={sect.sectionId}
                             py={2}
-                            px={4}
+                            px={5}
                             _hover={{ bg: "PrimaryLighter" }}
-                            onClick={() => handleHref(`#${String(sect.sectionTitle).replace(/ /g, "-")}`)}>
+                            onClick={() => handleHref(`#${String(sect.sectionTitle).replace(/ /g, "-")}`)}
+                            className="flex">
                             <Text fontSize={15} fontWeight="semibold">
+                              {item.numericTitles && (
+                                <Box w={4}>
+                                  {index + 1}
+                                  {"."}
+                                </Box>
+                              )}
+                            </Text>
+                            <Text fontSize={15} fontWeight="semibold" className="max-w-[220px] truncate">
                               {sect.sectionTitle}
                             </Text>
                           </Box>
@@ -100,7 +152,7 @@ const SideMenu = ({ modules, snippet }) => {
             );
           else
             return (
-              <Box key={item.moduleId} className="w-[16rem]">
+              <Box key={item.moduleId}>
                 <AccordionItem p={0} mt={1}>
                   <h2>
                     <AccordionButton
@@ -110,7 +162,13 @@ const SideMenu = ({ modules, snippet }) => {
                         bg: "PrimaryLighter",
                       }}>
                       <Box flex="1" textAlign="left">
-                        <Text fontSize={15} fontWeight="semibold">
+                        <Text fontSize={15} fontWeight="semibold" className="max-w-[220px] truncate">
+                          {snippet.allHasNumericTitles && (
+                            <>
+                              {index + 1}
+                              {". "}
+                            </>
+                          )}
                           {item.moduleTitle}
                         </Text>
                       </Box>
@@ -118,13 +176,44 @@ const SideMenu = ({ modules, snippet }) => {
                     </AccordionButton>
                   </h2>
                   <AccordionPanel p={0}>
+                    {item.hasFolderStructure && (
+                      <Box
+                        py={2}
+                        px={5}
+                        cursor="pointer"
+                        _hover={{
+                          bg: "PrimaryLighter",
+                        }}
+                        bg={
+                          asPath.endsWith(`/${String(item.moduleTitle).replace(/ /g, "-")}#folderstructure`)
+                            ? "PrimaryLighter"
+                            : "none"
+                        }
+                        onClick={() =>
+                          handleHref(`/setup/${id}/${String(item.moduleTitle).replace(/ /g, "-")}#folderstructure`)
+                        }>
+                        <Text
+                          fontSize={15}
+                          color={
+                            asPath.endsWith(`/${String(item.moduleTitle).replace(/ /g, "-")}#folderstructure`)
+                              ? "Primary"
+                              : "Black"
+                          }
+                          fontWeight="semibold">
+                          Mappestruktur
+                        </Text>
+                      </Box>
+                    )}
                     {item.sections.map((sect, index) => (
                       <Box key={index} _hover={{ bg: "PrimaryLighter" }}>
                         <Text
                           py={2}
-                          px={4}
+                          px={5}
                           fontSize={15}
                           fontWeight="semibold"
+                          _hover={{
+                            bg: "PrimaryLighter",
+                          }}
                           onClick={() =>
                             handleHref(
                               `/setup/${id}/${String(item.moduleTitle).replace(/ /g, "-")}#${String(
@@ -132,8 +221,18 @@ const SideMenu = ({ modules, snippet }) => {
                               ).replace(/ /g, "-")}`
                             )
                           }
-                          className="cursor-pointer transition ease-in-out duration-300 ">
-                          {sect.sectionTitle}
+                          className="cursor-pointer transition ease-in-out duration-300 flex">
+                          <Text fontSize={15} fontWeight="semibold">
+                            {item.numericTitles && (
+                              <Box w={4}>
+                                {index + 1}
+                                {"."}
+                              </Box>
+                            )}
+                          </Text>
+                          <Text fontSize={15} fontWeight="semibold" className="max-w-[220px] truncate">
+                            {sect.sectionTitle}
+                          </Text>
                         </Text>
                       </Box>
                     ))}

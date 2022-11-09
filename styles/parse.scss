@@ -43,6 +43,11 @@
     border-radius: 10px;
     background-color: #e6f7ff;
     color: #087ea4;
+    a {
+      color: #ed8142;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
   }
   blockquote::before {
     content: "\201C \0020";
@@ -57,7 +62,7 @@
   pre {
     background-color: #23241f;
     color: white;
-    margin: 10px auto;
+    margin: 20px auto;
     max-width: 600px;
     border-radius: 5px;
     padding: 5px 15px;

@@ -66,7 +66,29 @@ const Entries = ({ snippet }) => {
             {ents.map((modul, index) => {
               if (asPath.startsWith(`/setup/${id}/${String(modul.moduleTitle).replace(/ /g, "-")}`))
                 return (
-                  <Box key={index} className="flex flex-col gap-2 w-full">
+                  <Box key={index} className=" w-full">
+                    {snippet && asPath.endsWith(`/${String(modul.moduleTitle).replace(/ /g, "-")}#folderstructure`) && (
+                      <Box>
+                        <Box className="flex gap-1">
+                          <Text variant="breadcrumb">{modul.moduleTitle}</Text>
+                          <Text variant="breadcrumb">
+                            <ChevronRightIcon fontSize={24} />
+                          </Text>
+                          <Text variant="breadcrumb">Mappestruktur</Text>
+                        </Box>
+
+                        <SyntaxHighlighter
+                          language=""
+                          codeTagProps={{ style: { fontFamily: "Source Code Pro" } }}
+                          style={oneLight}
+                          lineProps={{
+                            style: { wordBreak: "break-all", whiteSpace: "pre-wrap" },
+                          }}>
+                          {modul.folderStructure}
+                        </SyntaxHighlighter>
+                      </Box>
+                    )}
+
                     {Array.isArray(modul.sections) && (
                       <>
                         <Box>

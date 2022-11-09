@@ -349,7 +349,7 @@ const Entries = ({
                   Sektion Titel
                 </Text>
               </div>
-              <Input placeholder="Installation" value={menu} maxLength={25} onChange={(e) => setMenu(e.target.value)} />
+              <Input placeholder="Installation" value={menu} maxLength={24} onChange={(e) => setMenu(e.target.value)} />
             </Box>
 
             <Divider />
